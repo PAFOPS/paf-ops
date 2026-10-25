@@ -1,5 +1,19 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c1f4a">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PAF OPS">
+<meta name="description" content="PAF OPS — préparation des meetings de la Patrouille de France">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>PAF OPS</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
@@ -36,6 +50,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav button[aria-current="page"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
 .sp{flex:1}
 .role{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.role span{white-space:nowrap}
+@media (max-width:1100px){.nav button{padding:8px 10px;gap:5px;font-size:14px}}
+@media (max-width:980px){.nav button span{display:none}.nav button{padding:9px 11px}}
 .role select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 8px;font-weight:700;font-size:13px}
 .wrap{max-width:1040px;margin:auto;padding-block:22px 110px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .note{display:flex;gap:10px;align-items:flex-start;background:var(--gold2);color:var(--fg);border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:20px}
@@ -573,7 +590,7 @@ select{max-width:100%}
 .locknote{display:flex;gap:8px;align-items:center;background:var(--warn2);color:var(--warn);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700;margin-bottom:10px}
 
 .fuelstd{margin-bottom:12px}.fuelstd>b{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:15px}
-.fuelstd .dimwrap{margin:0}.fuelstd .dimtab{font-size:12.5px}.fuelstd .dimtab th,.fuelstd .dimtab td{white-space:normal;padding:6px 7px}.fuelstd .dimtab td:last-child{font-weight:800;white-space:nowrap}
+.infob .dimwrap{margin:8px 0}.infob .dimtab{font-size:12.5px}.infob .dimtab th,.infob .dimtab td{white-space:normal;padding:6px 7px}.infob .dimtab td:last-child{font-weight:800;white-space:nowrap}
 .yn.big2 button small{display:block;font-size:11px;font-weight:600;opacity:.75;margin-top:2px}
 
 .enc{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px;background:var(--surface);display:grid;gap:8px}
@@ -588,6 +605,63 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .sheet .fdrop{width:100%}
 .sheet details.zrt{border:1px solid var(--line);border-radius:16px;padding:10px 12px}
 
+.pfgrid{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:16px;align-items:start}
+.pfhome{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:980px}
+.pftool{display:grid;gap:8px;justify-items:center;text-align:center;padding:16px 14px 18px;border:2px solid var(--line);border-radius:24px;background:var(--surface);color:var(--fg);box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
+.pftool:hover{transform:translateY(-2px);border-color:var(--fg)}.pftool b{font-family:var(--f-disp);font-size:20px}.pftool span{font-size:13px;color:var(--muted);line-height:1.35}
+.pfart{width:120px;height:120px;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18))}
+.pfbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
+.cgsvg{display:block;width:100%;height:auto;min-width:0}.cgsvg .cgg{stroke:var(--line);stroke-width:1}.cgsvg .cgt{font-size:10px;fill:var(--muted);font-weight:700;font-family:var(--f-body)}.cgsvg .cgl{font-size:11px;font-weight:800;font-family:var(--f-body)}
+.cgsvg .cgenv{fill:var(--c);fill-opacity:.14;stroke:var(--c);stroke-width:2.5;stroke-linejoin:round}.cgsvg .cgmax{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}.cgsvg .cgline{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3}
+.pfig .cgsvg{min-width:0}
+@media (max-width:760px){.pfgrid{grid-template-columns:1fr}}
+.pfn{display:grid;gap:4px;margin:8px 0;font-size:13px;font-weight:800;color:var(--muted)}
+.pfin{display:flex;align-items:center;gap:6px}.pfin input{width:110px;text-align:center;font-weight:800;font-size:16px}.pfin button{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);font-size:18px;font-weight:800;color:var(--fg)}.pfin b{color:var(--muted)}
+.pfcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.pfc{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;display:grid;gap:2px;box-shadow:var(--shadow)}
+.pfc .pfl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.pfc b{font-family:var(--f-disp);font-size:34px;line-height:1.1}.pfc b small{font-size:14px;font-family:var(--f-body);color:var(--muted);margin-left:4px}
+.pfc .pfs{font-size:12px;color:var(--muted);line-height:1.25}
+.pfc.ko{border-color:var(--bad);background:var(--bad2)}.pfc.ko b{color:var(--bad)}.pfc.ok{border-color:var(--ok);background:var(--ok2)}
+.pfal{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--c);border-radius:16px;padding:12px 14px;margin-top:12px;background:var(--surface)}
+.pfal b{display:block;font-size:16px;color:var(--c)}.pfal span{font-size:14px;line-height:1.45}
+.pfr{display:grid;grid-template-columns:70px 1fr 1fr;gap:8px;align-items:center;margin:6px 0}.pfr label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700}.pfr input{width:80px}
+
+.tbtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;color:var(--fg);min-width:112px;justify-content:center}
+.tbtn.empty{color:var(--muted);font-weight:700}.tbtn:disabled{opacity:.55}
+.tpov{position:fixed;inset:0;background:rgba(10,18,40,.45);display:flex;align-items:flex-end;justify-content:center;z-index:60;padding:12px}
+@media (min-width:600px){.tpov{align-items:center}}
+.tpbox{background:var(--surface);border-radius:22px;width:min(420px,100%);padding:14px 16px 16px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.tph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.tph b{font-family:var(--f-disp);font-size:26px}
+.tplab{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:8px 0 6px}
+.tpg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.tpg.m{grid-template-columns:repeat(4,1fr)}
+.tpg button{border:1.5px solid var(--line);background:var(--surface2);border-radius:12px;padding:11px 0;font-weight:800;font-size:16px;color:var(--fg)}
+.tpg.m button{padding:14px 0;font-size:18px}
+.tpg button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}.tpg button.lo{opacity:.35}.tpg button:disabled{opacity:.35}
+.tpf{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px}
+.mrow3 .tbtn,.encs .tbtn{min-width:104px}
+
+.fiche{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 22px;box-shadow:var(--shadow)}
+.rchead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding-bottom:14px;border-bottom:2px solid var(--line);margin-bottom:6px}
+.rchead h1{margin:2px 0 4px}.rchead .meta{color:var(--muted);font-size:14px;margin-bottom:8px}
+.rcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:4px 28px}
+.rcsec{padding:14px 0;border-bottom:1px solid var(--line);break-inside:avoid}
+.rcsec h2{display:flex;align-items:center;gap:8px;font-size:17px;margin:0 0 8px;flex-wrap:wrap}
+.rcsec h2 .pill{font-size:11px;padding:3px 9px}
+.rctab{width:100%;border-collapse:collapse;font-size:14px}.rctab th{text-align:left;font-weight:700;color:var(--muted);padding:5px 10px 5px 0;vertical-align:top;width:38%}.rctab td{padding:5px 0;vertical-align:top}
+.rctab tr+tr th,.rctab tr+tr td{border-top:1px dashed var(--line)}
+.rcsec ul{margin:0;padding-left:18px}.rcsec p{margin:4px 0}
+body.printmode header.top,body.printmode .bnav,body.printmode .back,body.printmode .head,body.printmode .note,body.printmode .ro{display:none!important}
+body.printmode .fiche{box-shadow:none;border:0;padding:0}
+@media print{header.top,.bnav,.back,.head,.note,.ro{display:none!important}.fiche{box-shadow:none;border:0;padding:0}.rcgrid{grid-template-columns:1fr 1fr}}
+
+.iq{border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;background:var(--surface2)}
+.iqh{display:flex;gap:10px;align-items:center;margin-bottom:8px}.iqh b{display:block}.iqh small{color:var(--muted)}
+.iqt{font-family:var(--f-body);font-size:15px;line-height:1.5;resize:vertical;min-height:140px}
+.person.hold{border-style:dashed;color:var(--muted)}
+.instbar{max-width:1040px;margin:10px 12px 0;padding:10px 12px;display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.instbar img{border-radius:10px;flex:none}.instbar>div{flex:1;min-width:0;font-size:13px;line-height:1.35}.instbar>div>b{display:block;font-size:14px}.instbar>div>span{color:var(--muted)}
+@media (min-width:1064px){.instbar{margin:10px auto 0}}
 /* Navigation basse sur téléphone */
 .bnav{display:none}
 @media (max-width:720px){
@@ -623,6 +697,8 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
  .q{font-size:21px}
 }
 </style>
+</head>
+<body>
 
 <header class="top"><div class="tin">
  <button class="brand" onclick="go('meetings')" aria-label="Accueil PAF OPS"><img src="data:image/png;base64,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" alt=""><b>PAF OPS</b></button>
@@ -631,6 +707,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
   <button id="nav-unite" onclick="go('unite')"></button>
   <button id="nav-acces" onclick="go('acces')"></button>
   <button id="nav-mails" onclick="go('mails')"></button>
+  <button id="nav-perfos" onclick="go('perfos')"></button>
  </nav>
  <div class="sp"></div>
  <label class="role" id="rolebox"><span>Vue :</span><select id="role" onchange="setRole(this.value)"></select></label>
@@ -643,6 +720,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
  <button id="bnav-unite" onclick="go('unite')"></button>
  <button id="bnav-acces" onclick="go('acces')"></button>
  <button id="bnav-mails" onclick="go('mails')"></button>
+ <button id="bnav-perfos" onclick="go('perfos')"></button>
 </nav>
 
 <div class="ov" id="ov" hidden onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
@@ -651,7 +729,9 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 
 <script>
 /* ====================== Icônes ====================== */
+ const P0=1;
 const P={
+ gauge:'<path d="M12 14l4-5"/><path d="M3.3 17a9 9 0 1 1 17.4 0"/><circle cx="12" cy="14" r="1.5"/>',
  screen:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
  wifi:'<path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>',
  moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
@@ -750,7 +830,8 @@ const ROLES=[
  {k:'dt',l:'DT',side:'paf',i:'wrench',c1:'#f59e0b',c2:'#c2410c'},
  {k:'cst',l:'CST',side:'paf',i:'gear',c1:'#ef7f3a',c2:'#b4441a'},
  {k:'comm',l:'Comm',side:'paf',i:'mega',c1:'#ec4899',c2:'#be185d'},
- {k:'visit',l:'Visiteur',side:'suivi',i:'eye',c1:'#64748b',c2:'#1e293b'},
+ {k:'visit',l:'Pilote PAF',side:'suivi',i:'eye',c1:'#64748b',c2:'#1e293b'},
+ {k:'dmma',l:'DMMA',side:'suivi',i:'briefcase',c1:'#8b5cf6',c2:'#5b21b6'},
  {k:'org',l:'Organisateur',side:'meet',i:'flag',c1:'#0ea5e9',c2:'#0369a1'},
  {k:'dv',l:'Directeur des vols',side:'meet',i:'radio',c1:'#6366f1',c2:'#3730a3'},
  {k:'ro',l:'Volontaires (lien public)',side:'ro',i:'hand',c1:'#94a3b8',c2:'#475569'}
@@ -775,10 +856,12 @@ const DEF_RIGHTS={
  cst:{tech:'e',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'},
  comm:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'r',pdocs:'n',acces:'n'},
  visit:{tech:'r',meet:'r',contacts:'r',annu:'r',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
+ dmma:{tech:'r',meet:'r',contacts:'r',annu:'r',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
  org:{tech:'e',meet:'r',contacts:'e',annu:'n',aero:'n',logi:'e',com:'e',pdocs:'n',acces:'n'},
  dv:{tech:'n',meet:'r',contacts:'r',annu:'n',aero:'e',logi:'n',com:'n',pdocs:'r',acces:'n'},
  ro:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'}
 };
+const FONC={DIR:['Commandant','Commandant en second','Chef des opérations','Secrétaire opérations','Officier sécurité des vols'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
 const GRADES=['Gal','Col','Lcl','Cdt','Cne','Lt','Slt','Asp','Maj','Adc','Adj','Sgc','Sgt','Cch','Cpl','Av1','Av'];
 
 /* ====================== Données (cet appareil uniquement) ====================== */
@@ -833,6 +916,7 @@ if(!DB.roV){if(DB.rights&&DB.rights.ro)Object.keys(DB.rights.ro).forEach(k=>DB.r
 if(!DB.logiV2){const r=DB.rights;if(r){if(r.dt)r.dt.logi='r';if(r.cst)r.cst.logi='r';if(r.dv){r.dv.logi='n';r.dv.com='n'}}DB.logiV2=1;DB.logiV=1}
 if(!DB.logiV){if(DB.rights&&DB.rights.sec)DB.rights.sec.logi='e';DB.logiV=1}
 if(!DB.rights)DB.rights=JSON.parse(JSON.stringify(DEF_RIGHTS));
+if(!DB.rights.dmma)DB.rights.dmma=JSON.parse(JSON.stringify(DEF_RIGHTS.dmma));
 ROLES.forEach(r=>{DB.rights[r.k]=Object.assign({...DEF_RIGHTS[r.k]},DB.rights[r.k]||{})});
 if(!Array.isArray(DB.pdocs))DB.pdocs=[{id:uid(),cat:'cerfa',name:'CERFA — déclaration de manifestation (exemple).pdf',size:182000,t:Date.now(),ex:1},{id:uid(),cat:'lic',name:'Licences et qualifications pilotes (exemple).pdf',size:410000,t:Date.now(),ex:1},{id:uid(),cat:'ass',name:'Attestation d\'assurance (exemple).pdf',size:95000,t:Date.now(),ex:1}];
 if(!Array.isArray(DB.access))DB.access=[{id:uid(),role:'chef',mid:null,name:'Chef des opérations (exemple)',mail:'chef.ops@exemple.fr'}];
@@ -877,7 +961,8 @@ const fmtD=s=>s?fromISO(s).toLocaleDateString('fr-FR',{weekday:'short',day:'nume
 const fmtL=s=>s?fromISO(s).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'';
 const today=(()=>{const d=new Date();d.setHours(0,0,0,0);return d})();
 const daysTo=s=>Math.round((fromISO(s)-today)/864e5);
-const firstDemo=m=>(m.demos||[]).filter(Boolean).sort()[0]||m.entr||null;
+const entrs=m=>(Array.isArray(m.entrs)&&m.entrs.length?m.entrs:(m.entr?[m.entr]:[])).filter(Boolean).sort();
+const firstDemo=m=>(m.demos||[]).filter(Boolean).sort()[0]||entrs(m)[0]||null;
 const mName=m=>m.event||('Meeting de '+(m.city||'…'));
 const fmtTel=t=>{const d=String(t||'').replace(/\D/g,'');if(d.length===10)return d.replace(/(\d{2})(?=\d)/g,'$1 ').trim();if(d.startsWith('33')&&d.length===11)return '+33 '+d.slice(2).replace(/^(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/,'$1 $2 $3 $4 $5');return String(t||'')};
 const okMail=m=>!m||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m);
@@ -894,21 +979,21 @@ const lineMail=m=>m?`<div class="line">${ic('mail',15)}<span>${esc(m)}</span><bu
 /* ====================== Navigation ====================== */
 function go(v,mid){S.view=v;if(mid!==undefined)S.mid=mid;closeSheet();render();window.scrollTo(0,0)}
 function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S.view='meetings';render();toast('Vous voyez l\'application comme : '+RLm[r].l)}
-const viewOk=v=>v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():true;
+const viewOk=v=>v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
 function render(){
  if(!viewOk(S.view))S.view='meetings';
- const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail']};
- ['meetings','unite','acces','mails'].forEach(k=>{
-  const cur=S.view===k||(k==='meetings'&&S.view==='meeting');
+ const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Perfos','gauge']};
+ ['meetings','unite','acces','mails','perfos'].forEach(k=>{
+  const cur=S.view===k||(k==='meetings'&&(S.view==='meeting'||S.view==='recap'));
   [$('nav-'+k),$('bnav-'+k)].forEach(b=>{b.hidden=!viewOk(k);b.innerHTML=ic(nm[k][1],18)+'<span>'+nm[k][0]+'</span>';if(cur)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
  });
  $('role').innerHTML=`<optgroup label="Patrouille de France">${ROLES.filter(r=>r.side==='paf').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Meeting">${ROLES.filter(r=>r.side==='meet').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Visiteurs">${ROLES.filter(r=>r.side==='suivi').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Lien public"><option value="ro">Volontaires (lien public)</option></optgroup>`;
  $('role').value=ROLE;$('rolebox').hidden=!(ME&&ME.role==='chef');
- $('view').innerHTML=roBar()+({meetings:vMeetings,meeting:vMeeting,unite:vUnite,acces:vAcces,mails:vMails}[S.view]||vMeetings)();
+ $('view').innerHTML=roBar()+({meetings:vMeetings,meeting:vMeeting,unite:vUnite,acces:vAcces,mails:vMails,perfos:vPerfos,recap:()=>{const m=DB.meetings.find(x=>x.id===S.mid);return m?vRecap(m):vMeetings()}}[S.view]||vMeetings)();
  relive();
 }
 function roBar(){
- if(ROLE==='chef')return '';
+ if(ROLE==='chef'||isMeetRole()||ROLE==='ro')return '';
  const ed=AREAS.filter(a=>!a.soon&&canEdit(a.k)).map(a=>a.l);
  return `<div class="ro">${tile(RLm[ROLE],'xs')}<span>Vue <b>${RLm[ROLE].l}</b> : ${ROLE==='ro'?'peut proposer sa participation aux meetings':RLm[ROLE].side==='suivi'?'consulte tous les meetings, sans rien modifier · aucun email après l\'invitation':ed.length?'peut modifier '+ed.join(', ').toLowerCase():'consultation uniquement'}${isMeetRole()?' · ne voit que son meeting':''}.</span></div>`;
 }
@@ -931,14 +1016,14 @@ function vMeetings(){
  ${L.length?`<div class="mgrid">${L.map(mCard).join('')}</div>`:`<div class="empty">${tile(FU[1],'lg')}<h2 style="margin-top:12px">Créez votre premier meeting</h2><p class="muted">Deux questions : où, et quand.</p>${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:'<p class="small muted">Le chef des opérations crée les meetings.</p>'}</div>`}`;
 }
 function jx(m){const d=firstDemo(m);if(!d)return `<div class="jx"><b>?</b><span>dates</span></div>`;const n=daysTo(d);return `<div class="jx"><b>${n<0?'✓':'J-'+n}</b><span>${n<0?'passé':'démonstration'}</span></div>`}
-function dateChips(m){return `<div class="dates">${m.entr?`<span class="chip entr">${ic('plane',14)} Entraînement ${fmtD(m.entr)}</span>`:''}${(m.demos||[]).filter(Boolean).map(d=>`<span class="chip demo">${ic('star',14)} Démonstration ${fmtD(d)}</span>`).join('')}</div>`}
+function dateChips(m){return `<div class="dates">${entrs(m).map(d=>`<span class="chip entr">${ic('plane',14)} Entraînement ${fmtD(d)}</span>`).join('')}${(m.demos||[]).filter(Boolean).map(d=>`<span class="chip demo">${ic('star',14)} Démonstration ${fmtD(d)}</span>`).join('')}</div>`}
 function mCard(m){
  const cs=m.contacts||[],miss=FC.filter(f=>f.key&&!cs.some(c=>c.fn===f.k)).length,sq=seqOfAll(m),col=sq?sq.c:'#94a3b8',sp=mSpan(m);
  const rng=sp?(fromISO(sp[0]).getMonth()===fromISO(sp[1]).getMonth()?fromISO(sp[0]).toLocaleDateString('fr-FR',{day:'numeric'})+' – '+fromISO(sp[1]).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):fromISO(sp[0]).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})+' – '+fromISO(sp[1]).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})):'dates à fixer';
  const nd=(m.demos||[]).filter(Boolean).length;
  return `<button class="mcard" style="--c:${col}" onclick="go('meeting','${m.id}')">
   <div class="mtop"><span class="mdot"></span><div class="t"><h3>${esc(mName(m))}${m.ex?' <span class="ex">exemple</span>':''}</h3><div class="small muted">${ic('pin',12)} ${esc(m.city||'')} · ${rng}</div></div>${jx(m)}</div>
-  <div class="mmeta"><span>${ic('plane',12)} ${m.entr?'entraînement':'—'}</span><span>${ic('star',12)} ${nd} démonstration${nd>1?'s':''}</span></div>
+  <div class="mmeta"><span>${ic('plane',12)} ${entrs(m).length?entrs(m).length+' entraînement'+(entrs(m).length>1?'s':''):'—'}</span><span>${ic('star',12)} ${nd} démonstration${nd>1?'s':''}</span></div>
   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
    <div class="avs">${ROLE==='ro'?'':cs.slice(0,6).map(c=>tile(FCm[c.fn]||FCm.autre,'xs')).join('')}${ROLE==='ro'||cs.length?'':'<span class="small muted">Aucun contact</span>'}</div>
    ${ROLE==='ro'?`<span class="small" style="font-weight:800;color:var(--pri)">${ic('hand',14)} Proposer ma participation</span>`:`<span class="small ${miss?'':'muted'}" style="${miss?'color:var(--warn);font-weight:700':''}">${cs.length} contact${cs.length>1?'s':''}${miss?' · '+miss+' clé'+(miss>1?'s':'')+' manquant'+(miss>1?'s':''):''}</span>`}
@@ -956,7 +1041,7 @@ function vMeeting(){
  <section class="hero"><div class="t"><div class="small" style="opacity:.75;text-transform:uppercase;letter-spacing:.12em;font-weight:700">Meeting ${m.ex?'· exemple':''}</div><h1>${esc(mName(m))}</h1>
   <div class="meta">${ic('pin',14)} ${esc(m.city||'')}${m.field?' · '+esc(m.field):''}</div>${dateChips(m)}</div>
   ${jx(m)}
-  ${canEdit('meet')?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="wizard('${m.id}')">${ic('edit',16)} Lieu et dates</button><button class="btn" onclick="askDelMeeting('${m.id}')" aria-label="Supprimer le meeting">${ic('trash',16)}</button></div>`:''}
+  ${canEdit('meet')||ROLE==='visit'||ROLE==='dmma'?`<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="S.view='recap';S.mid='${m.id}';render();window.scrollTo(0,0)">${ic('file',16)} Fiche récap</button>${canEdit('meet')?`<button class="btn" onclick="wizard('${m.id}')">${ic('edit',16)} Lieu et dates</button><button class="btn" onclick="askDelMeeting('${m.id}')" aria-label="Supprimer le meeting">${ic('trash',16)}</button>`:''}</div>`:''}
  </section>
  <div id="delm"></div>`;
  // Le directeur des vols garde sa page unique
@@ -1003,9 +1088,7 @@ const CHECKS=[
  {k:'vip',l:'La ou les tribunes officielles ou VIP',i:'star',c1:'#f5c24a',c2:'#b7860f'},
  {k:'pub',l:'L\'enceinte réservée au public',i:'users',c1:'#f59e0b',c2:'#c2410c'},
  {k:'park',l:'Les zones de parking',i:'park',c1:'#06b6d4',c2:'#0e7490'},
- {k:'zir',l:'Les zones interdites ou restreintes',i:'shield',c1:'#64748b',c2:'#334155'},
- {k:'stat',l:'Les aires de stationnement des Alphajets, de l\'avion d\'accompagnement et du camion',i:'plane',c1:'#3b82f6',c2:'#1d4ed8'},
- {k:'podium',l:'L\'emplacement du car podium de l\'armée de l\'Air',i:'mega',c1:'#ec4899',c2:'#be185d',cond:1}
+ {k:'zir',l:'Les zones interdites ou restreintes',i:'shield',c1:'#64748b',c2:'#334155'}
 ];
 // Coordonnées : accepte « 48.5867, -3.8320 » ou « 48°35'12.1"N 3°49'55.2"W »
 function parseCoord(t){
@@ -1047,7 +1130,7 @@ function aero(m){
  m.aero=m.aero||{axe:null,pb:null,chk:{},slots:[],status:''};
  const A=m.aero;A.chk=A.chk||{};A.slots=A.slots||[];
  // un créneau attendu par jour : entraînement le jour d'entraînement, démonstration chaque jour de démonstration
- const want=[];if(m.entr)want.push([m.entr,'entr']);(m.demos||[]).forEach(d=>d&&want.push([d,'demo']));
+ const want=[];entrs(m).forEach(d=>want.push([d,'entr']));(m.demos||[]).forEach(d=>d&&want.push([d,'demo']));
  want.forEach(([d,t])=>{if(!A.slots.some(x=>x.date===d&&x.type===t)&&!(A.del||[]).includes(d+':'+t))A.slots.push({id:uid(),date:d,type:t,deb:'',fin:''})});
  return A;
 }
@@ -1256,7 +1339,7 @@ function vAero(m){
   <div class="dvsec">${zrtBlock()}</div>
   <div class="dvsec"><h3><span class="stepn ${A.axe&&A.pb?'ok':''}">${A.axe&&A.pb?ic('check',13,3):'1'}</span> Documents</h3>
    <div class="files">${fileTile('axe','Plan détaillé du site','map','#22c55e','#15803d','Google Earth (KML/KMZ), PDF ou image')}${fileTile('pb','Pilot book','book','#a855f7','#7e22ce','Même en version provisoire')}</div>
-   <div class="hint">Le fichier est rangé dans le Drive de l'unité : touchez son nom pour l'ouvrir.</div></div>
+</div>
   <div class="dvsec"><h3><span class="stepn ${chkDone?'ok':''}">${chkDone?ic('check',13,3):'2'}</span> Le plan et le pilot book font-ils bien ressortir…</h3>
    ${CHECKS.map(c=>{const open=S.expl===c.k,na=c.cond&&A.podium==='non',v=A.chk[c.k]||'';
     const ctrl=c.cond&&A.podium!=='oui'
@@ -1270,8 +1353,8 @@ function vAero(m){
   <div class="dvsec"><h3><span class="stepn ${A.slots.length&&A.slots.every(x=>x.deb&&x.fin)?'ok':''}">${A.slots.length&&A.slots.every(x=>x.deb&&x.fin)?ic('check',13,3):'3'}</span> Créneaux de la Patrouille</h3>
    ${days.length?`<div class="days">${days.map(d=>`<div class="day"><div class="dh"><b>${ic('cal',15)} ${fmtL(d)}</b>${ed?`<span style="display:flex;gap:6px">${['entr','demo'].map(t=>`<button class="btn ghost" style="padding:6px 8px;font-size:13px" onclick="addSlot('${m.id}','${d}','${t}')">${ic('plus',14)} ${SLOTT[t].l}</button>`).join('')}</span>`:''}</div>
     ${A.slots.filter(x=>x.date===d).sort((a,b)=>(a.deb||'99').localeCompare(b.deb||'99')).map(x=>{const T=SLOTT[x.type],n=mins(x.deb,x.fin);return `<div class="slot"><span class="stype">${tile(T,'xs')} ${T.l}</span>
-     <div><label class="l" style="margin:0 0 4px" for="sd-${x.id}">Début</label><input class="in" type="time" id="sd-${x.id}" value="${esc(x.deb)}" ${ed?'':'disabled'} onchange="setSlot('${m.id}','${x.id}','deb',this.value)"></div>
-     <div><label class="l" style="margin:0 0 4px" for="sf-${x.id}">Fin</label><input class="in" type="time" id="sf-${x.id}" min="${esc(x.deb)}" value="${esc(x.fin)}" ${ed?'':'disabled'} onchange="setSlot('${m.id}','${x.id}','fin',this.value)"></div>
+     <div><label class="l" style="margin:0 0 4px" for="sd-${x.id}">Début</label>${timeBtn(`${esc(x.deb)}`,`setSlot('${m.id}','${x.id}','deb',v)`,'Heure',``,!ed)}</div>
+     <div><label class="l" style="margin:0 0 4px" for="sf-${x.id}">Fin</label>${timeBtn(`${esc(x.fin)}`,`setSlot('${m.id}','${x.id}','fin',v)`,'Heure',`${esc(x.deb)}`,!ed)}</div>
      ${n==null?`<span class="dur ok" style="background:var(--surface);color:var(--muted)">Référence : ${T.dur} min</span>`:`<span class="dur ${n>=T.dur?'ok':'ko'}">${n} min${n<T.dur?' (référence '+T.dur+')':''}</span>`}
      ${ed?`<button class="ib" onclick="delSlot('${m.id}','${x.id}')" aria-label="Retirer ce créneau">${ic('trash',15)}</button>`:'<span></span>'}</div>`}).join('')||'<p class="small muted">Aucun créneau ce jour-là.</p>'}</div>`).join('')}</div>`:'<p class="small muted">Les dates du meeting ne sont pas encore renseignées.</p>'}
    <div class="hint">Saisissez l'heure de début : la fin est calculée (60 min pour l'entraînement, 35 min pour la démonstration). Vous pouvez la modifier.</div></div>
@@ -1335,7 +1418,7 @@ function fireDet(m,F,ed){
   ${F.ext?`<div class="fd"><b>${ic('fire',15)} Extincteurs : type et nombre</b>
    ${F.exts.map(x=>`<div class="frow"><input class="in" list="extl" value="${esc(x.t)}" placeholder="Type" aria-label="Type d'extincteur" ${dis} onchange="setExt('${m.id}','${x.id}','t',this.value)"><input class="in" type="number" min="0" inputmode="numeric" value="${esc(String(x.n||''))}" placeholder="Nombre" aria-label="Nombre" ${dis} onchange="setExt('${m.id}','${x.id}','n',this.value)">${ed?`<button class="ib" onclick="delExt('${m.id}','${x.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:'<span></span>'}</div>`).join('')}
    ${ed?`<button class="more" style="margin-top:8px" onclick="addExt('${m.id}')">${ic('plus',14)} Ajouter un type</button>`:''}
-   <div class="hint ${ok?'okc':''}">${ok?ic('check',14,3)+' Conforme : ':'Attendu : '}5 extincteurs CO2 (2 × 10 kg minimum) et 1 extincteur à poudre de 100 kg.</div></div>`:''}
+   <div class="hint ${ok?'okc':''}" style="${!ok&&F.exts.some(x=>+x.n)?'color:var(--warn);font-weight:700':''}">${ok?ic('check',14,3)+' Conforme : ':F.exts.some(x=>+x.n)?ic('alert',14)+' En dessous du minimum. Attendu : ':'Attendu : '}5 extincteurs CO2 (2 × 10 kg minimum) et 1 extincteur à poudre de 100 kg.</div></div>`:''}
   ${F.cam?`<div class="fd"><b>${ic('truck',15)} Camion de sécurité incendie</b>
    <label class="l" style="margin-top:8px">Combien ?</label><div class="step"><button ${ed?`onclick="setCam('${m.id}','camN',String(Math.max(0,(+tech(DB.meetings.find(x=>x.id==='${m.id}')).fire.camN||0)-1)))"`:'disabled'} aria-label="Moins">−</button><b>${+F.camN||0}</b><button ${ed?`onclick="setCam('${m.id}','camN',String((+tech(DB.meetings.find(x=>x.id==='${m.id}')).fire.camN||0)+1))"`:'disabled'} aria-label="Plus">+</button></div>
    <label class="l">Catégorie OACI du service incendie</label>
@@ -1499,7 +1582,7 @@ function setLChk(mid,k,v){const L=lodg(DB.meetings.find(x=>x.id===mid));L.chk[k]
 function lodgStatus(mid,st){const L=lodg(DB.meetings.find(x=>x.id===mid));mailOnStatus(mid,'lodg',st,canVal('lodg'));L.status=st;if(st==='sent')L.sentAt=Date.now();save();render();toast(st==='sent'?'Envoyé à la PAF : transmis à la '+ownTxt('lodg'):st==='ok'?'Logement validé':'Rubrique rouverte')}
 let HF=null;
 function hotelSheet(mid,id){const m=DB.meetings.find(x=>x.id===mid),L=lodg(m),h=id?L.hotels.find(x=>x.id===id):null;
- const d0=m.entr?fromISO(m.entr):null;if(d0)d0.setDate(d0.getDate()-1);const last=(m.demos||[]).filter(Boolean).sort().pop();const d1=last?fromISO(last):null;if(d1)d1.setDate(d1.getDate()+1);
+ const d0=entrs(m)[0]?fromISO(entrs(m)[0]):null;if(d0)d0.setDate(d0.getDate()-1);const last=(m.demos||[]).filter(Boolean).sort().pop();const d1=last?fromISO(last):null;if(d1)d1.setDate(d1.getDate()+1);
  HF={mid,id,d:h?{...h}:{name:'',addr:'',gmap:'',bkf:'',contact:'',tel:'',mail:'',rooms:L.hotels.length?'':(teamN(m)||38),arr:d0?iso(d0):'',dep:d1?iso(d1):''},del:false};openSheet(hHTML)}
 function hHTML(){const d=HF.d;
  return `<div class="sh"><div class="t"><div class="q">${HF.id?'Modifier l\'hôtel':'L\'hôtel retenu'}</div><div class="small muted">Nom, lien Google Maps, téléphone et nombre de chambres.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
@@ -1545,7 +1628,8 @@ function secFoot(m,k,o,pr,area,lab){const pct=Math.round(pr.done/pr.tot*100);
     ${o.status==='sent'&&canVal(k)?`<button class="btn" onclick="secStatus('${m.id}','${k}','','${lab}')">Renvoyer pour correction</button><button class="btn pri" onclick="secStatus('${m.id}','${k}','ok','${lab}')">${ic('check',16)} Valider</button>`:''}
     ${(o.status==='sent'||o.status==='ok')&&canEdit(area)&&!canVal(k)?`<button class="btn" onclick="secStatus('${m.id}','${k}','','${lab}')">${ic('edit',16)} Modifier</button>`:''}
     ${o.status==='ok'&&canVal(k)?`<button class="btn" onclick="secStatus('${m.id}','${k}','','${lab}')">${ic('edit',16)} Rouvrir</button>`:''}
-    ${!o.status&&canEdit(area)?`<button class="btn pri big" ${pr.done?'':'disabled'} onclick="secStatus('${m.id}','${k}','sent','${lab}')">${ic('send',18)} Envoyer à la PAF</button>`:''}
+    ${!o.status&&canEdit(area)&&!canVal(k)?`<button class="btn pri big" ${pr.done?'':'disabled'} onclick="secStatus('${m.id}','${k}','sent','${lab}')">${ic('send',18)} Envoyer à la PAF</button>`:''}
+    ${!o.status&&canVal(k)&&!isMeetRole()?`<span class="small muted">${isChef()?'L\'organisation enverra cette rubrique ; vous pouvez aussi la valider directement.':'Vous recevrez cette rubrique quand l\'organisation l\'enverra ; vous pouvez aussi la valider directement.'}</span><button class="btn pri" ${pr.done?'':'disabled'} onclick="secStatus('${m.id}','${k}','ok','${lab}')">${ic('check',16)} Valider</button>`:''}
    </div></div>`}
 function ynQ(m,k,o,c,ed){const xk=k+':'+c.k,open=S.xp===xk,v=o.chk[c.k]||'';
  return `<div class="qrow">${tile(c,'sm')}<div class="ql"><b>${c.l}</b>${c.sub?`<span class="small muted" style="display:block">${c.sub}</span>`:''}
@@ -1563,7 +1647,7 @@ const FCHK=[
  {k:'rapide',l:'Un service rapide : 45 à 60 minutes par repas',i:'clock',c1:'#f59e0b',c2:'#c2410c',sub:'Le temps de repas est souvent limité.'},
  {k:'services',l:'Des repas en plusieurs services',i:'users',c1:'#6366f1',c2:'#4338ca',sub:'Les horaires des pilotes et des mécaniciens sont souvent décalés : prévenez le restaurateur.'}];
 function food(m){m.food=m.food||{meals:{},chk:{},note:'',status:''};const F=m.food;F.meals=F.meals||{};F.chk=F.chk||{};return F}
-function foodDays(m){const d=[];if(m.entr)d.push([m.entr,'rep']);(m.demos||[]).filter(Boolean).forEach(x=>d.push([x,'meet']));return d.sort((a,b)=>a[0].localeCompare(b[0]))}
+function foodDays(m){const d=[];entrs(m).forEach(x=>d.push([x,'rep']));(m.demos||[]).filter(Boolean).forEach(x=>d.push([x,'meet']));return d.sort((a,b)=>a[0].localeCompare(b[0]))}
 function foodProgress(m){const F=food(m),it=[];foodDays(m).forEach(([d])=>['dej','din'].forEach(t=>it.push(!!(F.meals[d+'|'+t]||{}).lieu)));FCHK.forEach(c=>it.push(!!F.chk[c.k]));return {done:it.filter(Boolean).length,tot:it.length||1}}
 function setMeal(mid,key,f,v){const F=food(DB.meetings.find(x=>x.id===mid));const o=F.meals[key]=F.meals[key]||{lieu:'',h:'',info:''};o[f]=typeof v==='string'?v.trim():v;if(o.mode==='c')fixRange(o,'h','h2',f);save();render()}
 function vFood(m){
@@ -1574,7 +1658,7 @@ function vFood(m){
    <div class="rec">Conseillé : <b>${rc.t}</b></div>
    <div class="chips" role="group" aria-label="Lieu du ${t==='dej'?'déjeuner':'dîner'}">${Object.entries(MEALL).map(([k,v])=>`<button aria-pressed="${o.lieu===k}" ${ed?`onclick="setMeal('${m.id}','${key}','lieu','${k}')"`:'disabled'}>${ic(v.i,13)} ${v.l}${rc.k.includes(k)?' <span class="star">★</span>':''}</button>`).join('')}</div>
    ${o.lieu?`<div class="chips" style="margin-top:8px">${[['h','Heure précise'],['c','Créneau']].map(([k,l])=>`<button aria-pressed="${(o.mode||'h')===k}" ${ed?`onclick="setMeal('${m.id}','${key}','mode','${k}')"`:'disabled'}>${ic('clock',13)} ${l}</button>`).join('')}</div>
-   <div class="mrow3">${(o.mode||'h')==='h'?`<input class="in" type="time" value="${esc(o.h||'')}" aria-label="Heure" ${ed?'':'disabled'} onchange="setMeal('${m.id}','${key}','h',this.value)">`:`<span class="tl">de</span><input class="in" type="time" value="${esc(o.h||'')}" aria-label="Début du créneau" ${ed?'':'disabled'} onchange="setMeal('${m.id}','${key}','h',this.value)"><span class="tl">à</span><input class="in" type="time" value="${esc(o.h2||'')}" aria-label="Fin du créneau" ${ed?'':'disabled'} onchange="setMeal('${m.id}','${key}','h2',this.value)">`}<input class="in grow" value="${esc(o.info||'')}" placeholder="Nom du lieu, adresse…" aria-label="Précision sur le lieu" ${ed?'':'disabled'} onchange="setMeal('${m.id}','${key}','info',this.value)"></div>`:''}
+   <div class="mrow3">${(o.mode||'h')==='h'?`${timeBtn(`${esc(o.h||'')}`,`setMeal('${m.id}','${key}','h',v)`,'Heure',``,!ed)}`:`<span class="tl">de</span>${timeBtn(`${esc(o.h||'')}`,`setMeal('${m.id}','${key}','h',v)`,'Début du créneau',``,!ed)}<span class="tl">à</span>${timeBtn(`${esc(o.h2||'')}`,`setMeal('${m.id}','${key}','h2',v)`,'Fin du créneau',``,!ed)}`}<input class="in grow" value="${esc(o.info||'')}" placeholder="Nom du lieu, adresse…" aria-label="Précision sur le lieu" ${ed?'':'disabled'} onchange="setMeal('${m.id}','${key}','info',this.value)"></div>`:''}
   </div></div>`};
  return `<div class="sect"><h2>${ic('food',20)} Restauration</h2>${secPill(F)}</div>
  <section class="dvbox">
@@ -1647,10 +1731,10 @@ function vMove(m){
 /* ====================== Salles : cahier des charges PAF 2026 V2, §4.4 et §4.5 ====================== */
 const RBR=[
  {k:'proj',s:'Vidéoprojecteur',l:'Un vidéoprojecteur (HDMI)',i:'screen'},{k:'clim',s:'Climatisation',l:'La climatisation',i:'wind'},{k:'wifi',s:'WIFI',l:'Le WIFI',i:'wifi'},{k:'cle',s:'Porte à clé',l:'Une porte fermant à clé',i:'key'},
- {k:'snack',s:'Coin snack',l:'Un coin snack : eau, café, en-cas',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'30 chaises',l:'Une trentaine de chaises',i:'users'},{k:'calme',s:'Calme',l:'Un environnement calme',i:'moon'}];
+ {k:'snack',s:'Eau, café, en-cas',l:'Des <b>bouteilles d\'eau : indispensable</b>. Le café et les en-cas sont un plus, toujours grandement appréciés',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'30 chaises',l:'Une trentaine de chaises',i:'users'},{k:'calme',s:'Calme',l:'Un environnement calme',i:'moon'}];
 const RME=[
  {k:'sep',s:'Salle à part',l:'Une salle distincte de celle des pilotes',i:'door'},{k:'wc',s:'Sanitaires',l:'Des sanitaires à proximité',i:'user'},{k:'wifi',s:'WIFI ou RJ45',l:'Le WIFI ou une prise RJ45',i:'wifi'},{k:'clim',s:'Climatisation',l:'La climatisation',i:'wind'},
- {k:'cle',s:'Porte à clé',l:'Une porte fermant à clé',i:'key'},{k:'snack',s:'Coin snack',l:'Un coin snack : eau, café, en-cas',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'15 chaises',l:'Une quinzaine de chaises',i:'users'},
+ {k:'cle',s:'Porte à clé',l:'Une porte fermant à clé',i:'key'},{k:'snack',s:'Eau, café, en-cas',l:'Des <b>bouteilles d\'eau : indispensable</b>. Café et en-cas : un plus, toujours apprécié',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'15 chaises',l:'Une quinzaine de chaises',i:'users'},
  {k:'manteaux',s:'Portemanteaux',l:'Des portemanteaux',i:'hanger'},{k:'atams',s:'Ordinateur ATAMS',l:'Un ordinateur Intradef avec le logiciel ATAMS',i:'laptop',sub:'Uniquement sur les bases militaires.',nc:1}];
 function room(m){m.room=m.room||{brief:{},meca:{},bWhere:'',mWhere:'',note:'',status:''};const o=m.room;o.brief=o.brief||{};o.meca=o.meca||{};o.chk=o.chk||{};Object.keys(o.brief).forEach(k=>{if(o.brief[k]&&!o.chk['b_'+k])o.chk['b_'+k]=o.brief[k]});Object.keys(o.meca).forEach(k=>{if(o.meca[k]&&!o.chk['m_'+k])o.chk['m_'+k]=o.meca[k]});o.brief={};o.meca={};return o}
 function roomProgress(m){const o=room(m);const it=[!!o.bWhere,...RBR.map(c=>!!o.brief[c.k]),!!o.mWhere,...RME.map(c=>!!o.meca[c.k])];return {done:it.filter(Boolean).length,tot:it.length}}
@@ -1730,7 +1814,7 @@ function multiDates(m,C,f,ed,pref,tl,types){const days=foodDays(m),sel=C[f];
   <div class="chips" style="margin-top:8px">${days.map(([d,ty])=>`<button aria-pressed="${!!sel[d]}" ${ed?`onclick="togMD('${m.id}','${f}','${d}')"`:'disabled'}>${ic('cal',13)} ${fromISO(d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}${ty===pref?' <span class="star">★</span>':''}</button>`).join('')}</div>
   ${Object.keys(sel).sort().map(d=>`<div class="mdate"><b class="small">${fromISO(d).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</b>
    <input class="in" list="dl-${f}" value="${esc(sel[d].type||'')}" placeholder="${tl}" aria-label="${tl}" ${ed?'':'disabled'} onchange="setMD('${m.id}','${f}','${d}','type',this.value)">
-   <span class="times"><span class="tl small muted">de</span><input class="in" type="time" value="${esc(sel[d].deb||'')}" aria-label="Début du créneau" ${ed?'':'disabled'} onchange="setMD('${m.id}','${f}','${d}','deb',this.value)"><span class="tl small muted">à</span><input class="in" type="time" value="${esc(sel[d].fin||'')}" aria-label="Fin du créneau" ${ed?'':'disabled'} onchange="setMD('${m.id}','${f}','${d}','fin',this.value)"></span></div>`).join('')}
+   <span class="times"><span class="tl small muted">de</span>${timeBtn(`${esc(sel[d].deb||'')}`,`setMD('${m.id}','${f}','${d}','deb',v)`,'Début du créneau',``,!ed)}<span class="tl small muted">à</span>${timeBtn(`${esc(sel[d].fin||'')}`,`setMD('${m.id}','${f}','${d}','fin',v)`,'Fin du créneau',``,!ed)}</span></div>`).join('')}
   <datalist id="dl-${f}">${types.map(t=>`<option value="${t}">`).join('')}</datalist></div>`}
 function comProgress(m){const C=com(m),k=C.chk;const it=[!!k.podium];
  if(k.podium==='non'){it.push(!!k.sono,!!k.espace);if(k.espace==='non')it.push(!!k.police)}
@@ -1810,7 +1894,7 @@ function vTeam(m){
   <div class="dvsec"><div class="tot"><div><div class="big">${N}</div><div class="small muted" style="font-weight:700">personne${N>1?'s':''} sur le meeting</div></div>
    <div style="flex:1;min-width:200px"><div class="det">${byF.map(o=>`<span class="own">${tile(o.f,'xs')}<b>${o.n}</b><span class="muted">${o.f.d.toLowerCase()}</span></span>`).join('')}${t.other?`<span class="own"><b>${t.other}</b><span class="muted">autre${t.other>1?'s':''}</span></span>`:''}</div>
    <div class="small muted" style="margin-top:8px">Ce total est repris pour le logement (une chambre par personne) et la restauration.</div></div></div></div>
-  ${pend.length?`<div class="dvsec">${stepH('!',false,'Volontaires pour cette séquence')}<p class="small muted" style="margin:-2px 0 10px">${sq?seqLabel(sq)+' · ':''}Classés par priorité, puis par nombre de meetings déjà faits, pour répartir équitablement.</p>${pend.map(({k,V,p,n})=>{const x=V.mem?DB.members.find(y=>y.id===V.mem):null;return `<div class="volr">${x?avatar(x,40):tile(FUm[V.fn]||FU[0],'sm')}<div class="t"><b>${esc(V.name)}</b> ${p<4?`<span class="prio p${p}">Priorité ${p}</span>`:'<span class="prio">Sans priorité</span>'}<div class="small muted">${(FUm[V.fn]||{}).d||''} · ${n} meeting${n>1?'s':''} déjà cette saison</div></div>${ed?`<button class="btn" onclick="voteAns('${m.id}','${k}',false)">Écarter</button><button class="btn pri" onclick="voteAns('${m.id}','${k}',true)">${ic('check',15)} Retenir</button>`:''}</div>`}).join('')}</div>`:''}
+  ${pend.length?`<div class="dvsec">${stepH('!',false,'Volontaires pour cette séquence')}<p class="small muted" style="margin:-2px 0 10px">${sq?seqLabel(sq)+' · ':''}Classés par préférence, puis par nombre de meetings déjà faits, pour répartir équitablement.</p>${pend.map(({k,V,p,n})=>{const x=V.mem?DB.members.find(y=>y.id===V.mem):null;return `<div class="volr">${x?avatar(x,40):tile(FUm[V.fn]||FU[0],'sm')}<div class="t"><b>${esc(V.name)}</b> ${p<4?`<span class="prio p${p}">Préférence n°${p}</span>`:'<span class="prio">Sans préférence</span>'}<div class="small muted">${(FUm[V.fn]||{}).d||''} · ${n} meeting${n>1?'s':''} déjà cette saison</div></div>${ed?`<button class="btn" onclick="voteAns('${m.id}','${k}',false)">Écarter</button><button class="btn pri" onclick="voteAns('${m.id}','${k}',true)">${ic('check',15)} Retenir</button>`:''}</div>`}).join('')}</div>`:''}
   <div class="dvsec">${stepH('1',true,'Qui part ?')}
    <p class="small muted" style="margin:-2px 0 6px">Les pilotes et l'équipe de piste sont ajoutés d'office sur tous les meetings : touchez un nom pour le retirer (absence, indisponibilité…). Touchez un nom grisé pour l'ajouter, ou « Ajouter » pour créer une nouvelle personne dans l'annuaire.</p>
    ${FU.map(f=>{const ms=DB.members.filter(x=>x.fn===f.k),ex=t.ext.filter(e=>e.fn===f.k);if(!ms.length&&!ex.length&&!ed)return '';
@@ -1848,7 +1932,7 @@ function cancelVol(mid){const t=team(DB.meetings.find(x=>x.id===mid));const id=(
 /* Envoi des accès aux contacts du meeting */
 function sendAccess(mid){const m=DB.meetings.find(x=>x.id===mid),cs=m.contacts||[];let n=0;
  [['org','org'],['dv','dv']].forEach(([fn,role])=>cs.filter(c=>c.fn===fn&&c.mail).forEach(c=>{if(!DB.access.some(a=>a.role===role&&a.mid===mid&&a.mail===c.mail)){addAccess({id:uid(),role,mid,name:[c.first,c.last].filter(Boolean).join(' '),mail:c.mail});n++}}));
- m.invAt=Date.now();save();render();toast(n?n+' accès envoyé'+(n>1?'s':'')+' par email':'Les accès étaient déjà envoyés')}
+ m.invAt=Date.now();save();render();if(n)invQueue(mid);else toast('Les accès étaient déjà envoyés')}
 
 /* ====================== Emails automatiques (règles d'envoi) ====================== */
 const MQ=100; // destinataires par jour, compte Gmail gratuit (Apps Script)
@@ -1856,7 +1940,26 @@ const SLOTS=['08:00','10:00','13:00','15:30','17:00'];
 const SLOTW={'08:00':'ce qui est arrivé entre 17h00 et 8h00','10:00':'ce qui est arrivé entre 8h00 et 10h00','13:00':'entre 10h00 et 13h00','15:30':'entre 13h00 et 15h30','17:00':'entre 15h30 et 17h00'};
 function mcfg(){DB.mail=DB.mail||{};const c=DB.mail;c.slots=c.slots||{'08:00':true,'10:00':true,'13:00':true,'15:30':true,'17:00':true};if(!c.slotsV2){c.slots={'08:00':true,'10:00':true,'13:00':true,'15:30':true,'17:00':true};c.extTime='08:00';c.slotsV2=1}if(c.extTime==null)c.extTime='08:00';if(c.reserve==null)c.reserve=15;if(c.onlyNew==null)c.onlyNew=true;if(c.ownerOnly==null)c.ownerOnly=true;c.log=c.log||[];c.queue=c.queue||[];c.rem=c.rem||[{id:'r6',on:true,days:42,to:'org',tone:'rappel'},{id:'r4',on:true,days:28,to:'dv',tone:'urgent'},{id:'r3',on:true,days:21,to:'org',tone:'urgent'},{id:'r10',on:true,days:10,to:'both',tone:'limite'}];if(c.remOn==null)c.remOn=true;if(c.remGap==null)c.remGap=7;return c}
 const todayKey=()=>iso(new Date());
-function addAccess(a){DB.access.push(a);const c=mcfg();c.log.unshift({id:uid(),t:Date.now(),d:todayKey(),type:'invit',to:a.name||a.mail,role:a.role,mid:a.mid||null,txt:'Invitation · '+(RLm[a.role]||{}).l})}
+/* Message personnalisé envoyé avec le lien : proposé, modifiable, validé par le chef ops */
+function invMsg(role,mid,name){const m=mid?DB.meetings.find(x=>x.id===mid):null,nm=m?mName(m):'';const hello='Bonjour'+(name?' '+name:'')+',';
+ const sig='\n\nBien cordialement,\nLe chef des opérations de la Patrouille de France';
+ if(role==='org')return `${hello}\n\nNous nous réjouissons de venir chez vous pour ${nm}${m&&m.city?' à '+m.city:''}.\n\nPour préparer au mieux notre venue, voici votre accès personnel à PAF OPS : vous y trouverez, rubrique par rubrique, les informations pratiques dont nous avons besoin (technique, logement, restauration, locomotion, salles, communication). Quelques minutes suffisent, depuis un ordinateur ou un téléphone, et vos réponses sont enregistrées automatiquement.\n\nNous restons à votre disposition pour toute question.${sig}`;
+ if(role==='dv')return `${hello}\n\nVous êtes directeur des vols pour ${nm}${m&&m.city?' à '+m.city:''} : merci d'avance pour votre concours.\n\nVoici votre accès personnel à PAF OPS, où nous rassemblons les éléments aéronautiques de la présentation : plan du site et axe de présentation, pilot book, créneaux, zone réglementée temporaire. Vous y trouverez aussi les documents de la Patrouille utiles à votre dossier.\n\nNous restons à votre disposition pour en parler de vive voix.${sig}`;
+ if(role==='visit'||role==='dmma')return `${hello}\n\nVoici votre accès personnel à PAF OPS pour suivre la préparation des meetings de la saison, en consultation. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`;
+ return `${hello}\n\nVoici votre accès personnel à PAF OPS (${(RLm[role]||{}).l||role}). Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`}
+let IQ=null;
+function invQueue(mid){const L=DB.access.filter(a=>a.hold&&(!mid||a.mid===mid));if(!L.length)return;IQ={ids:L.map(a=>a.id)};openSheet(iqHTML)}
+function iqHTML(){const L=IQ.ids.map(id=>DB.access.find(a=>a.id===id)).filter(a=>a&&a.hold);if(!L.length){setTimeout(closeSheet,10);return ''}
+ return `<div class="sh">${tile({i:'send',c1:'#3b82f6',c2:'#1d4ed8'},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Avant l'envoi</div><div class="q" style="margin-top:2px">${L.length>1?L.length+' liens à envoyer':'1 lien à envoyer'}</div><div class="small muted">Relisez ou modifiez chaque message, puis validez l'envoi.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb">${L.map(a=>{const r=RLm[a.role]||{},m=a.mid?DB.meetings.find(x=>x.id===a.mid):null;return `<div class="iq">
+   <div class="iqh">${tile(r,'sm')}<div><b>${esc(a.name||a.mail)}</b><small>${esc(a.mail)} · ${r.l||a.role}${m?' · '+esc(mName(m)):''}</small></div></div>
+   <textarea class="in iqt" rows="9" oninput="const a=DB.access.find(x=>x.id==='${a.id}');if(a){a.msg=this.value}">${esc(a.msg||'')}</textarea>
+   <div class="small muted" style="margin:4px 0 8px">Le bouton « Ouvrir PAF OPS » avec le lien personnel est ajouté automatiquement sous le message.</div>
+   <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="DB.access=DB.access.filter(x=>x.id!=='${a.id}');save();relive();toast('Invitation annulée')">${ic('trash',15)} Annuler</button><button class="btn pri" onclick="invGo('${a.id}')">${ic('send',16)} Envoyer le lien</button></div></div>`}).join('')}</div>
+ <div class="sf"><button class="btn" onclick="closeSheet()">Plus tard</button>${L.length>1?`<button class="btn pri big" onclick="invGoAll()">${ic('send',18)} Tout envoyer (${L.length})</button>`:'<span></span>'}</div>`}
+function invGo(id){const a=DB.access.find(x=>x.id===id);if(!a)return;delete a.hold;save();relive();toast('Lien envoyé à '+(a.name||a.mail))}
+function invGoAll(){const L=IQ.ids.map(id=>DB.access.find(a=>a.id===id)).filter(a=>a&&a.hold);L.forEach(a=>delete a.hold);save();closeSheet();render();toast(L.length+' lien'+(L.length>1?'s':'')+' envoyé'+(L.length>1?'s':''))}
+function addAccess(a){if(!a.msg)a.msg=invMsg(a.role,a.mid,a.name);if(a.hold===undefined&&isChef())a.hold=true;DB.access.push(a);const c=mcfg();c.log.unshift({id:uid(),t:Date.now(),d:todayKey(),type:'invit',to:a.name||a.mail,role:a.role,mid:a.mid||null,txt:'Invitation · '+(RLm[a.role]||{}).l})}
 const RUBL={tech:'Technique',lodg:'Logement',food:'Restauration',move:'Locomotion',room:'Salles',com:'Communication',aero:'Directeur des vols',team:'Équipe PAF'};
 function nextSlot(ext){const c=mcfg(),now=new Date(),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
  if(ext)return (c.extTime>hm?'Aujourd\'hui ':'Demain ')+c.extTime.replace(':','h');
@@ -1887,13 +1990,13 @@ function vMails(){
  <section class="acard"><div class="ah"><h2>${ic('gear',20)} Règles d'envoi</h2></div>
   <div class="mrule"><div><b>Synthèses de la Patrouille</b><span class="small muted" style="display:block">Une seule synthèse par personne, qui regroupe tous ses meetings. <b>8h00</b> : tout ce qui est arrivé entre 17h00 et 8h00. <b>10h00</b> : ce qui est arrivé entre 8h00 et 10h00. Puis 13h00, 15h30 et 17h00. Touchez une heure pour l'activer ou la couper.</span>
    <div class="chips" style="margin-top:8px">${SLOTS.map(x=>`<button aria-pressed="${!!c.slots[x]}" title="${SLOTW[x]}" onclick="mcfg().slots['${x}']=!mcfg().slots['${x}'];save();render()">${ic('clock',13)} ${x.replace(':','h')}</button>`).join('')}</div></div></div>
-  <div class="mrule"><div><b>Organisateurs et directeurs des vols</b><span class="small muted" style="display:block">Un email par jour au plus, seulement quand une rubrique est validée ou à corriger.</span></div><input class="in" type="time" value="${c.extTime}" style="width:130px" onchange="if(this.value){mcfg().extTime=this.value;save();render()}" aria-label="Heure de l'email aux organisateurs et DV"></div>
+  <div class="mrule"><div><b>Organisateurs et directeurs des vols</b><span class="small muted" style="display:block">Un email par jour au plus, seulement quand une rubrique est validée ou à corriger.</span></div>${timeBtn(`${c.extTime}`,`if(v){mcfg().extTime=v;save();render()}`,'Heure de l\'email aux organisateurs et DV',``,false)}</div>
   ${tg('onlyNew','Seulement s\'il y a du nouveau','Pas de nouveauté pour une personne : pas d\'email.')}
   ${tg('ownerOnly','Chaque rubrique prévient seulement son responsable','Logistique à la secrétaire ops, technique au CST et au DT, communication au Comm. Le chef ops reçoit tout.')}
   <div class="mrule"><div><b>Réserve pour les invitations</b><span class="small muted" style="display:block">Envois gardés chaque jour pour les nouveaux comptes.</span></div><div class="step"><button onclick="mcfg().reserve=Math.max(0,mcfg().reserve-5);save();render()" aria-label="Moins">−</button><b>${c.reserve}</b><button onclick="mcfg().reserve=Math.min(50,mcfg().reserve+5);save();render()" aria-label="Plus">+</button></div></div></section>
  ${vRemind()}
  <section class="acard"><div class="ah"><h2>${ic('users',20)} Qui reçoit quoi</h2></div>
-  ${WHO.map(([r,a,b])=>{const R0=r==='org'?FCm.org:r==='dv'?FCm.dv:RLm[r];return `<div class="mrule">${tile(R0,'sm')}<div style="flex:1"><b>${r==='visit'?'Visiteurs (directeurs, pilotes, DMMA…)':r==='ro'?'Volontaires (lien public)':who(r)}</b><span class="small muted" style="display:block">${a}</span></div><span class="small" style="font-weight:700;text-align:right">${b}</span></div>`}).join('')}</section>
+  ${WHO.map(([r,a,b])=>{const R0=r==='org'?FCm.org:r==='dv'?FCm.dv:RLm[r];return `<div class="mrule">${tile(R0,'sm')}<div style="flex:1"><b>${r==='visit'?'Pilotes PAF et DMMA':r==='ro'?'Volontaires (lien public)':who(r)}</b><span class="small muted" style="display:block">${a}</span></div><span class="small" style="font-weight:700;text-align:right">${b}</span></div>`}).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('clock',20)} Prochains envois</h2>${c.queue.length&&isChef()?`<button class="btn ghost" onclick="mcfg().queue=[];save();render();toast('File vidée')">Vider</button>`:''}</div>
   ${Object.keys(grp).length?Object.entries(grp).sort().map(([key,L])=>{const [when,to]=key.split('|');return `<div class="mrule"><span class="pill todo">${ic('clock',12)} ${when}</span><div style="flex:1"><b>${who(to)}</b><span class="small muted" style="display:block">${L.map(x=>esc(x.txt)+' · '+esc(mName(DB.meetings.find(m=>m.id===x.mid)||{city:'?'}))).join('<br>')}</span></div><span class="small muted">1 email</span></div>`}).join(''):'<p class="small muted" style="margin:0 16px 14px">Rien en attente : aucune synthèse ne partira tant qu\'il n\'y a pas de nouveauté.</p>'}</section>
  <section class="acard"><div class="ah"><h2>${ic('send',20)} Envoyés aujourd'hui</h2></div>
@@ -1909,12 +2012,12 @@ const counted=it=>!it.opt&&it.kind!=='info'&&it.kind!=='link'&&it.kind!=='static
 const iDoneAck=1;
 function gridProg(m,sec){const o=SECG[sec](m),L=ITM[sec](m).filter(counted);return {done:L.filter(i=>iDone(o,i)).length,tot:L.length||1}}
 function openLive(fn){openSheet(fn);S.live=true}
-function relive(){if(S.skipLive)return;if(S.live&&sheetFn&&!$('ov').hidden)$('sheet').innerHTML=sheetFn()}
+function relive(){if(S.skipLive)return;if(S.live&&sheetFn&&!$('ov').hidden){$('sheet').innerHTML=sheetFn();fixSheet()}}
 function itemTile(m,sec,o,it,ed){
  const d=iDone(o,it),w=iWarn(o,it),cls=w?'ko':d?'ok':'';
  const sub=it.sub?it.sub(o):w?(it.noLabel||'Pas possible'):(o.chk[it.k]==='non'&&it.neutralNo)?(it.noLabel||'Non'):d?(it.okLabel||'Prévu'):it.opt?'Si besoin':'';
  const info=it.info?`<button class="inf" onclick="openInfo('${m.id}','${sec}','${it.k}')" aria-label="Plus d'infos : ${esc(it.l)}">${ic('info',18)}</button>`:'';
- const inner=`${w?`<span class="bdg ko">!</span>`:d?`<span class="bdg">${ic('check',13,3.5)}</span>`:''}${tile(it,'')}<b>${it.l}</b>${sub?`<small>${sub}</small>`:''}`;
+ const inner=`${w?`<span class="bdg ko">${ic('x',13,3.5)}</span>`:d?`<span class="bdg">${ic('check',13,3.5)}</span>`:''}${tile(it,'')}<b>${it.l}</b>${sub?`<small>${sub}</small>`:''}`;
  let act;
  if(it.kind==='ack'){const dd=!!o.chk[it.k];return `<div class="itmw"><button class="itm ${dd?'ok':''} fix" onclick="openInfo('${m.id}','${sec}','${it.k}')" aria-pressed="${dd}">${dd?`<span class="bdg">${ic('check',13,3.5)}</span>`:''}${tile(it,'')}<b>${it.l}</b><small>${dd?it.okLabel:'À lire'}</small></button></div>`}
  if(it.kind==='static')return `<div class="itmw"><div class="itm fix static">${tile(it,'')}<b>${it.l}</b>${it.sub?`<small>${it.sub(o)}</small>`:''}</div></div>`;
@@ -1930,8 +2033,8 @@ function infoHTML(){const {mid,sec,k}=S.inf,m=DB.meetings.find(x=>x.id===mid),o=
  const area=sec==='tech'?'tech':sec==='com'?'com':'logi',ed=canEdit(area)&&o.status!=='sent'&&o.status!=='ok',v=o.chk[k]||'';
  const body=typeof it.info==='function'?it.info(m,o):(it.info||'');
  return `<div class="sh">${tile(it,'')}<div class="t"><div class="q">${it.l}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
- <div class="sb infob">${body}</div>
- <div class="sf">${it.kind==='ack'&&ed?`<span></span><button class="btn pri big" onclick="infoSet('oui')">${ic('check',18)} Lu, j'en tiens compte</button>`:it.kind==='tick'&&ed?`<button class="btn ${v==='non'?'warnb':''}" onclick="infoSet('non')">${it.noLabel||'Pas possible'}</button><button class="btn pri big" onclick="infoSet('oui')">${ic('check',18)} ${it.okLabel||'C\'est prévu'}</button>`
+ <div class="sb infob">${S.fs={mid},lockNote(o,area,sec)}${body}</div>
+ <div class="sf">${it.kind==='ack'&&!ed&&o.chk[k]==='oui'?`<span></span><span class="pill ok">${ic('check',13,3)} Pris en compte</span>`:it.kind==='ack'&&ed?`<span></span><button class="btn pri big" onclick="infoSet('oui')">${ic('check',18)} Lu, j'en tiens compte</button>`:it.kind==='tick'&&ed?`<button class="btn ${v==='non'?'warnb':''}" onclick="infoSet('non')">${it.noLabel||'Pas possible'}</button><button class="btn pri big" onclick="infoSet('oui')">${ic('check',18)} ${it.okLabel||'C\'est prévu'}</button>`
   :it.kind==='sheet'&&ed?`<span></span><button class="btn pri big" onclick="closeSheet();${it.open.replace(/"/g,'&quot;')}">${ic('edit',18)} Remplir</button>`:`<span></span><button class="btn pri" onclick="closeSheet()">Fermer</button>`}</div>`}
 function infoSet(v){const {mid,sec,k}=S.inf,o=SECG[sec](DB.meetings.find(x=>x.id===mid));o.chk[k]=v;save();closeSheet();render()}
 function vGrid(m,sec,title,icon,c1,c2,area,lab,extraLead){
@@ -1953,7 +2056,7 @@ function fieldSheet(mid,sec,f,title,type,ph,icon,hint){S.fs={mid,sec,f,title,typ
  <div class="sf"><span></span><button class="btn pri big" onclick="setSecVal('${X.mid}','${X.sec}','${X.f}',$('fsv').value);closeSheet()">${ic('check',18)} Enregistrer</button></div>`})}
 const shHead=(icon,q,sub)=>`<div class="sh">${tile(icon,'')}<div class="t"><div class="q">${q}</div>${sub?`<div class="small muted">${sub}</div>`:''}</div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>`;
 const shOk=`<div class="sf"><span></span><button class="btn pri big" onclick="closeSheet()">${ic('check',18)} Je valide</button></div>`;
-const lockNote=(o,area,sec)=>o.status==='sent'||o.status==='ok'?`<div class="locknote">${ic('lock',15)} <span style="flex:1">${o.status==='ok'?'Rubrique validée par la Patrouille.':'Rubrique envoyée à la Patrouille.'} ${canEdit(area)?'Rouvrez-la pour la modifier.':'Consultation uniquement.'}</span>${canEdit(area)&&sec?`<button class="btn" style="padding:6px 10px;font-size:13px" onclick="secOf('${S.fs.mid}','${sec}').status='';save();render()">${ic('edit',14)} Rouvrir</button>`:''}</div>`:!canEdit(area)?`<div class="locknote">${ic('eye',15)} ${canVal(sec||area)?'L\'initiative revient à l\'organisateur : vous pouvez lui faire une proposition (en bas de la rubrique) et valider ce qu\'il envoie.':'Consultation uniquement : la vue « '+RLm[ROLE].l+' » n\'a pas le droit de modifier cette rubrique (page Accès).'}</div>`:'';
+const lockNote=(o,area,sec)=>(!o||!o.status&&canEdit(area))?'':o.status==='sent'||o.status==='ok'?`<div class="locknote">${ic('lock',15)} <span style="flex:1">${o.status==='ok'?'Rubrique validée par la Patrouille.':'Rubrique envoyée à la Patrouille.'} ${canEdit(area)?'Rouvrez-la pour la modifier.':'Consultation uniquement.'}</span>${canEdit(area)&&sec?`<button class="btn" style="padding:6px 10px;font-size:13px" onclick="secOf('${S.fs.mid}','${sec}').status='';save();render()">${ic('edit',14)} Rouvrir</button>`:''}</div>`:!canEdit(area)?`<div class="locknote">${ic('eye',15)} ${canVal(sec||area)?'L\'initiative revient à l\'organisateur : vous pouvez lui faire une proposition (en bas de la rubrique) et valider ce qu\'il envoie.':'Consultation uniquement : la vue « '+RLm[ROLE].l+' » n\'a pas le droit de modifier cette rubrique (page Accès).'}</div>`:'';
 const bigYN=(mid,sec,k,o,ed,yes,no)=>`<div class="yn big2">${[['oui',yes||'Oui','y'],['non',no||'Non','n']].map(([v,l,c])=>`<button class="${c}" aria-pressed="${o.chk[k]===v}" ${ed?`onclick="setSecChk('${mid}','${sec}','${k}','${v}')"`:'disabled'}>${l}</button>`).join('')}</div>`;
 
 /* ---------- Technique ---------- */
@@ -1966,6 +2069,7 @@ function dangerInner(){return `<div class="zkeys"><div class="zk"><b>4 · 6 m</b
  <figure class="pfig" style="margin:0">${dangerSvg()}</figure>
  <div class="dleg"><div><h5>Mise en route / réacteurs en marche</h5><p><i style="background:var(--mr)"></i> Devant : 4 m</p><p><i style="background:var(--mr)"></i> Derrière : 15 m (personnel), 30 m (avions, bâtiments)</p></div><div><h5>Point fixe (pleine puissance)</h5><p><i style="background:var(--pf)"></i> Devant : 6 m</p><p><i style="background:var(--pf)"></i> Derrière : 45 m (personnel), 90 m (avions, bâtiments)</p></div></div>
  <div class="src">Source : cahier des charges PAF 2026 V2, §2.2. Schéma non à l'échelle.</div>`}
+const fireOk=F=>{const s=re=>F.exts.filter(x=>re.test(x.t)).reduce((a,x)=>a+(+x.n||0),0);return s(/co2/i)>=5&&s(/poudre/i)>=1};
 const fireSub=F=>{if(F.none)return 'Aucun moyen';const n=F.exts.reduce((a,x)=>a+(+x.n||0),0);return [F.ext?(n?n+' extincteurs':'Extincteurs'):'',F.cam?(((+F.camN||'')+' camion').trim()+(F.camCat?' cat. '+F.camCat:'')):''].filter(Boolean).join(' + ').replace(/^c/,'C')};
 ITM.tech=m=>[
  {k:'infos',l:'Informations importantes',i:'alert',c1:'#ef4444',c2:'#b91c1c',kind:'ack',okLabel:'Pris en compte',
@@ -1976,12 +2080,12 @@ ITM.tech=m=>[
   <p>Le parking reste <b>fermé au public</b> ; on n'approche les avions qu'<b>accompagné du personnel de la Patrouille</b>. Réacteurs en route, personne devant ni derrière (voir les distances dans « Parking avions »).</p>`},
  {k:'park',l:'Parking avions',i:'plane',c1:'#3b82f6',c2:'#1d4ed8',kind:'sheet',open:`parkSheet('${m.id}')`,done:o=>!!o.parkFile,sub:o=>o.parkFile?'Schéma déposé':'Déposer votre schéma',
   info:()=>`<p>Déposez un <b>schéma du parking envisagé</b> (photo, PDF, plan) : la Patrouille vérifie qu'il convient. Le schéma idéal et les rappels sont là pour vous aider.</p>`+parkInner()+`<h4 class="ih">${ic('alert',15)} Rappel : distances de sécurité</h4>`+dangerInner()+`<h4 class="ih">${ic('eye',15)} Rappel : gardiennage</h4><p>Gardiennage des avions <b>pendant tout le séjour</b>, dès que le personnel de la Patrouille n'est plus sur la plateforme, par une société accréditée ou un organisme officiellement reconnu.</p>`},
- {k:'feu',l:'Incendie',i:'fire',c1:'#f43f5e',c2:'#be123c',kind:'sheet',open:`fireSheet('${m.id}')`,done:o=>!!o.chk.feu,warn:o=>o.chk.feu==='non'||(o.fire.cam&&o.fire.camCat&&+o.fire.camCat<4),sub:o=>fireSub(o.fire),
+ {k:'feu',l:'Incendie',i:'fire',c1:'#f43f5e',c2:'#be123c',kind:'sheet',open:`fireSheet('${m.id}')`,done:o=>!!o.chk.feu,warn:o=>o.chk.feu==='non'||(o.fire.cam&&o.fire.camCat&&+o.fire.camCat<4)||(o.fire.ext&&!o.fire.cam&&!fireOk(o.fire)),sub:o=>fireSub(o.fire),
   info:'<p>Près de la ligne Alphajet :</p>'+FIRE+'<p><b>Sans extincteurs</b> : un camion de sécurité incendie, de la mise en route des réacteurs jusqu\'au décollage. Service incendie : <b>catégorie OACI 4 minimum</b>.</p>'},
- {k:'fuel',l:'Carburant',i:'fuel',c1:'#f59e0b',c2:'#c2410c',kind:'sheet',open:`fuelSheet('${m.id}')`,done:o=>{fuelO(o);return fuelProv(o)>0},warn:o=>{fuelO(o);const n=fuelNeed(o),p=fuelProv(o);return p>0&&n>0&&p<n},sub:o=>{fuelO(o);const t=FUELK.filter(([k])=>o.fuel[k].on).map(([k,l])=>l+(+o.fuel[k].q?' '+nfmt(o.fuel[k].q)+' l':'')).join(' + ');return t||(fuelNeed(o)?'Besoin : '+nfmt(fuelNeed(o))+' l':'À indiquer')},
-  info:FUELT+'<p><b>Départs des avions</b> (fin d\'entraînement si mise en place, fin de démonstration pour le retour à Salon-de-Provence ou un autre meeting) : carburant <b>avec additif anti-givre, type F34</b>.</p><p>Une <b>citerne en alerte près de la ligne Alphajet</b> pendant les mises en route. Avion de réserve utilisé : <b>complément de plein</b>. Paiement par la carte AEG FUEL de la Patrouille (code client dans le cahier des charges).</p>'},
- {k:'trac',l:'2 tracteurs de piste',i:'truck',c1:'#6366f1',c2:'#4338ca',kind:'tick',info:'<p>2 tracteurs de piste <b>type TRACMA lourd</b>, pour tracter les avions.</p>'},
- {k:'gpu',l:'2 groupes de démarrage',i:'bolt',c1:'#eab308',c2:'#a16207',kind:'tick',info:'<p>2 groupes de démarrage <b>28 V, 1 000 A minimum</b>.</p>'},
+ {k:'fuel',l:'Carburant',i:'fuel',c1:'#f59e0b',c2:'#c2410c',kind:'sheet',open:`fuelSheet('${m.id}')`,done:o=>{fuelO(o);return fuelProv(o)>0},warn:o=>{fuelO(o);return fuelProv(o)>0&&!o.fuel.f34.on},sub:o=>{fuelO(o);const t=FUELK.filter(([k])=>o.fuel[k].on).map(([k,l])=>l).join(' + ');return t||(fuelNeed(o)?'Besoin : '+nfmt(fuelNeed(o))+' l':'À indiquer')},
+  info:'<p><b>Demande standard de la Patrouille</b></p>'+FUELT+'<p><b>Départs des avions</b> (fin d\'entraînement si mise en place, fin de démonstration pour le retour à Salon-de-Provence ou un autre meeting) : carburant <b>avec additif anti-givre, type F34</b>. Le TRO et le JET A1 n\'en contiennent pas.</p><p>Une <b>citerne en alerte près de la ligne Alphajet</b> pendant les mises en route. Avion de réserve utilisé : <b>complément de plein</b>. Paiement par la carte AEG FUEL de la Patrouille (code client dans le cahier des charges).</p>'},
+ {k:'trac',l:'Tracteurs de piste',i:'truck',c1:'#6366f1',c2:'#4338ca',kind:'sheet',open:`countSheet('${m.id}','trac')`,done:o=>+(o.cnt||{}).trac>=2,warn:o=>o.cnt&&o.cnt.trac!==''&&o.cnt.trac!=null&&+o.cnt.trac<2,sub:o=>o.cnt&&o.cnt.trac!=null&&o.cnt.trac!==''?o.cnt.trac+' sur 2 demandés':'2 demandés',info:'<p>2 tracteurs de piste <b>type TRACMA lourd</b>, pour tracter les avions. Indiquez combien vous pouvez fournir.</p>'},
+ {k:'gpu',l:'Groupes de démarrage',i:'bolt',c1:'#eab308',c2:'#a16207',kind:'sheet',open:`countSheet('${m.id}','gpu')`,done:o=>+(o.cnt||{}).gpu>=2,warn:o=>o.cnt&&o.cnt.gpu!==''&&o.cnt.gpu!=null&&+o.cnt.gpu<2,sub:o=>o.cnt&&o.cnt.gpu!=null&&o.cnt.gpu!==''?o.cnt.gpu+' sur 2 demandés':'2 demandés',info:'<p>2 groupes de démarrage <b>28 V, 1 000 A minimum</b>. Indiquez combien vous pouvez fournir.</p>'},
  ];
 function parkSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.id===S.fs.mid),T=tech(m),ed=canEdit('tech')&&T.status!=='sent'&&T.status!=='ok',f=T.parkFile,img=FILES[m.id+'park'];
  return shHead({i:'plane',c1:'#3b82f6',c2:'#1d4ed8'},'Parking avions','Envoyez-nous le schéma du parking que vous envisagez.')+`<div class="sb">${lockNote(T,'tech','tech')}
@@ -1990,6 +2094,12 @@ function parkSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.i
   ${f&&ed?`<button class="more" style="margin-top:8px" onclick="tech(DB.meetings.find(x=>x.id==='${m.id}')).parkFile=null;delete FILES['${m.id}park'];save();render()">${ic('trash',14)} Retirer le schéma</button>`:''}
   <details class="zrt" style="margin-top:14px"><summary>${tile({i:'eye',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Voir le schéma idéal</b><span class="small muted">Disposition, dimensions et rappels de la Patrouille</span></span><span class="chev">${ic('chev',20)}</span></summary>
    <div style="margin-top:12px">${parkInner()}<h4 class="ih">${ic('alert',15)} Rappel : distances de sécurité</h4>${dangerInner()}<h4 class="ih">${ic('eye',15)} Rappel : gardiennage</h4><p>Gardiennage des avions <b>pendant tout le séjour</b>, dès que le personnel de la Patrouille n'est plus sur la plateforme, par une société accréditée ou un organisme officiellement reconnu.</p></div></details></div>`+shOk})}
+const CNTD={trac:{t:'Tracteurs de piste',s:'Type TRACMA lourd, pour tracter les avions.',n:2,i:'truck',c1:'#6366f1',c2:'#4338ca'},gpu:{t:'Groupes de démarrage',s:'28 V, 1 000 A minimum.',n:2,i:'bolt',c1:'#eab308',c2:'#a16207'}};
+function countSheet(mid,k){S.fs={mid,k};openLive(()=>{const {mid,k}=S.fs,m=DB.meetings.find(x=>x.id===mid),T=tech(m),ed=canEdit('tech')&&T.status!=='sent'&&T.status!=='ok',D=CNTD[k];T.cnt=T.cnt||{};const v=T.cnt[k],n=v==null||v===''?null:+v;
+ return shHead(D,D.t,D.s)+`<div class="sb">${lockNote(T,'tech','tech')}<div class="cnt"><div><b>Combien pouvez-vous en fournir ?</b><span class="tgt" style="display:block;color:${n==null?'var(--muted)':n>=D.n?'var(--ok)':'var(--warn)'}">${n==null?D.n+' demandés':n>=D.n?ic('check',13,3)+' '+n+' sur '+D.n+' demandés':n+' sur '+D.n+' demandés : il en manque '+(D.n-n)}</span></div>
+  <div class="step"><button ${ed?`onclick="setCnt('${mid}','${k}',${Math.max(0,(n||0)-1)})"`:'disabled'} aria-label="Moins">−</button><b>${n==null?'–':n}</b><button ${ed?`onclick="setCnt('${mid}','${k}',${(n||0)+1})"`:'disabled'} aria-label="Plus">+</button></div></div>
+  ${n!=null&&n<D.n?`<div class="hint" style="color:var(--warn);font-weight:700">${ic('alert',14)} Le minimum demandé par la Patrouille n'est pas atteint : le CST ou le DT verra ce point en orange et vous recontactera.</div>`:''}</div>`+shOk})}
+function setCnt(mid,k,v){const T=tech(DB.meetings.find(x=>x.id===mid));T.cnt=T.cnt||{};T.cnt[k]=String(Math.max(0,+v||0));save();render()}
 function fireSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.id===S.fs.mid),T=tech(m),F=T.fire,ed=canEdit('tech')&&T.status!=='sent'&&T.status!=='ok';
  return shHead({i:'fire',c1:'#f43f5e',c2:'#be123c'},'Incendie','Touchez ce que vous prévoyez, puis le nombre.')+`<div class="sb">
   <div class="yn big2">${[['ext','Extincteurs','y'],['cam','Camion','y'],['none','Aucun','n']].map(([k,l,c])=>`<button class="${c}" aria-pressed="${!!F[k]}" ${ed?`onclick="togFire('${m.id}','${k}')"`:'disabled'}>${l}</button>`).join('')}</div>
@@ -2031,11 +2141,11 @@ function mealSheet(mid,key,ty){S.fs={mid,key,ty};openLive(()=>{const {mid,key,ty
  return shHead({i:t==='dej'?'food':'moon',c1:'#f97316',c2:'#c2410c'},(t==='dej'?'Déjeuner':'Dîner')+' · '+fromISO(key.split('|')[0]).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}),'')+`<div class="sb">
   <label class="l" for="ml">Où ?</label><input class="in" id="ml" value="${esc(MEALL[o.lieu]?'':o.lieu||'')}" placeholder="" ${ed?'':'disabled'} onchange="S.skipLive=true;setMeal('${mid}','${key}','lieu',this.value);S.skipLive=false">
   ${true?`<label class="l">Quand ?</label><div class="chips">${[['h','Heure précise'],['c','Créneau']].map(([k,l])=>`<button aria-pressed="${(o.mode||'h')===k}" ${ed?`onclick="setMeal('${mid}','${key}','mode','${k}')"`:'disabled'}>${ic('clock',13)} ${l}</button>`).join('')}</div>
-   <div class="mrow3">${(o.mode||'h')==='h'?`<input class="in" type="time" value="${esc(o.h||'')}" aria-label="Heure" ${ed?'':'disabled'} onchange="S.skipLive=true;setMeal('${mid}','${key}','h',this.value);S.skipLive=false">`:`<span class="tl">de</span><input class="in" type="time" value="${esc(o.h||'')}" aria-label="Début" ${ed?'':'disabled'} onchange="S.skipLive=true;setMeal('${mid}','${key}','h',this.value);S.skipLive=false"><span class="tl">à</span><input class="in" type="time" min="${esc(o.h||'')}" value="${esc(o.h2||'')}" aria-label="Fin" ${ed?'':'disabled'} onchange="setMeal('${mid}','${key}','h2',this.value)">`}</div>
+   <div class="mrow3">${(o.mode||'h')==='h'?`${timeBtn(`${esc(o.h||'')}`,`setMeal('${mid}','${key}','h',v)`,'Heure',``,!ed)}`:`<span class="tl">de</span>${timeBtn(`${esc(o.h||'')}`,`setMeal('${mid}','${key}','h',v)`,'Début',``,!ed)}<span class="tl">à</span>${timeBtn(`${esc(o.h2||'')}`,`setMeal('${mid}','${key}','h2',v)`,'Fin',`${esc(o.h||'')}`,!ed)}`}</div>
    `:''}</div>`+shOk})}
 /* ---------- Locomotion ---------- */
 ITM.move=m=>[
- {k:'veh',l:'11 voitures',i:'car',c1:'#3b82f6',c2:'#1d4ed8',kind:'sheet',open:`vehSheet('${m.id}')`,done:o=>+o.nVeh>=11&&+o.nBig>=3,warn:o=>o.nVeh!==''&&o.nVeh!=null&&+o.nVeh<11,sub:o=>o.nVeh===''||o.nVeh==null?'À indiquer':(+o.nVeh)+' / 11 · '+(+o.nBig||0)+' grand coffre',
+ {k:'veh',l:'11 voitures',i:'car',c1:'#3b82f6',c2:'#1d4ed8',kind:'sheet',open:`vehSheet('${m.id}')`,done:o=>+o.nVeh>=11&&+o.nBig>=3,warn:o=>o.nVeh!==''&&o.nVeh!=null&&(+o.nVeh<11||+o.nBig<3),sub:o=>o.nVeh===''||o.nVeh==null?'À indiquer':(+o.nVeh)+' / 11 · '+(+o.nBig||0)+' grand coffre',
   info:'<p><b>11 voitures moyennes ou grandes</b> (308, Mégane, Golf… pas de citadine), pour 4 personnes et 8 bagages.</p><p><b>Dont 3 avec un grand coffre</b> : leader, direction / communication, point central.</p>'},
  {k:'util',l:'1 utilitaire',i:'truck',c1:'#64748b',c2:'#334155',kind:'tick',info:'<p>Type Transit, Ducato, Sprinter ou Boxer : 3 à 5 places, environ 9 m³ de bagages.</p>'},
  {k:'plein',l:'Le plein fait',i:'fuel',c1:'#f59e0b',c2:'#c2410c',kind:'tick',info:'<p>Les véhicules sont livrés avec le plein : la Patrouille n\'ajoute pas de carburant.</p>'},
@@ -2059,7 +2169,7 @@ function vRoomInfo(m){const o=room(m);
  const fig=(kind,t,d,L)=>`<div class="roomc"><h3 style="margin:0 0 4px">${t}</h3><p class="small muted" style="margin:0 0 10px">${d}</p><figure class="pfig" style="margin:0 0 10px;padding:0;overflow:hidden">${roomSvg(kind)}</figure><ol class="rleg">${L.map(c=>`<li>${c.l}${c.sub?' <span class="muted">· '+c.sub+'</span>':''}</li>`).join('')}</ol></div>`;
  return `<div class="sect"><h2>${ic('screen',20)} Salles</h2></div>
  <section class="dvbox"><div class="dvsec">
-  <div class="lead2"><span class="n">${ic('info',14)}</span><span>Deux salles <b>à proximité du parking des Alphajet</b>. Voici ce qu'il faut y trouver.</span></div>
+  <div class="lead2"><span class="n">${ic('info',14)}</span><span>Deux salles <b>à proximité du parking des Alphajet</b>. Voici ce qu'il faut y trouver. Dans chacune, des <b>bouteilles d'eau sont indispensables</b> ; le café et les en-cas sont un plus, toujours grandement appréciés.</span></div>
   ${fig('brief','Salle de briefing et de repos des pilotes','Pour la préparation, le briefing et le débriefing des vols, et le repos des pilotes.',RBR)}
   ${fig('meca','Salle de repos des mécaniciens','Pour la documentation des avions et les effets personnels, à l\'abri des conditions climatiques éprouvantes.',RME)}
   <div class="src">Source : cahier des charges PAF 2026, version 2 du 16 janvier 2026, §4.4 et §4.5. Dessins d'illustration.</div></div></section>`}
@@ -2074,7 +2184,7 @@ function delEnc(mid,f,id){const C=com(DB.meetings.find(x=>x.id===mid));C[f]=comL
 function encList(m,C,f,ed,ph,addLab){const L=comL(C,f),days=foodDays(m);
  return `${L.map(x=>`<div class="enc"><div class="chips">${days.map(([d,ty])=>`<button aria-pressed="${x.d===d}" ${ed?`onclick="setEnc('${m.id}','${f}','${x.id}','d','${d}')"`:'disabled'}>${ic('cal',13)} ${fromISO(d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}</button>`).join('')}</div>
    <input class="in" value="${esc(x.who)}" placeholder="${ph}" aria-label="${ph}" ${ed?'':'disabled'} onchange="S.skipLive=true;setEnc('${m.id}','${f}','${x.id}','who',this.value);S.skipLive=false">
-   <div class="encs"><span class="tl">Créneau souhaité</span><input class="in" type="time" value="${esc(x.deb)}" aria-label="Début" ${ed?'':'disabled'} onchange="S.skipLive=true;setEnc('${m.id}','${f}','${x.id}','deb',this.value);S.skipLive=false"><span class="tl">à</span><input class="in" type="time" min="${esc(x.deb)}" value="${esc(x.fin)}" aria-label="Fin" ${ed?'':'disabled'} onchange="setEnc('${m.id}','${f}','${x.id}','fin',this.value)">${ed?`<button class="ib" onclick="delEnc('${m.id}','${f}','${x.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:''}</div></div>`).join('')}
+   <div class="encs"><span class="tl">Créneau souhaité</span>${timeBtn(`${esc(x.deb)}`,`setEnc('${m.id}','${f}','${x.id}','deb',v)`,'Début',``,!ed)}<span class="tl">à</span>${timeBtn(`${esc(x.fin)}`,`setEnc('${m.id}','${f}','${x.id}','fin',v)`,'Fin',`${esc(x.deb)}`,!ed)}${ed?`<button class="ib" onclick="delEnc('${m.id}','${f}','${x.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:''}</div></div>`).join('')}
  ${ed?`<button class="btn ghost" onclick="addEnc('${m.id}','${f}')">${ic('plus',16)} ${addLab}</button>`:''}`}
 const encOk=L=>L.length>0&&L.every(x=>x.d&&x.who);
 ITM.com=m=>[
@@ -2134,21 +2244,18 @@ function sendMsg(){const {mid,sec,to}=S.ms,txt=($('msgt').value||'').trim();if(!
 const FUELK=[['f34','F34'],['tro','TRO'],['jet','JET A1']];
 const FUELD={f34:'kérosène avec additif anti-givre (JP-8)',tro:'kérosène TRO, sans additif',jet:'JET A1 civil, sans additif'};
 function fuelO(T){T.fuel=T.fuel||{f34:{on:false,q:''},jet:{on:false,q:''}};T.fuel.tro=T.fuel.tro||{on:false,q:''};T.need=T.need||{f34:'',jet:''};if(T.need.tro==null)T.need.tro='';return T}
-const fuelProv=T=>FUELK.reduce((a,[k])=>a+(T.fuel[k].on?(+T.fuel[k].q||0):0),0);
+const fuelProv=T=>FUELK.reduce((a,[k])=>a+(T.fuel[k].on?1:0),0);
 const fuelNeed=T=>FUELK.reduce((a,[k])=>a+(+T.need[k]||0),0);
 const nfmt=n=>Number(n).toLocaleString('fr-FR');
 function fuelSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.id===S.fs.mid),T=fuelO(tech(m)),ed=canEdit('tech')&&T.status!=='sent'&&T.status!=='ok',pv=canVal('tech'),nd=fuelNeed(T),pr=fuelProv(T);
- return shHead({i:'fuel',c1:'#f59e0b',c2:'#c2410c'},'Carburant','F34, TRO, JET A1 : un ou plusieurs.')+`<div class="sb">
-  <div class="fuelstd"><b>${ic('info',15)} Demande standard de la Patrouille</b>${FUELT}
-   <div class="warnbox" style="margin-top:10px;border-color:var(--warn);background:var(--warn2)">${tile({i:'plane',c1:'#f59e0b',c2:'#c2410c'},'sm')}<p><b>Pour les départs des avions</b> (fin de l'entraînement en cas de mise en place, fin de la démonstration pour le retour à Salon-de-Provence ou un changement de meeting), il faut du carburant <b>avec additif anti-givre, type F34</b>. Le TRO et le JET A1 n'en contiennent pas.</p></div></div>
+ return shHead({i:'fuel',c1:'#f59e0b',c2:'#c2410c'},'Carburant','Quels carburants sont disponibles sur le site ?')+`<div class="sb">
+  <div class="rappel" style="margin:0 0 12px">${ic('plane',18)}<span><b>Pour les départs des avions</b>, il faut du carburant <b>avec additif anti-givre, type F34</b> (le TRO et le JET A1 n'en contiennent pas). La demande standard de la Patrouille est dans le ⓘ de l'icône Carburant.</span></div>
   <div class="fd"><b>${ic('flag',15)} Besoin de la Patrouille sur ce site</b>
    ${pv?`<div class="fq">${FUELK.map(([k,l])=>`<label><span>${l}</span><input class="in" type="number" min="0" step="500" inputmode="numeric" value="${esc(String(T.need[k]||''))}" placeholder="litres" onchange="setNeed('${m.id}','${k}',this.value)"></label>`).join('')}</div><div class="hint">À remplir par le CST ou le DT dès la création du meeting, puis « Je valide ».</div>`
    :`<p style="margin:6px 0 0">${nd?FUELK.filter(([k])=>+T.need[k]).map(([k,l])=>`<b>${l}</b> : ${nfmt(T.need[k])} litres`).join(' · '):'<span class="muted">Le CST ou le DT va l\'indiquer.</span>'}</p>`}</div>
-  <label class="l">Ce que vous fournissez</label>
+  <label class="l">Carburants disponibles sur le site</label>
   <div class="yn big2">${FUELK.map(([k,l])=>`<button class="y" aria-pressed="${T.fuel[k].on}" ${ed?`onclick="togFuel('${m.id}','${k}')"`:'disabled'}>${l}<small>${FUELD[k]}</small></button>`).join('')}</div>
-  <div class="fq">${FUELK.filter(([k])=>T.fuel[k].on).map(([k,l])=>`<label><span>${l}</span><input class="in" type="number" min="0" step="500" inputmode="numeric" value="${esc(String(T.fuel[k].q||''))}" placeholder="litres" ${ed?'':'disabled'} onchange="setFuelQ('${m.id}','${k}',this.value)"></label>`).join('')}</div>
-  ${nd&&pr?`<div class="hint ${pr>=nd?'okc':''}" style="${pr<nd?'color:var(--warn);font-weight:700':''}">${pr>=nd?ic('check',14,3)+' Couvre le besoin':'Il manque '+nfmt(nd-pr)+' litres'} (${nfmt(pr)} sur ${nfmt(nd)} litres)</div>`:''}
-  ${pr>0&&!T.fuel.f34.on?`<div class="hint" style="color:var(--bad);font-weight:700">${ic('alert',14)} Sans F34, prévoyez de l'additif anti-givre pour les départs.</div>`:''}
+  ${FUELK.some(([k])=>T.fuel[k].on)&&!T.fuel.f34.on?`<div class="hint" style="color:var(--bad);font-weight:700">${ic('alert',14)} Sans F34, prévoyez de l'additif anti-givre pour les départs.</div>`:''}
   <p class="small muted">Une citerne reste en alerte près de la ligne Alphajet pendant les mises en route.</p></div>`+(pv?`<div class="sf"><span class="small muted">${T.needOk?ic('check',13,3)+' Besoin validé le '+new Date(T.needOk.t).toLocaleDateString('fr-FR')+' ('+(RLm[T.needOk.by]||{}).l+')':''}</span><button class="btn pri big" ${nd?'':'disabled'} onclick="validNeed('${m.id}')">${ic('check',18)} Je valide</button></div>`:shOk)})}
 function validNeed(mid){const T=fuelO(tech(DB.meetings.find(x=>x.id===mid)));T.needOk={t:Date.now(),by:ROLE};save();closeSheet();render();toast('Besoin en carburant validé')}
 function setNeed(mid,k,v){const T=fuelO(tech(DB.meetings.find(x=>x.id===mid)));T.needOk=null;T.need[k]=v===''?'':String(Math.max(0,parseInt(v,10)||0));save();render()}
@@ -2157,7 +2264,7 @@ function setFuelQ(mid,k,v){const T=fuelO(tech(DB.meetings.find(x=>x.id===mid)));
 
 /* ====================== Séquences (week-ends) et vœux des volontaires ====================== */
 const SEQC=['#3b82f6','#ec4899','#22c55e','#f59e0b','#a855f7','#06b6d4','#ef4444','#6366f1'];
-function mSpan(m){const ds=[m.entr,...(m.demos||[])].filter(Boolean).sort();return ds.length?[ds[0],ds[ds.length-1]]:null}
+function mSpan(m){const ds=[...entrs(m),...(m.demos||[])].filter(Boolean).sort();return ds.length?[ds[0],ds[ds.length-1]]:null}
 function anchorSat(s){const d=fromISO(s),w=d.getDay(),off={6:0,0:-1,1:-2,2:-3,3:3,4:2,5:1}[w];d.setDate(d.getDate()+off);return iso(d)}
 function seqs(all){const L=DB.meetings.map(m=>({m,sp:mSpan(m)})).filter(x=>x.sp&&(all||daysTo(x.sp[1])>=0)).sort((a,b)=>a.sp[0].localeCompare(b.sp[0]));const out=[];
  L.forEach(x=>{const a=anchorSat(x.sp[1]);let S0=out.find(s=>s.id===a||(x.sp[0]<=s.end&&x.sp[1]>=s.start));if(!S0){S0={id:a,start:x.sp[0],end:x.sp[1],ms:[]};out.push(S0)}S0.ms.push(x.m);if(x.sp[0]<S0.start)S0.start=x.sp[0];if(x.sp[1]>S0.end)S0.end=x.sp[1]});
@@ -2175,7 +2282,7 @@ function setPrio(id,p){const V=myVote();if(V.seq[id]===p){V.seq[id]=0}else{Objec
 function voterStatus(v,s){const ok=s.ms.some(m=>{const t=team(m);return v.mem?teamList(m).some(x=>x.id===v.mem):t.ext.some(e=>e.name.toLowerCase()===v.name.toLowerCase())});if(ok)return 'ok';const ko=s.ms.every(m=>(team(m).ref||[]).includes(vkey(v)));return ko?'ko':''}
 function calMonth(SQ){const now=new Date();let ym=S.calM;if(!ym){const f=SQ[0]?fromISO(SQ[0].start):now;ym=f.getFullYear()*12+f.getMonth()}S.calM=ym;
  const y=Math.floor(ym/12),mo=ym%12,first=new Date(y,mo,1),st=new Date(first);st.setDate(1-((first.getDay()+6)%7));
- const byDay={};SQ.forEach(s=>s.ms.forEach(m=>{[m.entr,...(m.demos||[])].filter(Boolean).forEach(d=>{(byDay[d]=byDay[d]||[]).push({m,s,ty:d===m.entr?'entr':'demo'})})}));
+ const byDay={};SQ.forEach(s=>s.ms.forEach(m=>{[...entrs(m),...(m.demos||[])].filter(Boolean).forEach(d=>{(byDay[d]=byDay[d]||[]).push({m,s,ty:entrs(m).includes(d)?'entr':'demo'})})}));
  let cells='';for(let i=0;i<42;i++){const d=new Date(st);d.setDate(st.getDate()+i);const k=iso(d),ev=byDay[k]||[],out=d.getMonth()!==mo;
   cells+=`<div class="cday ${out?'out':''} ${k===iso(today)?'today':''}"><span class="dn">${d.getDate()}</span>${ev.map(e=>`<${S.calGo?'button':'span'} class="cev" style="--c:${e.s.c}" title="${esc(mName(e.m))}" ${S.calGo?`onclick="S.rub=null;go('meeting','${e.m.id}')"`:''}>${e.ty==='entr'?ic('plane',10):ic('star',10)} ${esc(e.m.city||mName(e.m))}</${S.calGo?'button':'span'}>`).join('')}</div>`}
  return `<div class="cal"><div class="calh"><button class="ib" onclick="S.calM--;render()" aria-label="Mois précédent">${ic('back',16)}</button><b>${first.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</b><button class="ib" onclick="S.calM++;render()" aria-label="Mois suivant" style="transform:rotate(180deg)">${ic('back',16)}</button></div>
@@ -2192,13 +2299,13 @@ function vVote(){
  const V=myVote(),n=Object.keys(V.seq).filter(id=>SQ.some(s=>s.id===id)).length;
  return `<div class="head"><div><h1>Mes meetings</h1><p class="muted">Bonjour <b>${esc(v.name)}</b> · ${(FUm[v.fn]||{}).d||''} · <button class="more" onclick="setVoter(null);VF={};render()">Ce n'est pas moi</button></p></div></div>
  ${calMonth(SQ)}
- <div class="lead" style="margin:18px 0 10px">Cochez les séquences qui vous intéressent, puis donnez jusqu'à 3 priorités. <span class="lchip">${n} cochée${n>1?'s':''}</span></div>
+ <div class="lead" style="margin:18px 0 10px">Cochez les séquences qui vous intéressent, puis donnez jusqu'à 3 préférences. <span class="lchip">${n} cochée${n>1?'s':''}</span></div>
  ${SQ.length?`<div class="seqs">${SQ.map(s=>{const p=V.seq[s.id],on=p!==undefined,st=voterStatus(v,s);
   return `<div class="seq ${on?'on':''}" style="--c:${s.c}"><div class="seqh"><span class="sdot"></span><div style="flex:1;min-width:0"><b>${seqLabel(s)}</b><div class="small muted">${s.ms.map(m=>esc(mName(m))+' ('+esc(m.city||'')+')').join(' · ')}</div></div>
    ${st==='ok'?`<span class="pill ok">${ic('check',13,3)} Retenu</span>`:st==='ko'?'<span class="pill todo">Pas retenu</span>':''}</div>
    <div class="seqa"><button class="vbtn" aria-pressed="${on}" onclick="togSeq('${s.id}')">${on?ic('check',16,3)+' Je suis volontaire':ic('hand',16)+' Je me propose'}</button>
-    ${on?`<div class="prios">${[1,2,3].map(k=>`<button aria-pressed="${p===k}" onclick="setPrio('${s.id}',${k})">Priorité ${k}</button>`).join('')}</div>`:''}</div></div>`}).join('')}</div>`:'<p class="muted">Aucun meeting à venir pour l\'instant.</p>'}
- <p class="small muted" style="margin-top:14px">${ic('info',13)} Une séquence regroupe les meetings d'un même week-end, entraînements compris. La secrétaire ops choisit en favorisant les priorités, puis confirme.</p>`;
+    ${on?`<div class="prios">${[1,2,3].map(k=>`<button aria-pressed="${p===k}" onclick="setPrio('${s.id}',${k})">Préférence n°${k}</button>`).join('')}</div>`:''}</div></div>`}).join('')}</div>`:'<p class="muted">Aucun meeting à venir pour l\'instant.</p>'}
+ <p class="small muted" style="margin-top:14px">${ic('info',13)} Une séquence regroupe les meetings d'un même week-end, entraînements compris. La secrétaire ops choisit en favorisant les préférences, puis confirme.</p>`;
 }
 function iAm(){const x=VF.mem?DB.members.find(y=>y.id===VF.mem):null,name=x?[x.grade,x.first,x.last].filter(Boolean).join(' '):(VF.name||'').trim();if(!VF.fn||!name){toast('Choisissez votre nom ou écrivez-le');return}setVoter({fn:VF.fn,mem:x?x.id:'',name});VF={};render()}
 /* Côté secrétaire : volontaires de la séquence, triés par priorité puis par équité */
@@ -2294,6 +2401,438 @@ function vRemind(){const c=mcfg(),plan=remPlan(),soon=plan.slice(0,8);
    <button class="switch" role="switch" aria-checked="${!m.remOff}" aria-label="Rappels automatiques pour ce meeting" title="Rappels automatiques" onclick="const mm=DB.meetings.find(x=>x.id==='${m.id}');mm.remOff=!mm.remOff;save();render()"></button></div>`).join('')||'<p class="small muted" style="margin:0 16px 14px">Aucun meeting à venir.</p>'}
   <p class="small muted" style="margin:6px 16px 12px">Le rappel immédiat part dans le prochain email aux organisateurs. L'interrupteur coupe les rappels automatiques d'un meeting.</p></section>`}
 
+/* ====================== Perfos décollage Alphajet (UCE 116-1, appendice 1, et fiche « Perfos décollage » PAF) ====================== */
+const PF_DEF={
+ // Fiche « Perfos décollage » : index des paramètres de décollage selon la pression (QFE, hPa) et la température (°C)
+ idxP:[1050,1025,1000,975,950],idxT:[-10,-5,0,5,10,15,20,25,30],
+ idx:[[1,2,3,4,5,6,7,8,9],[2,3,4,5,6,7,8,9,10],[4,5,5,6,7,8,9,10,11],[5,6,7,8,8,9,10,11,12],[6,7,8,9,9,10,11,12,12]],
+ accT:[-10,0,10,15,20,30],acc:{N1:[10,10,11,12,12,13],N2:[11,11,12,12,13,14],D:[12,13,14,14,15,16]},
+ vr:{N1:[89,89,90,91,91,92,94,94,95,95,96,97],N2:[95,95,96,96,98,98,99,100,101,102,103,103],D:[102,102,103,104,105,105,106,107,107,108,109,110]},
+ vlof:{N1:[107,107,108,108,108,109,109,109,109,109,109,109],N2:[112,112,112,113,113,113,113,114,114,114,115,115],D:[117,117,117,117,118,118,118,118,118,119,119,119]},
+ dist:{N1:[290,300,300,320,330,340,350,390,420,440,460,500],N2:[320,330,340,360,370,390,400,430,460,500,520,560],D:[400,410,420,440,460,480,500,540,580,620,660,700]},
+ // Références Vc / Vstop (fiche PAF) : +15 °C, QFE 1013, piste 2 400 m, vent nul, piste sèche
+ ref:{FUS:{vc:131,vs:133},FUS1:{vc:129,vs:132},N1:{vc:127,vs:132},N2:{vc:126,vs:130},D:{vc:119,vs:118}},
+ refT:15,refP:1013,refL:2400,
+ kT:1,     // +1 kt par −5 °C (Vc et Vstop)
+ kP:1,     // +1 kt par +20 hPa (Vc et Vstop)
+ kL:2,     // +2 kt par +100 m de piste (Vstop)
+ kWf:1,    // +1 kt par kt de vent de face (Vstop)
+ kWb:1.5,  // −1,5 kt par kt de vent arrière (Vstop) — prudence, hors abaque
+ wet:{seche:0,humide:5,mouillee:10,inondee:15}  // kt retirés à Vstop
+};
+const PF_CFG=[['FUS','FUS','1 235 L · fuselage seul'],['FUS1','FUS + 1','fiche PAF'],['N1','N1','1 435 L · niveau 1'],['N2','N2','1 945 L · niveau 2'],['D','D','niveau 2 + bidons (déplacement)']];
+const PF_WET=[['seche','Sèche'],['humide','Humide'],['mouillee','Mouillée'],['inondee','Inondée']];
+function pfCfg(){DB.perf=DB.perf||{};return Object.assign({},PF_DEF,DB.perf)}
+const lerp=(xs,ys,x)=>{if(x<=xs[0])return ys[0];if(x>=xs[xs.length-1])return ys[ys.length-1];for(let i=1;i<xs.length;i++)if(x<=xs[i]){const t=(x-xs[i-1])/(xs[i]-xs[i-1]);return ys[i-1]+t*(ys[i]-ys[i-1])}return ys[ys.length-1]};
+function pfIndex(C,P,T){const rows=C.idxP.map((p,i)=>[p,lerp(C.idxT,C.idx[i],T)]);const ps=rows.map(r=>r[0]).slice().reverse(),vs=rows.map(r=>r[1]).slice().reverse();return Math.min(12,Math.max(1,Math.round(lerp(ps,vs,P))))}
+const PFK=localStorage?KEY+':perf':null;
+function pfIn(){if(!S.pf){let o=null;try{o=JSON.parse(localStorage.getItem(PFK)||'null')}catch(e){}S.pf=Object.assign({cfg:'N1',L:2400,wind:0,T:15,mode:'qfe',qfe:1013,qnh:1013,alt:0,wet:'seche',ab:false},o||{})}return S.pf}
+function pfSet(k,v){const o=pfIn();o[k]=v;try{localStorage.setItem(PFK,JSON.stringify(o))}catch(e){}render()}
+function pfCalc(){const C=pfCfg(),o=pfIn();
+ const qfe=o.mode==='qnh'?Math.round((+o.qnh||1013)-(+o.alt||0)/27.3):(+o.qfe||1013);
+ const T=+o.T||0,L=+o.L||0,W=+o.wind||0,row=o.cfg==='N2'?'N2':o.cfg==='D'?'D':'N1';
+ const idx=pfIndex(C,qfe,T);
+ const acc=Math.round(lerp(C.accT,C.acc[row],T)),vr=C.vr[row][idx-1],vlof=C.vlof[row][idx-1],dist=C.dist[row][idx-1];
+ const r=C.ref[o.cfg]||C.ref.N1;
+ const dT=(C.refT-T)/5*C.kT,dP=(qfe-C.refP)/20*C.kP,dL=(L-C.refL)/100*C.kL,dW=W>=0?W*C.kWf:W*C.kWb,dWet=-(C.wet[o.wet]||0);
+ let vc=Math.round(r.vc+dT+dP),vs=Math.round(r.vs+dT+dP+dL+dW+dWet);
+ if(o.ab){vc=Math.round(vc*1.025)}
+ const al=[];
+ if(vc<vs)al.push({t:'bad',h:'Vc < Vstop',p:`La vitesse de destruction des freins (${vc} kt) est inférieure à Vstop (${vs} kt) : entre ${vc} et ${vs} kt, l'interruption se fait au freinage aérodynamique nez haut (et aérofreins), sans freiner avant ${vc} kt.`});
+ if(o.cfg==='N2'||o.cfg==='D')al.push({t:'warn',h:'Les volets en 2 fois !',p:'Avion plus lourd que N1 : ½ volets à 150 kt, puis volets rentrés à 180 kt.'});
+ if(vs>=vlof)al.push({t:'ok',h:'Interruption possible jusqu\'au décollage',p:`Vstop (${vs} kt) ≥ Vlof (${vlof} kt) : la piste permet d'interrompre jusqu'à la vitesse de décollage.`});
+ else if(vs>=vr)al.push({t:'warn',h:'Vstop < Vlof',p:`Entre ${vs} kt et le décollage (${vlof} kt), l'arrêt en piste n'est plus assuré : au-delà de Vstop, le décollage est obligatoire.`});
+ else if(vs<vr)al.push({t:'bad',h:'Vstop < Vr',p:`Au-delà de ${vs} kt, l'arrêt avant la fin de piste n'est plus assuré alors que la rotation est à ${vr} kt : marge très réduite, décollage à reconsidérer.`});
+ if(W<0)al.push({t:'warn',h:'Vent arrière',p:`${-W} kt de vent arrière : l'abaque ne couvre que le vent de face, la correction appliquée (−${C.kWb} kt par kt) est prudente mais non documentée.`});
+ if(o.wet==='inondee')al.push({t:'bad',h:'Piste inondée',p:'Hors abaque : procédure « piste inondée » (profondeur plein arrière à 50 kt) et décollage à reconsidérer. La correction appliquée à Vstop est une marge de prudence, pas une donnée constructeur.'});
+ else if(o.wet==='mouillee')al.push({t:'warn',h:'Piste mouillée',p:'Correction de prudence, non documentée par le constructeur (l\'abaque ne traite que la piste humide).'});
+ else if(o.wet==='humide')al.push({t:'warn',h:'Piste humide',p:`−${C.wet.humide} kt sur Vstop (fiche PAF). L'abaque prévoit aussi +100 à +600 m d'accélération-arrêt selon la masse.`});
+ if(o.cfg==='FUS'||o.cfg==='FUS1')al.push({t:'info',h:'Vr, Vlof et distance : valeurs N1',p:'La fiche ne donne pas ces valeurs pour les configurations plus légères : celles de N1 sont reprises (légèrement prudentes).'});
+ if(dist>L)al.push({t:'bad',h:'Piste trop courte',p:`Distance de décollage ${dist} m pour ${L} m de piste.`});
+ return {qfe,idx,acc,vr,vlof,dist,vc,vs,al,dT,dP,dL,dW,dWet,r};
+}
+function vPerfos(){const sub=S.pfTab||'home';
+ if(sub==='home')return `${NOTE}<div class="head"><div><h1>Perfos & calculs</h1><p class="muted">Trois outils d'aide à la décision. Touchez une icône.</p></div></div>
+  <div class="pfhome">${PF_TOOLS.map(t=>`<button class="pftool" onclick="S.pfTab='${t[0]}';render()">${pfArt(t[0])}<b>${t[1]}</b><span>${t[2]}</span></button>`).join('')}</div>`;
+ const tabs=`<div class="pfbar"><button class="btn" onclick="S.pfTab='home';render()">${ic('back',16)} Tous les outils</button><div class="chips">${PF_TOOLS.map(t=>`<button aria-pressed="${sub===t[0]}" onclick="S.pfTab='${t[0]}';render()">${t[1]}</button>`).join('')}</div></div>`;
+ if(sub==='cg')return vCentrage(tabs);
+ if(sub==='cto')return vCPerf(tabs);
+ if(sub==='pod')return `${NOTE}<div class="head"><div><h1>Réchauffement du POD fumigène</h1><p class="muted">Temps d'attente après un transit en altitude à température négative, avant de considérer les membranes dégelées.</p></div></div>${tabs}${vPod()}`;
+ return vPerfTO(tabs)}
+function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
+ const num=(k,lab,unit,step,min,max)=>`<label class="pfn"><span>${lab}</span><div class="pfin"><button onclick="pfSet('${k}',${(+o[k]||0)-step})" aria-label="Moins">−</button><input class="in" type="number" inputmode="decimal" step="${step}" ${min!=null?`min="${min}"`:''} ${max!=null?`max="${max}"`:''} value="${esc(String(o[k]))}" onchange="pfSet('${k}',this.value===''?0:+this.value)"><button onclick="pfSet('${k}',${(+o[k]||0)+step})" aria-label="Plus">+</button><b>${unit}</b></div></label>`;
+ const card=(lab,v,unit,sub,cls)=>`<div class="pfc ${cls||''}"><span class="pfl">${lab}</span><b>${v}<small>${unit}</small></b>${sub?`<span class="pfs">${sub}</span>`:''}</div>`;
+ const AL={bad:['#ef4444','#b91c1c','alert'],warn:['#f59e0b','#c2410c','alert'],ok:['#22c55e','#15803d','check'],info:['#64748b','#334155','info']};
+ return `${NOTE}<div class="head"><div><h1>Perfos décollage</h1><p class="muted">Alphajet · PMM · pleins volets · freinage énergie détresse. D'après l'UCE 116-1 (appendice 1) et la fiche « Perfos décollage » de la Patrouille.</p></div>${isChef()?`<button class="btn" onclick="pfSettings()">${ic('gear',16)} Références</button>`:''}</div>${tabs}
+ <div class="pfgrid">
+  <section class="dvbox"><div class="dvsec">
+   <h3 style="margin:0 0 8px">Conditions du jour</h3>
+   <label class="l">Plein de l'avion</label><div class="chips">${PF_CFG.map(([k,l,d])=>`<button aria-pressed="${o.cfg===k}" title="${d}" onclick="pfSet('cfg','${k}')">${l}</button>`).join('')}</div>
+   <div class="small muted" style="margin:4px 0 10px">${(PF_CFG.find(c=>c[0]===o.cfg)||[])[2]||''}</div>
+   ${num('L','Longueur de piste','m',100,500,5000)}
+   ${num('wind','Vent dans l\'axe (+ face / − arrière)','kt',5,-30,60)}
+   ${num('T','Température','°C',1,-30,50)}
+   <label class="l">Pression</label><div class="chips" style="margin-bottom:6px"><button aria-pressed="${o.mode==='qfe'}" onclick="pfSet('mode','qfe')">QFE</button><button aria-pressed="${o.mode==='qnh'}" onclick="pfSet('mode','qnh')">QNH + altitude terrain</button></div>
+   ${o.mode==='qfe'?num('qfe','QFE','hPa',1,850,1060):num('qnh','QNH','hPa',1,900,1060)+num('alt','Altitude du terrain','ft',50,0,9000)+`<div class="small muted" style="margin:-4px 0 8px">QFE calculé : <b>${x.qfe} hPa</b> (≈ 1 hPa par 27 ft)</div>`}
+   <label class="l">État de la piste</label><div class="chips">${PF_WET.map(([k,l])=>`<button aria-pressed="${o.wet===k}" onclick="pfSet('wet','${k}')">${l}</button>`).join('')}</div>
+   <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Aérofreins sortis à l'interruption</b><span class="small muted" style="display:block">Vc freinage +2,5 % (abaque) · longueur de piste nécessaire −10 %.</span></div><button class="switch" role="switch" aria-checked="${!!o.ab}" aria-label="Aérofreins sortis" onclick="pfSet('ab',!pfIn().ab)"></button></label>
+  </div></section>
+  <section>
+   <div class="pfcards">
+    ${card('Accélération à 90 kt',x.acc,'s','à vérifier au top chrono')}
+    ${card('Vr · rotation',x.vr,'kt','assiette 7°')}
+    ${card('Vlof · décollage',x.vlof,'kt','')}
+    ${card('Distance de décollage',x.dist,'m',`index ${x.idx} · piste ${o.L} m`,x.dist>o.L?'ko':'')}
+    ${card('Vc · freinage',x.vc,'kt','vitesse max de début de freinage (énergie détresse)',x.vc<x.vs?'ko':'')}
+    ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vr?'ko':x.vs>=x.vlof?'ok':'')}
+   </div>
+   ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
+   <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Références et corrections appliquées</span></span><span class="chev">${ic('chev',20)}</span></summary>
+    <div class="small" style="margin-top:10px;line-height:1.6">
+     <p><b>Vr, Vlof, distance</b> : fiche « Perfos décollage », index ${x.idx} (QFE ${x.qfe} hPa, ${o.T} °C), ligne ${o.cfg==='N2'?'N2':o.cfg==='D'?'D':'N1'}. <b>Accélération à 90 kt</b> : table en température.</p>
+     <p><b>Vc / Vstop</b> : référence ${o.cfg} à +15 °C, 1013 hPa, 2 400 m, vent nul, piste sèche → Vc ${x.r.vc} kt, Vstop ${x.r.vs} kt. Corrections : température ${x.dT>=0?'+':''}${x.dT.toFixed(1)} kt (1 kt par 5 °C), pression ${x.dP>=0?'+':''}${x.dP.toFixed(1)} kt (1 kt par 20 hPa) ; sur Vstop seulement : longueur de piste ${x.dL>=0?'+':''}${x.dL.toFixed(1)} kt (2 kt par 100 m), vent ${x.dW>=0?'+':''}${x.dW.toFixed(1)} kt, état de piste ${x.dWet} kt${o.ab?' ; aérofreins : Vc +2,5 %':''}.</p>
+     <p class="muted">Hypothèses de l'abaque : constatation à t = 0, réduction des gaz à 2 s, poussée réduite à 7 s, pente nulle. Outil d'aide : la décision reste au pilote, avec le manuel.</p>
+    </div></details>
+  </section>
+ </div>`}
+function pfSettings(){openLive(()=>{const C=pfCfg(),P=DB.perf||{};const f=(k,lab,step)=>`<label class="pfn"><span>${lab}</span><input class="in" type="number" step="${step}" value="${C[k]}" onchange="DB.perf=DB.perf||{};DB.perf['${k}']=+this.value;save()"></label>`;
+ const refRow=k=>`<div class="pfr"><b>${(PF_CFG.find(c=>c[0]===k)||[k,k])[1]}</b><label>Vc <input class="in" type="number" value="${C.ref[k].vc}" onchange="pfRef('${k}','vc',this.value)"></label><label>Vstop <input class="in" type="number" value="${C.ref[k].vs}" onchange="pfRef('${k}','vs',this.value)"></label></div>`;
+ return shHead({i:'gear',c1:'#64748b',c2:'#334155'},'Références perfos','Réservé au chef ops. Les valeurs de départ viennent de la fiche PAF.')+`<div class="sb">
+  <label class="l">Vc / Vstop de référence (15 °C, 1013 hPa, 2 400 m, vent nul, sèche)</label>${PF_CFG.map(c=>refRow(c[0])).join('')}
+  <label class="l" style="margin-top:12px">Corrections (kt)</label>
+  ${f('kT','par 5 °C en moins',0.5)}${f('kP','par 20 hPa en plus',0.5)}${f('kL','par 100 m de piste en plus (Vstop)',0.5)}${f('kWf','par kt de vent de face (Vstop)',0.5)}${f('kWb','par kt de vent arrière, retiré (Vstop)',0.5)}
+  <label class="l" style="margin-top:12px">État de piste : kt retirés à Vstop</label>
+  ${PF_WET.slice(1).map(([k,l])=>`<label class="pfn"><span>${l}</span><input class="in" type="number" step="1" value="${C.wet[k]}" onchange="DB.perf=DB.perf||{};DB.perf.wet=Object.assign({},pfCfg().wet,{['${k}']:+this.value});save()"></label>`).join('')}
+  <button class="btn ghost" style="margin-top:10px" onclick="DB.perf={};save();closeSheet();render();toast('Références PAF rétablies')">Rétablir les valeurs de la fiche PAF</button></div>`+shOk})}
+function pfRef(k,f,v){DB.perf=DB.perf||{};DB.perf.ref=JSON.parse(JSON.stringify(pfCfg().ref));DB.perf.ref[k][f]=+v;save()}
+
+/* ====================== Pavé horaire (remplace les menus déroulants) ====================== */
+const hTxt=v=>v?v.replace(':','h'):'— : —';
+function timeBtn(val,code,lab,min,dis){const id='tb'+Math.random().toString(36).slice(2,8);window.__TB=window.__TB||{};window.__TB[id]={code,min:min||'',val:val||''};
+ return `<button class="tbtn ${val?'':'empty'}" ${dis?'disabled':''} aria-label="${lab}" onclick="openTP('${id}',this)">${ic('clock',14)} ${hTxt(val)}</button>`}
+function openTP(id,btn){const d=window.__TB[id];if(!d)return;TP={id,h:d.val?+d.val.split(':')[0]:null,m:d.val?d.val.split(':')[1]:null,min:d.min,code:d.code,btn};drawTP()}
+let TP=null;
+function drawTP(){let el=$('tp');if(!el){el=document.createElement('div');el.id='tp';el.className='tpov';el.onclick=e=>{if(e.target===el)closeTP()};document.body.appendChild(el)}
+ const minH=TP.min?+TP.min.split(':')[0]:0;
+ const hrs=[];for(let h=5;h<=23;h++)hrs.push(h);
+ el.innerHTML=`<div class="tpbox" role="dialog" aria-label="Choisir une heure"><div class="tph"><b>${TP.h==null?'Heure ?':(String(TP.h).padStart(2,'0')+'h'+(TP.m==null?'…':TP.m))}</b><button class="ib" onclick="closeTP()" aria-label="Fermer">${ic('x',16)}</button></div>
+  <div class="tplab">Heure</div><div class="tpg">${hrs.map(h=>`<button class="${TP.h===h?'on':''} ${h<minH?'lo':''}" onclick="TP.h=${h};if(TP.m!=null)pickTP();else drawTP()">${String(h).padStart(2,'0')}</button>`).join('')}</div>
+  <div class="tplab">Minutes</div><div class="tpg m">${['00','15','30','45'].map(mm=>`<button class="${TP.m===mm?'on':''}" ${TP.h==null?'disabled':''} onclick="TP.m='${mm}';pickTP()">${mm}</button>`).join('')}</div>
+  <div class="tpf"><button class="btn ghost" onclick="TP.h=null;TP.m=null;pickTP(true)">Effacer</button><span class="small muted">Touchez l'heure puis les minutes.</span></div></div>`;
+ el.hidden=false}
+function pickTP(clear){const v=clear?'':String(TP.h).padStart(2,'0')+':'+TP.m;const code=TP.code;closeTP();try{new Function('v',code)(v)}catch(e){console.error(e)}}
+function closeTP(){const el=$('tp');if(el)el.hidden=true;TP=null}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&TP)closeTP()});
+
+/* ====================== Fiche récapitulative du meeting (chef ops, secrétaire, visiteurs) ====================== */
+const STL={'':['En préparation','todo'],sent:['Envoyé par l\'organisation','sent'],ok:['Validé','ok']};
+const rpill=o=>{if(!o)return '';const [l,c]=STL[o.status||''];return `<span class="pill ${c}">${l}</span>`};
+const yn=v=>v==='oui'?'<b class="okc">Oui</b>':v==='non'?'<b style="color:var(--bad)">Non</b>':'<span class="muted">—</span>';
+const dash=v=>v?esc(v):'<span class="muted">—</span>';
+const rrow=(l,v)=>`<tr><th>${l}</th><td>${v}</td></tr>`;
+function recapText(m){const el=document.createElement('div');el.innerHTML=vRecap(m,true);el.querySelectorAll('tr').forEach(tr=>{tr.querySelectorAll('th,td').forEach((c,i)=>{if(i)c.prepend(document.createTextNode(' : '))});tr.append('\n')});el.querySelectorAll('h2,h3').forEach(h=>{h.prepend('\n\n');h.append('\n')});el.querySelectorAll('li,p').forEach(x=>x.append('\n'));return el.innerText.replace(/\n{3,}/g,'\n\n').trim()}
+function copyRecap(mid){const t=recapText(DB.meetings.find(x=>x.id===mid));(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Fiche copiée : collez-la dans un email ou un document')).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Fiche copiée')}catch(e){toast('Copie impossible sur cet appareil')}ta.remove()})}
+function vRecap(m,plain){
+ const T=tech(m),L=lodg(m),F=food(m),V=move(m),C=com(m),A=aero(m),cs=m.contacts||[],t=team(m),N=teamN(m),sp=mSpan(m);
+ fuelO(T);const Fi=T.fire;
+ const days=foodDays(m);
+ const who=fn=>cs.filter(c=>c.fn===fn).map(c=>`${esc([c.first,c.last].filter(Boolean).join(' '))}${c.org?' ('+esc(c.org)+')':''}${c.tel?' · '+esc(fmtTel(c.tel)):''}${c.mail?' · '+esc(c.mail):''}`).join('<br>')||'<span class="muted">non renseigné</span>';
+ const resp=o=>o.resp&&o.resp.name?` <span class="small muted">· responsable : ${esc(o.resp.name)}${o.resp.mail?' · '+esc(o.resp.mail):''}</span>`:'';
+ const sec=(ic0,title,o,body)=>`<section class="rcsec"><h2>${ic(ic0,18)} ${title} ${rpill(o)}${o?resp(o):''}</h2>${body}</section>`;
+ const byF=FU.map(f=>({f,n:teamList(m).filter(x=>x.fn===f.k).length+t.ext.filter(e=>e.fn===f.k).length})).filter(x=>x.n);
+ const nights=nightsWanted(m),B=L.booked||{};
+ const encL=(list,lab)=>list.length?`<ul>${list.map(x=>`<li>${x.d?fromISO(x.d).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'jour ?'} · ${dash(x.who)}${slotTxt(x)?' · '+slotTxt(x):''}</li>`).join('')}</ul>`:`<p class="muted">Aucune ${lab}.</p>`;
+ const file=f=>f?(f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a>`:esc(f.name))+` <span class="muted small">(${new Date(f.t).toLocaleDateString('fr-FR')})</span>`:'<span class="muted">non déposé</span>';
+ const head=plain?'':`<button class="back" onclick="S.rub=null;go('meeting','${m.id}')">${ic('back',16)} ${esc(mName(m))}</button>
+ <div class="head"><div><h1>Fiche récapitulative</h1><p class="muted">Tout ce qui a été renseigné pour ce meeting, au ${new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}.</p></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="copyRecap('${m.id}')">${ic('copy',16)} Copier en texte</button><button class="btn pri" onclick="document.body.classList.toggle('printmode');toast(document.body.classList.contains('printmode')?'Mode impression : utilisez Imprimer dans le menu du navigateur':'Mode normal')">${ic('file',16)} Version imprimable</button></div></div>`;
+ return `${head}<article class="fiche">
+ <header class="rchead"><div><div class="small" style="text-transform:uppercase;letter-spacing:.1em;opacity:.75">Patrouille de France · PAF OPS</div><h1>${esc(mName(m))}</h1><div class="meta">${ic('pin',14)} ${esc(m.city||'')}${m.field?' · '+esc(m.field):''}${sp?' · du '+fromISO(sp[0]).toLocaleDateString('fr-FR',{day:'numeric',month:'long'})+' au '+fromISO(sp[1]).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):''}</div>${dateChips(m)}</div>${jx(m)}</header>
+ <div class="rcgrid">
+ ${sec('users','Contacts',null,`<table class="rctab">${rrow('Organisation',who('org'))}${rrow('Directeur des vols',who('dv'))}${rrow('Responsable accueil PAF',who('acc'))}${['mairie','hotel','aero','presse','autre'].filter(k=>cs.some(c=>c.fn===k)).map(k=>rrow(FCm[k].l,who(k))).join('')}</table>`)}
+ ${sec('users','Équipe de la Patrouille',null,`<p><b>${N} personne${N>1?'s':''}</b> · ${byF.map(x=>x.n+' '+x.f.d.toLowerCase()).join(' · ')}${t.other?' · '+t.other+' autre'+(t.other>1?'s':''):''}</p>${t.ext.length?`<p class="small muted">Volontaires retenus : ${t.ext.map(e=>esc(e.name)).join(', ')}</p>`:''}`)}
+ ${sec('wrench','Technique',T,`<table class="rctab">
+  ${rrow('Informations importantes',T.chk.infos==='oui'?'<b class="okc">Lues et prises en compte</b>':'<span class="muted">pas encore</span>')}
+  ${rrow('Schéma du parking',file(T.parkFile))}
+  ${rrow('Incendie',Fi.none?'<b style="color:var(--bad)">Aucun moyen</b>':[Fi.ext?'Extincteurs : '+(Fi.exts.filter(x=>+x.n).map(x=>x.n+' × '+esc(x.t)).join(', ')||'types à préciser')+(fireOk(Fi)?' <b class="okc">(conforme)</b>':' <b style="color:var(--warn)">(sous le minimum)</b>'):'',Fi.cam?'Camion : '+(+Fi.camN||'?')+(Fi.camCat?' · catégorie OACI '+Fi.camCat+(+Fi.camCat<4?' <b style="color:var(--warn)">(4 minimum)</b>':''):''):''].filter(Boolean).join('<br>')||'<span class="muted">—</span>')}
+  ${rrow('Carburant',(FUELK.filter(([k])=>T.fuel[k].on).map(([k,l])=>l).join(' + ')||'<span class="muted">—</span>')+(fuelNeed(T)?`<br><span class="small">Besoin PAF : ${FUELK.filter(([k])=>+T.need[k]).map(([k,l])=>l+' '+nfmt(T.need[k])+' l').join(' · ')}${T.needOk?' (validé)':''}</span>`:'')+(T.fuel.tro.on||T.fuel.jet.on?(!T.fuel.f34.on?'<br><b style="color:var(--bad)">Sans F34 : prévoir l\'additif anti-givre pour les départs</b>':''):''))}
+  ${rrow('Tracteurs de piste',(T.cnt&&T.cnt.trac!=null&&T.cnt.trac!==''?T.cnt.trac+' / 2'+(+T.cnt.trac<2?' <b style="color:var(--warn)">(il en manque '+(2-T.cnt.trac)+')</b>':''):'<span class="muted">—</span>'))}
+  ${rrow('Groupes de démarrage',(T.cnt&&T.cnt.gpu!=null&&T.cnt.gpu!==''?T.cnt.gpu+' / 2'+(+T.cnt.gpu<2?' <b style="color:var(--warn)">(il en manque '+(2-T.cnt.gpu)+')</b>':''):'<span class="muted">—</span>'))}
+  ${msgs(T).length?rrow('Messages',msgs(T).map(x=>esc(x.txt)).join('<br>')):''}</table>`)}
+ ${sec('bed','Logement',L,`${L.hotels.filter(h=>h.name).map(h=>`<p><b>${esc(h.name)}</b>${h.tel?' · '+esc(fmtTel(h.tel)):''}${h.mail?' · '+esc(h.mail):''}${h.contact?' · '+esc(h.contact):''}${h.bkf?'<br>Petit-déjeuner : '+esc(h.bkf):''}${h.gmap?`<br><a href="${esc(h.gmap)}" target="_blank" rel="noopener">Lien Google</a>`:''}</p>`).join('')||'<p class="muted">Hôtel non renseigné.</p>'}
+  ${nights.length?`<table class="rctab"><tr><th>Nuit</th><td><b>Souhaitées</b></td><td><b>Réservées</b></td></tr>${nights.map(x=>{const b=B[x.d];const ok=b!=null&&b!==''&&+b>=x.n;return `<tr><th>${fromISO(x.d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}<span class="small muted"> · ${x.parts.map(p=>WHO_S[p.who]).join(' + ')}</span></th><td>${x.n}</td><td>${b==null||b===''?'<span class="muted">—</span>':ok?'<b class="okc">'+b+'</b>':'<b style="color:var(--warn)">'+b+'</b>'}</td></tr>`}).join('')}</table>`:''}`)}
+ ${sec('food','Restauration',F,days.length?`<table class="rctab">${days.map(([d,ty])=>['dej','din'].map(tt=>{const o=F.meals[d+'|'+tt]||{};return rrow(fromISO(d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})+' · '+(tt==='dej'?'déjeuner':'dîner'),o.lieu?`${esc(MEALL[o.lieu]?MEALL[o.lieu].l:o.lieu)}${o.h?' · '+(o.mode==='c'?'de '+hTxt(o.h)+' à '+hTxt(o.h2):hTxt(o.h)):''}`:'<span class="muted">—</span>')}).join('')).join('')}</table>`:'<p class="muted">Dates non renseignées.</p>')}
+ ${sec('car','Locomotion',V,`<table class="rctab">${rrow('Voitures',V.nVeh!==''&&V.nVeh!=null?`${V.nVeh} / 11${+V.nVeh<11?' <b style="color:var(--warn)">(insuffisant)</b>':''} · dont ${+V.nBig||0} grand coffre / 3`:'<span class="muted">—</span>')}${rrow('Utilitaire',yn(V.chk.util))}${rrow('Plein fait',yn(V.chk.plein))}${rrow('Télépéage et parking',yn(V.chk.peage))}${rrow('Axe rouge le jour J',yn(V.chk.axe))}${rrow('Véhicules électriques',V.chk.elec==='oui'?'Oui'+(V.recharge?' · recharge : '+esc(V.recharge):'')+(V.chk.carte==='oui'?' · carte de recharge':''):yn(V.chk.elec))}</table>`)}
+ ${sec('screen','Salles',null,`<p class="muted small">Fiche d'information (salle de briefing pilotes, salle de repos mécaniciens).</p>`)}
+ ${sec('mega','Communication',C,`<table class="rctab">${rrow('Car podium',C.chk.podium==='oui'?'<b class="okc">Présent</b>':C.chk.podium==='non'?'<b style="color:var(--warn)">Absent</b> · sono '+yn(C.chk.sono)+' · espace sécurisé '+yn(C.chk.espace)+(C.chk.espace==='non'?' · forces de l\'ordre '+yn(C.chk.police):''):'<span class="muted">—</span>')}
+  ${rrow('Rencontres',C.chk.auto==='non'?'Aucune':encL(comL(C,'meet'),'rencontre'))}${rrow('Médias',C.chk.media==='non'?'Aucune demande':encL(comL(C,'med'),'demande'))}
+  ${rrow('Réception officielle',C.chk.soiree==='oui'?`${C.soirDay?fromISO(C.soirDay).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'jour à choisir'}${C.soirInfo?' · '+esc(C.soirInfo):''}${C.soirMap?` · <a href="${esc(C.soirMap)}" target="_blank" rel="noopener">lieu</a>`:''}`:yn(C.chk.soiree))}</table>`)}
+ ${sec('radio','Directeur des vols',A,`<table class="rctab">${rrow('Plan du site',file(A.axe))}${rrow('Pilot book',A.pb?file(A.pb)+(A.pb.draft?' · <span class="muted">provisoire</span>':''):'<span class="muted">non déposé</span>')}
+  ${rrow('Plan et pilot book font ressortir',CHECKS.map(c=>`${c.l.charAt(0).toLowerCase()+c.l.slice(1)} : ${yn(A.chk[c.k])}`).join('<br>'))}
+  ${rrow('Créneaux',A.slots.filter(x=>x.deb).length?A.slots.filter(x=>x.deb).sort((a,b)=>(a.date+a.deb).localeCompare(b.date+b.deb)).map(x=>`${fromISO(x.date).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${SLOTT[x.type].l} ${hTxt(x.deb)}${x.fin?' – '+hTxt(x.fin):''}`).join('<br>'):'<span class="muted">—</span>')}</table>`)}
+ </div>
+ <footer class="small muted" style="margin-top:14px">Fiche générée par PAF OPS · ${new Date().toLocaleString('fr-FR')}</footer></article>`}
+
+/* ====================== Temps de réchauffement du POD fumigène (note de travail interne PAF) ====================== */
+const POD={sat:[-10,-20,-30,-40,-50],sol:[15,20,25,30,35],expo:[10,20,30],
+ t:{10:[[0,0,0,0,0],[90,90,60,60,60],[240,210,180,150,150],[360,300,270,240,210],[450,390,360,300,300]],
+    20:[[0,0,0,0,0],[180,150,150,120,120],[360,330,270,240,240],[510,450,390,360,330],[600,540,510,450,420]],
+    30:[[0,0,0,0,0],[240,210,180,150,150],[420,360,330,300,270],[570,510,450,420,360],[600,600,570,510,480]]}};
+function podIn(){if(!S.pod){let o=null;try{o=JSON.parse(localStorage.getItem(KEY+':pod')||'null')}catch(e){}S.pod=Object.assign({sat:-30,expo:20,sol:20},o||{})}return S.pod}
+function podSet(k,v){const o=podIn();o[k]=+v;try{localStorage.setItem(KEY+':pod',JSON.stringify(o))}catch(e){}render()}
+function podCalc(){const o=podIn(),notes=[];
+ if(o.sat>=-10)return {sec:0,notes:['Au-dessus de −10 °C en transit, le réchauffement cinétique à 300 kt suffit : membrane au-dessus de 0 °C.'],ok:true};
+ if(o.sat<-50)notes.push('En dessous de −50 °C : hors tableau, la règle actuelle de 10 minutes s\'applique.');
+ if(o.sol<15)notes.push('Vol en basse altitude à moins de 15 °C : hors tableau, la règle actuelle de 10 minutes s\'applique.');
+ if(o.sat<-50||o.sol<15)return {sec:600,notes,cap:true};
+ // Lecture prudente : ligne la plus froide, colonne la plus fraîche, exposition la plus longue qui encadrent la situation
+ const ri=POD.sat.findIndex(x=>x<=o.sat),ci=(()=>{let i=POD.sol.length-1;while(i>0&&POD.sol[i]>o.sol)i--;return i})(),ex=o.expo<=10?10:o.expo<=20?20:30;
+ const row=POD.t[ex][Math.max(0,ri)];let sec=row[ci];
+ if(POD.sat[ri]!==o.sat)notes.push(`Lecture à la ligne ${POD.sat[ri]} °C (valeur la plus pénalisante encadrant ${o.sat} °C).`);
+ if(POD.sol[ci]!==o.sol)notes.push(`Lecture à la colonne sol ${POD.sol[ci]} °C (valeur la plus pénalisante encadrant ${o.sol} °C).`);
+ if(ex!==o.expo)notes.push(`Exposition arrondie à ${ex===30?'≥ 30':ex} minutes.`);
+ return {sec,notes,cap:sec>=600,ok:sec===0}}
+const mmss=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+function vPod(){const o=podIn(),x=podCalc(),ex=o.expo<=10?10:o.expo<=20?20:30;
+ const chips=(k,vals,fmt)=>`<div class="chips">${vals.map(v=>`<button aria-pressed="${o[k]===v}" onclick="podSet('${k}',${v})">${fmt(v)}</button>`).join('')}</div>`;
+ return `<div class="pfgrid">
+  <section class="dvbox"><div class="dvsec"><h3 style="margin:0 0 8px">Conditions</h3>
+   <label class="l">Température extérieure (SAT) pendant le transit en altitude</label>${chips('sat',[-10,-15,-20,-25,-30,-35,-40,-45,-50],v=>v+' °C')}
+   <label class="l" style="margin-top:10px">Temps de transit à la température négative (MA / HA)</label>${chips('expo',[10,15,20,25,30],v=>v>=30?'≥ 30 min':v+' min')}
+   <label class="l" style="margin-top:10px">Température extérieure (SAT) pendant le vol en basse altitude</label>${chips('sol',[10,15,20,25,30,35],v=>v+' °C')}
+   <p class="small muted" style="margin:12px 0 0">Vol en basse altitude à 300 kt (échauffement cinétique ≈ +10,5 °C déjà compté). Les SAT sont les températures statiques.</p></div></section>
+  <section>
+   <div class="pfc ${x.cap?'ko':x.ok?'ok':''}" style="text-align:center;padding:22px"><span class="pfl">Temps de réchauffement avant usage du POD</span><b style="font-size:64px" id="podt">${mmss(x.sec)}</b><span class="pfs">${x.ok?'Pas d\'attente : la membrane reste au-dessus de 0 °C.':x.cap?'Plafond de la règle actuelle (10 minutes).':'Arrondi à la demi-minute supérieure, lecture prudente du tableau.'}</span>
+</div>
+   ${x.notes.map(n=>`<div class="pfal" style="--c:#64748b">${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<div><span>${n}</span></div></div>`).join('')}
+   <div class="pfal" style="--c:#f59e0b">${tile({i:'alert',c1:'#f59e0b',c2:'#c2410c'},'sm')}<div><b>Règle en vigueur : 10 minutes</b><span>Ces temps sont une aide à la décision issue d'une note de travail interne ; ils ne dépassent jamais 10 minutes et ne remplacent pas la règle opérationnelle tant qu'elle n'a pas évolué par les canaux habituels.</span></div></div>
+   <details class="zrt" style="margin-top:12px"><summary>${tile({i:'grid',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Tableau utilisé</b><span class="small muted">Exposition ${ex===30?'≥ 30':ex} minutes · lignes : SAT transit · colonnes : SAT vol en basse altitude</span></span><span class="chev">${ic('chev',20)}</span></summary>
+    <div class="dimwrap" style="margin-top:10px"><table class="dimtab"><thead><tr><th>SAT transit</th>${POD.sol.map(s=>`<th>Sol ${s} °C</th>`).join('')}</tr></thead><tbody>${POD.sat.map((sa,i)=>`<tr><td>${sa} °C</td>${POD.t[ex][i].map((v,j)=>`<td style="${v===0?'color:var(--ok);font-weight:800':v>=600?'color:var(--warn);font-weight:800':''}">${mmss(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <p class="small muted" style="margin-top:8px">Modèle : constantes τ_inox = 790 s et τ_fumée = 12 096 s mesurées au sol, valeur la plus pénalisante pour une température initiale au sol de 5 à 35 °C, plafond 10:00.</p></details>
+  </section></div>`}
+
+/* ====================== Perfos décollage / atterrissage Cirrus ====================== */
+/* Source : Lutin SR2X édition 2024, §12 (SR20 G3, 3050 lb) et §13 (SR22 G3, 3400 lb ; SR22 G5, 3600 lb, extrait du POH).
+   Distances en mètres (G5 : pieds convertis). Tableaux « tirés du POH, non officiels » : aide à la décision uniquement. */
+const CP_ALT9=[0,500,1000,1500,2000,2500,3000,3500,4000],CP_T9=[0,5,10,15,20,25,30,35,40],CP_ALT5=[0,1000,2000,3000,4000],CP_T5=[0,10,20,30,40];
+const CP={
+ SR20:{l:'SR20 G3',w:'3050 lb',hw:13,
+  to:{dur:[[608,637,665,697,728,763,797,836,874],[631,660,690,723,756,791,827,867,907],[653,684,715,749,783,820,857,898,939],[677,704,730,759,788,820,851,886,920],[701,734,767,803,839,884,928,968,1007],[726,760,794,831,869,912,956,999,1043],[750,785,820,859,898,941,983,1031,1078],[776,812,848,888,928,972,1017,1066,1115],[801,838,875,917,958,1004,1050,1101,1151]],
+      herbe:[[688,721,753,789,825,864,903,947,991],[714,748,782,819,856,897,938,983,1028],[740,775,810,849,888,930,972,1019,1066],[767,797,827,860,893,929,965,1005,1044],[795,832,870,911,952,1003,1054,1099,1143],[823,861,900,943,986,1035,1085,1134,1184],[851,890,930,975,1019,1068,1116,1170,1225],[880,921,962,1008,1054,1104,1155,1210,1266],[909,951,993,1041,1088,1140,1193,1251,1308]]},
+  ld:{dur:[[780,788,796,805,813,822,831,841,851],[788,796,804,813,822,831,841,851,861],[795,804,812,822,831,841,850,861,871],[804,811,818,826,833,841,848,857,865],[812,821,830,840,849,859,869,880,891],[820,829,839,849,859,869,879,890,902],[828,838,847,858,868,879,889,901,912],[837,846,856,867,877,888,899,911,923],[845,855,865,876,886,898,909,921,933]],
+      herbe:[[829,838,847,857,866,876,886,897,908],[838,847,856,866,876,886,897,908,919],[846,856,865,876,886,897,907,919,930],[856,864,872,880,888,897,905,914,924],[865,875,885,895,906,917,928,940,952],[874,884,894,905,916,928,939,951,964],[883,893,904,915,927,939,950,963,975],[892,903,914,925,937,949,961,974,987],[901,913,924,935,947,959,972,985,998]]},
+  as:{dur:[[788,831,876,922,970],[839,885,934,984,1036],[894,945,998,1052,1108],[955,1010,1067,1126,1187],[1021,1081,1143,1208,1273]],
+      herbe:[[931,983,1037,1092,1149],[992,1048,1107,1167,1229],[1058,1119,1183,1248,1315],[1131,1198,1267,1337,1410],[1211,1283,1358,1435,1514]]}},
+ G3:{l:'SR22 G3',w:'3400 lb',hw:13,
+  to:{dur:[[436,458,480,504,528,555,581,611,641],[453,475,498,523,548,575,603,634,665],[469,492,515,541,567,596,625,657,689],[486,507,527,549,571,596,620,647,674],[503,528,553,581,608,639,669,704,738],[521,546,572,602,633,663,693,728,764],[538,565,591,624,657,687,716,753,790],[556,584,611,643,676,708,740,778,817],[574,603,631,663,694,729,764,804,843]],
+      herbe:[[492,517,542,569,596,625,654,689,724],[511,536,562,590,618,649,680,716,752],[529,555,581,611,640,673,706,743,779],[549,572,595,620,645,673,701,731,762],[568,596,625,656,687,722,756,796,835],[588,617,646,681,715,749,783,824,864],[608,638,668,706,743,777,810,852,894],[629,660,691,728,764,801,837,881,924],[649,681,714,749,785,825,865,910,955]]},
+  ld:{dur:[[690,698,706,715,724,734,743,753,763],[698,707,715,724,734,765,797,785,773],[706,715,724,734,743,797,850,817,783],[715,722,729,737,744,796,848,813,777],[723,733,742,752,761,772,782,793,804],[732,741,751,761,771,781,792,803,815],[740,750,760,770,780,791,802,814,825],[749,759,769,779,790,801,813,824,836],[758,768,778,789,799,811,823,835,846]],
+      herbe:[[756,765,774,784,794,806,817,828,839],[765,775,784,795,806,824,842,846,851],[774,784,794,806,817,842,868,865,862],[785,793,801,809,818,842,866,861,855],[793,804,816,826,837,849,861,874,886],[803,815,826,837,848,860,872,885,898],[813,825,836,847,859,871,884,897,910],[824,835,846,858,870,883,896,908,920],[834,845,856,868,880,894,908,919,931]]},
+  as:{dur:[[681,715,751,787,824],[722,759,797,837,877],[767,807,848,891,935],[816,859,904,950,998],[870,917,966,1016,1067]],
+      herbe:[[803,844,887,930,975],[852,897,942,990,1038],[905,954,1004,1054,1107],[965,1017,1070,1126,1183],[1029,1086,1144,1204,1266]]}},
+ G5:{l:'SR22 G5',w:'3600 lb',hw:12,t6:[0,10,20,30,40,50],vlof:76,v50:84,
+  roll:[[965,1042,1123,1207,1294,1384],[1063,1148,1237,1330,1426,1526],[1172,1267,1365,1467,1573,1683],[1295,1399,1507,1620,1737,1858],[1431,1546,1666,1791,1920,2054]],
+  d50:[[1680,1804,1933,2066,2203,2345],[1844,1980,2121,2267,2418,2573],[2025,2174,2329,2490,2656,2827],[2226,2391,2561,2738,2920,3109],[2451,2632,2820,3014,3215,3422]],
+  ld0:{dur:[[965,989,1012,1036,1061],[989,1014,1038,1063,1089],[1013,1040,1066,1092,1119],[1040,1068,1095,1123,1151],[1069,1097,1126,1155,1185]],
+       herbe:[[1049,1075,1102,1129,1156],[1075,1103,1131,1159,1188],[1103,1133,1162,1192,1222],[1133,1164,1195,1226,1258],[1165,1197,1230,1262,1295]]}}};
+const CP_RWY=[['dur','Piste en dur'],['herbe','Herbe sèche'],['herbem','Herbe mouillée']];
+function cpIn(){if(!S.cp){let o=null;try{o=JSON.parse(localStorage.getItem(KEY+':cperf')||'null')}catch(e){}S.cp=Object.assign({type:'SR20',alt:0,qnh:1013,T:15,wind:0,rwy:'dur',L:1500},o||{})}return S.cp}
+function cpSet(k,v){const o=cpIn();o[k]=v;try{localStorage.setItem(KEY+':cperf',JSON.stringify(o))}catch(e){}render()}
+function bil(tab,alts,temps,alt,T){ // tab[alt][T] → interpolation bilinéaire, bornée aux tableaux
+ const rows=tab.map(r=>lerp(temps,r,T));return lerp(alts,rows,alt)}
+function cpCalc(){const o=cpIn(),A=CP[o.type]||CP.SR20,notes=[],al=[];
+ const zp=Math.round((+o.alt||0)+(1013-(+o.qnh||1013))*27);const T=+o.T||0,w=+o.wind||0,L=+o.L||0;
+ const grass=o.rwy!=='dur',wet=o.rwy==='herbem';const surf=grass?'herbe':'dur';
+ if(zp>4000)notes.push(`Altitude pression ${zp} ft : au-delà des tableaux (4 000 ft), valeurs prises à 4 000 ft — prudence.`);
+ if(zp<0)notes.push('Altitude pression négative : valeurs prises au niveau de la mer.');
+ const tmax=A.t6?50:40;if(T>tmax)notes.push(`Température au-delà des tableaux (${tmax} °C), valeurs prises à ${tmax} °C — prudence.`);if(T<0)notes.push('Température négative : valeurs prises à 0 °C.');
+ // vent : −10 % par 13 kt (12 kt sur G5) de face, +10 % par 2 kt arrière (plafond 10 kt)
+ const kw=w>=0?1-0.10*w/A.hw:1+0.10*(-w)/2;
+ if(w<-10)al.push({t:'bad',h:'Vent arrière supérieur à 10 kt',p:'Les tableaux ne couvrent pas plus de 10 kt de vent arrière.'});
+ else if(w<0)al.push({t:'warn',h:'Vent arrière',p:`Distances majorées de ${Math.round(0.10*(-w)/2*100)} % (10 % par 2 kt).`});
+ if(wet)al.push({t:'bad',h:'Herbe mouillée : interdite sauf urgence (REAF)',p:'Roulement au décollage +30 %, à l\'atterrissage +60 % par rapport à l\'herbe sèche.'});
+ let to,roll,as,ld,ldLab,vl='';
+ if(A.t6){ // SR22 G5 : POH 3600 lb, en pieds
+  const ft=x=>x*0.3048;const r=bil(A.roll,CP_ALT5,A.t6,zp,T),d=bil(A.d50,CP_ALT5,A.t6,zp,T);
+  let kr=grass?(wet?1.3:1.2):1;roll=ft(r)*kr*kw;to=(ft(d)+ft(r)*(kr-1))*kw;
+  ld=bil(A.ld0[surf],CP_ALT5,CP_T5,zp,T)*kw*(wet?1.6:1);ldLab='Atterrissage volets 0 %';as=null;vl=`Vlof ${A.vlof} kt · 50 ft ${A.v50} kt`;
+  notes.push('SR22 G5 : distances du POH à 3 600 lb (herbe : roulement +20 %, mouillée +30 %). L\'accélération-arrêt n\'est pas tabulée dans le Lutin pour le G5. Atterrissage : tableau volets 0 % (3 600 lb).');
+ }else{
+  to=bil(A.to[surf],CP_T9,CP_ALT9,T,zp)*kw;roll=to*2/3*(grass?1.1:1)*(wet?1.3:1);
+  as=bil(A.as[surf],CP_ALT5,CP_T5,zp,T)*kw*(wet?1.3:1);
+  ld=bil(A.ld[surf],CP_T9,CP_ALT9,T,zp)*kw*(wet?1.6:1);ldLab='Atterrissage volets 100 %';
+ }
+ const R=x=>x==null?null:Math.round(x/5)*5;to=R(to);roll=R(roll);as=R(as);ld=R(ld);
+ if(L>0){if(to>L)al.push({t:'bad',h:'Piste trop courte pour le décollage',p:`${to} m nécessaires (passage des 15 m) pour ${L} m de piste.`});
+  if(as!=null&&as>L)al.push({t:'bad',h:'Accélération-arrêt supérieure à la piste',p:`${as} m pour s'arrêter après une interruption à Vr, pour ${L} m disponibles. Fixer un repère d'interruption avant Vr.`});
+  else if(as!=null&&as>L*0.9)al.push({t:'warn',h:'Accélération-arrêt proche de la longueur de piste',p:`${as} m pour ${L} m : marge inférieure à 10 %.`});
+  if(ld>L)al.push({t:'bad',h:'Piste trop courte pour l\'atterrissage',p:`${ld} m nécessaires pour ${L} m de piste.`});}
+ if(!al.length)al.push({t:'ok',h:'Compatible avec la piste',p:L>0?`Marge au décollage ${L-to} m · ${as!=null?`accélération-arrêt ${L-as} m · `:''}atterrissage ${L-ld} m.`:'Renseignez la longueur de piste pour vérifier les marges.'});
+ return {A,zp,T,w,kw,to,roll,as,ld,ldLab,vl,notes,al,grass,wet,L}}
+function vCPerf(tabs){const o=cpIn(),x=cpCalc(),A=x.A;
+ const num=(k,lab,unit,step,min,max)=>`<label class="pfn"><span>${lab}</span><div class="pfin"><button onclick="cpSet('${k}',Math.max(${min},${(+o[k]||0)-step}))" aria-label="Moins">−</button><input class="in" type="number" inputmode="decimal" step="${step}" min="${min}" max="${max}" value="${esc(String(o[k]))}" onchange="cpSet('${k}',this.value===''?0:+this.value)"><button onclick="cpSet('${k}',Math.min(${max},${(+o[k]||0)+step}))" aria-label="Plus">+</button><b>${unit}</b></div></label>`;
+ const card=(lab,v,unit,sub,cls)=>`<div class="pfc ${cls||''}"><span class="pfl">${lab}</span><b>${v==null?'—':v}<small>${v==null?'':unit}</small></b>${sub?`<span class="pfs">${sub}</span>`:''}</div>`;
+ const AL={bad:['#ef4444','#b91c1c','alert'],warn:['#f59e0b','#c2410c','alert'],ok:['#22c55e','#15803d','check'],info:['#64748b','#334155','info']};
+ const ko=(v)=>x.L>0&&v!=null&&v>x.L?'ko':'';
+ return `${NOTE}<div class="head"><div><h1>Perfos Cirrus</h1><p class="muted">Décollage volets 50 %, accélération-arrêt, atterrissage · masse maximale. D'après le Lutin SR2X 2024 (tableaux tirés du POH).</p></div></div>${tabs}
+ <div class="pfgrid">
+  <section class="dvbox"><div class="dvsec">
+   <h3 style="margin:0 0 8px">Conditions du jour</h3>
+   <label class="l">Avion</label><div class="chips">${Object.keys(CP).map(k=>`<button aria-pressed="${o.type===k}" onclick="cpSet('type','${k}')">${CP[k].l}</button>`).join('')}</div>
+   <div class="small muted" style="margin:4px 0 8px">Masse de référence ${A.w}${x.vl?' · '+x.vl:''}.</div>
+   ${num('alt','Altitude du terrain','ft',250,-500,9000)}
+   ${num('qnh','QNH','hPa',1,900,1060)}
+   <div class="small muted" style="margin:-4px 0 8px">Altitude pression : <b>${x.zp} ft</b></div>
+   ${num('T','Température','°C',1,-30,50)}
+   ${num('wind','Vent dans l\'axe (+ face / − arrière)','kt',1,-20,60)}
+   <label class="l">Piste</label><div class="chips">${CP_RWY.map(([k,l])=>`<button aria-pressed="${o.rwy===k}" onclick="cpSet('rwy','${k}')">${l}</button>`).join('')}</div>
+   <div style="height:8px"></div>${num('L','Longueur de piste','m',50,0,5000)}
+  </div></section>
+  <section>
+   <div class="pfcards">
+    ${card('Décollage (15 m)',x.to,'m','volets 50 %, passage des 15 m',ko(x.to))}
+    ${card('Roulement au décollage',x.roll,'m',A.t6?'POH ground roll':'≈ 2/3 de la distance'+(x.grass?' + 10 % herbe':'')+' · repère d\'accélération')}
+    ${card('Accélération-arrêt',x.as,'m',x.as==null?'non tabulé pour le G5':'interruption à Vr, réaction 2 s',ko(x.as))}
+    ${card(x.ldLab,x.ld,'m','à la masse max',ko(x.ld))}
+   </div>
+   ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
+   ${x.notes.map(n=>`<div class="pfal" style="--c:#64748b">${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<div><span>${n}</span></div></div>`).join('')}
+   <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Lutin SR2X 2024, §12 et §13</span></span><span class="chev">${ic('chev',20)}</span></summary>
+    <div class="small" style="margin-top:10px;line-height:1.6">
+     <p>Lecture des tableaux du Lutin (altitude 0 à 4 000 ft, température 0 à 40 °C${A.t6?' — 50 °C pour le G5':''}) par interpolation, à l'altitude pression (altitude terrain corrigée du QNH, 27 ft/hPa). Arrondi à 5 m.</p>
+     <p><b>Vent</b> : −10 % par ${A.hw} kt de vent de face, +10 % par 2 kt de vent arrière (maximum 10 kt) — facteur appliqué ${x.kw.toFixed(2)}. <b>Herbe</b> : tableaux « dry grass » ; herbe mouillée interdite sauf urgence (roulement +30 % au décollage, +60 % à l'atterrissage). <b>Roulement au décollage</b> ≈ 2/3 de la distance de décollage (+10 % en herbe) : à comparer aux repères de l'aérodrome pour contrôler l'accélération. <b>Accélération-arrêt</b> : V1 = Vr, volets 50 %, délai de freinage 2 s, masse max (calcul obligatoire, CPMRA).</p>
+     <p class="muted">Tableaux marqués « tirés du POH, non officiels » dans le Lutin : aide à la décision du commandant de bord, qui reste responsable du calcul réglementaire avec le POH.</p>
+    </div></details>
+  </section>
+ </div>`}
+
+/* ====================== Centrage Cirrus SR20 / SR22 ====================== */
+/* Modèle : feuilles « Centrage SR20 » et « Centrage SR22 G3-G5 » de l'escadron (masses en lb, moments en lb·in/1000),
+   masses à vide et moments : Lutin SR2X édition 2024, §11. Les bras sont ceux des feuilles (par kg ou par USG). */
+const CG_T={
+ SR20:{l:'SR20',mtow:3050,fuelMax:56,tks:false,arm:{f:0.32,r:0.40,b:0.46,fuel:0.93,tks:1.4},
+  env:w=>[(w-132.8)/6.8,(w+23.6)/6.8],wmin:2200},
+ G3:{l:'SR22 G3',mtow:3400,fuelMax:92,tks:true,arm:{f:0.32,r:0.40,b:0.46,fuel:0.93,tks:1.4},
+  fwd:[[2200,304],[2300,318],[2400,333],[2500,347],[2600,362],[2700,375],[2800,390],[2900,406],[3000,421],[3100,437],[3200,452],[3300,467],[3400,484]],
+  env:function(w){return [lerp(this.fwd.map(p=>p[0]),this.fwd.map(p=>p[1]),w),326+(w-2200)*178/1200]},wmin:2200},
+ G5:{l:'SR22 G5',mtow:3600,fuelMax:92,tks:true,arm:{f:0.1435*2.205,r:0.18*2.205,b:0.208*2.205,fuel:0.1549*6,tks:0.148*9.2},
+  env:w=>[304+(w-2200)*207/1400,326+(w-2200)*207/1400],wmin:2200}};
+const CG_FLEET=[
+ ['SR20','F-HGDU',2167,304.6],['SR20','F-HKCB',2179,306.6],['SR20','F-HKCD',2184,308.2],['SR20','F-HKCE',2178,308.2],['SR20','F-HKCG',2178,306.2],
+ ['SR20','F-HKCH',2177,306.0],['SR20','F-HKCJ',2175,306.0],['SR20','F-HKCK',2178,306.6],['SR20','F-HKCM',2178,306.1],['SR20','F-HKCN',2175,305.5],
+ ['SR20','F-HKCP',2175,305.5],['SR20','F-HKCQ',2170,304.0],['SR20','F-HKCT',2172,304.8],['SR20','F-HKCU',2179,306.2],['SR20','F-HKCV',2174,305.0],['SR20','F-HKCX',2172,304.8],
+ ['G3','F-HKCA',2336,323.6],['G3','F-HKCF',2317,320.0],['G3','F-HKCI',2344,324.4],['G3','F-HKCL',2323,322.2],['G3','F-HKCO',2328,322.1],
+ ['G5','F-GKCI',2400,334.5],['G5','F-HKCC',2420,339.6],['G5','F-HKCY',2444,345.1],['G5','F-HKCZ',2427,340.7]];
+const CG_BAGMAX=59,LB=2.205;
+function cgIn(){if(!S.cg){let o=null;try{o=JSON.parse(localStorage.getItem(KEY+':cg')||'null')}catch(e){}
+ S.cg=Object.assign({type:'SR20',ac:'F-HKCB',ew:2179,em:306.6,fl:85,fr:0,rl:0,rr:0,bag:5,fuel:40,tks:3,burn:15},o||{})}return S.cg}
+function cgSet(k,v){const o=cgIn();o[k]=v;
+ if(k==='type'){const f=CG_FLEET.find(a=>a[0]===v);if(f){o.ac=f[1];o.ew=f[2];o.em=f[3]}else{o.ac='autre'}o.fuel=Math.min(o.fuel,CG_T[v].fuelMax)}
+ if(k==='ac'){const f=CG_FLEET.find(a=>a[1]===v);if(f){o.type=f[0];o.ew=f[2];o.em=f[3]}}
+ try{localStorage.setItem(KEY+':cg',JSON.stringify(o))}catch(e){}render()}
+function cgCalc(){const o=cgIn(),T=CG_T[o.type]||CG_T.SR20,A=T.arm;
+ const kg=k=>Math.max(0,+o[k]||0);const tks=T.tks?Math.max(0,+o.tks||0):0,fuel=Math.max(0,+o.fuel||0),burn=Math.min(fuel,Math.max(0,+o.burn||0));
+ const pax=kg('fl')+kg('fr')+kg('rl')+kg('rr')+kg('bag');
+ const W=(+o.ew||0)+pax*LB+fuel*6+tks*9.2;
+ const M=(+o.em||0)+(kg('fl')+kg('fr'))*A.f+(kg('rl')+kg('rr'))*A.r+kg('bag')*A.b+fuel*A.fuel+tks*A.tks;
+ const pt=(w,m)=>{const [mn,mx]=T.env(w);const pct=mx>mn?100*(m-mn)/(mx-mn):0;return {w,m,mn,mx,pct,cg:w?m*1000/w:0,inEnv:m>=mn-1e-9&&m<=mx+1e-9&&w<=T.mtow}};
+ const to=pt(W,M),ldg=pt(W-burn*6,M-burn*A.fuel),zfw=pt(W-fuel*6-tks*9.2,M-fuel*A.fuel-tks*A.tks);
+ const rest=(T.mtow-W)/LB,fuelMax=Math.max(0,Math.min(T.fuelMax,fuel+(T.mtow-W)/6));
+ const al=[];
+ if(W>T.mtow)al.push({t:'bad',h:'Masse maximale dépassée',p:`${Math.round(W)} lb pour ${T.mtow} lb autorisées (${Math.round((W-T.mtow)/LB)} kg de trop). Réduire le carburant ou la charge.`});
+ if(!to.inEnv&&W<=T.mtow)al.push({t:'bad',h:to.m<to.mn?'Centrage trop avant au décollage':'Centrage trop arrière au décollage',p:'Le point de décollage est hors de l\'enveloppe. Déplacer des masses (bagages, passagers) ou revoir le carburant.'});
+ if(to.inEnv&&!ldg.inEnv)al.push({t:'bad',h:'Hors enveloppe à l\'atterrissage',p:'En consommant le carburant prévu, le centrage sort de l\'enveloppe. Revoir la répartition des masses.'});
+ if(to.inEnv&&ldg.inEnv&&!zfw.inEnv)al.push({t:'warn',h:'Hors enveloppe réservoirs vides',p:'Avec tout le carburant consommé le centrage sortirait de l\'enveloppe : attention en cas de vol plus long que prévu.'});
+ if(kg('bag')>CG_BAGMAX)al.push({t:'bad',h:'Soute bagages : 59 kg maximum',p:`${kg('bag')} kg saisis pour 130 lb (59 kg) autorisés.`});
+ if(fuel>T.fuelMax)al.push({t:'warn',h:'Carburant au-dessus du plein complet',p:`Plein complet ${T.fuelMax} USG sur ${T.l}.`});
+ if(to.inEnv&&W<=T.mtow&&(to.pct<8||to.pct>92))al.push({t:'warn',h:'Centrage proche d\'une limite',p:`Point de décollage à ${Math.round(to.pct)} % de la plage (0 % = limite avant, 100 % = limite arrière).`});
+ if(!al.length)al.push({t:'ok',h:'Dans l\'enveloppe',p:`Décollage, atterrissage estimé et réservoirs vides sont dans les limites. Charge utile restante ≈ ${Math.max(0,Math.round(rest))} kg.`});
+ return {T,W,M,to,ldg,zfw,rest,fuelMax,pax,burn,al,ok:al[0].t==='ok'||al.every(a=>a.t!=='bad')}}
+function cgSvg(x){const T=x.T,w0=T.wmin-100,w1=T.mtow+150,pts=[];const n=48,CG=(m,w)=>m*1000/w;
+ for(let i=0;i<=n;i++){const w=T.wmin+(T.mtow-T.wmin)*i/n;pts.push([CG(T.env(w)[0],w),w])}
+ for(let i=n;i>=0;i--){const w=T.wmin+(T.mtow-T.wmin)*i/n;pts.push([CG(T.env(w)[1],w),w])}
+ const ms=pts.map(p=>p[0]).concat([x.to.cg,x.ldg.cg,x.zfw.cg]),m0=Math.min(...ms)-1.5,m1=Math.max(...ms)+1.5;
+ const Wd=420,Hd=300,L=52,R=14,Tp=14,B=36;const X=m=>L+(m-m0)/(m1-m0)*(Wd-L-R),Y=w=>Tp+(w1-w)/(w1-w0)*(Hd-Tp-B);
+ const poly=pts.map(p=>`${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join(' ');
+ const gy=[];for(let w=Math.ceil(w0/200)*200;w<=w1;w+=200)gy.push(w);const gx=[];for(let m=Math.ceil(m0);m<=m1;m+=1)gx.push(m);
+ const dot=(p,c,lab,r)=>{const left=X(p.cg)>Wd-110;return `<circle cx="${X(p.cg).toFixed(1)}" cy="${Y(p.w).toFixed(1)}" r="${r}" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${(X(p.cg)+(left?-r-4:r+4)).toFixed(1)}" y="${(Y(p.w)+4).toFixed(1)}" class="cgl" fill="${c}" text-anchor="${left?'end':'start'}">${lab}</text>`};
+ const okc=x.to.inEnv&&x.ldg.inEnv&&x.W<=T.mtow?'var(--ok)':'var(--bad)';
+ return `<svg class="cgsvg" viewBox="0 0 ${Wd} ${Hd}" role="img" aria-label="Enveloppe de centrage ${T.l}">
+  ${gy.map(w=>`<line class="cgg" x1="${L}" x2="${Wd-R}" y1="${Y(w).toFixed(1)}" y2="${Y(w).toFixed(1)}"/><text class="cgt" x="${L-6}" y="${(Y(w)+4).toFixed(1)}" text-anchor="end">${w}</text>`).join('')}
+  ${gx.map(m=>`<line class="cgg" y1="${Tp}" y2="${Hd-B}" x1="${X(m).toFixed(1)}" x2="${X(m).toFixed(1)}"/><text class="cgt" y="${Hd-B+14}" x="${X(m).toFixed(1)}" text-anchor="middle">${m}</text>`).join('')}
+  <line class="cgmax" x1="${L}" x2="${Wd-R}" y1="${Y(T.mtow).toFixed(1)}" y2="${Y(T.mtow).toFixed(1)}"/><text class="cgt" x="${Wd-R}" y="${(Y(T.mtow)-5).toFixed(1)}" text-anchor="end">Masse max ${T.mtow} lb</text>
+  <polygon class="cgenv" points="${poly}" style="--c:${okc}"/>
+  <line class="cgline" x1="${X(x.to.cg).toFixed(1)}" y1="${Y(x.to.w).toFixed(1)}" x2="${X(x.zfw.cg).toFixed(1)}" y2="${Y(x.zfw.w).toFixed(1)}"/>
+  ${dot(x.zfw,'#64748b','Réservoirs vides',5)}${dot(x.ldg,'#f59e0b','Atterrissage',6)}${dot(x.to,x.to.inEnv&&x.W<=T.mtow?'#16a34a':'#dc2626','Décollage',8)}
+  <text class="cgt" x="${(L+(Wd-L-R)/2).toFixed(1)}" y="${Hd-4}" text-anchor="middle">Centrage (pouces en arrière de la référence)</text>
+  <text class="cgt" transform="translate(11 ${((Hd-B)/2+Tp).toFixed(1)}) rotate(-90)" text-anchor="middle">Masse (lb)</text></svg>`}
+function vCentrage(tabs){const o=cgIn(),x=cgCalc(),T=x.T;
+ const num=(k,lab,unit,step,min,max,sub)=>`<label class="pfn"><span>${lab}${sub?` <small class="muted" style="font-weight:600">${sub}</small>`:''}</span><div class="pfin"><button onclick="cgSet('${k}',Math.max(${min},${(+o[k]||0)-step}))" aria-label="Moins">−</button><input class="in" type="number" inputmode="decimal" step="${step}" min="${min}" ${max!=null?`max="${max}"`:''} value="${esc(String(o[k]))}" onchange="cgSet('${k}',this.value===''?0:+this.value)"><button onclick="cgSet('${k}',${(+o[k]||0)+step})" aria-label="Plus">+</button><b>${unit}</b></div></label>`;
+ const card=(lab,v,unit,sub,cls)=>`<div class="pfc ${cls||''}"><span class="pfl">${lab}</span><b>${v}<small>${unit}</small></b>${sub?`<span class="pfs">${sub}</span>`:''}</div>`;
+ const AL={bad:['#ef4444','#b91c1c','alert'],warn:['#f59e0b','#c2410c','alert'],ok:['#22c55e','#15803d','check'],info:['#64748b','#334155','info']};
+ const fleet=CG_FLEET.filter(a=>a[0]===o.type);
+ const kgF=w=>Math.round(w/LB);
+ return `${NOTE}<div class="head"><div><h1>Centrage Cirrus</h1><p class="muted">SR20 · SR22 G3 · SR22 G5. Masses en kilos, carburant en gallons US : le résultat se met à jour tout seul.</p></div></div>${tabs}
+ <div class="pfgrid">
+  <section class="dvbox"><div class="dvsec">
+   <h3 style="margin:0 0 8px">L'avion</h3>
+   <div class="chips">${Object.keys(CG_T).map(k=>`<button aria-pressed="${o.type===k}" onclick="cgSet('type','${k}')">${CG_T[k].l}</button>`).join('')}</div>
+   <label class="l" style="margin-top:10px">Immatriculation</label>
+   <select class="in" style="width:100%" onchange="cgSet('ac',this.value)">${fleet.map(a=>`<option value="${a[1]}" ${o.ac===a[1]?'selected':''}>${a[1]} · ${a[2]} lb</option>`).join('')}<option value="autre" ${o.ac==='autre'?'selected':''}>Autre avion (saisie manuelle)</option></select>
+   ${o.ac==='autre'?`<div class="pfr" style="grid-template-columns:1fr 1fr"><label>Masse à vide (lb)<input class="in" type="number" step="1" value="${o.ew}" onchange="cgSet('ew',+this.value)"></label><label>Moment (/1000)<input class="in" type="number" step="0.1" value="${o.em}" onchange="cgSet('em',+this.value)"></label></div>`:`<div class="small muted" style="margin:4px 0 0">Masse à vide équipé <b>${o.ew} lb</b> (${kgF(o.ew)} kg) · moment <b>${o.em}</b> · Lutin 2024.</div>`}
+   <h3 style="margin:16px 0 4px">À bord</h3>
+   <div class="small muted" style="margin-bottom:4px">1 personne = masse à nu + 5 kg (85 kg en moyenne).</div>
+   ${num('fl','Pilote (avant gauche)','kg',5,0,200)}
+   ${num('fr','Passager avant droit','kg',5,0,200)}
+   ${num('rl','Arrière gauche','kg',5,0,200)}
+   ${num('rr','Arrière droit','kg',5,0,200)}
+   ${num('bag','Bagages','kg',5,0,null,'max 59 kg')}
+   <h3 style="margin:16px 0 4px">Carburant</h3>
+   ${num('fuel','Carburant au décollage','USG',5,0,null,`plein complet ${T.fuelMax} USG`)}
+   ${T.tks?num('tks','Liquide TKS (dégivrage)','gal',1,0,8):''}
+   ${num('burn','Consommation prévue du vol','USG',5,0,null)}
+  </div></section>
+  <section>
+   <div class="pfcards">
+    ${card('Masse au décollage',kgF(x.W),'kg',`${Math.round(x.W)} lb · max ${T.mtow} lb (${kgF(T.mtow)} kg)`,x.W>T.mtow?'ko':'ok')}
+    ${card('Centrage décollage',Math.round(x.to.pct),'%',`de la plage · CG ${x.to.cg.toFixed(1)} in · moment ${x.to.m.toFixed(1)}`,x.to.inEnv&&x.W<=T.mtow?'ok':'ko')}
+    ${card('À l\'atterrissage',kgF(x.ldg.w),'kg',`après ${x.burn} USG · centrage ${Math.round(x.ldg.pct)} %`,x.ldg.inEnv?'':'ko')}
+    ${card('Charge utile restante',Math.max(0,Math.round(x.rest)),'kg',x.rest<0?'masse max dépassée':'avant d\'atteindre la masse max')}
+    ${card('Carburant max possible',Math.floor(x.fuelMax),'USG',`avec ces masses · plein ${T.fuelMax} USG`)}
+   </div>
+   <figure class="pfig" style="margin:12px 0 0">${cgSvg(x)}</figure>
+   ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
+   <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Feuilles de centrage de l'escadron et Lutin SR2X 2024</span></span><span class="chev">${ic('chev',20)}</span></summary>
+    <div class="small" style="margin-top:10px;line-height:1.6">
+     <p>Masses converties en livres (× 2,205), carburant 6 lb/USG, TKS 9,2 lb/gal. Moments en lb·in/1000 : sièges avant ${T.arm.f.toFixed(3)}/kg, sièges arrière ${T.arm.r.toFixed(3)}/kg, bagages ${T.arm.b.toFixed(3)}/kg, carburant ${T.arm.fuel.toFixed(3)}/USG${T.tks?`, TKS ${T.arm.tks.toFixed(3)}/gal`:''}.</p>
+     <p>Enveloppe ${T.l} : limite avant ${x.to.mn.toFixed(1)} et limite arrière ${x.to.mx.toFixed(1)} à la masse de décollage ; 0 % = limite avant, 100 % = limite arrière. Masse max décollage et atterrissage ${T.mtow} lb, soute 130 lb (59 kg), plein complet ${T.fuelMax} USG.</p>
+     <p class="muted">Aide au calcul : ne dispense pas du calcul réglementaire avec le POH ou la feuille officielle, ni de vérifier la dernière pesée de l'avion.</p>
+    </div></details>
+  </section>
+ </div>`}
+/* Illustrations des trois outils */
+function pfArt(k){
+ const bg=(a,b,id)=>`<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="120" height="120" rx="28" fill="url(#${id})"/>`;
+ const st='fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"';
+ if(k==='to')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#3b82f6','#1e3a8a','g_to')}
+  <path d="M44 22 L76 22 L106 104 L14 104 Z" fill="#1e293b" opacity=".85"/><path d="M44 22 L14 104 M76 22 L106 104" stroke="#fff" stroke-width="3" opacity=".8"/>
+  <path d="M60 30 V40 M60 50 V62 M60 72 V86 M60 96 V104" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M24 96 H36 M30 96 V88 M84 96 H96 M90 96 V88" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/></svg>`;
+ if(k==='cto')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_cto')}
+  <path d="M44 22 L76 22 L106 104 L14 104 Z" fill="#1e293b" opacity=".85"/><path d="M44 22 L14 104 M76 22 L106 104" stroke="#fff" stroke-width="3" opacity=".8"/>
+  <path d="M60 30 V40 M60 50 V62 M60 72 V86 M60 96 V104" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M24 96 H36 M30 96 V88 M84 96 H96 M90 96 V88" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+</svg>`;
+ if(k==='pod')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#f97316','#b91c1c','g_pod')}
+  <rect x="14" y="44" width="60" height="24" rx="12" fill="#fff"/><rect x="66" y="49" width="12" height="14" rx="3" fill="#fde68a"/>
+  <circle cx="86" cy="56" r="7" fill="#fff" opacity=".95"/><circle cx="98" cy="50" r="9" fill="#fff" opacity=".8"/><circle cx="104" cy="66" r="7" fill="#fff" opacity=".6"/>
+  <rect x="38" y="76" width="12" height="22" rx="6" fill="#fff"/><circle cx="44" cy="102" r="8" fill="#fff"/><rect x="42" y="84" width="4" height="14" fill="#dc2626"/><circle cx="44" cy="102" r="4.5" fill="#dc2626"/></svg>`;
+ return `<svg viewBox="0 0 120 120" class="pfart">${bg('#10b981','#065f46','g_cg')}
+  <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
+  <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Centrage Cirrus','SR20 · SR22 G3 · SR22 G5']];
+
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
 function vPdocs(){
@@ -2322,7 +2861,7 @@ function delMeeting(id){DB.meetings=DB.meetings.filter(m=>m.id!==id);save();go('
 let W=null;
 function wizard(id){
  const m=id?DB.meetings.find(x=>x.id===id):null;
- W={id,orgs:[{first:'',last:'',mail:'',tel:''}],dvs:[{first:'',last:'',mail:'',tel:''}],step:1,city:m?m.city:'',field:m?m.field:'',event:m?m.event:'',entr:m?m.entr:'',demos:m&&m.demos&&m.demos.length?[...m.demos]:['']};
+ W={id,orgs:[{first:'',last:'',mail:'',tel:''}],dvs:[{first:'',last:'',mail:'',tel:''}],step:1,city:m?m.city:'',field:m?m.field:'',event:m?m.event:'',entrs:m&&entrs(m).length?[...entrs(m)]:[''],demos:m&&m.demos&&m.demos.length?[...m.demos]:['']};
  openSheet(wHTML);
  setTimeout(()=>{const i=$('w-city');if(i)i.focus()},60);
 }
@@ -2338,8 +2877,10 @@ function wHTML(){
   <label class="l">Démonstration(s)</label>
   ${W.demos.map((d,i)=>`<div class="drow"><input class="in" type="date" id="w-demo-${i}" min="${iso(today)}" value="${esc(d)}" onchange="wDemo(${i},this.value)">${W.demos.length>1?`<button class="ib" onclick="W.demos.splice(${i},1);rs()" aria-label="Retirer cette date">${ic('x',16)}</button>`:''}</div>`).join('')}
   <button class="btn ghost" onclick="W.demos.push('');rs()">${ic('plus',16)} Ajouter un jour de démonstration</button>
-  <label class="l" for="w-entr">Entraînement</label><input class="in" type="date" id="w-entr" min="${iso(today)}" value="${esc(W.entr)}" onchange="if(this.value&&this.value<iso(today)){toast('Choisissez une date à partir d\'aujourd\'hui');this.value=W.entr;return}W.entr=this.value;wBtn()">
-  <div class="hint ${W.entr&&W.demos.some(d=>d&&d<W.entr)?'bad':''}">${W.entr&&W.demos.some(d=>d&&d<W.entr)?'L\'entraînement est après une démonstration : vérifiez les dates.':'Créneau de référence : 60 min d\'entraînement, 35 min de démonstration.'}</div></div>
+  <label class="l">Entraînement(s)</label>
+  ${W.entrs.map((d,i)=>`<div class="drow"><input class="in" type="date" id="w-entr-${i}" min="${iso(today)}" value="${esc(d)}" onchange="wEntr(${i},this.value)">${W.entrs.length>1?`<button class="ib" onclick="W.entrs.splice(${i},1);rs()" aria-label="Retirer cette date">${ic('x',16)}</button>`:''}</div>`).join('')}
+  <button class="btn ghost" onclick="W.entrs.push('');rs()">${ic('plus',16)} Ajouter un jour d'entraînement</button>
+  <div class="hint ${W.entrs.some(e=>e&&W.demos.some(d=>d&&d<e))?'bad':''}">${W.entrs.some(e=>e&&W.demos.some(d=>d&&d<e))?'Un entraînement est après une démonstration : vérifiez les dates.':'Créneau de référence : 60 min d\'entraînement, 35 min de démonstration.'}</div></div>
   <div class="sf"><button class="btn" onclick="W.step=1;rs()">${ic('back',16)} Retour</button><button class="btn pri big" id="w-next" onclick="wNext()" ${W.demos.some(Boolean)?'':'disabled'}>Suivant</button></div>`;
  if(W.step===3&&!W.id){const pl=(k,lab,ic0)=>`<div class="fd" style="margin-bottom:12px"><b>${tile(FCm[k==='orgs'?'org':'dv'],'xs')} ${lab}</b>
    ${W[k].map((p,i)=>`<div class="pers"><input class="in" value="${esc(p.first)}" placeholder="Prénom" aria-label="Prénom" oninput="W.${k}[${i}].first=this.value;wBtn()"><input class="in" value="${esc(p.last)}" placeholder="Nom" aria-label="Nom" oninput="W.${k}[${i}].last=this.value;wBtn()"><input class="in" type="email" inputmode="email" value="${esc(p.mail)}" placeholder="Email (pour l'invitation)" aria-label="Email" oninput="W.${k}[${i}].mail=this.value.trim();wBtn()">${W[k].length>1?`<button class="ib" onclick="W.${k}.splice(${i},1);rs()" aria-label="Retirer">${ic('x',15)}</button>`:'<span></span>'}</div>`).join('')}
@@ -2350,7 +2891,7 @@ function wHTML(){
  const ppl=W.id?[]:[...W.orgs.map(p=>['org',p]),...W.dvs.map(p=>['dv',p])].filter(([,p])=>p.first||p.last);
  return head('C\'est bon ?','Vérifiez puis validez.')+`<div class="sb"><div class="recap">
   <div>${tile(FC[0],'sm')}<span><b>${esc(W.event||'Meeting de '+W.city)}</b><br><span class="small muted">${esc(W.city)}${W.field?' · '+esc(W.field):''}</span></span></div>
-  ${W.entr?`<div>${tile(FU[1],'sm')}<span>Entraînement : <b>${fmtL(W.entr)}</b></span></div>`:''}
+  ${W.entrs.filter(Boolean).sort().map(d=>`<div>${tile(FU[1],'sm')}<span>Entraînement : <b>${fmtL(d)}</b></span></div>`).join('')}
   ${demos.map(d=>`<div>${tile({i:'star',c1:'#f5c24a',c2:'#c8961e'},'sm')}<span>Démonstration : <b>${fmtL(d)}</b></span></div>`).join('')}
   ${ppl.map(([k,p])=>`<div>${tile(FCm[k],'sm')}<span>${k==='org'?'Organisation':'Directeur des vols'} : <b>${esc([p.first,p.last].filter(Boolean).join(' '))}</b><br><span class="small muted">${ic('send',12)} invitation à ${esc(p.mail)}</span></span></div>`).join('')}
  </div>${W.id?'':'<p class="small muted">Leurs droits sont créés automatiquement et chacun reçoit son lien personnel par email.</p>'}</div>
@@ -2359,14 +2900,15 @@ function wHTML(){
 function rs(){$('sheet').innerHTML=wHTML()}
 const wPeopleOk=()=>[W.orgs,W.dvs].every(L=>L.some(p=>(p.first||p.last)&&okMail(p.mail)&&p.mail)&&L.every(p=>!(p.first||p.last||p.mail)||((p.first||p.last)&&p.mail&&okMail(p.mail))));
 function wBtn(){const b=$('w-next');if(b)b.disabled=W.step===1?!W.city.trim():W.step===2?!W.demos.some(Boolean):!wPeopleOk()}
-function wDemo(i,v){if(v&&v<iso(today)){toast('Choisissez une date à partir d\'aujourd\'hui');rs();return}W.demos[i]=v;if(v&&!W.entr){const d=fromISO(v);d.setDate(d.getDate()-1);if(d>=today)W.entr=iso(d)}rs()}
+function wDemo(i,v){if(v&&v<iso(today)){toast('Choisissez une date à partir d\'aujourd\'hui');rs();return}W.demos[i]=v;if(v&&!W.entrs.some(Boolean)){const d=fromISO(v);d.setDate(d.getDate()-1);if(d>=today)W.entrs[0]=iso(d)}rs()}
+function wEntr(i,v){if(v&&v<iso(today)){toast('Choisissez une date à partir d\'aujourd\'hui');rs();return}W.entrs[i]=v;rs()}
 function wNext(){if(W.step===1&&!W.city.trim())return;if(W.step===2&&!W.demos.some(Boolean))return;if(W.step===3&&!W.id&&!wPeopleOk())return;W.step+=(W.step===2&&W.id)?1:1;rs();if(W.step===2)setTimeout(()=>{const i=$('w-demo-0');if(i)i.focus()},60)}
 function wSave(){
- const data={city:W.city.trim(),field:W.field.trim(),event:W.event.trim(),entr:W.entr||'',demos:W.demos.filter(Boolean).sort()};
+ const data={city:W.city.trim(),field:W.field.trim(),event:W.event.trim(),entrs:W.entrs.filter(Boolean).sort(),entr:W.entrs.filter(Boolean).sort()[0]||'',demos:W.demos.filter(Boolean).sort()};
  if(W.id){Object.assign(DB.meetings.find(x=>x.id===W.id),data);save();closeSheet();render();toast('Lieu et dates enregistrés')}
  else{const m=Object.assign({id:uid(),contacts:[]},data);let n=0;
   [['org',W.orgs],['dv',W.dvs]].forEach(([fn,L])=>L.filter(p=>(p.first||p.last)&&p.mail).forEach(p=>{m.contacts.push({id:uid(),fn,first:p.first.trim(),last:p.last.trim(),org:'',tel:'',mail:p.mail});addAccess({id:uid(),role:fn,mid:m.id,name:[p.first,p.last].filter(Boolean).join(' ').trim(),mail:p.mail});n++}));
-  m.invAt=Date.now();DB.meetings.push(m);save();S.rub=null;go('meeting',m.id);toast('Meeting créé · '+n+' invitation'+(n>1?'s':'')+' envoyée'+(n>1?'s':''))}
+  m.invAt=Date.now();DB.meetings.push(m);DB.access.filter(a=>a.mid===m.id&&a.hold).forEach(a=>a.msg=invMsg(a.role,m.id,a.name));save();S.rub=null;go('meeting',m.id);toast('Meeting créé');if(n)setTimeout(()=>invQueue(m.id),300)}
 }
 
 /* ====================== Fiche contact (choisir la fonction, puis 4 champs) ====================== */
@@ -2433,17 +2975,18 @@ function memberSheet(id,fn){
 }
 function uHTML(){
  const d=MF.d;
- return `<div class="sh"><div class="t"><div class="q">${MF.id?'Modifier un membre':'Nouveau membre'}</div><div class="small muted">Fonction, nom, téléphone : le reste est facultatif.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ return `<div class="sh"><div class="t"><div class="q">${MF.id?'Modifier un membre':'Nouveau membre'}</div><div class="small muted">Spécialité, nom, fonction et téléphone : le reste est facultatif.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb">
   <div class="phrow">${MF.d.photo?`<img class="avimg" src="${MF.d.photo}" alt="" style="width:72px;height:72px">`:`<span class="av" style="width:72px;height:72px;font-size:22px">${ic('camera',26)}</span>`}<div><button class="btn" onclick="$('ph-in').click()">${ic('camera',16)} ${MF.d.photo?'Changer la photo':'Ajouter une photo'}</button>${MF.d.photo?` <button class="btn ghost" onclick="MF.d.photo='';$('sheet').innerHTML=uHTML()">Retirer</button>`:''}<div class="small muted" style="margin-top:4px">Facultatif. Elle aide à reconnaître chacun.</div></div><input type="file" id="ph-in" accept="image/*" hidden onchange="takePhoto(this)"></div>
-  <label class="l">Fonction</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${FU.map(f=>`<button class="pk" aria-pressed="${d.fn===f.k}" onclick="MF.d.fn='${f.k}';$('sheet').innerHTML=uHTML()">${tile(f,'sm')}<span>${f.l}</span></button>`).join('')}</div>
+  <label class="l">Spécialité</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${FU.map(f=>`<button class="pk" aria-pressed="${d.fn===f.k}" onclick="MF.d.fn='${f.k}';$('sheet').innerHTML=uHTML()">${tile(f,'sm')}<span>${f.l}</span></button>`).join('')}</div>
   <div class="two" style="grid-template-columns:110px 1fr 1fr"><div><label class="l" for="u-grade">Grade</label><input class="in" id="u-grade" list="grades" value="${esc(d.grade)}" oninput="MF.d.grade=this.value" placeholder="Cne"></div><div><label class="l" for="u-first">Prénom</label><input class="in" id="u-first" value="${esc(d.first)}" oninput="MF.d.first=this.value"></div><div><label class="l" for="u-last">Nom</label><input class="in" id="u-last" value="${esc(d.last)}" oninput="MF.d.last=this.value"></div></div>
   <datalist id="grades">${GRADES.map(g=>`<option value="${g}">`).join('')}</datalist>
+  <label class="l" for="u-role">Fonction</label><input class="in" id="u-role" list="fonctions" value="${esc(d.role)}" placeholder="Ex. : Athos 3, chef de piste, DT…" oninput="MF.d.role=this.value">
+  <datalist id="fonctions">${(FONC[d.fn]||[]).concat(['Autre']).map(f=>`<option value="${f}">`).join('')}</datalist>
   <label class="l" for="u-tel">Téléphone</label><input class="in" id="u-tel" type="tel" inputmode="tel" value="${esc(fmtTel(d.tel))}" placeholder="06 12 34 56 78" oninput="MF.d.tel=this.value" onblur="this.value=fmtTel(this.value);this.classList.toggle('err',!okTel(this.value))">
   <label class="l" for="u-mail">Email <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-mail" type="email" inputmode="email" value="${esc(d.mail)}" oninput="MF.d.mail=this.value.trim()">
   <label class="l">Interlocuteur PAF affiché aux organisateurs et au DV</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(110px,1fr))">${[{k:'',l:'Non'}].concat(KP,KPX).map(p=>`<button class="pk" aria-pressed="${(d.kp||'')===p.k}" onclick="MF.d.kp='${p.k}';$('sheet').innerHTML=uHTML()">${p.k?tile(RLm[p.k],'sm'):`<span class="tile sm" style="--c1:#94a3b8;--c2:#475569">${ic('x',18)}</span>`}<span>${p.l}</span></button>`).join('')}</div>
   ${d.kp&&DB.members.some(y=>y.kp===d.kp&&y.id!==MF.id)?`<div class="hint">Remplacera la personne actuellement désignée.</div>`:''}
-  <label class="l" for="u-role">Poste ou indicatif <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-role" value="${esc(d.role)}" placeholder="Ex. : Athos 3, chef de piste…" oninput="MF.d.role=this.value">
   <div id="u-err" class="hint bad"></div>
   ${MF.del?`<div class="confirm"><span><b>Retirer ce membre de l'annuaire ?</b></span><span style="display:flex;gap:8px"><button class="btn" onclick="MF.del=false;$('sheet').innerHTML=uHTML()">Annuler</button><button class="btn danger" onclick="uDel()">${ic('trash',16)} Retirer</button></span></div>`:''}
  </div>
@@ -2453,6 +2996,7 @@ function uSave(){
  const d=MF.d,e=$('u-err');
  if(!d.fn){e.textContent='Choisissez une fonction.';return}
  if(!d.first.trim()&&!d.last.trim()){e.textContent='Indiquez au moins un nom ou un prénom.';return}
+ if(!String(d.role||'').trim()){e.textContent='Indiquez la fonction de cette personne.';return}
  if(!okTel(d.tel)){e.textContent='Le numéro de téléphone semble incomplet (10 chiffres).';return}
  if(!okMail(d.mail)){e.textContent='L\'adresse email n\'est pas valide.';return}
  const rec={id:MF.id||uid(),photo:d.photo||'',fn:d.fn,grade:d.grade.trim(),first:d.first.trim(),last:d.last.trim(),role:d.role.trim(),kp:d.kp||'',tel:String(d.tel||'').replace(/[^\d+]/g,''),mail:(d.mail||'').trim()};
@@ -2470,12 +3014,13 @@ function vAcces(){
  const pm=ms.find(m=>m.id===S.am);
  const row=(r,mid)=>{const L=DB.access.filter(a=>a.role===r.k&&(r.side!=='meet'||a.mid===mid));
   return `<div class="arow"><div class="rl">${tile(r,'sm')}<div style="min-width:0"><b>${r.l}</b><small>${L.length?L.length+' personne'+(L.length>1?'s':''):'Personne pour l\'instant'}</small></div></div>
-  <div class="people">${L.map(a=>`<span class="person" title="${esc(a.mail)}">${ic('mail',13)}<span>${esc(a.name||a.mail)}</span>${ed&&!(r.k==='chef'&&L.length<2)?`<button onclick="delAccess('${a.id}')" aria-label="Retirer l'accès de ${esc(a.name||a.mail)}">${ic('x',13)}</button>`:''}</span>`).join('')}</div>
+  <div class="people">${L.map(a=>`<span class="person ${a.hold?'hold':''}" title="${esc(a.mail)}">${ic(a.hold?'clock':'mail',13)}<span>${esc(a.name||a.mail)}${a.hold?' · à envoyer':''}</span>${ed&&!(r.k==='chef'&&L.length<2)?`<button onclick="delAccess('${a.id}')" aria-label="Retirer l'accès de ${esc(a.name||a.mail)}">${ic('x',13)}</button>`:''}</span>`).join('')}</div>
   ${ed?`<button class="btn" onclick="inviteSheet('${r.k}','${mid||''}')">${ic('send',15)} Inviter</button>`:'<span></span>'}</div>`};
  const lk=location.origin+location.pathname+'?k=ro:'+DB.ro.code;
- return `${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Chacun reçoit par email un lien personnel, sans mot de passe. Ses droits dépendent de son rôle.</p></div></div>
+ const nh=DB.access.filter(a=>a.hold).length;
+ return `${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Chacun reçoit par email un lien personnel, sans mot de passe. Ses droits dépendent de son rôle.</p></div>${ed&&nh?`<button class="btn pri" onclick="invQueue()">${ic('send',16)} ${nh} lien${nh>1?'s':''} à envoyer</button>`:''}</div>
  <section class="acard"><div class="ah"><h2>${ic('shield',20)} Patrouille de France</h2></div>${ROLES.filter(r=>r.side==='paf').map(r=>row(r)).join('')}</section>
- <section class="acard"><div class="ah"><h2>${ic('eye',20)} Visiteurs</h2></div><p class="small muted" style="margin:0 16px 10px">Directeurs, pilotes, DMMA… : un seul lien, en consultation. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
+ <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF et DMMA</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('flag',20)} Côté meeting</h2>${ms.length>1?`<select class="in" style="width:auto;padding:9px 12px;font-size:14px" id="a-meet" onchange="S.am=this.value;render()">${ms.map(m=>`<option value="${m.id}" ${m.id===S.am?'selected':''}>${esc(mName(m))}</option>`).join('')}</select>`:pm?`<span class="small muted">${esc(mName(pm))}</span>`:''}</div>
   ${pm?ROLES.filter(r=>r.side==='meet').map(r=>row(r,pm.id)).join(''):'<p class="small muted" style="padding:0 16px 12px">Créez d\'abord un meeting.</p>'}</section>
  <section class="acard"><div class="ah"><h2>${ic('hand',20)} Lien public : volontaires</h2>${ed?`<button class="switch" role="switch" aria-checked="${DB.ro.on}" aria-label="Activer le lien en lecture seule" onclick="DB.ro.on=!DB.ro.on;save();render();toast(DB.ro.on?'Lien en lecture seule activé':'Lien en lecture seule désactivé')"></button>`:''}</div>
@@ -2484,31 +3029,41 @@ function vAcces(){
  <section class="acard"><div class="ah"><h2>${ic('gear',20)} Droits par rôle</h2>${ed&&isChef()?`<button class="btn ghost" onclick="DB.rights=JSON.parse(JSON.stringify(DEF_RIGHTS));save();render();toast('Droits par défaut rétablis')">Rétablir les droits par défaut</button>`:''}</div>
   <div class="legend"><span class="rt e">Modifier</span><span class="rt r">Lecture</span><span class="rt n">Aucun accès</span>${isChef()?'<span>Touchez une case pour la changer.</span>':''}</div>
   <div class="matrix"><table><thead><tr><th>Rôle</th>${AREAS.map(a=>`<th>${a.l}${a.soon?'<span class="soon">à venir</span>':''}</th>`).join('')}</tr></thead><tbody>
-  ${[['paf','Patrouille de France'],['suivi','Visiteurs'],['meet','Meeting'],['ro','Lien public']].map(([sd,lb])=>`<tr class="grp"><td colspan="${AREAS.length+1}">${lb}</td></tr>`+ROLES.filter(r=>r.side===sd).map(r=>`<tr><td><span class="rl">${tile(r,'xs')} ${r.l}</span></td>${AREAS.map(a=>{const v=right(a.k,r.k);const lock=!isChef()||r.k==='chef'||r.side==='ro'||(a.k==='acces'&&r.side!=='paf');return `<td><button class="rt ${v}" ${lock?'disabled':''} onclick="cycleRight('${r.k}','${a.k}')" aria-label="${r.l}, ${a.l} : ${v==='e'?'modifier':v==='r'?'lecture':'aucun accès'}">${v==='e'?'Modifier':v==='r'?'Lecture':'—'}</button></td>`}).join('')}</tr>`).join('')).join('')}
+  ${[['paf','Patrouille de France'],['suivi','Pilotes PAF / DMMA'],['meet','Meeting'],['ro','Lien public']].map(([sd,lb])=>`<tr class="grp"><td colspan="${AREAS.length+1}">${lb}</td></tr>`+ROLES.filter(r=>r.side===sd).map(r=>`<tr><td><span class="rl">${tile(r,'xs')} ${r.l}</span></td>${AREAS.map(a=>{const v=right(a.k,r.k);const lock=!isChef()||r.k==='chef'||r.side==='ro'||(a.k==='acces'&&r.side!=='paf');return `<td><button class="rt ${v}" ${lock?'disabled':''} onclick="cycleRight('${r.k}','${a.k}')" aria-label="${r.l}, ${a.l} : ${v==='e'?'modifier':v==='r'?'lecture':'aucun accès'}">${v==='e'?'Modifier':v==='r'?'Lecture':'—'}</button></td>`}).join('')}</tr>`).join('')).join('')}
   </tbody></table></div></section>`;
 }
 function cycleRight(role,area){const o=['n','r','e'],v=right(area,role);DB.rights[role][area]=o[(o.indexOf(v)+1)%3];save();render()}
 function delAccess(id){const a=DB.access.find(x=>x.id===id);DB.access=DB.access.filter(x=>x.id!==id);save();render();toast('Accès retiré : son lien ne marche plus'+(a?' ('+(a.name||a.mail)+')':''))}
 let IV=null;
-function inviteSheet(role,mid){IV={role,mid:mid||null,name:'',mail:''};openSheet(ivHTML);setTimeout(()=>{const i=$('iv-name');if(i)i.focus()},60)}
+function inviteSheet(role,mid){IV={role,mid:mid||null,name:'',mail:'',step:1,msg:''};openSheet(ivHTML);setTimeout(()=>{const i=$('iv-name');if(i)i.focus()},60)}
 function ivHTML(){
  const r=RLm[IV.role],m=IV.mid?DB.meetings.find(x=>x.id===IV.mid):null;
  return `<div class="sh">${tile(r,'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Inviter</div><div class="q" style="margin-top:2px">${r.l}</div>${m?`<div class="small muted">${esc(mName(m))}</div>`:''}</div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb"><label class="l" for="iv-name">Prénom et nom</label><input class="in" id="iv-name" value="${esc(IV.name)}" oninput="IV.name=this.value">
  <label class="l" for="iv-mail">Email</label><input class="in" id="iv-mail" type="email" inputmode="email" value="${esc(IV.mail)}" placeholder="prenom.nom@exemple.fr" oninput="IV.mail=this.value.trim()" onkeydown="if(event.key==='Enter')ivSave()">
  <div class="hint">Il recevra un lien personnel par email. Droits : ${AREAS.filter(a=>!a.soon&&right(a.k,IV.role)==='e').map(a=>a.l.toLowerCase()).join(', ')||'consultation uniquement'}.</div><div id="iv-err" class="hint bad"></div></div>
- <div class="sf"><span></span><button class="btn pri big" onclick="ivSave()">${ic('send',18)} Envoyer le lien</button></div>`;
+ <div class="sf"><span></span><button class="btn pri big" onclick="ivNext()">Continuer ${ic('chev',18)}</button></div>`;
 }
+function ivNext(){
+ if(!okMail(IV.mail)||!IV.mail){$('iv-err').textContent='Indiquez une adresse email valide.';return}
+ if(DB.access.some(a=>a.role===IV.role&&a.mid===IV.mid&&a.mail.toLowerCase()===IV.mail.toLowerCase())){$('iv-err').textContent='Cette personne a déjà cet accès.';return}
+ IV.step=2;if(!IV.msg)IV.msg=invMsg(IV.role,IV.mid,IV.name.trim());openSheet(ivMsgHTML)}
+function ivMsgHTML(){const r=RLm[IV.role];
+ return `<div class="sh">${tile(r,'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Votre message</div><div class="q" style="margin-top:2px">${esc(IV.name||IV.mail)}</div><div class="small muted">${esc(IV.mail)} · ${r.l}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Message envoyé avec le lien (modifiable)</label><textarea class="in iqt" rows="11" oninput="IV.msg=this.value">${esc(IV.msg)}</textarea>
+ <div class="hint">Le bouton « Ouvrir PAF OPS » avec le lien personnel est ajouté automatiquement sous votre message.</div></div>
+ <div class="sf"><button class="btn" onclick="IV.step=1;openSheet(ivHTML)">${ic('back',16)} Modifier la personne</button><button class="btn pri big" onclick="ivSave()">${ic('send',18)} Envoyer le lien</button></div>`}
 function ivSave(){
  if(!okMail(IV.mail)||!IV.mail){$('iv-err').textContent='Indiquez une adresse email valide.';return}
  if(DB.access.some(a=>a.role===IV.role&&a.mid===IV.mid&&a.mail.toLowerCase()===IV.mail.toLowerCase())){$('iv-err').textContent='Cette personne a déjà cet accès.';return}
- addAccess({id:uid(),role:IV.role,mid:IV.mid,name:IV.name.trim(),mail:IV.mail});save();closeSheet();render();
- toast('Invitation en cours d\'envoi à '+IV.mail);
+ addAccess({id:uid(),role:IV.role,mid:IV.mid,name:IV.name.trim(),mail:IV.mail,msg:IV.msg,hold:false});save();closeSheet();render();
+ toast('Lien envoyé à '+IV.mail);
 }
 
 /* ====================== Feuille modale ====================== */
 let sheetFn=null;
-function openSheet(fn){S.live=false;sheetFn=fn;$('sheet').innerHTML=fn();$('ov').hidden=false}
+function openSheet(fn){S.live=false;sheetFn=fn;$('sheet').innerHTML=fn();fixSheet();$('ov').hidden=false}
+function fixSheet(){const sh=$('sheet');if(!sh)return;const ctrls=[...sh.querySelectorAll('input,textarea,select,.yn button,.chips button,.step button,.mchip,.pk,.ocat button,.fdrop,.ghostc,.more')];const any=ctrls.some(x=>!x.disabled);if(ROLE==='visit'||RLm[ROLE].side==='suivi'||!any){sh.querySelectorAll('.sf .btn.pri').forEach(b=>{if(/Je valide|C'est noté|Enregistrer|Remplir/.test(b.textContent)){b.textContent='Fermer';b.onclick=closeSheet;b.className='btn pri'}})}}
 function closeSheet(){$('ov').hidden=true;sheetFn=null}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('ov').hidden)closeSheet()});
 
@@ -2528,5 +3083,23 @@ $('filein').addEventListener('change',async e=>{
  if(/^image\//.test(f.type)){try{FILES[m.id+PICK.key]=URL.createObjectURL(f)}catch(err){}}else delete FILES[m.id+PICK.key];
  save();render();toast((PICK.key==='axe'?'Axe':'Pilot book')+' déposé');PICK=null;
 });
+/* ---- Application installable sur téléphone (PWA) ---- */
+let INSTALL=null;
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();INSTALL=e;instBar()});
+window.addEventListener('appinstalled',()=>{const b=$('instbar');if(b)b.remove();toast('PAF OPS est installé sur votre écran d\'accueil')});
+function instBar(){
+ const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+ let off=false;try{off=!!localStorage.getItem('pafops:inst')}catch(e){}
+ if(standalone||off||innerWidth>900||$('instbar'))return;
+ const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)&&!window.MSStream;
+ const how=INSTALL?'':ios?'Touchez <b>Partager</b> (le carré avec la flèche) puis <b>« Sur l\'écran d\'accueil »</b>.':'Ouvrez le menu du navigateur (⋮) puis <b>« Ajouter à l\'écran d\'accueil »</b> ou <b>« Installer l\'application »</b>.';
+ const d=document.createElement('div');d.id='instbar';d.className='instbar';
+ d.innerHTML=`<img src="./icon-192.png" alt="" width="40" height="40"><div><b>Garder PAF OPS sur le téléphone</b><span>${how||'Un raccourci sur l\'écran d\'accueil, comme une application.'}</span></div>${INSTALL?`<button class="btn pri" onclick="INSTALL.prompt()">Installer</button>`:''}<button class="ib" aria-label="Fermer" onclick="try{localStorage.setItem('pafops:inst','1')}catch(e){};this.parentNode.remove()">${ic('x',16)}</button>`;
+ document.querySelector('header.top').after(d)}
+window.addEventListener('load',()=>setTimeout(instBar,1500));
 boot();
 </script>
+
+</body>
+</html>
