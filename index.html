@@ -2661,11 +2661,12 @@ function pfCalc(){const C=pfCfg(),o=pfIn();
 }
 function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
-  <div class="pfhome">${PF_TOOLS.map(t=>`<button class="pftool" onclick="S.pfTab='${t[0]}';render();window.scrollTo(0,0)">${pfArt(t[0])}<b>${t[1]}</b><span>${t[2]}</span></button>`).join('')}</div>`;
+  <div class="pfhome">${PF_TOOLS.filter(t=>t[0]!=='pc'||pcCan()).map(t=>`<button class="pftool" onclick="S.pfTab='${t[0]}';render();window.scrollTo(0,0)">${pfArt(t[0])}<b>${t[1]}</b><span>${t[2]}</span></button>`).join('')}</div>`;
  const tabs=`<div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>`;
  if(sub==='cg')return vCentrage(tabs);
  if(sub==='cto')return vCPerf(tabs);
  if(sub==='fea')return vFea(tabs);
+ if(sub==='pc'&&!pcCan()){S.pfTab='home';return vPerfos()}
  if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
  if(sub==='pod')return `${NOTE}<div class="head"><div><h1>Réchauffement du POD fumigène</h1><p class="muted">Temps d'attente après un transit en altitude à température négative, avant de considérer les membranes dégelées.</p></div></div>${tabs}${vPod()}`;
  return vPerfTO(tabs)}
@@ -3187,6 +3188,8 @@ const pcCount=t=>{let n=0;String(t||'').replace(PC_RX,(m,a)=>{n+=+a;return m});r
 const PC_ZONE=/\b(?:R|D|TSA|CBA|ZRT)\s?-?\d{1,3}[A-Z]?\b|\bzone\b/i;
 const pcKind=t=>PC_ZONE.test(t||'')||pcCount(t)>=4?'pc':'ask';
 /* Qui suis-je ? (en ligne : la fiche de l'Unité qui porte mon email ; maquette : choisi dans la liste) */
+/* Outil réservé aux PC (Athos 9, 15, 16, 17, 18) */
+function pcCan(){return !isOnline()||isChef()||!!pcMe()}
 function pcMe(){const M=pcMembers(),c17=()=>M.find(x=>athN(x)===17)||M.find(x=>x.kp==='chef')||null;
  if(isOnline()){const x=ME&&memOf(ME.mail);if(x&&x.pc)return x;return ME&&ME.role==='chef'?c17():null}
  return isChef()?c17():M.find(x=>x.id===S.pcAs)||null}
@@ -3216,7 +3219,18 @@ function pcPropose(w){const W=pcWk(w),M=pcMembers(),who=pcDB().who;
  W.prop=A;W.propT=Date.now()}
 /* ---- Actions ---- */
 function pcGoWk(d){S.pcW=pcAdd(S.pcW||pcNextWk(),7*d);render();pcAuto()}
-function pcAddFl(w,d,t){if(!t)return;const W=pcWk(w);if(W.fl.some(f=>f.d===d&&f.time===t)){toast('Ce vol existe déjà');return}W.fl.push({id:uid(),d,time:t,title:'',man:1,no:false});W.fl.sort(pcFsort);save();render()}
+/* Ajout d'un vol à la main par le chef ops : titre, jour, heure */
+let PCA=null;
+function pcAddSheet(w){PCA={w,title:'',d:0,time:''};openSheet(pcAddHTML)}
+function pcAddHTML(){const w=PCA.w;return `<div class="sh">${tile({i:'plane',c1:'#8b5cf6',c2:'#3b0764'},'lg')}<div class="t"><div class="q">Ajouter un vol</div><div class="small muted">Semaine du ${pcWkLabel(w)}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l" for="pca-t">Titre de la plaquette</label><input class="in" id="pca-t" placeholder="Ex. : 8 FUS+100, 2 N1 R276…" value="${esc(PCA.title)}" oninput="PCA.title=this.value">
+  <label class="l">Jour</label><div class="chips">${PC_J.map((j,d)=>`<button aria-pressed="${PCA.d===d}" onclick="PCA.d=${d};$('sheet').innerHTML=pcAddHTML()">${j} ${pcDay(w,d)}</button>`).join('')}</div>
+  <label class="l">Heure</label>${timeBtn(PCA.time,"PCA.time=v;$('sheet').innerHTML=pcAddHTML()",'Heure du vol')}
+  <div id="pca-err" class="hint bad"></div></div>
+ <div class="sf"><span></span><button class="btn pri big" onclick="pcAddFl()">${ic('check',18)} Ajouter</button></div>`}
+function pcAddFl(){const w=PCA.w,W=pcWk(w),t=PCA.time;if(!t){$('pca-err').textContent='Indiquez l\'heure du vol.';return}
+ if(W.fl.some(f=>f.d===PCA.d&&f.time===t)){$('pca-err').textContent='Il y a déjà un vol à cette heure ce jour-là.';return}
+ W.fl.push({id:uid(),d:PCA.d,time:t,title:PCA.title.trim(),man:1,no:false});W.fl.sort(pcFsort);const had=!!W.prop;if(had&&!W.val)W.prop=null;save();closeSheet();const pr=pcMaybePropose(w);render();toast('Vol ajouté'+(pr?' · nouvelle proposition prête':had?' · relancez la proposition':''))}
 function pcDelFl(w,id){const W=pcWk(w);W.fl=W.fl.filter(f=>f.id!==id);if(W.prop)delete W.prop[id];save();render()}
 function pcAsk(w,id,need){const W=pcWk(w),f=W.fl.find(f=>f.id===id);f.ask=false;f.no=!need;if(f.no&&W.prop)delete W.prop[id];if(need&&W.prop&&!W.val)W.prop[id]=W.prop[id]||'';save();const pr=pcMaybePropose(w);render();toast(pr?'Tout le monde a répondu : voici la proposition':need?'PC nécessaire : vol ajouté':'Pas de PC pour ce vol')}
 function pcNoFl(w,id){const f=pcWk(w).fl.find(f=>f.id===id);f.no=!f.no;f.ask=false;const W=pcWk(w);if(f.no&&W.prop)delete W.prop[id];save();render()}
@@ -3268,7 +3282,7 @@ function pcMaybePropose(w){if(!isChef())return false;const W=pcW0(w);if(W.val||W
 function pcGrid(w,ro){const W=pcW0(w),F=W.fl.filter(f=>!f.no),x=DB.members.find(y=>y.id===PCD.mid),hab=pcHab(x);
  const has=c=>F.filter(f=>pcCell(f)===c);
  return `<div class="pcgrid ${ro?'ro':''}"><span></span>${PC_JS.map((j,d)=>`<button class="pcgh" ${ro?'disabled':''} onclick="pcTog('${d}')">${j}<small>${pcDay(w,d)}</small></button>`).join('')}
-  ${PC_P.map(p=>`<span class="pcgl"><b>${p[1]}</b><small>~${p[2]}</small></span>${PC_J.map((j,d)=>{const c=d+p[0],on=!!PCD.ok[c],fl=has(c);if(F.length&&!fl.length)return '<span class="pcc none">—</span>';return `<button class="pcc ${on?'on':'idle'}" ${ro?'disabled':''} aria-pressed="${on}" aria-label="${j} ${p[1]} : ${on?'je peux':'pas dispo'}" onclick="pcTog('${c}')">${on?ic('check',18):'<i class="dot"></i>'}${fl.length?`<small>${fl.map(f=>f.time.replace(':','h')).join(' ')}</small>`:''}${hab.includes(c)?'<em>d\'office</em>':''}</button>`}).join('')}`).join('')}</div>`}
+  ${PC_P.map(p=>`<span class="pcgl"><b>${p[1]}</b></span>${PC_J.map((j,d)=>{const c=d+p[0],on=!!PCD.ok[c],fl=has(c);if(F.length&&!fl.length)return '<span class="pcc none">—</span>';return `<button class="pcc ${on?'on':'idle'}" ${ro?'disabled':''} aria-pressed="${on}" aria-label="${j} ${p[1]} : ${on?'je peux':'pas dispo'}" onclick="pcTog('${c}')">${on?ic('check',18):'<i class="dot"></i>'}${fl.length?`<small>${fl.map(f=>f.time.replace(':','h')).join(' ')}</small>`:''}${hab.includes(c)?'<em>d\'office</em>':''}</button>`}).join('')}`).join('')}</div>`}
 function pcDispoBody(w,mid,sheet){const W=pcW0(w),r=W.dispo[mid],ro=!!W.val&&!isChef();
  return `<div class="pcq">${ro?'':`<button class="btn" onclick="pcTog('all')">${ic('check',15)} Tout cocher / décocher</button>`}<span class="small muted">Cochez tous les vols que vous pouvez faire, même si d'autres les cochent aussi : l'application équilibre ensuite.</span></div>
   ${pcGrid(w,ro)}
@@ -3325,11 +3339,11 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
  const steps=`<div class="pcsteps">${step(1,pcAskL(w).length?'Vols · '+pcAskL(w).length+' à confirmer':'Vols',F.length&&!pcAskL(w).length?'done':'cur')}${step(2,`Dispos ${nonRes.length-todo.length}/${nonRes.length}`,allIn?'done':F.length?'cur':'')}${step(3,'Proposition',W.prop?'done':allIn?'cur':'')}${step(4,'Validé',W.val?'done':W.prop?'cur':'')}</div>`;
  // 1. Vols
  const fl=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('plane',18)} Vols de la semaine <span class="n">${F.length} avec PC</span></h3>
-  <div class="pcbtns">${pcDB().cal||!isOnline()?`<button class="btn" ${S.pcBusy?'disabled':''} onclick="pcAgenda('${w}')">${ic('cal',15)} ${S.pcBusy?'Lecture…':W.agT?'Relire l\'agenda':'Lire l\'agenda'}</button>`:`<button class="btn" onclick="pcSettings()">${ic('cal',15)} Relier l'agenda des plaquettes</button>`}${W.agT?`<span class="small muted">Lu ${new Date(W.agT).toLocaleString('fr-FR',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</span>`:''}</div>
+  <div class="pcbtns">${W.val?'':`<button class="btn pri" onclick="pcAddSheet('${w}')">${ic('plus',15)} Ajouter un vol</button>`}${pcDB().cal||!isOnline()?`<button class="btn" ${S.pcBusy?'disabled':''} onclick="pcAgenda('${w}')">${ic('cal',15)} ${S.pcBusy?'Lecture…':W.agT?'Relire l\'agenda':'Lire l\'agenda'}</button>`:`<button class="btn" onclick="pcSettings()">${ic('cal',15)} Relier l'agenda des plaquettes</button>`}${W.agT?`<span class="small muted">Lu ${new Date(W.agT).toLocaleString('fr-FR',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</span>`:''}</div>
   <div class="pcdays">${PC_J.map((j,d)=>{const L=W.fl.filter(f=>f.d===d);return `<div class="pcday"><b>${PC_JS[d]} ${pcDay(w,d)}</b>
    ${L.map(f=>f.ask&&!W.val?`<div class="pcfl ask"><span class="pct">${f.time.replace(':','h')}</span><span class="pcti">${esc(f.title||'Vol')}<small>Moins de 4 avions, pas de zone : PC ?</small></span><span class="pcyn"><button class="btn pri" onclick="pcAsk('${w}','${f.id}',1)">Oui</button><button class="btn" onclick="pcAsk('${w}','${f.id}',0)">Non</button></span></div>`:`<div class="pcfl ${f.no?'no':''}"><span class="pct">${f.time.replace(':','h')}</span><span class="pcti">${esc(f.title||'Vol')}${f.no?'<small>pas de PC</small>':''}</span>${W.val?'':`<button class="ib" title="${f.no?'Remettre un PC':'Pas besoin de PC (vol direction)'}" aria-label="${f.no?'Remettre un PC':'Pas besoin de PC'}" onclick="pcNoFl('${w}','${f.id}')">${ic(f.no?'plus':'x',14)}</button>${f.man?`<button class="ib" aria-label="Supprimer" onclick="pcDelFl('${w}','${f.id}')">${ic('trash',14)}</button>`:''}`}</div>`).join('')}
-   ${W.val?'':`<div class="pcadd">${PC_P.map(p=>`<button onclick="pcAddFl('${w}',${d},'${p[2].replace('h',':')}')">+ ${p[2]}</button>`).join('')}${timeBtn('',`pcAddFl('${w}',${d},v)`,'Autre heure')}</div>`}</div>`}).join('')}</div>
-  <p class="hint">PC d'office : 4 avions et plus, ou une zone citée (R276, R55…). Moins de 4 avions sans zone : vol direction probable, vous confirmez. Touchez × ou + pour corriger.</p></div></section>`;
+   ${L.length?'':'<span class="small muted">Pas de vol</span>'}</div>`}).join('')}</div>
+  <p class="hint">Vols lus dans l'agenda ; un vol manquant s'ajoute avec « Ajouter un vol ». PC d'office : 4 avions et plus, ou une zone citée (R276, R55…). Moins de 4 avions sans zone : vol direction probable, vous confirmez. Touchez × ou + pour corriger.</p></div></section>`;
  const askN=pcAskL(w).length,askB=askN&&!W.val?`<div class="pfal pcaskb" style="--c:#f59e0b">${tile({i:'alert',c1:'#f59e0b',c2:'#c2410c'},'sm')}<div><b>${askN} vol${askN>1?'s':''} à confirmer</b><span>${pcAskL(w).map(f=>PC_J[f.d].toLowerCase()+' '+f.time.replace(':','h')+' « '+esc(f.title)+' »').join(', ')} : moins de 4 avions et pas de zone. Faut-il un PC ?</span></div></div>`:'';
  // 2. Dispos
  const disp=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('users',18)} Dispos des PC <span class="n">${nonRes.length-todo.length}/${nonRes.length} réponses</span></h3>
