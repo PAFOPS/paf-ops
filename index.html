@@ -678,6 +678,8 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 .fph .ib{position:absolute;top:3px;right:3px;width:24px;height:24px;background:rgba(0,0,0,.55);color:#fff;border:0}.fphs.sm{margin:0 0 8px}.fphs.sm .fph{width:64px;height:64px;cursor:zoom-in}
 .fphadd{width:76px;height:76px;border:2px dashed var(--line);border-radius:12px;background:var(--surface);color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:700}
 .feaedit{display:flex;align-items:center;gap:8px;background:var(--gold2);border-radius:12px;padding:8px 10px;margin-bottom:10px}.feaedit b{flex:1}.feac.editing{outline:3px solid var(--gold)}
+.pill.bad{background:var(--bad2);color:var(--bad)}
+.ib.bell{position:relative;margin-right:6px}.ib.bell.on::after{content:'';position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 2px var(--surface)}
 .fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .grp h3 .gacts{margin-left:auto;display:flex;gap:6px}.grp h3 .gacts .btn{padding:6px 10px;font-size:12.5px;text-transform:none;letter-spacing:0}
 .subh{display:flex;align-items:center;gap:8px;margin:14px 0 6px 4px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.subh b{color:var(--fg)}.subh .gacts{margin-left:auto;display:flex;gap:4px}.subh .ib{width:30px;height:30px}
@@ -748,6 +750,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
   <button id="nav-perfos" onclick="go('perfos')"></button>
  </nav>
  <div class="sp"></div>
+ <button class="ib bell" id="bell" hidden onclick="pushSheet()" aria-label="Notifications" title="Notifications"></button>
  <label class="role" id="rolebox"><span>Vue :</span><select id="role" onchange="setRole(this.value)"></select></label>
 </div></header>
 
@@ -809,7 +812,7 @@ const P={
  cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
  pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
  plus:'<path d="M12 5v14M5 12h14"/>',search:'<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>',
- map:'<path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/>', download:'<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>', image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>', copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
+ map:'<path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/>', download:'<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>', bell:'<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/>', image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>', copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
  edit:'<path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>',
  trash:'<path d="M3 6h18M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2"/>',
  back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',check:'<path d="M20 6L9 17l-5-5"/>',
@@ -1003,7 +1006,7 @@ async function boot(){
  if(r.error)return fatal(r.error);
  DB=r.db;REV=r.rev;ME=r.me;ROLE=ME.role;BASE=clone(r.db);
  if(!DB.meetings.length&&!DB.members.length&&ME.role==='chef'){const sm=sample();DB.meetings=sm.meetings;DB.members=sm.members;DB.kpInit=1;DB.kpInit2=1;DB.teamV=1}
- migrate();if(!ROLES.some(x=>x.k===ROLE))ROLE='visit';render();
+ migrate();if(!ROLES.some(x=>x.k===ROLE))ROLE='visit';render();deepLink();setTimeout(pushInit,1500);
 }
 
 /* ====================== État ====================== */
@@ -1044,6 +1047,7 @@ function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S
 const viewOk=v=>v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
 function render(){
  if(!viewOk(S.view))S.view='meetings';
+ {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}}
  const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Outils','gauge']};
  ['meetings','unite','acces','mails','perfos'].forEach(k=>{
   const cur=S.view===k||(k==='meetings'&&(S.view==='meeting'||S.view==='recap'));
@@ -2963,6 +2967,45 @@ function vFea(tabs){const f=feaIn(),chef=isChef(),all=feaAll(),L=feaFiltered(),A
    ${L.map(card).join('')||`<p class="small muted">${all?'Aucune FEA pour ces filtres.':'Les fiches que vous envoyez apparaîtront ici.'}</p>`}
   </section>
  </div>`}
+
+/* ====================== Notifications sur le téléphone (Web Push, sans service extérieur) ====================== */
+const pushOK=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isOnline=()=>typeof api==='function'&&typeof K!=='undefined';
+const canBell=()=>isChef()||ROLE==='visit';
+function b64uToU8(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s);return Uint8Array.from(b,c=>c.charCodeAt(0))}
+let PST='off';
+async function pushState(){if(!pushOK())return 'nosupport';if(isIOS()&&!isStandalone())return 'install';if(Notification.permission==='denied')return 'denied';
+ try{const r=await navigator.serviceWorker.getRegistration();const s=r&&await r.pushManager.getSubscription();return s?'on':'off'}catch(e){return 'off'}}
+/* Le service worker a besoin du lien personnel et de l'adresse du serveur pour venir chercher le détail des notifications */
+async function pushCfg(){if(!isOnline())return;try{const c=await caches.open('pafops-cfg');await c.put('/k',new Response(K));await c.put('/api',new Response(API_URL))}catch(e){}}
+async function pushOn(){if(!isOnline()){toast('Disponible dans la version en ligne');return}
+ try{const perm=await Notification.requestPermission();if(perm!=='granted'){toast('Notifications refusées : autorisez-les dans les réglages');await pushRefresh();return}
+  const reg=await navigator.serviceWorker.register('./sw.js');await navigator.serviceWorker.ready;const v=await api('vapid');if(!v||!v.pub)throw new Error(v&&v.error||'serveur pas encore prêt');
+  let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64uToU8(v.pub)});
+  await pushCfg();const r=await api('sub',{sub:sub.toJSON()});if(r&&r.error)throw new Error(r.error);toast('Notifications activées sur cet appareil')}
+ catch(e){toast('Activation impossible : '+(e.message||e))}await pushRefresh()}
+async function pushOff(){try{const reg=await navigator.serviceWorker.getRegistration();const sub=reg&&await reg.pushManager.getSubscription();if(sub){if(isOnline())await api('unsub',{endpoint:sub.endpoint});await sub.unsubscribe()}toast('Notifications coupées sur cet appareil')}catch(e){}await pushRefresh()}
+async function pushTest(){if(!isOnline()){toast('Disponible dans la version en ligne');return}const r=await api('pushtest');toast(r&&r.error?r.error:r&&r.sent?'Essai envoyé : la notification arrive dans quelques secondes':'Aucun appareil abonné : activez d\'abord les notifications')}
+async function pushRefresh(){PST=await pushState();const b=$('bell');if(b){b.hidden=!canBell();b.classList.toggle('on',PST==='on')}if(!$('ov').hidden&&sheetFn===pushHTML)$('sheet').innerHTML=pushHTML()}
+function pushSheet(){openSheet(pushHTML);pushRefresh()}
+function pushHTML(){const chef=isChef();
+ const what=chef?['Une FEA reçue d\'un pilote','Une butée atteinte (organisateur ou DV en retard)']:['Une nouvelle FEA, si vous êtes l\'officier sécurité des vols (Athos '+(DB.feaSV||7)+')','D\'autres notifications pourront s\'ajouter plus tard'];
+ const st={on:['ok','Activées sur cet appareil'],off:['todo','Pas encore activées sur cet appareil'],install:['todo','À installer d\'abord'],denied:['bad','Bloquées dans les réglages'],nosupport:['bad','Non disponibles sur ce navigateur']}[PST]||['todo',''];
+ return `<div class="sh">${tile({i:'bell',c1:'#f59e0b',c2:'#c2410c'},'lg')}<div class="t"><div class="q">Notifications</div><div class="small muted">Sur ce téléphone ou cet ordinateur, même application fermée.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><span class="pill ${st[0]}">${st[1]}</span>
+  <label class="l" style="margin-top:12px">Vous serez prévenu pour</label><ul class="rl">${what.map(w=>`<li>${w}</li>`).join('')}</ul>
+  ${PST==='install'?`<div class="pfal" style="--c:#3b82f6">${tile({i:'info',c1:'#3b82f6',c2:'#1d4ed8'},'sm')}<div><b>Sur iPhone, ajoutez d'abord PAF OPS à l'écran d'accueil</b><span>Dans Safari : bouton Partager (le carré avec la flèche) › « Sur l'écran d'accueil ». Ouvrez ensuite PAF OPS depuis son icône et revenez ici.</span></div></div>`:''}
+  ${PST==='denied'?`<div class="pfal" style="--c:#ef4444">${tile({i:'alert',c1:'#ef4444',c2:'#b91c1c'},'sm')}<div><b>Les notifications ont été refusées</b><span>Pour les rétablir : réglages du téléphone › Notifications › PAF OPS (iPhone), ou ⋮ › Paramètres › Notifications (Android, Chrome).</span></div></div>`:''}
+  ${PST==='nosupport'?`<p class="small muted">Ce navigateur ne gère pas les notifications. Sur iPhone, il faut iOS 16.4 ou plus récent et PAF OPS ajouté à l'écran d'accueil.</p>`:''}
+  <p class="small muted" style="margin-top:10px">À activer sur chaque appareil où vous voulez être prévenu. Vous pouvez couper à tout moment.</p></div>
+ <div class="sf">${PST==='on'?`<button class="btn" onclick="pushOff()">Couper</button>${chef?`<button class="btn pri" onclick="pushTest()">${ic('bell',16)} Envoyer un essai</button>`:'<span></span>'}`:PST==='off'?`<span></span><button class="btn pri big" onclick="pushOn()">${ic('bell',18)} Activer les notifications</button>`:`<span></span><button class="btn" onclick="closeSheet()">Fermer</button>`}</div>`}
+/* Au démarrage : réveille l'abonnement (le lien personnel a pu changer) */
+async function pushInit(){await pushRefresh();if(PST==='on'&&isOnline()){await pushCfg();try{const reg=await navigator.serviceWorker.getRegistration();const sub=await reg.pushManager.getSubscription();if(sub)api('sub',{sub:sub.toJSON()})}catch(e){}}}
+/* Ouverture depuis une notification : ?go=fea, ?go=mails */
+function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='mails'&&isChef())go('mails')}
+if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.go)deepLink(e.data.go)});
 
 /* ====================== Centrage Cirrus SR20 / SR22 ====================== */
 /* Modèle : feuilles « Centrage SR20 » et « Centrage SR22 G3-G5 » de l'escadron (masses en lb, moments en lb·in/1000),
