@@ -608,7 +608,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .pfgrid{display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:16px;align-items:start}
 .pfhome{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:980px}
 .pftool{display:grid;gap:8px;justify-items:center;text-align:center;padding:16px 14px 18px;border:2px solid var(--line);border-radius:24px;background:var(--surface);color:var(--fg);box-shadow:var(--shadow);transition:transform .12s,border-color .12s}
-.pftool:hover{transform:translateY(-2px);border-color:var(--fg)}.pftool b{font-family:var(--f-disp);font-size:20px}.pftool span{font-size:13px;color:var(--muted);line-height:1.35}
+.pftool .pfn2{font-size:11.5px;font-weight:800;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:2px 9px}.pftool:hover{transform:translateY(-2px);border-color:var(--fg)}.pftool b{font-family:var(--f-disp);font-size:20px}.pftool span{font-size:13px;color:var(--muted);line-height:1.35}
 .pfart{width:120px;height:120px;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18))}
 .pfbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 16px}
 .cgsvg{display:block;width:100%;height:auto;min-width:0}.cgsvg .cgg{stroke:var(--line);stroke-width:1}.cgsvg .cgt{font-size:10px;fill:var(--muted);font-weight:700;font-family:var(--f-body)}.cgsvg .cgl{font-size:11px;font-weight:800;font-family:var(--f-body)}
@@ -888,6 +888,8 @@ const FC=[
 const FU=[
  {k:'DIR',l:'DIR',d:'Direction',i:'briefcase',c1:'#334e9e',c2:'#0c1f4a'},
  {k:'PILOTES',l:'PILOTES',d:'Pilotes',i:'plane',c1:'#3b82f6',c2:'#1d4ed8'},
+ {k:'DT',l:'DT',d:'DT · un seul titulaire',i:'shield',c1:'#64748b',c2:'#334155',grp:'MECAS',one:1},
+ {k:'CST',l:'CST',d:'CST · un seul titulaire',i:'wrench',c1:'#0ea5e9',c2:'#0369a1',grp:'MECAS',one:1},
  {k:'DEP',l:'DEP',d:'DEP',i:'wrench',c1:'#f59e0b',c2:'#c2410c',grp:'MECAS'},
  {k:'PISTE',l:'PISTE',d:'Piste',i:'cone',c1:'#22c55e',c2:'#15803d',grp:'MECAS'},
  {k:'COMM',l:'COMM',d:'Communication',i:'mega',c1:'#ec4899',c2:'#be185d'},
@@ -896,7 +898,7 @@ const FU=[
  {k:'ARTA',l:'ARTA',d:'ARTA',i:'gear',c1:'#ef7f3a',c2:'#b4441a'}
 ];
 const FCm=Object.fromEntries(FC.map(f=>[f.k,f])),FUm=Object.fromEntries(FU.map(f=>[f.k,f]));
-const MECAS={k:'MECAS',l:'MÉCAS',d:'DEP et piste',i:'wrench',c1:'#f59e0b',c2:'#15803d'};
+const MECAS={k:'MECAS',l:'MÉCAS',d:'DT, CST, DEP et piste',i:'wrench',c1:'#f59e0b',c2:'#15803d'};
 /* Spécialités techniques (sous-catégories du DEP, facultatives pour la piste) et fonctions particulières */
 const SPE=['Vecteur','Avio','Petaf','Motoriste','Servitude',"Choum'"];
 const DFN={DEP:['Chef du DEP','Adjoint chef du DEP','Équipement','Trads'],PISTE:['Chef de piste','Adjoint chef de piste']};
@@ -939,7 +941,7 @@ const DEF_RIGHTS={
  dv:{tech:'n',meet:'r',contacts:'r',annu:'n',aero:'e',logi:'n',com:'n',pdocs:'r',acces:'n'},
  ro:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'}
 };
-const FONC={DIR:['Commandant','Commandant en second','Chef des opérations','Secrétaire opérations','Officier sécurité des vols'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
+const FONC={DT:['DT'],CST:['CST'],DIR:['Commandant','Commandant en second','Chef des opérations','Secrétaire opérations','Officier sécurité des vols'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
 const GRADES=['Gal','Col','Lcl','Cdt','Cne','Lt','Slt','Asp','Maj','Adc','Adj','Sgc','Sgt','Cch','Cpl','Av1','Av'];
 const GRADEL={Gal:'Général',Col:'Colonel',Lcl:'Lieutenant-colonel',Cdt:'Commandant',Cne:'Capitaine',Lt:'Lieutenant',Slt:'Sous-lieutenant',Asp:'Aspirant',Maj:'Major',Adc:'Adjudant-chef',Adj:'Adjudant',Sgc:'Sergent-chef',Sgt:'Sergent',Cch:'Caporal-chef',Cpl:'Caporal',Av1:'Aviateur de 1re classe',Av:'Aviateur'};
 
@@ -1001,6 +1003,7 @@ if(!DB.pcV&&(typeof ME==='undefined'||!ME||ME.role==='chef')){const ms=DB.member
  if(!ms.some(x=>(x.fn==='DIR'||x.fn==='PILOTES')&&+x.athos===18))ms.push({id:uid(),photo:'',fn:'DIR',grade:'Cne',first:'Antoine',last:'HAUSER',nick:'Tonio',athos:'18',role:'Pilote réserviste',res:true,pc:true,kp:'',tel:'',mail:''});
  ms.forEach(x=>{if((x.fn==='DIR'||x.fn==='PILOTES')&&[9,15,16,17,18].includes(+x.athos))x.pc=true});DB.pcV=1}
 if(!DB.pcV2&&(typeof ME==='undefined'||!ME||ME.role==='chef')){(DB.members||[]).forEach(x=>{if(x.fn==='PILOTES'&&+x.athos===9&&(!x.nick||x.nick==='Zébulon'))x.nick='Kéké'});DB.pcV2=1}
+if(!DB.mecaV){(DB.members||[]).forEach(x=>{if(x.fn==='DEP'&&(x.kp==='dt'||/^dt$/i.test(String(x.role||'').trim())))x.fn='DT';else if(x.fn==='DEP'&&(x.kp==='cst'||/^cst$/i.test(String(x.role||'').trim())))x.fn='CST'});DB.mecaV=1}
 if(!DB.athV){(DB.members||[]).forEach(x=>{if(!x.athos){const m=String(x.role||'').match(/athos\s*(\d{1,2})/i);if(m)x.athos=m[1]}});DB.athV=1}
 if(!DB.rV7){const old=['leader','n5','n7','dmma','dir','diradj'];if(DB.rights)old.forEach(k=>delete DB.rights[k]);(DB.access||[]).forEach(a=>{if(old.includes(a.role))a.role='visit'});DB.rV7=1}
 if(!DB.rV6){if(DB.rights&&DB.rights.comm)DB.rights.comm=JSON.parse(JSON.stringify(DEF_RIGHTS.comm));DB.rV6=1}
@@ -2661,8 +2664,11 @@ function pfCalc(){const C=pfCfg(),o=pfIn();
 }
 function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
-  <div class="pfhome">${PF_TOOLS.filter(t=>t[0]!=='pc'||pcCan()).map(t=>`<button class="pftool" onclick="S.pfTab='${t[0]}';render();window.scrollTo(0,0)">${pfArt(t[0])}<b>${t[1]}</b><span>${t[2]}</span></button>`).join('')}</div>`;
- const tabs=`<div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>`;
+  <div class="pfhome">${PF_HOME.filter(k=>k!=='pc'||pcCan()).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
+ if(PF_DIR[sub]){const D=PF_DIR[sub];return `${NOTE}<div class="head"><div><h1>${D[0]}</h1><p class="muted">${D[1]}</p></div></div><div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>
+  <div class="pfhome">${D[2].map(k=>{const t=PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span></button>`}).join('')}</div>`}
+ const par=pfParent(sub);
+ const tabs=`<div class="pfbar"><button class="btn" onclick="S.pfTab='${par||'home'}';render();window.scrollTo(0,0)">${ic('back',16)} ${par?PF_DIR[par][0]:'Tous les outils'}</button></div>`;
  if(sub==='cg')return vCentrage(tabs);
  if(sub==='cto')return vCPerf(tabs);
  if(sub==='fea')return vFea(tabs);
@@ -3379,6 +3385,12 @@ function pfArt(k){
   <path d="M60 30 V40 M60 50 V62 M60 72 V86 M60 96 V104" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
   <path d="M24 96 H36 M30 96 V88 M84 96 H96 M90 96 V88" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
 </svg>`;
+ if(k==='alpha')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#1d4ed8','#0c1f4a','g_al')}
+  <path d="M60 14 C64 22 65 34 65 44 L100 74 L100 82 L65 70 L64 90 L76 100 L76 106 L60 102 L44 106 L44 100 L56 90 L55 70 L20 82 L20 74 L55 44 C55 34 56 22 60 14 Z" fill="#fff"/>
+  <path d="M60 22 C62 27 62 32 62 36 L58 36 C58 32 58 27 60 22 Z" fill="#93c5fd"/><path d="M44 106 L60 102 L76 106" stroke="#ef4444" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+ if(k==='cirrus')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_ci')}
+  <path d="M60 22 C64 24 65 32 65 40 L104 46 C107 46 107 54 104 54 L65 58 L63 88 L80 92 L80 98 L60 97 L40 98 L40 92 L57 88 L55 58 L16 54 C13 54 13 46 16 46 L55 40 C55 32 56 24 60 22 Z" fill="#fff"/>
+  <path d="M46 16 H74" stroke="#fde68a" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="18" r="3.5" fill="#fde68a"/><path d="M57 30 H63 V36 H57 Z" fill="#5eead4"/></svg>`;
  if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
   <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/><circle cx="60" cy="60" r="18" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/>
   <path d="M60 18 V34 M60 86 V102 M18 60 H34 M86 60 H102" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="60" r="7" fill="#fde68a"/></svg>`;
@@ -3392,7 +3404,10 @@ function pfArt(k){
   <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Centrage Cirrus','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine']];
+const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']]};
+const PF_HOME=['alpha','cirrus','fea','pc'];
+const pfParent=k=>Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -3535,7 +3550,7 @@ function grpHTML(f,L,q){const ed=canEdit('annu'),ro=S.reorder===f.k&&ed,SC=subs(
  const rows=list=>list.length?`<div class="mlist">${list.map((x,i)=>mRow(x,ro?{up:i>0,down:i<list.length-1}:null)).join('')}</div>`:'';
  const lead=L.filter(x=>DFN_RANK[x.dfn]!=null).sort(mSort),inLead=x=>DFN_RANK[x.dfn]!=null;
  const free=L.filter(x=>!inLead(x)&&(!x.sub||!SC.some(c=>c.id===x.sub)));
- return `<section class="grp"><h3>${tile(f,'sm')} ${f.l} <span class="n">${f.d!==f.l?f.d+' · ':''}${L.length}</span>${ed&&!q?`<span class="gacts"><button class="btn ghost" onclick="subAdd('${f.k}')">${ic('plus',14)} Sous-catégorie</button><button class="btn ${ro?'pri':'ghost'}" onclick="S.reorder=${ro?'null':`'${f.k}'`};render()">${ic('grid',14)} ${ro?'Terminé':'Ordonner'}</button></span>`:''}</h3>
+ return `<section class="grp"><h3>${tile(f,'sm')} ${f.l} <span class="n">${f.d!==f.l?f.d+' · ':''}${L.length}</span>${ed&&!q&&!f.one?`<span class="gacts"><button class="btn ghost" onclick="subAdd('${f.k}')">${ic('plus',14)} Sous-catégorie</button><button class="btn ${ro?'pri':'ghost'}" onclick="S.reorder=${ro?'null':`'${f.k}'`};render()">${ic('grid',14)} ${ro?'Terminé':'Ordonner'}</button></span>`:''}</h3>
   ${ro?`<p class="small muted" style="margin:-4px 0 8px">Montez ou descendez avec les flèches. <button class="more" onclick="memAuto('${f.k}')">Revenir à l'ordre automatique</button></p>`:''}
   ${rows(lead.concat(free.sort(mSort)))}
   ${SC.map((c,ci)=>{const M=L.filter(x=>x.sub===c.id&&!inLead(x)).sort(mSort);return `<div class="subh"><b>${esc(c.l)}</b><span class="n">${M.length}</span>${ro?`<span class="gacts"><button class="ib" ${ci?'':'disabled'} onclick="subMove('${f.k}','${c.id}',-1)" aria-label="Monter" style="transform:rotate(180deg)">${ic('chev',14)}</button><button class="ib" ${ci<SC.length-1?'':'disabled'} onclick="subMove('${f.k}','${c.id}',1)" aria-label="Descendre">${ic('chev',14)}</button><button class="ib" onclick="subRen('${f.k}','${c.id}')" aria-label="Renommer">${ic('edit',14)}</button><button class="ib" onclick="subDel('${f.k}','${c.id}')" aria-label="Supprimer">${ic('trash',14)}</button></span>`:''}</div>${rows(M)||(ro?`<p class="small muted" style="margin:0 0 8px 4px">Personne pour l'instant : choisissez cette sous-catégorie dans la fiche d'un membre.</p>`:'')}`}).join('')}
@@ -3556,7 +3571,7 @@ function vUnite(){
 }
 /* Accès PAF OPS des membres de l'unité : reliés par l'adresse email (un accès déjà envoyé est reconnu, rien n'est renvoyé) */
 const U_ROLES=['visit','sec','cst','dt','comm','dmma'];
-const U_DEF={PILOTES:'visit',DIR:'visit'};
+const U_DEF={PILOTES:'visit',DIR:'visit',DT:'dt',CST:'cst'};
 const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
 const memOf=mail=>mail?DB.members.find(x=>lc(x.mail)===lc(mail)):null;
@@ -3599,6 +3614,7 @@ function uHTML(){
   <label class="l">Service</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${FU.map(f=>`<button class="pk" aria-pressed="${d.fn===f.k}" onclick="MF.d.fn='${f.k}';$('sheet').innerHTML=uHTML()">${tile(f,'sm')}<span>${f.grp?'<small class="muted" style="display:block;font-size:10px">MÉCAS</small>':''}${f.l}</span></button>`).join('')}</div>
   <div class="two" style="grid-template-columns:minmax(120px,170px) 1fr 1fr"><div><label class="l" for="u-grade">Grade</label><select class="in" id="u-grade" onchange="MF.d.grade=this.value"><option value="">—</option>${GRADES.concat(d.grade&&!GRADES.includes(d.grade)?[d.grade]:[]).map(g=>`<option value="${esc(g)}" ${d.grade===g?'selected':''}>${esc(g)}${GRADEL[g]?' · '+GRADEL[g]:''}</option>`).join('')}</select></div><div><label class="l" for="u-first">Prénom</label><input class="in" id="u-first" value="${esc(d.first)}" oninput="MF.d.first=this.value"></div><div><label class="l" for="u-last">Nom</label><input class="in" id="u-last" value="${esc(d.last)}" oninput="MF.d.last=this.value"></div></div>
   <datalist id="grades">${GRADES.map(g=>`<option value="${g}">`).join('')}</datalist>
+  ${FUm[d.fn]&&FUm[d.fn].one?(()=>{const o=DB.members.find(x=>x.fn===d.fn&&x.id!==MF.id);return `<div class="hint">Un seul titulaire pour ce poste${o?' : actuellement '+esc(memLabel(o))+'.':'.'}</div>`})():''}
   ${ATH_L[d.fn]?`<div class="two" style="grid-template-columns:minmax(120px,170px) 1fr"><div><label class="l" for="u-ath">N° ${ATH_L[d.fn]} <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-ath" type="number" inputmode="numeric" min="1" max="99" value="${esc(d.athos||'')}" placeholder="—" oninput="MF.d.athos=this.value.replace(/\\D/g,'');const n=+MF.d.athos,r=$('u-role');if(r&&!r.value.trim()){const v=(MF.d.fn==='DIR'?ATHOS_F[n]:'')||(n>=1&&n<=9&&MF.d.fn==='PILOTES'?'Athos '+n:MF.d.fn==='PISTE'&&n?'Mecathos '+n:'');if(v){r.value=v;MF.d.role=v}}"></div><div class="small muted" style="align-self:end;padding-bottom:12px">Sert à l'ordre de l'Unité${d.fn==='PISTE'?' : mécaniciens classés par numéro.':' : pilotes 1 à 9, direction 15 à 18.'}</div></div>`:''}
   ${NICK_FN[d.fn]?`<label class="l" for="u-nick">Surnom <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-nick" value="${esc(d.nick||'')}" placeholder="Ex. : Tonio" oninput="MF.d.nick=this.value">
   <div class="tgls"><label class="tgl"><input type="checkbox" ${d.pc?'checked':''} onchange="MF.d.pc=this.checked"> <span><b>Peut être PC</b> (point central)</span></label>${d.fn==='DIR'||d.res?`<label class="tgl"><input type="checkbox" ${d.res?'checked':''} onchange="MF.d.res=this.checked"> <span><b>Réserviste</b> · vous indiquez ses semaines de présence</span></label>`:''}</div>`:''}
@@ -3625,6 +3641,7 @@ function uSave(){
  if(!String(d.role||'').trim()){e.textContent='Indiquez la fonction de cette personne.';return}
  if(!okTel(d.tel)){e.textContent='Le numéro de téléphone semble incomplet (10 chiffres).';return}
  if(!okMail(d.mail)){e.textContent='L\'adresse email n\'est pas valide.';return}
+ if(FUm[d.fn]&&FUm[d.fn].one){const o=DB.members.find(x=>x.fn===d.fn&&x.id!==MF.id);if(o){if(!confirm((memLabel(o)||'Quelqu\'un')+' occupe déjà le poste de '+d.fn+'. Le remplacer ? (il passera dans DEP)'))return;o.fn='DEP'}}
  const a0=accOf(MF.mail0||d.mail),accR=d.acc===undefined?(a0?a0.role:(U_DEF[d.fn]||'')):d.acc;
  const old=MF.id?DB.members.find(x=>x.id===MF.id):null;
  const rec={id:MF.id||uid(),nick:NICK_FN[d.fn]?String(d.nick||'').trim():'',pc:NICK_FN[d.fn]?!!d.pc:false,res:NICK_FN[d.fn]?!!d.res:false,spe:d.fn==='PISTE'?(d.spe||''):'',dfn:(DFN[d.fn]||[]).includes(d.dfn)?d.dfn:'',athos:ATH_L[d.fn]?String(d.athos||'').replace(/\D/g,''):'',sub:subs(d.fn).some(c=>c.id===d.sub)?d.sub:'',ord:old&&old.fn===d.fn&&(old.sub||'')===(d.sub||'')?old.ord:undefined,photo:d.photo||'',fn:d.fn,grade:d.grade.trim(),first:d.first.trim(),last:d.last.trim(),role:d.role.trim(),kp:d.kp||'',tel:String(d.tel||'').replace(/[^\d+]/g,''),mail:(d.mail||'').trim(),acc:accR};
@@ -3697,7 +3714,7 @@ function ivSave(){
 
 /* ====================== Feuille modale ====================== */
 let sheetFn=null;
-function openSheet(fn){if($('ov').hidden)SHD=false;S.live=false;sheetFn=fn;$('sheet').innerHTML=fn();fixSheet();$('ov').hidden=false}
+function openSheet(fn){if($('ov').hidden)SHD=false;S.live=false;sheetFn=fn;const sh=$('sheet');sh.innerHTML=fn();fixSheet();$('ov').hidden=false;sh.scrollTop=0;$('ov').scrollTop=0;sh.querySelectorAll('.sb').forEach(e=>e.scrollTop=0);requestAnimationFrame(()=>{sh.scrollTop=0})}   // toute fenêtre s'ouvre en haut
 function fixSheet(){const sh=$('sheet');if(!sh)return;const ctrls=[...sh.querySelectorAll('input,textarea,select,.yn button,.chips button,.step button,.mchip,.pk,.ocat button,.fdrop,.ghostc,.more')];const any=ctrls.some(x=>!x.disabled);if(ROLE==='visit'||RLm[ROLE].side==='suivi'||!any){sh.querySelectorAll('.sf .btn.pri').forEach(b=>{if(/Je valide|C'est noté|Enregistrer|Remplir/.test(b.textContent)){b.textContent='Fermer';b.onclick=closeSheet;b.className='btn pri'}})}}
 function closeSheet(){$('ov').hidden=true;sheetFn=null;SHD=false}
 /* Fermeture en touchant à côté : seulement si le doigt s'est posé ET levé à côté (pas en fin de sélection de texte ou de défilement),
