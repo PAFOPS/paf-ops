@@ -615,6 +615,38 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cgsvg .cgenv{fill:var(--c);fill-opacity:.14;stroke:var(--c);stroke-width:2.5;stroke-linejoin:round}.cgsvg .cgmax{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}.cgsvg .cgline{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3}
 .pfig .cgsvg{min-width:0}
 @media (max-width:760px){.pfgrid{grid-template-columns:1fr}}
+.nick{font-weight:600;color:var(--muted)}
+.tgls{display:grid;gap:6px;margin-top:10px}.tgl{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface2);cursor:pointer}.tgl input{width:20px;height:20px;accent-color:var(--pri)}
+.pccols{display:grid;gap:14px;max-width:1080px}.pcbox .dvsec{border:0}
+.pch{display:flex;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}.pch .n{font-size:13px;color:var(--muted);font-weight:600}
+.pcnav{display:flex;align-items:center;gap:10px;justify-content:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px;margin:0 0 12px;max-width:520px}.pcnav div{flex:1;text-align:center}.pcnav b{display:block;font-family:var(--f-disp);font-size:18px}.pcnav small{color:var(--muted)}
+.pcsteps{display:flex;gap:6px;margin:0 0 14px;flex-wrap:wrap}.pcst{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);font-weight:700;font-size:13px}
+.pcst i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;background:var(--line);color:var(--fg);font-size:12px}.pcst.cur{border-color:var(--pri);color:var(--fg)}.pcst.cur i{background:var(--pri);color:#fff}.pcst.done{color:var(--ok)}.pcst.done i{background:var(--ok);color:#fff}
+.pcn{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 3px;border-radius:999px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);font-weight:800;font-size:13px;white-space:nowrap}
+.pcn i{font-style:normal;min-width:22px;height:22px;padding:0 4px;border-radius:999px;background:var(--c);color:#fff;display:grid;place-items:center;font-size:11.5px}.pcn.me{outline:2px solid var(--c)}.pcn.none{--c:var(--bad);padding-left:10px}
+.pcgrid{display:grid;grid-template-columns:auto repeat(5,minmax(0,1fr));gap:6px;align-items:stretch}
+.pcgh{border:0;background:none;font-weight:800;padding:4px 0;display:grid;justify-items:center;line-height:1.1}.pcgh small{color:var(--muted);font-weight:600}
+.pcgl{display:grid;align-content:center;padding-right:4px;line-height:1.1}.pcgl b{font-size:13px}.pcgl small{color:var(--muted);font-size:11.5px}
+.pcc{border:2px solid transparent;border-radius:14px;min-height:54px;display:grid;place-items:center;align-content:center;gap:2px;font-weight:800;transition:transform .08s}.pcc:active{transform:scale(.95)}
+.pcc.on{background:var(--ok2);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}.pcc.off{background:var(--bad2);color:var(--bad);border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.pcc small{font-size:10.5px;font-weight:700;opacity:.85}.pcc.idle{background:var(--surface);color:var(--muted);border:2px dashed var(--line)}.pcc .dot{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;opacity:.5}.pcc.none{color:var(--line);background:none;border:0}.pcc em{font-style:normal;font-size:10px;font-weight:800;background:var(--ok);color:#fff;border-radius:99px;padding:0 6px}.pcleg .pcc.idle{border-width:1.5px}.pcmine{border:2px solid var(--pri)}.pcmini i.nf{background:var(--line)}.pcgrid.ro .pcc{cursor:default}
+.pcleg{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 4px;font-size:12.5px;align-items:center}.pcleg span{display:inline-flex;gap:6px;align-items:center}.pcleg .pcc{display:inline-block;min-height:14px;width:18px;height:14px;border-radius:5px}
+.pcq{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.pcbtns{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 10px}
+.pcdays,.pcplan{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.pcday,.pcpd{background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:8px;display:grid;gap:6px;align-content:start}.pcday>b,.pcpd>b{font-family:var(--f-disp);font-size:15px}
+.pcfl{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 4px 6px 8px}.pcfl .ib{width:28px;height:28px}
+.pcfl.no{opacity:.55;border-style:dashed}.pcfl.ask{flex-wrap:wrap;border:2px solid var(--warn);background:var(--warn2)}.pcfl.ask .pcti small{color:var(--warn)}.pcyn{display:flex;gap:6px;width:100%}.pcyn .btn{flex:1;padding:6px;justify-content:center}.pcaskb{margin:0 0 14px;max-width:1080px}.pct{font-weight:800;font-variant-numeric:tabular-nums}.pcti{flex:1;min-width:0;font-size:12px;color:var(--muted);line-height:1.2;overflow-wrap:anywhere}.pcti small{display:block;font-weight:700;color:var(--warn)}
+.pcadd{display:flex;flex-wrap:wrap;gap:4px}.pcadd>button{border:1.5px dashed var(--line);background:none;border-radius:10px;padding:4px 7px;font-size:12px;font-weight:700;color:var(--muted)}.pcadd .tbtn{font-size:12px}
+.pcrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line);width:100%;text-align:left;background:none;border-left:0;border-right:0;border-top:0;flex-wrap:wrap}.pcrow:last-of-type{border-bottom:0}.pcrr{flex:1;display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+.pcmini{display:grid;grid-template-columns:repeat(5,10px);gap:2px}.pcmini i{width:10px;height:8px;border-radius:2px;background:var(--ok)}.pcmini i.off{background:var(--surface2);outline:1px solid var(--line)}
+.pcpf{display:grid;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px}.pcpf.mine{border-color:var(--pri);box-shadow:0 0 0 2px color-mix(in srgb,var(--pri) 25%,transparent)}.pcpf.miss{border-color:var(--bad)}.pcpf small.bad{color:var(--bad);font-weight:700}
+.pcsel{padding:5px 6px;font-size:13px;font-weight:700;border-color:var(--c);color:var(--c)}
+.pccnt{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 4px;align-items:center}.pccnt>span{display:inline-flex;align-items:center;gap:4px}
+.pcbar{display:grid;grid-template-columns:150px 1fr 32px;gap:10px;align-items:center;margin:6px 0}.pcbt{height:10px;border-radius:99px;background:var(--surface2);overflow:hidden}.pcbt i{display:block;height:100%;border-radius:99px}
+.pcsr .pcn,.pcrow .pcn{justify-self:start}.pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
+.pcdemo{display:flex;gap:8px;align-items:center;margin:0 0 10px}.pcdemo select{width:auto}
+@media (max-width:760px){.pcdays,.pcplan{grid-template-columns:1fr}.pcday,.pcpd{grid-template-columns:52px 1fr;align-items:center}.pcday>b,.pcpd>b{grid-row:span 9;align-self:start}.pcbar{grid-template-columns:120px 1fr 28px}.pcc{min-height:48px}.pcgl b{font-size:11.5px}}
 .pfn{display:grid;gap:4px;margin:8px 0;font-size:13px;font-weight:800;color:var(--muted)}
 .pfin{display:flex;align-items:center;gap:6px}.pfin input{width:110px;text-align:center;font-weight:800;font-size:16px}.pfin button{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);font-size:18px;font-weight:800;color:var(--fg)}.pfin b{color:var(--muted)}
 .pfcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
@@ -707,7 +739,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 @media (max-width:720px){
  h1{font-size:24px}
  .top .nav,.role span{display:none}
- .role select{max-width:52vw}
+ .role select{max-width:36vw;min-width:0;padding-right:20px}
  .brand img{width:36px;height:36px}
  .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:6px}
  .bnav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700;color:var(--muted);padding:6px;border-radius:12px}
@@ -963,6 +995,12 @@ if(!DB.kpInit2){if(!(DB.members||[]).some(x=>['dt','cst','comm'].includes(x.kp))
 if(!DB.kpInit){if(!(DB.members||[]).some(x=>x.kp))DB.members=(DB.members||[]).concat(exKP());DB.kpInit=1}
 if(!DB.rV8){if(DB.rights&&DB.rights.comm)DB.rights.comm.com='r';DB.rV8=1}
 if(!DB.depV){DB.subcats=DB.subcats||{};const L=DB.subcats.DEP=DB.subcats.DEP||[];SPE.forEach(n=>{if(!L.some(c=>c.l.toLowerCase()===n.toLowerCase()))L.push({id:uid(),l:n})});DB.depV=1}
+if(!DB.pcDemo&&typeof api!=='function'){const ms=DB.members,NK={9:'Kéké',15:'Gaston',16:'Marcel',17:'Ricky'};const ex=(fn,ath,role)=>{let x=ms.find(y=>(y.fn==='DIR'||y.fn==='PILOTES')&&+y.athos===ath);if(!x){x={id:uid(),ex:1,fn,grade:ath>9?'Lcl':'Cne',first:'Prénom',last:'Exemple',role,tel:'',mail:'',athos:String(ath)};ms.push(x)}x.nick=x.nick||NK[ath];x.pc=true};
+ const c=ms.find(y=>y.kp==='chef');if(c&&!c.athos){c.fn='DIR';c.athos='17'}ex('PILOTES',9,'Athos 9 — remplaçant');ex('DIR',15,'Directeur');ex('DIR',16,'Directeur adjoint');ex('DIR',17,'Chef des opérations');DB.pcDemo=1}
+if(!DB.pcV&&(typeof ME==='undefined'||!ME||ME.role==='chef')){const ms=DB.members=DB.members||[];
+ if(!ms.some(x=>(x.fn==='DIR'||x.fn==='PILOTES')&&+x.athos===18))ms.push({id:uid(),photo:'',fn:'DIR',grade:'Cne',first:'Antoine',last:'HAUSER',nick:'Tonio',athos:'18',role:'Pilote réserviste',res:true,pc:true,kp:'',tel:'',mail:''});
+ ms.forEach(x=>{if((x.fn==='DIR'||x.fn==='PILOTES')&&[9,15,16,17,18].includes(+x.athos))x.pc=true});DB.pcV=1}
+if(!DB.pcV2&&(typeof ME==='undefined'||!ME||ME.role==='chef')){(DB.members||[]).forEach(x=>{if(x.fn==='PILOTES'&&+x.athos===9&&(!x.nick||x.nick==='Zébulon'))x.nick='Kéké'});DB.pcV2=1}
 if(!DB.athV){(DB.members||[]).forEach(x=>{if(!x.athos){const m=String(x.role||'').match(/athos\s*(\d{1,2})/i);if(m)x.athos=m[1]}});DB.athV=1}
 if(!DB.rV7){const old=['leader','n5','n7','dmma','dir','diradj'];if(DB.rights)old.forEach(k=>delete DB.rights[k]);(DB.access||[]).forEach(a=>{if(old.includes(a.role))a.role='visit'});DB.rV7=1}
 if(!DB.rV6){if(DB.rights&&DB.rights.comm)DB.rights.comm=JSON.parse(JSON.stringify(DEF_RIGHTS.comm));DB.rV6=1}
@@ -985,13 +1023,17 @@ function merge3(base,mine,theirs){const out=clone(theirs);if(!base)return out;co
  ['meetings','members','access','pdocs'].forEach(k=>{const B=new Map((base[k]||[]).map(x=>[x.id,x])),M=new Map((mine[k]||[]).map(x=>[x.id,x]));let T=(out[k]||[]).slice();const Ti=new Map(T.map((x,i)=>[x.id,i]));
   (mine[k]||[]).forEach(x=>{const b0=B.get(x.id);if(!b0){if(!Ti.has(x.id))T.push(x)}else if(J(b0)!==J(x)){if(Ti.has(x.id))T[Ti.get(x.id)]=x;else T.push(x)}});
   B.forEach((x,id)=>{if(!M.has(id))T=T.filter(y=>y.id!==id)});out[k]=T});
- Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=mine[k]});
+ Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=k==='pc'?mergeObj(base[k],mine[k],out[k]):mine[k]});
  return out}
+/* Fusion fine (points centraux) : chacun ne réécrit que ce qu'il a changé (ses dispos, une case du planning…) */
+function mergeObj(b,m,t){const J=JSON.stringify,isO=v=>v&&typeof v==='object'&&!Array.isArray(v);if(!isO(m)||!isO(t)||!isO(b))return m;const o=Object.assign({},t);
+ new Set(Object.keys(m).concat(Object.keys(b))).forEach(k=>{if(J(m[k])===J(b[k]))return;if(m[k]===undefined){delete o[k];return}o[k]=isO(m[k])&&isO(t[k])&&isO(b[k])?mergeObj(b[k],m[k],t[k]):m[k]});return o}
 function save(){DIRTY=true;clearTimeout(saveT);saveT=setTimeout(flush,500)}
 async function flush(){if(SAVING){DIRTY=true;return}DIRTY=false;const snap=JSON.stringify(DB);SAVING=api('save',{db:DB,rev:REV});
  try{const r=await SAVING;
   if(r.conflict){const mine=JSON.parse(snap);DB=merge3(BASE,mine,r.db);REV=r.rev;BASE=clone(r.db);migrate();render();DIRTY=true;toast('Mis à jour par quelqu\'un d\'autre : vos modifications sont conservées');}
-  else if(r.error){toast(r.error);if(r.rev){REV=r.rev}}else{REV=r.rev;BASE=JSON.parse(snap);if(r.invited)toast(r.invited+' invitation'+(r.invited>1?'s':'')+' envoyée'+(r.invited>1?'s':'')+' par email')}
+  else if(r.error){toast(r.error);if(r.rev){REV=r.rev}}else if(r.db){DB=merge3(BASE,DB,r.db);REV=r.rev;BASE=clone(r.db);migrate();render()}   // pilote : on repart de la version du serveur (planning validé par le chef, etc.)
+  else{REV=r.rev;BASE=JSON.parse(snap);if(r.invited)toast(r.invited+' invitation'+(r.invited>1?'s':'')+' envoyée'+(r.invited>1?'s':'')+' par email')}
  }catch(e){toast('Connexion impossible : modification non enregistrée');DIRTY=true}
  SAVING=null;if(DIRTY)flush()}
 async function refresh(){if(SAVING||DIRTY||!DB||!$('ov').hidden)return;   // jamais pendant qu'une fiche est ouverte : on ne perd pas une saisie
@@ -2624,6 +2666,7 @@ function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='cg')return vCentrage(tabs);
  if(sub==='cto')return vCPerf(tabs);
  if(sub==='fea')return vFea(tabs);
+ if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
  if(sub==='pod')return `${NOTE}<div class="head"><div><h1>Réchauffement du POD fumigène</h1><p class="muted">Temps d'attente après un transit en altitude à température négative, avant de considérer les membranes dégelées.</p></div></div>${tabs}${vPod()}`;
  return vPerfTO(tabs)}
 function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
@@ -2991,7 +3034,7 @@ async function pushTest(){if(!isOnline()){toast('Disponible dans la version en l
 async function pushRefresh(){PST=await pushState();const b=$('bell');if(b){b.hidden=!canBell();b.classList.toggle('on',PST==='on')}if(!$('ov').hidden&&sheetFn===pushHTML)$('sheet').innerHTML=pushHTML()}
 function pushSheet(){openSheet(pushHTML);pushRefresh()}
 function pushHTML(){const chef=isChef();
- const what=chef?['Une FEA reçue d\'un pilote','Une butée atteinte (organisateur ou DV en retard)']:['Une nouvelle FEA, si vous êtes l\'officier sécurité des vols (Athos '+(DB.feaSV||7)+')','D\'autres notifications pourront s\'ajouter plus tard'];
+ const what=chef?['Une FEA reçue d\'un pilote','Une butée atteinte (organisateur ou DV en retard)','Points centraux : tous les PC ont répondu, la proposition est prête']:['Une nouvelle FEA, si vous êtes l\'officier sécurité des vols (Athos '+(DB.feaSV||7)+')','Points centraux : le jeudi, pour remplir vos dispos, puis vos PC validés'];
  const st={on:['ok','Activées sur cet appareil'],off:['todo','Pas encore activées sur cet appareil'],install:['todo','À installer d\'abord'],denied:['bad','Bloquées dans les réglages'],nosupport:['bad','Non disponibles sur ce navigateur']}[PST]||['todo',''];
  return `<div class="sh">${tile({i:'bell',c1:'#f59e0b',c2:'#c2410c'},'lg')}<div class="t"><div class="q">Notifications</div><div class="small muted">Sur ce téléphone ou cet ordinateur, même application fermée.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb"><span class="pill ${st[0]}">${st[1]}</span>
@@ -3004,7 +3047,7 @@ function pushHTML(){const chef=isChef();
 /* Au démarrage : réveille l'abonnement (le lien personnel a pu changer) */
 async function pushInit(){await pushRefresh();if(PST==='on'&&isOnline()){await pushCfg();try{const reg=await navigator.serviceWorker.getRegistration();const sub=await reg.pushManager.getSubscription();if(sub)api('sub',{sub:sub.toJSON()})}catch(e){}}}
 /* Ouverture depuis une notification : ?go=fea, ?go=mails */
-function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='mails'&&isChef())go('mails')}
+function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='mails'&&isChef())go('mails')}
 if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.go)deepLink(e.data.go)});
 
 /* ====================== Centrage Cirrus SR20 / SR22 ====================== */
@@ -3111,6 +3154,204 @@ function vCentrage(tabs){const o=cgIn(),x=cgCalc(),T=x.T;
     </div></details>
   </section>
  </div>`}
+/* ====================== Points centraux (PC) : surveillance des vols d'entraînement depuis le sol ====================== */
+/* Jeudi matin de la semaine S-1 : les PC notent leurs dispos ; quand tout le monde a répondu, l'application propose ; le chef ops valide. */
+const PC_P=[['m','Matin','09h30'],['d','Midi','12h30'],['a','Après-midi','16h00']];
+const PC_J=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'],PC_JS=['Lun','Mar','Mer','Jeu','Ven'];
+const PC_COL=['#2563eb','#16a34a','#d97706','#9333ea','#db2777','#0891b2','#65a30d','#dc2626'];
+const PC_MO=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+function pcWho(x){const P=pcDB();return P.who[x.id]||(x.fn==='PILOTES'&&athN(x)===9?{min:3,max:4,hab:['4d']}:{})}
+function pcDB(){DB.pc=DB.pc||{};const P=DB.pc;P.who=P.who||{};P.res=P.res||{};P.weeks=P.weeks||{};return P}
+const pcMon=d=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-(x.getDay()+6)%7);return x};
+const pcAdd=(s,n)=>{const d=fromISO(s);d.setDate(d.getDate()+n);return iso(d)};
+const pcCurWk=()=>iso(pcMon(new Date())),pcNextWk=()=>pcAdd(pcCurWk(),7);
+const pcEmpty={fl:[],dispo:{},prop:null,val:null};
+const pcW0=w=>(DB.pc&&DB.pc.weeks&&DB.pc.weeks[w])||pcEmpty;                       // lecture seule
+function pcWk(w){const P=pcDB();const W=P.weeks[w]=P.weeks[w]||{fl:[],dispo:{},prop:null,val:null};W.fl=W.fl||[];W.dispo=W.dispo||{};return W}
+const pcPer=t=>String(t)<'11:00'?'m':String(t)<'14:30'?'d':'a';
+const pcCell=f=>f.d+pcPer(f.time);
+const pcFsort=(a,b)=>a.d-b.d||String(a.time).localeCompare(String(b.time));
+function pcWkLabel(w){const a=fromISO(w),b=fromISO(pcAdd(w,4));return a.getMonth()===b.getMonth()?`${a.getDate()} au ${b.getDate()} ${PC_MO[b.getMonth()]}`:`${a.getDate()} ${PC_MO[a.getMonth()]} au ${b.getDate()} ${PC_MO[b.getMonth()]}`}
+function pcWkRel(w){const c=pcCurWk();return w===c?'cette semaine':w===pcAdd(c,7)?'semaine prochaine':w===pcAdd(c,-7)?'semaine dernière':''}
+const pcDay=(w,d)=>fromISO(pcAdd(w,d)).getDate();
+/* Les PC : direction et pilotes cochés « peut être PC » dans l'Unité */
+const pcMembers=()=>DB.members.filter(x=>x.pc&&(x.fn==='DIR'||x.fn==='PILOTES')).sort((a,b)=>athN(a)-athN(b)||mSort(a,b));
+const pcShort=x=>x?(x.nick||(x.last?x.last.charAt(0).toUpperCase()+x.last.slice(1).toLowerCase():x.first)||'?'):'?';
+const pcName=x=>x?(athN(x)<1e6?'Athos '+athN(x)+' · ':'')+pcShort(x):'—';
+const pcCol=x=>{const i=pcMembers().indexOf(x);return PC_COL[(i<0?7:i)%PC_COL.length]};
+const pcChip=(x,me)=>x?`<span class="pcn ${me?'me':''}" style="--c:${pcCol(x)}">${athN(x)<1e6?`<i>${athN(x)}</i>`:''}${esc(pcShort(x))}</span>`:`<span class="pcn none">À pourvoir</span>`;
+/* Plaquettes : « 4N1 », « 4 FUS+100 », « 1 N2 », « 8 FUS+100 »… → nombre d'avions ; un vol de la direction (moins de 4 avions) n'a en général pas besoin de PC */
+const PC_RX=/(\d+)\s*(?:N\s*\d|FUS)/gi;
+const pcCount=t=>{let n=0;String(t||'').replace(PC_RX,(m,a)=>{n+=+a;return m});return n};
+/* Zone d'entraînement citée (R276, R55, TSA…) ou 4 avions et plus : PC. Moins de 4 avions sans zone : vol direction probable, à confirmer par le chef ops */
+const PC_ZONE=/\b(?:R|D|TSA|CBA|ZRT)\s?-?\d{1,3}[A-Z]?\b|\bzone\b/i;
+const pcKind=t=>PC_ZONE.test(t||'')||pcCount(t)>=4?'pc':'ask';
+/* Qui suis-je ? (en ligne : la fiche de l'Unité qui porte mon email ; maquette : choisi dans la liste) */
+function pcMe(){const M=pcMembers(),c17=()=>M.find(x=>athN(x)===17)||M.find(x=>x.kp==='chef')||null;
+ if(isOnline()){const x=ME&&memOf(ME.mail);if(x&&x.pc)return x;return ME&&ME.role==='chef'?c17():null}
+ return isChef()?c17():M.find(x=>x.id===S.pcAs)||null}
+/* Ce que chacun a coché (« je peux ») ; le vol habituel d'Athos 9 compte d'office tant qu'il n'a pas répondu */
+const pcHab=x=>(x&&pcWho(x).hab)||[];
+function pcOk(x,w){const r=pcW0(w).dispo[x.id];if(!r||!r.t)return null;if(r.ok)return r.ok;const o={};PC_J.forEach((j,d)=>PC_P.forEach(p=>{if(!(r.x||{})[d+p[0]])o[d+p[0]]=1}));return o}
+/* Disponibilités */
+function pcResp(x,w){const W=pcW0(w);if(x.res)return true;const r=W.dispo[x.id];return !!(r&&r.t)}
+function pcAvail(x,f,w){const W=pcW0(w);if(x.res){const p=(pcDB().res[w]||{})[x.id]||[];return p.includes(f.d)}const o=pcOk(x,w);if(!o)return pcHab(x).includes(pcCell(f));return !!o[pcCell(f)]}
+const pcTodo=w=>pcMembers().filter(x=>!x.res&&!pcResp(x,w));
+function pcSeason(id,before){const P=pcDB();let n=0;Object.keys(P.weeks).forEach(w=>{const W=P.weeks[w];if((!before||w<before)&&W.val&&W.prop)(W.fl||[]).forEach(f=>{if(!f.no&&W.prop[f.id]===id)n++})});return n}
+/* Proposition : le PC « prioritaire » (Athos 9) prend son vol habituel puis son objectif ; le reste est équilibré, en commençant par les vols où le moins de monde est disponible */
+function pcPropose(w){const W=pcWk(w),M=pcMembers(),who=pcDB().who;
+ const F=W.fl.filter(f=>!f.no).slice().sort(pcFsort);const A={},cnt={},days={},season={};M.forEach(x=>{if(!who[x.id]&&pcWho(x).min)who[x.id]=pcWho(x)});
+ M.forEach(x=>{cnt[x.id]=0;days[x.id]=new Set();season[x.id]=pcSeason(x.id,w)});
+ const av=(x,f)=>pcAvail(x,f,w),nAv=f=>M.filter(x=>av(x,f)).length;
+ const give=(f,x)=>{A[f.id]=x.id;cnt[x.id]++;days[x.id].add(f.d)};
+ const prio=M.filter(x=>+(who[x.id]||{}).min>0);
+ prio.forEach(x=>(who[x.id].hab||[]).forEach(c=>{const f=F.find(f=>!A[f.id]&&pcCell(f)===c&&av(x,f));if(f)give(f,x)}));
+ M.filter(x=>x.res).forEach(x=>F.forEach(f=>{if(!A[f.id]&&av(x,f))give(f,x)}));   // réserviste présent : PC de base sur tous ses jours
+ prio.forEach(x=>{const mn=+who[x.id].min;let C;while(cnt[x.id]<mn&&(C=F.filter(f=>!A[f.id]&&av(x,f))).length){
+  C.sort((a,b)=>(days[x.id].has(a.d)-days[x.id].has(b.d))||(nAv(a)-nAv(b))||pcFsort(a,b));give(C[0],x)}});
+ let rest=F.filter(f=>!A[f.id]);
+ while(rest.length){rest.sort((a,b)=>nAv(a)-nAv(b)||pcFsort(a,b));const f=rest.shift(),C=M.filter(x=>av(x,f));if(!C.length){A[f.id]='';continue}
+  const sc=x=>{const o=who[x.id]||{};let s=cnt[x.id]*10+(days[x.id].has(f.d)?6:0)+season[x.id]*.05;if(+o.min>0)s+=cnt[x.id]>=Math.max(+o.max||0,+o.min)?1000:100;return s};
+  C.sort((a,b)=>sc(a)-sc(b)||athN(a)-athN(b));give(f,C[0])}
+ W.prop=A;W.propT=Date.now()}
+/* ---- Actions ---- */
+function pcGoWk(d){S.pcW=pcAdd(S.pcW||pcNextWk(),7*d);render();pcAuto()}
+function pcAddFl(w,d,t){if(!t)return;const W=pcWk(w);if(W.fl.some(f=>f.d===d&&f.time===t)){toast('Ce vol existe déjà');return}W.fl.push({id:uid(),d,time:t,title:'',man:1,no:false});W.fl.sort(pcFsort);save();render()}
+function pcDelFl(w,id){const W=pcWk(w);W.fl=W.fl.filter(f=>f.id!==id);if(W.prop)delete W.prop[id];save();render()}
+function pcAsk(w,id,need){const W=pcWk(w),f=W.fl.find(f=>f.id===id);f.ask=false;f.no=!need;if(f.no&&W.prop)delete W.prop[id];if(need&&W.prop&&!W.val)W.prop[id]=W.prop[id]||'';save();const pr=pcMaybePropose(w);render();toast(pr?'Tout le monde a répondu : voici la proposition':need?'PC nécessaire : vol ajouté':'Pas de PC pour ce vol')}
+function pcNoFl(w,id){const f=pcWk(w).fl.find(f=>f.id===id);f.no=!f.no;f.ask=false;const W=pcWk(w);if(f.no&&W.prop)delete W.prop[id];save();render()}
+function pcSetProp(w,fid,mid){const W=pcWk(w);W.prop=W.prop||{};W.prop[fid]=mid;save();render()}
+function pcRes(w,mid,d){const P=pcDB();const R=P.res[w]=P.res[w]||{};let L=R[mid]||[];if(d==='all')L=L.length===5?[]:[0,1,2,3,4];else L=L.includes(d)?L.filter(x=>x!==d):L.concat(d).sort();R[mid]=L;save();render()}
+const pcAskL=w=>pcW0(w).fl.filter(f=>f.ask);
+function pcDoPropose(w){const q=pcAskL(w).length;if(q){toast(q+' vol'+(q>1?'s':'')+' à confirmer d\'abord : PC nécessaire ou non ?');const e=document.querySelector('.pcfl.ask');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});return}pcPropose(w);save();render();const W=pcW0(w),n=W.fl.filter(f=>!f.no&&!W.prop[f.id]).length;toast(n?`Proposition prête · ${n} vol${n>1?'s':''} sans PC disponible`:'Proposition prête : relisez puis validez')}
+async function pcSync(){if(typeof flush!=='function')return;clearTimeout(saveT);try{if(SAVING)await SAVING}catch(e){}await flush();try{if(SAVING)await SAVING}catch(e){}}
+async function pcValidate(w){if(pcAskL(w).length){toast('Confirmez d\'abord les vols marqués « PC ? »');return}const W=pcWk(w),miss=W.fl.filter(f=>!f.no&&!(W.prop||{})[f.id]).length;
+ if(miss&&!confirm(miss+' vol'+(miss>1?'s':'')+' sans PC. Valider quand même ?'))return;
+ W.val={t:Date.now()};save();render();
+ if(!isOnline()){toast('Planning validé · chaque PC reçoit une notification (maquette)');return}
+ await pcSync();let r;try{r=await api('pcValidate',{w,cal:!!(pcDB().cal&&pcDB().calW!==false)})}catch(e){r={error:'Connexion impossible : le planning est validé mais les PC ne sont pas encore prévenus'}}
+ toast(r.error||('Planning validé · '+r.notified+' PC prévenu'+(r.notified>1?'s':'')+(r.cal!=null?' · '+r.cal+' plaquette'+(r.cal>1?'s':'')+' complétée'+(r.cal>1?'s':''):'')+(r.calErr?' · agenda : '+r.calErr:'')))}
+function pcUnval(w){if(!confirm('Rouvrir le planning de cette semaine pour le modifier ?'))return;pcWk(w).val=null;save();render()}
+async function pcRelance(w){const L=pcTodo(w);if(!L.length)return;if(!isOnline()){toast('Rappel envoyé à '+L.map(pcShort).join(', ')+' (maquette)');return}
+ await pcSync();let r;try{r=await api('pcRelance',{w})}catch(e){r={error:'Connexion impossible'}}toast(r.error||('Notification envoyée à '+r.n+' PC'))}
+/* Agenda Google : les plaquettes de la semaine */
+async function pcAgenda(w,quiet){
+ if(!isOnline()){pcDemoAgenda(w);return}
+ if(!pcDB().cal){if(!quiet)pcSettings();return}
+ S.pcBusy=1;if(!quiet)render();let r;try{r=await api('pcAgenda',{w})}catch(e){r={error:'Connexion impossible'}}S.pcBusy=0;
+ if(!r||r.error){render();if(!quiet)toast(r&&r.error||'Agenda illisible');return}
+ const W=pcWk(w),before=JSON.stringify(W.fl);pcMergeFl(w,r.ev||[]);W.agT=Date.now();if(JSON.stringify(W.fl)!==before||!quiet)save();render();
+ if(!quiet)toast((r.ev||[]).length+' plaquette'+((r.ev||[]).length>1?'s':'')+' trouvée'+((r.ev||[]).length>1?'s':'')+' dans l\'agenda')}
+function pcMergeFl(w,ev){const W=pcWk(w),old=new Map(W.fl.filter(f=>f.ev).map(f=>[f.ev,f]));
+ const nf=ev.map(e=>{const o=old.get(e.id);const k=pcKind(e.title),same=o&&o.title===e.title;return {id:o?o.id:uid(),ev:e.id,d:e.d,time:e.time,title:e.title,no:same?o.no:k!=='pc',ask:same?!!o.ask:k==='ask'}});
+ W.fl=nf.concat(W.fl.filter(f=>!f.ev&&!nf.some(n=>n.d===f.d&&n.time===f.time))).sort(pcFsort);
+ if(W.prop)Object.keys(W.prop).forEach(k=>{if(!W.fl.some(f=>f.id===k))delete W.prop[k]})}
+function pcDemoAgenda(w,quiet){const T=[[0,'09:30','8 FUS+100'],[0,'16:00','4N1 4 FUS+100'],[1,'09:30','8 FUS+100'],[1,'12:30','1 N2'],[2,'12:30','2 N1 R276'],[1,'16:00','8 FUS+100'],[2,'09:30','8 FUS+100'],[2,'16:00','4N1 4 FUS+100'],[3,'09:30','8 FUS+100'],[3,'16:00','8 FUS+100'],[4,'09:30','8 FUS+100'],[4,'12:25','8 FUS+100']];
+ pcMergeFl(w,T.map(([d,t,ti])=>({id:'demo-'+w+'-'+d+'-'+t,d,time:t,title:ti})));pcWk(w).agT=Date.now();save();render();if(!quiet)toast(T.length+' plaquettes trouvées dans l\'agenda (exemple)')}
+function pcAuto(){const w=S.pcW||pcNextWk();
+ if(!isOnline()&&isChef()&&w===pcNextWk()&&!pcW0(w).agT){pcDemoAgenda(w,1);const M=pcMembers(),W=pcWk(w),D={9:['4d','0m','2a','3m'],15:['0a','1m','2m','3a','4m'],16:['0m','1a','2d','3a']};
+  M.forEach(x=>{const k=D[athN(x)];if(k&&!W.dispo[x.id]){W.dispo[x.id]={t:Date.now()-36e5*(20-athN(x)),ok:Object.fromEntries(k.map(c=>[c,1])),note:''}}});save();render();return}
+ if(!isChef()||!pcDB().cal||!isOnline())return;const W=pcW0(w);if(W.val||S.pcBusy)return;if(W.agT&&Date.now()-W.agT<10*60e3)return;pcAgenda(w,true)}
+/* ---- Saisie des dispos (le PC lui-même, ou le chef ops pour lui) ---- */
+let PCD=null;
+function pcDispoStart(w,mid){const W=pcW0(w),r=W.dispo[mid],x=DB.members.find(y=>y.id===mid),o=x&&pcOk(x,w);const ok={};if(o)Object.assign(ok,o);else pcHab(x).forEach(c=>ok[c]=1);PCD={w,mid,ok,note:(r&&r.note)||''}}
+const pcCells=w=>{const F=pcW0(w).fl.filter(f=>!f.no);const all=PC_J.flatMap((j,d)=>PC_P.map(p=>d+p[0]));return F.length?all.filter(c=>F.some(f=>pcCell(f)===c)):all};
+function pcTog(c){const C=pcCells(PCD.w),set=k=>{const on=k.every(c=>PCD.ok[c]);k.forEach(c=>{if(on)delete PCD.ok[c];else PCD.ok[c]=1})};if(c==='all')set(C);else if(/^\d$/.test(c))set(C.filter(k=>k[0]===c));else{if(PCD.ok[c])delete PCD.ok[c];else PCD.ok[c]=1}pcRedraw()}
+function pcRedraw(){if(!$('ov').hidden&&sheetFn===pcDispoHTML)$('sheet').innerHTML=pcDispoHTML();else render()}
+function pcSend(){const W=pcWk(PCD.w);if(W.val&&!isChef()){toast('Planning déjà validé : voyez avec le chef ops');return}
+ const w=PCD.w,ok={};pcCells(w).forEach(c=>{if(PCD.ok[c])ok[c]=1});W.dispo[PCD.mid]={t:Date.now(),ok,note:PCD.note.trim()};const x=DB.members.find(y=>y.id===PCD.mid),mine=pcMe()===x;if(isChef()&&!mine)W.dispo[PCD.mid].by='chef';
+ const last=!pcTodo(w).length,n=Object.keys(ok).length;save();
+ if(!$('ov').hidden&&sheetFn===pcDispoHTML)closeSheet();PCD=null;const prop=pcMaybePropose(w);render();
+ toast(prop?'Tout le monde a répondu : voici la proposition, à relire puis valider':isChef()&&!mine?'Dispos de '+pcShort(x)+' enregistrées':last?(isChef()?'Tout le monde a répondu':'Merci ! Tout le monde a répondu : le chef ops reçoit la proposition'):'Merci : '+n+' vol'+(n>1?'s':'')+' coché'+(n>1?'s':''))}
+/* Quand tout le monde a répondu (et les vols « PC ? » tranchés), l'application propose d'elle-même */
+function pcMaybePropose(w){if(!isChef())return false;const W=pcW0(w);if(W.val||W.prop||!W.fl.some(f=>!f.no)||pcAskL(w).length||pcTodo(w).length)return false;pcPropose(w);save();return true}
+function pcGrid(w,ro){const W=pcW0(w),F=W.fl.filter(f=>!f.no),x=DB.members.find(y=>y.id===PCD.mid),hab=pcHab(x);
+ const has=c=>F.filter(f=>pcCell(f)===c);
+ return `<div class="pcgrid ${ro?'ro':''}"><span></span>${PC_JS.map((j,d)=>`<button class="pcgh" ${ro?'disabled':''} onclick="pcTog('${d}')">${j}<small>${pcDay(w,d)}</small></button>`).join('')}
+  ${PC_P.map(p=>`<span class="pcgl"><b>${p[1]}</b><small>~${p[2]}</small></span>${PC_J.map((j,d)=>{const c=d+p[0],on=!!PCD.ok[c],fl=has(c);if(F.length&&!fl.length)return '<span class="pcc none">—</span>';return `<button class="pcc ${on?'on':'idle'}" ${ro?'disabled':''} aria-pressed="${on}" aria-label="${j} ${p[1]} : ${on?'je peux':'pas dispo'}" onclick="pcTog('${c}')">${on?ic('check',18):'<i class="dot"></i>'}${fl.length?`<small>${fl.map(f=>f.time.replace(':','h')).join(' ')}</small>`:''}${hab.includes(c)?'<em>d\'office</em>':''}</button>`}).join('')}`).join('')}</div>`}
+function pcDispoBody(w,mid,sheet){const W=pcW0(w),r=W.dispo[mid],ro=!!W.val&&!isChef();
+ return `<div class="pcq">${ro?'':`<button class="btn" onclick="pcTog('all')">${ic('check',15)} Tout cocher / décocher</button>`}<span class="small muted">Cochez tous les vols que vous pouvez faire, même si d'autres les cochent aussi : l'application équilibre ensuite.</span></div>
+  ${pcGrid(w,ro)}
+  <div class="pcleg"><span><i class="pcc on"></i> Je peux le faire</span><span><i class="pcc idle"></i> Pas dispo</span>${W.fl.length?'<span class="muted">Heures : plaquettes de l\'agenda</span>':''}</div>
+  <label class="l" for="pc-note">Remarque <span style="font-weight:500">(facultatif)</span></label><input class="in" id="pc-note" ${ro?'disabled':''} placeholder="Ex. : mardi, pas avant 14h" value="${esc(PCD.note)}" oninput="PCD.note=this.value">
+  ${r&&r.t?`<p class="small muted" style="margin:8px 0 0">${ic('check',13)} Envoyées le ${new Date(r.t).toLocaleString('fr-FR',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})}${r.by==='chef'?' (par le chef ops)':''}. ${ro?'':'Vous pouvez les modifier jusqu\'à la validation du planning.'}</p>`:''}
+  ${ro?`<div class="hint">Planning validé : pour un changement, voyez avec le chef ops.</div>`:sheet?'':`<button class="btn pri big" style="width:100%;margin-top:12px" onclick="pcSend()">${ic('send',18)} ${r&&r.t?'Mettre à jour mes dispos':'Envoyer mes dispos'}</button>`}`}
+function pcDispoSheet(w,mid){pcDispoStart(w,mid);openSheet(pcDispoHTML)}
+function pcDispoHTML(){const x=DB.members.find(y=>y.id===PCD.mid);
+ return `<div class="sh">${tile({i:'cal',c1:'#2563eb',c2:'#1e3a8a'},'lg')}<div class="t"><div class="q">Dispos de ${esc(pcName(x))}</div><div class="small muted">Semaine du ${pcWkLabel(PCD.w)}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb">${pcDispoBody(PCD.w,PCD.mid,true)}</div>
+ <div class="sf">${pcW0(PCD.w).dispo[PCD.mid]?`<button class="btn" onclick="delete pcWk(PCD.w).dispo[PCD.mid];save();closeSheet();render();toast('Réponse effacée')">${ic('trash',15)} Effacer sa réponse</button>`:'<span></span>'}<button class="btn pri big" onclick="pcSend()">${ic('check',18)} Enregistrer</button></div>`}
+/* ---- Réglages (chef ops) ---- */
+function pcSettings(){openSheet(pcSetHTML)}
+function pcSetWho(id,k,v){const o=pcDB().who[id]=pcDB().who[id]||Object.assign({},pcWho(DB.members.find(y=>y.id===id)));if(k==='hab')o.hab=v?[v]:[];else o[k]=+v||0;if(k==='min'&&o.max<o.min)o.max=o.min;if(k==='max'&&o.min>o.max)o.min=o.max;save();$('sheet').innerHTML=pcSetHTML()}
+function pcSetHTML(){const P=pcDB(),M=pcMembers(),O=n=>[0,1,2,3,4,5,6].map(i=>`<option value="${i}" ${i===n?'selected':''}>${i||'—'}</option>`).join('');
+ const cells=[['','Aucun']].concat(PC_J.flatMap((j,d)=>PC_P.map(p=>[d+p[0],j+' '+p[1].toLowerCase()+' (~'+p[2]+')'])));
+ return `<div class="sh">${tile({i:'gear',c1:'#64748b',c2:'#334155'},'lg')}<div class="t"><div class="q">Réglages des points centraux</div><div class="small muted">Agenda des plaquettes et règles de répartition</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb">
+  <label class="l" for="pc-cal">Identifiant de l'agenda Google des plaquettes</label>
+  <input class="in" id="pc-cal" placeholder="xxxxxxxx@group.calendar.google.com" value="${esc(P.cal||'')}" onchange="pcDB().cal=this.value.trim();save()">
+  <div class="hint">Dans Google Agenda : ⚙️ Paramètres › l'agenda › « Intégrer l'agenda » › Identifiant de l'agenda. Il doit être partagé avec le compte de PAF OPS (« Apporter des modifications » pour y inscrire les PC).</div>
+  <label class="tgl" style="margin-top:10px"><input type="checkbox" ${P.calW!==false?'checked':''} onchange="pcDB().calW=this.checked;save();$('sheet').innerHTML=pcSetHTML()"> <span>À la validation, inscrire « PC = Surnom » sur chaque plaquette</span></label>
+  ${P.calW!==false?`<div class="chips" style="margin-top:8px">${[['title','À la fin du titre (ex. : 8 FUS+100 · PC = Kéké)'],['desc','En 1re ligne de la description']].map(o=>`<button aria-pressed="${(P.calPos||'title')===o[0]}" onclick="pcDB().calPos='${o[0]}';save();$('sheet').innerHTML=pcSetHTML()">${o[1]}</button>`).join('')}</div>`:''}
+  <label class="l" style="margin-top:16px">Les PC</label>
+  ${M.length?`<div class="pcset">${M.map(x=>{const o=pcWho(x);return `<div class="pcsr">${pcChip(x)}<div class="pcsf">${x.res?`<span class="small muted">Réserviste : vous cochez ses jours de présence chaque semaine. Pas d'alerte.</span>`:`<label>Objectif / semaine <select class="in" onchange="pcSetWho('${x.id}','min',this.value)">${O(+o.min||0)}</select> à <select class="in" onchange="pcSetWho('${x.id}','max',this.value)">${O(+o.max||0)}</select></label>
+     <label>Vol habituel <select class="in" onchange="pcSetWho('${x.id}','hab',this.value)">${cells.map(c=>`<option value="${c[0]}" ${((o.hab||[])[0]||'')===c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></label>`}</div></div>`}).join('')}</div>`:''}
+  <div class="hint">Ordre : le vol habituel d'Athos 9, puis le réserviste présent sur tous ses jours, puis l'objectif d'Athos 9 (3 à 4) ; les autres se répartissent le reste à égalité, en tenant compte du compteur de la saison. Pour ajouter ou retirer un PC : cochez « Peut être PC » dans sa fiche de l'Unité.</div>
+ </div><div class="sf"><span></span><button class="btn pri big" onclick="closeSheet();render();pcAuto()">${ic('check',18)} Terminé</button></div>`}
+/* ---- Vue ---- */
+function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
+ if(!S.pcW)S.pcW=pcNextWk();const w=S.pcW,W=pcW0(w),rel=pcWkRel(w);
+ if(!isOnline()&&!chef&&!S.pcAs&&M[0])S.pcAs=M[0].id;
+ const nav=`<div class="pcnav"><button class="ib" onclick="pcGoWk(-1)" aria-label="Semaine précédente" style="transform:rotate(90deg)">${ic('chev',18)}</button><div><b>Semaine du ${pcWkLabel(w)}</b>${rel?`<small>${rel}</small>`:''}</div><button class="ib" onclick="pcGoWk(1)" aria-label="Semaine suivante" style="transform:rotate(-90deg)">${ic('chev',18)}</button></div>`;
+ const F=W.fl.filter(f=>!f.no),todo=pcTodo(w),nonRes=M.filter(x=>!x.res);
+ const planning=(w2,title)=>{const W2=pcW0(w2),F2=W2.fl.filter(f=>!f.no&&W2.prop);if(!W2.val||!F2.length)return '';
+  return `<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('check',18)} ${title} <span class="pill ok">Validé</span></h3><p class="small muted" style="margin:-4px 0 10px">Semaine du ${pcWkLabel(w2)}</p>
+   <div class="pcplan">${PC_J.map((j,d)=>{const L=F2.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w2,d)}</b>${L.length?L.map(f=>{const x=DB.members.find(y=>y.id===W2.prop[f.id]);return `<div class="pcpf ${me&&x===me?'mine':''}"><span class="pct">${f.time.replace(':','h')}</span>${pcChip(x,me&&x===me)}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
+   ${me?(()=>{const mine=F2.filter(f=>W2.prop[f.id]===me.id);return `<p class="small" style="margin:10px 0 0"><b>Vous :</b> ${mine.length?mine.map(f=>PC_J[f.d].toLowerCase()+' '+f.time.replace(':','h')).join(', '):'pas de PC cette semaine'}</p>`})():''}</div></section>`};
+ const head=`${NOTE}<div class="head"><div><h1>Points centraux</h1><p class="muted">Qui surveille les vols d'entraînement depuis le sol, semaine par semaine.</p></div>${chef?`<button class="btn" onclick="pcSettings()">${ic('gear',16)} Réglages</button>`:''}</div>${tabs}`;
+ let myCard='';
+ if(me&&!me.res&&(!chef||!W.val)){if(!$('ov').hidden&&sheetFn===pcDispoHTML){}else if(!PCD||PCD.w!==w||PCD.mid!==me.id)pcDispoStart(w,me.id);const r=W.dispo[me.id];
+  myCard=PCD&&PCD.mid===me.id?`<section class="dvbox pcbox pcmine"><div class="dvsec"><h3 class="pch">${ic('cal',18)} Mes dispos · ${esc(pcName(me))} ${r&&r.t?'<span class="pill ok">Envoyées</span>':W.val?'':'<span class="pill sent">À remplir</span>'}</h3>
+   <p class="small muted" style="margin:-4px 0 10px">Touchez les vols que vous pouvez faire comme PC. Quand tout le monde a répondu, l'application propose un planning équilibré${chef?'':' et le chef ops le valide'}.</p>${pcDispoBody(w,me.id)}</div></section>`:''}
+ /* --- Pilote / directeur --- */
+ if(!chef){
+  const demo=!isOnline()?`<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.pcAs=this.value;PCD=null;render()">${M.map(x=>`<option value="${x.id}" ${S.pcAs===x.id?'selected':''}>${esc(pcName(x))}</option>`).join('')}</select></div>`:'';
+  let mine=myCard;
+  if(me&&me.res)mine=`<p class="small muted">Réserviste : le chef ops indique vos jours de présence, rien à remplir.</p>`;
+  return `${head}${demo}${nav}<div class="pccols">${mine}${planning(w,'Planning PC')}${w!==pcCurWk()?planning(pcCurWk(),'Cette semaine'):''}${!mine&&!W.val?`<p class="muted">Le planning de cette semaine n'est pas encore validé.</p>`:''}</div>`}
+ /* --- Chef ops --- */
+ const step=(n,l,st)=>`<div class="pcst ${st}"><i>${st==='done'?ic('check',14):n}</i><span>${l}</span></div>`;
+ const allIn=!todo.length&&M.length;
+ const steps=`<div class="pcsteps">${step(1,pcAskL(w).length?'Vols · '+pcAskL(w).length+' à confirmer':'Vols',F.length&&!pcAskL(w).length?'done':'cur')}${step(2,`Dispos ${nonRes.length-todo.length}/${nonRes.length}`,allIn?'done':F.length?'cur':'')}${step(3,'Proposition',W.prop?'done':allIn?'cur':'')}${step(4,'Validé',W.val?'done':W.prop?'cur':'')}</div>`;
+ // 1. Vols
+ const fl=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('plane',18)} Vols de la semaine <span class="n">${F.length} avec PC</span></h3>
+  <div class="pcbtns">${pcDB().cal||!isOnline()?`<button class="btn" ${S.pcBusy?'disabled':''} onclick="pcAgenda('${w}')">${ic('cal',15)} ${S.pcBusy?'Lecture…':W.agT?'Relire l\'agenda':'Lire l\'agenda'}</button>`:`<button class="btn" onclick="pcSettings()">${ic('cal',15)} Relier l'agenda des plaquettes</button>`}${W.agT?`<span class="small muted">Lu ${new Date(W.agT).toLocaleString('fr-FR',{weekday:'short',hour:'2-digit',minute:'2-digit'})}</span>`:''}</div>
+  <div class="pcdays">${PC_J.map((j,d)=>{const L=W.fl.filter(f=>f.d===d);return `<div class="pcday"><b>${PC_JS[d]} ${pcDay(w,d)}</b>
+   ${L.map(f=>f.ask&&!W.val?`<div class="pcfl ask"><span class="pct">${f.time.replace(':','h')}</span><span class="pcti">${esc(f.title||'Vol')}<small>Moins de 4 avions, pas de zone : PC ?</small></span><span class="pcyn"><button class="btn pri" onclick="pcAsk('${w}','${f.id}',1)">Oui</button><button class="btn" onclick="pcAsk('${w}','${f.id}',0)">Non</button></span></div>`:`<div class="pcfl ${f.no?'no':''}"><span class="pct">${f.time.replace(':','h')}</span><span class="pcti">${esc(f.title||'Vol')}${f.no?'<small>pas de PC</small>':''}</span>${W.val?'':`<button class="ib" title="${f.no?'Remettre un PC':'Pas besoin de PC (vol direction)'}" aria-label="${f.no?'Remettre un PC':'Pas besoin de PC'}" onclick="pcNoFl('${w}','${f.id}')">${ic(f.no?'plus':'x',14)}</button>${f.man?`<button class="ib" aria-label="Supprimer" onclick="pcDelFl('${w}','${f.id}')">${ic('trash',14)}</button>`:''}`}</div>`).join('')}
+   ${W.val?'':`<div class="pcadd">${PC_P.map(p=>`<button onclick="pcAddFl('${w}',${d},'${p[2].replace('h',':')}')">+ ${p[2]}</button>`).join('')}${timeBtn('',`pcAddFl('${w}',${d},v)`,'Autre heure')}</div>`}</div>`}).join('')}</div>
+  <p class="hint">PC d'office : 4 avions et plus, ou une zone citée (R276, R55…). Moins de 4 avions sans zone : vol direction probable, vous confirmez. Touchez × ou + pour corriger.</p></div></section>`;
+ const askN=pcAskL(w).length,askB=askN&&!W.val?`<div class="pfal pcaskb" style="--c:#f59e0b">${tile({i:'alert',c1:'#f59e0b',c2:'#c2410c'},'sm')}<div><b>${askN} vol${askN>1?'s':''} à confirmer</b><span>${pcAskL(w).map(f=>PC_J[f.d].toLowerCase()+' '+f.time.replace(':','h')+' « '+esc(f.title)+' »').join(', ')} : moins de 4 avions et pas de zone. Faut-il un PC ?</span></div></div>`:'';
+ // 2. Dispos
+ const disp=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('users',18)} Dispos des PC <span class="n">${nonRes.length-todo.length}/${nonRes.length} réponses</span></h3>
+  ${M.length?M.map(x=>{if(x.res){const p=(pcDB().res[w]||{})[x.id]||[];return `<div class="pcrow">${pcChip(x)}<div class="pcrr"><span class="small muted">Réserviste · présent :</span><div class="chips">${PC_JS.map((j,d)=>`<button aria-pressed="${p.includes(d)}" ${W.val?'disabled':''} onclick="pcRes('${w}','${x.id}',${d})">${j}</button>`).join('')}<button aria-pressed="${p.length===5}" ${W.val?'disabled':''} onclick="pcRes('${w}','${x.id}','all')">Semaine complète</button></div></div></div>`}
+   const r=W.dispo[x.id],ok=r&&r.t;return `<button class="pcrow btnrow" onclick="pcDispoSheet('${w}','${x.id}')">${pcChip(x)}<span class="pcrr">${ok?`<span class="pcmini">${(()=>{const o=pcOk(x,w)||{},C=pcCells(w);return PC_P.map(p=>PC_J.map((j,d)=>`<i class="${!C.includes(d+p[0])?'nf':o[d+p[0]]?'on':'off'}"></i>`).join('')).join('')})()}</span><span class="small"><b>${Object.keys(pcOk(x,w)||{}).filter(c=>pcCells(w).includes(c)).length}</b> vol(s) coché(s)</span>${r.note?`<span class="small muted">« ${esc(r.note)} »</span>`:''}`:`<span class="pill sent">${ic('clock',12)} En attente</span>`}</span><span class="small muted">${ok?'Modifier':'Saisir pour lui'}</span></button>`}).join(''):`<p class="small muted">Aucun PC : cochez « Peut être PC » dans la fiche des membres de la direction et des pilotes (Unité).</p>`}
+  ${todo.length&&!W.val?`<div class="pcbtns" style="margin-top:10px"><button class="btn" onclick="pcRelance('${w}')">${ic('bell',15)} Relancer ${todo.map(pcShort).join(', ')}</button></div>`:''}
+  <p class="hint">Chaque jeudi matin, les PC (sauf réserviste) reçoivent une notification pour remplir leurs dispos de la semaine suivante.</p></div></section>`;
+ // 3. Répartition
+ const cntW={};M.forEach(x=>cntW[x.id]=0);if(W.prop)F.forEach(f=>{if(W.prop[f.id]&&cntW[W.prop[f.id]]!=null)cntW[W.prop[f.id]]++});
+ const prop=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('target',18)} Répartition ${W.val?`<span class="pill ok">Validée le ${new Date(W.val.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>`:W.prop?'<span class="pill sent">À valider</span>':''}</h3>
+  ${!F.length?`<p class="small muted">Ajoutez d'abord les vols de la semaine.</p>`:!W.prop?`<p class="small muted" style="margin-top:0">${allIn?'Tout le monde a répondu.':`En attente de ${todo.map(pcShort).join(', ')}. Vous pouvez proposer quand même : sans réponse = pas disponible.`}</p><button class="btn pri big" onclick="pcDoPropose('${w}')">${ic('target',18)} Proposer la répartition</button>`:
+  `<div class="pcplan">${PC_J.map((j,d)=>{const L=F.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w,d)}</b>${L.length?L.map(f=>{const cur=W.prop[f.id]||'',x=DB.members.find(y=>y.id===cur),ok=x&&pcAvail(x,f,w);
+    return `<div class="pcpf ${cur?'':'miss'}"><span class="pct">${f.time.replace(':','h')}</span>${W.val?pcChip(x):`<select class="in pcsel" style="--c:${x?pcCol(x):'var(--bad)'}" onchange="pcSetProp('${w}','${f.id}',this.value)"><option value="">À pourvoir</option>${M.map(y=>`<option value="${y.id}" ${y.id===cur?'selected':''}>${esc(pcName(y))}${pcAvail(y,f,w)?(y.res?'  ✓ présent':'  ✓ dispo'):''}</option>`).join('')}</select>`}${x&&!ok?`<small class="bad">pas dispo</small>`:''}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
+   <div class="pccnt">${M.map(x=>`<span>${pcChip(x)} <b>${cntW[x.id]}</b>${(()=>{const o=pcWho(x);return o&&+o.min>0?`<small class="muted"> / ${o.min}${+o.max>+o.min?'–'+o.max:''}</small>`:''})()}</span>`).join('')}</div>
+   ${W.val?`<div class="pcbtns"><button class="btn" onclick="pcUnval('${w}')">${ic('edit',15)} Modifier</button></div>`:`<div class="pcbtns"><button class="btn" onclick="pcDoPropose('${w}')">${ic('target',15)} Recalculer</button><button class="btn pri big" onclick="pcValidate('${w}')">${ic('check',18)} Valider et prévenir les PC</button></div>
+   <p class="hint">Dans chaque menu, tout le monde est proposé ; « ✓ dispo » marque ceux qui ont coché ce vol. Tonio, quand il est présent, est PC de base (sauf le vendredi T2, réservé au 9). À la validation, chaque PC reçoit une notification avec ses vols${pcDB().cal&&pcDB().calW!==false?' et les plaquettes de l\'agenda sont complétées':''}.</p>`}`}
+  </div></section>`;
+ // 4. Bilan
+ const tot=M.map(x=>({x,n:pcSeason(x.id)})),mx=Math.max(1,...tot.map(t=>t.n));
+ const bil=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('star',18)} Bilan de la saison</h3>${tot.map(t=>`<div class="pcbar">${pcChip(t.x)}<span class="pcbt"><i style="width:${t.n/mx*100}%;background:${pcCol(t.x)}"></i></span><b>${t.n}</b></div>`).join('')}<p class="hint">PC des semaines validées.</p></div></section>`;
+ return `${head}${nav}${steps}${askB}<div class="pccols">${myCard}${fl}${disp}${prop}${bil}</div>`}
+
 /* Illustrations des trois outils */
 function pfArt(k){
  const bg=(a,b,id)=>`<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="120" height="120" rx="28" fill="url(#${id})"/>`;
@@ -3124,6 +3365,9 @@ function pfArt(k){
   <path d="M60 30 V40 M60 50 V62 M60 72 V86 M60 96 V104" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
   <path d="M24 96 H36 M30 96 V88 M84 96 H96 M90 96 V88" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
 </svg>`;
+ if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
+  <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/><circle cx="60" cy="60" r="18" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/>
+  <path d="M60 18 V34 M60 86 V102 M18 60 H34 M86 60 H102" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="60" r="7" fill="#fde68a"/></svg>`;
  if(k==='fea')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#ef4444','#7f1d1d','g_fea')}
   <path d="M60 22 L102 94 H18 Z" fill="#fff"/><path d="M60 46 V70" stroke="#b91c1c" stroke-width="8" stroke-linecap="round"/><circle cx="60" cy="82" r="5" fill="#b91c1c"/></svg>`;
  if(k==='pod')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#f97316','#b91c1c','g_pod')}
@@ -3134,7 +3378,7 @@ function pfArt(k){
   <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Centrage Cirrus','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.']];
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Centrage Cirrus','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -3264,7 +3508,8 @@ const gRank=g=>{const i=GRADES.indexOf(g);return i<0?99:i};
 const ATH_L={DIR:'Athos',PILOTES:'Athos',PISTE:'Mecathos'};   // numéro seulement pour la direction, les pilotes et la piste
 const athN=x=>{if(!ATH_L[x.fn])return 1e6;const n=parseInt(x.athos,10);return isNaN(n)?1e6:n};
 const mSort=(a,b)=>((a.ord??1e6)-(b.ord??1e6))||((DFN_RANK[a.dfn]??9)-(DFN_RANK[b.dfn]??9))||(athN(a)-athN(b))||(gRank(a.grade)-gRank(b.grade))||String(a.last||'').localeCompare(String(b.last||''));
-const ATHOS_F={15:'Directeur',16:'Directeur adjoint',17:'Chef des opérations'};
+const ATHOS_F={15:'Directeur',16:'Directeur adjoint',17:'Chef des opérations',18:'Pilote réserviste'};
+const NICK_FN={DIR:1,PILOTES:1};
 function subs(fn){DB.subcats=DB.subcats||{};return DB.subcats[fn]=DB.subcats[fn]||[]}
 function subAdd(fn){const l=prompt('Nom de la sous-catégorie ('+fn+') :');if(!l||!l.trim())return;subs(fn).push({id:uid(),l:l.trim()});S.reorder=fn;save();render()}
 function subRen(fn,id){const s0=subs(fn).find(x=>x.id===id);const l=prompt('Nouveau nom :',s0.l);if(!l||!l.trim())return;s0.l=l.trim();save();render()}
@@ -3283,7 +3528,7 @@ function grpHTML(f,L,q){const ed=canEdit('annu'),ro=S.reorder===f.k&&ed,SC=subs(
   ${!L.length?(!ed?'<p class="small muted">Aucun membre.</p>':`<button class="ghostc" style="width:100%" onclick="memberSheet(null,'${f.k}')">${tile(f,'sm')}<span><b>Ajouter dans ${f.l}</b><span class="small">${q?'Aucun résultat pour cette recherche':'Aucun membre pour l\'instant'}</span></span></button>`):''}</section>`}
 function vUnite(){
  const q=S.q.trim().toLowerCase();
- const match=x=>!q||[x.first,x.last,x.grade,x.role,x.tel,x.mail,x.fn].join(' ').toLowerCase().includes(q);
+ const match=x=>!q||[x.first,x.last,x.nick,x.grade,x.role,x.tel,x.mail,x.fn].join(' ').toLowerCase().includes(q);
  const all=DB.members.filter(match);
  const groups=FU.filter(f=>S.filter==='all'||S.filter===f.k||S.filter===f.grp).map(f=>({f,L:all.filter(x=>x.fn===f.k)}));
  return `${NOTE}<div class="head"><div><h1>Unité</h1><p class="muted">${DB.members.length} membre${DB.members.length>1?'s':''}, classés par fonction</p></div>${canEdit('annu')?`<button class="btn pri big" onclick="memberSheet()">${ic('plus',18)} Ajouter un membre</button>`:''}</div>
@@ -3322,7 +3567,7 @@ function uAccBar(){const P=uPending(),H=DB.access.filter(a=>a.hold&&!a.mid),O=or
    <div class="orph">${O.map(a=>`<button class="person" onclick="adoptAcc('${a.id}')">${ic('plus',13)}<span>${esc(a.name||a.mail)} <small class="muted">· ${(RLm[a.role]||{}).l||a.role}</small></span></button>`).join('')}</div></div>
    ${OV.length?`<button class="btn" onclick="adoptAll()">${ic('plane',16)} Ajouter les ${OV.length} pilote${OV.length>1?'s':''} dans PILOTES</button>`:''}</div>`:''}</section>`}
 function mRow(x,mv){
- return `<div class="mrow"><div class="who">${mv?`<span class="mvb"><button class="ib" ${mv.up?'':'disabled'} onclick="memMove('${x.id}',-1)" aria-label="Monter" style="transform:rotate(180deg)">${ic('chev',14)}</button><button class="ib" ${mv.down?'':'disabled'} onclick="memMove('${x.id}',1)" aria-label="Descendre">${ic('chev',14)}</button></span>`:''}${x.photo?avatar(x,40):tile(FUm[x.fn],'sm')}<div style="min-width:0"><b>${athN(x)<1e6?`<span class="athb">${ATH_L[x.fn]} ${athN(x)}</span> `:''}${x.grade?esc(x.grade)+' ':''}${esc([x.first,x.last].filter(Boolean).join(' '))} ${x.ex?'<span class="ex">exemple</span>':''}</b><small>${x.dfn?`<span class="dfnb">${esc(x.dfn)}</span> `:''}${x.spe?`<span class="speb">${esc(x.spe)}</span> `:''}${esc(x.role||'')}${x.kp?` · <span style="color:var(--pri)">${ic('headset',12)} interlocuteur ${(RLm[x.kp]||{}).l||''}</span>`:''}${isChef()?' '+accChip(x):''}</small></div></div>
+ return `<div class="mrow"><div class="who">${mv?`<span class="mvb"><button class="ib" ${mv.up?'':'disabled'} onclick="memMove('${x.id}',-1)" aria-label="Monter" style="transform:rotate(180deg)">${ic('chev',14)}</button><button class="ib" ${mv.down?'':'disabled'} onclick="memMove('${x.id}',1)" aria-label="Descendre">${ic('chev',14)}</button></span>`:''}${x.photo?avatar(x,40):tile(FUm[x.fn],'sm')}<div style="min-width:0"><b>${athN(x)<1e6?`<span class="athb">${ATH_L[x.fn]} ${athN(x)}</span> `:''}${x.grade?esc(x.grade)+' ':''}${esc([x.first,x.last].filter(Boolean).join(' '))}${x.nick?` <span class="nick">« ${esc(x.nick)} »</span>`:''} ${x.ex?'<span class="ex">exemple</span>':''}</b><small>${x.res?'<span class="dfnb">Réserviste</span> ':''}${x.pc?'<span class="speb">PC</span> ':''}${x.dfn?`<span class="dfnb">${esc(x.dfn)}</span> `:''}${x.spe?`<span class="speb">${esc(x.spe)}</span> `:''}${esc(x.role||'')}${x.kp?` · <span style="color:var(--pri)">${ic('headset',12)} interlocuteur ${(RLm[x.kp]||{}).l||''}</span>`:''}${isChef()?' '+accChip(x):''}</small></div></div>
   ${x.tel?lineTel(x.tel):'<div class="line muted small">—</div>'}${x.mail?lineMail(x.mail):'<div class="line muted small"></div>'}
   <div class="acts">${isChef()&&x.mail&&x.acc&&!accOf(x.mail)?`<button class="ib" title="Envoyer son accès" onclick="uInvite(['${x.id}'])" aria-label="Envoyer son accès">${ic('send',16)}</button>`:''}${canEdit('annu')?`<button class="ib" onclick="memberSheet('${x.id}')" aria-label="Modifier">${ic('edit',16)}</button>`:''}</div></div>`;
 }
@@ -3340,7 +3585,9 @@ function uHTML(){
   <label class="l">Service</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${FU.map(f=>`<button class="pk" aria-pressed="${d.fn===f.k}" onclick="MF.d.fn='${f.k}';$('sheet').innerHTML=uHTML()">${tile(f,'sm')}<span>${f.grp?'<small class="muted" style="display:block;font-size:10px">MÉCAS</small>':''}${f.l}</span></button>`).join('')}</div>
   <div class="two" style="grid-template-columns:minmax(120px,170px) 1fr 1fr"><div><label class="l" for="u-grade">Grade</label><select class="in" id="u-grade" onchange="MF.d.grade=this.value"><option value="">—</option>${GRADES.concat(d.grade&&!GRADES.includes(d.grade)?[d.grade]:[]).map(g=>`<option value="${esc(g)}" ${d.grade===g?'selected':''}>${esc(g)}${GRADEL[g]?' · '+GRADEL[g]:''}</option>`).join('')}</select></div><div><label class="l" for="u-first">Prénom</label><input class="in" id="u-first" value="${esc(d.first)}" oninput="MF.d.first=this.value"></div><div><label class="l" for="u-last">Nom</label><input class="in" id="u-last" value="${esc(d.last)}" oninput="MF.d.last=this.value"></div></div>
   <datalist id="grades">${GRADES.map(g=>`<option value="${g}">`).join('')}</datalist>
-  ${ATH_L[d.fn]?`<div class="two" style="grid-template-columns:minmax(120px,170px) 1fr"><div><label class="l" for="u-ath">N° ${ATH_L[d.fn]} <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-ath" type="number" inputmode="numeric" min="1" max="99" value="${esc(d.athos||'')}" placeholder="—" oninput="MF.d.athos=this.value.replace(/\\D/g,'');const n=+MF.d.athos,r=$('u-role');if(r&&!r.value.trim()){const v=(MF.d.fn==='DIR'?ATHOS_F[n]:'')||(n>=1&&n<=9&&MF.d.fn==='PILOTES'?'Athos '+n:MF.d.fn==='PISTE'&&n?'Mecathos '+n:'');if(v){r.value=v;MF.d.role=v}}"></div><div class="small muted" style="align-self:end;padding-bottom:12px">Sert à l'ordre de l'Unité${d.fn==='PISTE'?' : mécaniciens classés par numéro.':' : pilotes 1 à 9, direction 15, 16, 17.'}</div></div>`:''}
+  ${ATH_L[d.fn]?`<div class="two" style="grid-template-columns:minmax(120px,170px) 1fr"><div><label class="l" for="u-ath">N° ${ATH_L[d.fn]} <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-ath" type="number" inputmode="numeric" min="1" max="99" value="${esc(d.athos||'')}" placeholder="—" oninput="MF.d.athos=this.value.replace(/\\D/g,'');const n=+MF.d.athos,r=$('u-role');if(r&&!r.value.trim()){const v=(MF.d.fn==='DIR'?ATHOS_F[n]:'')||(n>=1&&n<=9&&MF.d.fn==='PILOTES'?'Athos '+n:MF.d.fn==='PISTE'&&n?'Mecathos '+n:'');if(v){r.value=v;MF.d.role=v}}"></div><div class="small muted" style="align-self:end;padding-bottom:12px">Sert à l'ordre de l'Unité${d.fn==='PISTE'?' : mécaniciens classés par numéro.':' : pilotes 1 à 9, direction 15 à 18.'}</div></div>`:''}
+  ${NICK_FN[d.fn]?`<label class="l" for="u-nick">Surnom <span style="font-weight:500">(facultatif)</span></label><input class="in" id="u-nick" value="${esc(d.nick||'')}" placeholder="Ex. : Tonio" oninput="MF.d.nick=this.value">
+  <div class="tgls"><label class="tgl"><input type="checkbox" ${d.pc?'checked':''} onchange="MF.d.pc=this.checked"> <span><b>Peut être PC</b> (point central)</span></label>${d.fn==='DIR'||d.res?`<label class="tgl"><input type="checkbox" ${d.res?'checked':''} onchange="MF.d.res=this.checked"> <span><b>Réserviste</b> · vous indiquez ses semaines de présence</span></label>`:''}</div>`:''}
   ${subs(d.fn).length?`<label class="l">${d.fn==='DEP'?'Spécialité':'Sous-catégorie'}</label><div class="chips">${[{id:'',l:'Aucune'}].concat(subs(d.fn)).map(c=>`<button aria-pressed="${(d.sub||'')===c.id}" onclick="MF.d.sub='${c.id}';$('sheet').innerHTML=uHTML()">${esc(c.l)}</button>`).join('')}</div>`:''}
   ${d.fn==='PISTE'?`<label class="l">Spécialité <span style="font-weight:500">(facultatif)</span></label><div class="chips">${['',...SPE].map(v=>`<button aria-pressed="${(d.spe||'')===v}" onclick="MF.d.spe=${JSON.stringify(v).replace(/"/g,'&quot;')};$('sheet').innerHTML=uHTML()">${v?esc(v):'Aucune'}</button>`).join('')}</div>`:''}
   ${DFN[d.fn]?`<label class="l">Fonction ${d.fn==='DEP'?'au DEP':'à la piste'} <span style="font-weight:500">(facultatif)</span></label><div class="chips">${['',...DFN[d.fn]].map(v=>`<button aria-pressed="${(d.dfn||'')===v}" onclick="MF.d.dfn=${JSON.stringify(v).replace(/"/g,'&quot;')};$('sheet').innerHTML=uHTML()">${v?esc(v):'Aucune'}</button>`).join('')}</div>${d.fn==='PISTE'&&/chef/i.test(d.dfn||'')?'<div class="hint">Le chef et l\'adjoint chef de piste auront des droits particuliers (à venir).</div>':''}`:''}
@@ -3366,7 +3613,7 @@ function uSave(){
  if(!okMail(d.mail)){e.textContent='L\'adresse email n\'est pas valide.';return}
  const a0=accOf(MF.mail0||d.mail),accR=d.acc===undefined?(a0?a0.role:(U_DEF[d.fn]||'')):d.acc;
  const old=MF.id?DB.members.find(x=>x.id===MF.id):null;
- const rec={id:MF.id||uid(),spe:d.fn==='PISTE'?(d.spe||''):'',dfn:(DFN[d.fn]||[]).includes(d.dfn)?d.dfn:'',athos:ATH_L[d.fn]?String(d.athos||'').replace(/\D/g,''):'',sub:subs(d.fn).some(c=>c.id===d.sub)?d.sub:'',ord:old&&old.fn===d.fn&&(old.sub||'')===(d.sub||'')?old.ord:undefined,photo:d.photo||'',fn:d.fn,grade:d.grade.trim(),first:d.first.trim(),last:d.last.trim(),role:d.role.trim(),kp:d.kp||'',tel:String(d.tel||'').replace(/[^\d+]/g,''),mail:(d.mail||'').trim(),acc:accR};
+ const rec={id:MF.id||uid(),nick:NICK_FN[d.fn]?String(d.nick||'').trim():'',pc:NICK_FN[d.fn]?!!d.pc:false,res:NICK_FN[d.fn]?!!d.res:false,spe:d.fn==='PISTE'?(d.spe||''):'',dfn:(DFN[d.fn]||[]).includes(d.dfn)?d.dfn:'',athos:ATH_L[d.fn]?String(d.athos||'').replace(/\D/g,''):'',sub:subs(d.fn).some(c=>c.id===d.sub)?d.sub:'',ord:old&&old.fn===d.fn&&(old.sub||'')===(d.sub||'')?old.ord:undefined,photo:d.photo||'',fn:d.fn,grade:d.grade.trim(),first:d.first.trim(),last:d.last.trim(),role:d.role.trim(),kp:d.kp||'',tel:String(d.tel||'').replace(/[^\d+]/g,''),mail:(d.mail||'').trim(),acc:accR};
  if(rec.kp)DB.members.forEach(y=>{if(y.kp===rec.kp&&y.id!==rec.id)y.kp=''});
  const i=DB.members.findIndex(x=>x.id===rec.id);if(i>=0)DB.members[i]=rec;else DB.members.push(rec);
  if(MF.toMeet&&i<0){const mm=DB.meetings.find(x=>x.id===MF.toMeet);if(mm){const t=team(mm);if(!isDefault(rec)&&!t.add.includes(rec.id))t.add.push(rec.id)}}
