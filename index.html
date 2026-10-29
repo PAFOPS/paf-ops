@@ -644,7 +644,33 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .pcsel{padding:5px 6px;font-size:13px;font-weight:700;border-color:var(--c);color:var(--c)}
 .pccnt{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 4px;align-items:center}.pccnt>span{display:inline-flex;align-items:center;gap:4px}
 .pcbar{display:grid;grid-template-columns:150px 1fr 32px;gap:10px;align-items:center;margin:6px 0}.pcbt{height:10px;border-radius:99px;background:var(--surface2);overflow:hidden}.pcbt i{display:block;height:100%;border-radius:99px}
-.pcsr .pcn,.pcrow .pcn{justify-self:start}.pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
+.pcsr .pcn,.pcrow .pcn{justify-self:start}.hbtns{display:flex;gap:8px;flex-wrap:wrap}
+.rxsite{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;font-size:14px}.rxsite>span{flex:1;min-width:200px}
+.rxgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.rxbox .dvsec{border:0}.rxbh{display:flex;gap:10px;align-items:center;margin-bottom:10px}.rxbh>div{flex:1;display:grid}.rxbh b{font-size:16px}
+.rxsyn{display:grid;gap:8px}.rxsr h4,.rxcols h4{margin:4px 0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--c)}
+.rxc{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:12px;padding:8px 10px;margin:6px 0;background:var(--surface)}.rxc p{margin:4px 0;white-space:pre-wrap;font-size:14px;line-height:1.45}
+.rxh{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.rxh .ib{margin-left:auto;width:30px;height:30px}
+.rxr,.rxv,.rxk{font-size:11px;font-weight:800;border-radius:99px;padding:2px 8px}.rxr{background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c)}.rxk{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+.rxv{display:inline-flex;gap:4px;align-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent)}
+.rxvs{width:auto;padding:2px 6px;font-size:11.5px;font-weight:800;border-radius:99px;border:1.5px solid var(--c);color:var(--c);background:var(--surface)}
+.rxvis{display:grid;grid-template-columns:1fr 1fr;gap:6px}.rxvis button{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:8px;font-weight:700;font-size:13px;display:flex;gap:6px;align-items:center;color:var(--muted)}.rxvis button[aria-pressed="true"]{border-color:var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent)}
+.rxy{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px 14px;margin:8px 0}.rxy summary{display:flex;gap:10px;align-items:center;cursor:pointer;list-style:none;flex-wrap:wrap}.rxy summary::-webkit-details-marker{display:none}.rxy summary b{font-family:var(--f-disp);font-size:18px}.rxy summary .chev{margin-left:auto;transition:transform .15s}.rxy[open] summary .chev{transform:rotate(180deg)}
+.rxm{font-size:12px;font-weight:700;background:var(--surface2);border-radius:99px;padding:2px 8px}
+.rxcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:8px}
+.rxsay{border:2px solid #22c55e;background:color-mix(in srgb,#22c55e 7%,var(--surface));border-radius:16px;padding:12px 14px;margin:12px 0}.rxsh{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.rxsh>div{flex:1;display:grid;min-width:200px}.rxsay ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.rxsites{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:10px}.rxst{display:grid;gap:2px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;position:relative}.rxst b{font-size:15px}.rxst span{font-size:12px;color:var(--muted)}.rxst:hover{border-color:var(--fg)}
+.rxsay1{position:absolute;top:8px;right:8px;font-style:normal;font-size:10.5px;font-weight:800;color:#15803d;background:color-mix(in srgb,#22c55e 15%,transparent);border-radius:99px;padding:1px 7px}
+.rxres{margin:8px 0}.rxpl{display:grid;gap:6px;margin-top:10px;max-height:50vh;overflow:auto}.rxpl .person[aria-pressed="true"]{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 8%,transparent)}
+.rxil{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;max-height:40vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:10px}
+.ghostc.sm{padding:8px 12px;font-size:13px;gap:6px;width:100%;justify-content:center}
+@media (max-width:760px){.rxgrid{grid-template-columns:1fr}.rxvis{grid-template-columns:1fr}}
+.rxnow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.rxcol{background:var(--surface2);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:8px 10px;display:grid;gap:6px;align-content:start}.rxcol h4{margin:0;color:var(--c);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.rxcol ul,.rxtab ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:14px;line-height:1.35}.rxcol li[role=button],.rxtab li[role=button]{cursor:pointer}.rxcol li[role=button]:hover{text-decoration:underline}li.say{color:#15803d;font-weight:600}
+.rxadd{display:flex;gap:4px;align-items:flex-end}.rxadd textarea{font-family:var(--f-body);resize:vertical;min-height:44px;font-size:14px;padding:6px 8px}.rxn{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 8px}.rxnh{display:flex;gap:6px;align-items:center;font-size:12px}.rxnh b{color:var(--c)}.rxnh .ib{width:26px;height:26px;margin-left:auto}.rxnh .ib+.ib{margin-left:0}.rxn p{margin:3px 0 0;font-size:14px;white-space:pre-wrap;line-height:1.35}.rxbh .n{font-size:12px;background:var(--surface2);border-radius:99px;padding:1px 8px;margin-left:4px}.rxsynb{border:2px solid #0ea5e9}.rxadd .in{padding:6px 8px;font-size:14px}.rxadd .ib{width:34px;height:34px;flex:none}
+.rxtab{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}.rxtr{display:grid;grid-template-columns:64px repeat(4,minmax(0,1fr));gap:10px;padding:10px 12px;border-top:1px solid var(--line)}.rxtr.rxth{border-top:0;background:var(--surface2)}.rxth b{color:var(--c);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.rxyy{font-family:var(--f-disp);font-size:20px;font-weight:800}.rxml{display:none}.rxtab ul{white-space:pre-wrap}.rxfound{padding-left:0;list-style:none;display:grid;gap:8px}.rxfound li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:14px;white-space:pre-wrap}
+@media (max-width:760px){.rxnow{grid-template-columns:1fr}.rxtr{grid-template-columns:1fr}.rxth{display:none!important}.rxml{display:block;font-style:normal;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--c)}}
+.pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
 .pcdemo{display:flex;gap:8px;align-items:center;margin:0 0 10px}.pcdemo select{width:auto}
 @media (max-width:760px){.pcdays,.pcplan{grid-template-columns:1fr}.pcday,.pcpd{grid-template-columns:52px 1fr;align-items:center}.pcday>b,.pcpd>b{grid-row:span 9;align-self:start}.pcbar{grid-template-columns:120px 1fr 28px}.pcc{min-height:48px}.pcgl b{font-size:11.5px}}
 .pfn{display:grid;gap:4px;margin:8px 0;font-size:13px;font-weight:800;color:var(--muted)}
@@ -1003,6 +1029,10 @@ if(!DB.pcV&&(typeof ME==='undefined'||!ME||ME.role==='chef')){const ms=DB.member
  if(!ms.some(x=>(x.fn==='DIR'||x.fn==='PILOTES')&&+x.athos===18))ms.push({id:uid(),photo:'',fn:'DIR',grade:'Cne',first:'Antoine',last:'HAUSER',nick:'Tonio',athos:'18',role:'Pilote réserviste',res:true,pc:true,kp:'',tel:'',mail:''});
  ms.forEach(x=>{if((x.fn==='DIR'||x.fn==='PILOTES')&&[9,15,16,17,18].includes(+x.athos))x.pc=true});DB.pcV=1}
 if(!DB.pcV2&&(typeof ME==='undefined'||!ME||ME.role==='chef')){(DB.members||[]).forEach(x=>{if(x.fn==='PILOTES'&&+x.athos===9&&(!x.nick||x.nick==='Zébulon'))x.nick='Kéké'});DB.pcV2=1}
+if(DB.rxDemo!==3&&typeof api!=='function'){const m=(DB.meetings||[]).find(x=>x.ex)||(DB.meetings||[])[0];if(m){const k=String(m.city||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\bSTE\b/g,'SAINTE').replace(/\bST\b/g,'SAINT').trim(),y=+(String((m.demos||[])[0]||'').slice(0,4))||new Date().getFullYear(),E=[[y-1,'ops','Axe bien matérialisé par des bouées','int'],[y-1,'ray','Tribune VIP trop loin de l\'axe','org'],[y-1,'log','Hôtel à 40 min : 2 voitures de plus','org'],[y-1,'com','Bonne couverture presse locale','int'],[y-2,'ops','Briefing DV tardif : le demander à J-1','org'],[y-2,'log','RAS','int']];
+ DB.retex=(DB.retex||[]).filter(e=>!e.ex).concat(E.map(([yy,rub,txt,vis])=>({id:uid(),ex:1,imp:'ex',site:k,siteL:m.city,y:yy,rub,kind:'rem',txt,vis,t:Date.now()})));
+ const P=n=>(DB.members||[]).find(x=>x.fn==='PILOTES'&&(+x.athos===n||new RegExp('^Athos '+n+'\\b').test(x.role||''))),N=[[3,'ops','Axe difficile à voir par contre-jour le matin, à signaler au DV.'],[7,'ops','Parking avions trop serré, attention aux saumons.'],[5,'ray','Beaucoup de monde au stand dédicaces, prévoir plus de cartes.'],[3,'log','Hôtel très bien, mais petit-déjeuner trop tard (7h30).']];
+ N.forEach(([n,rub,txt],i)=>{const x=P(n);DB.retex.push({id:uid(),ex:1,site:k,siteL:m.city,y:y,mid:m.id,kind:'note',rub,txt,vis:'int',t:Date.now()-i*36e5,by:x?[x.grade,String(x.last||'').toUpperCase(),x.first].filter(Boolean).join(' '):'Athos '+n,byS:'Athos '+n+(x&&x.nick?' · '+x.nick:''),byId:x?x.id:'',byMail:x?x.mail||'':''})})}DB.rxDemo=3}
 if(!DB.mecaV){(DB.members||[]).forEach(x=>{if(x.fn==='DEP'&&(x.kp==='dt'||/^dt$/i.test(String(x.role||'').trim())))x.fn='DT';else if(x.fn==='DEP'&&(x.kp==='cst'||/^cst$/i.test(String(x.role||'').trim())))x.fn='CST'});DB.mecaV=1}
 if(!DB.athV){(DB.members||[]).forEach(x=>{if(!x.athos){const m=String(x.role||'').match(/athos\s*(\d{1,2})/i);if(m)x.athos=m[1]}});DB.athV=1}
 if(!DB.rV7){const old=['leader','n5','n7','dmma','dir','diradj'];if(DB.rights)old.forEach(k=>delete DB.rights[k]);(DB.access||[]).forEach(a=>{if(old.includes(a.role))a.role='visit'});DB.rV7=1}
@@ -1023,10 +1053,10 @@ let saveT=null,BASE=null;
 const clone=x=>JSON.parse(JSON.stringify(x));
 /* Fusion à trois : ce que j'ai changé depuis ma dernière synchronisation est réappliqué sur la version du serveur */
 function merge3(base,mine,theirs){const out=clone(theirs);if(!base)return out;const J=JSON.stringify;
- ['meetings','members','access','pdocs'].forEach(k=>{const B=new Map((base[k]||[]).map(x=>[x.id,x])),M=new Map((mine[k]||[]).map(x=>[x.id,x]));let T=(out[k]||[]).slice();const Ti=new Map(T.map((x,i)=>[x.id,i]));
+ ['meetings','members','access','pdocs','retex'].forEach(k=>{if(!mine[k]&&!theirs[k])return;const B=new Map((base[k]||[]).map(x=>[x.id,x])),M=new Map((mine[k]||[]).map(x=>[x.id,x]));let T=(out[k]||[]).slice();const Ti=new Map(T.map((x,i)=>[x.id,i]));
   (mine[k]||[]).forEach(x=>{const b0=B.get(x.id);if(!b0){if(!Ti.has(x.id))T.push(x)}else if(J(b0)!==J(x)){if(Ti.has(x.id))T[Ti.get(x.id)]=x;else T.push(x)}});
   B.forEach((x,id)=>{if(!M.has(id))T=T.filter(y=>y.id!==id)});out[k]=T});
- Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=k==='pc'?mergeObj(base[k],mine[k],out[k]):mine[k]});
+ Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','retex','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=k==='pc'?mergeObj(base[k],mine[k],out[k]):mine[k]});
  return out}
 /* Fusion fine (points centraux) : chacun ne réécrit que ce qu'il a changé (ses dispos, une case du planning…) */
 function mergeObj(b,m,t){const J=JSON.stringify,isO=v=>v&&typeof v==='object'&&!Array.isArray(v);if(!isO(m)||!isO(t)||!isO(b))return m;const o=Object.assign({},t);
@@ -1089,19 +1119,19 @@ const lineMail=m=>m?`<div class="line">${ic('mail',15)}<span>${esc(m)}</span><bu
 /* ====================== Navigation ====================== */
 function go(v,mid){S.view=v;if(mid!==undefined)S.mid=mid;closeSheet();render();window.scrollTo(0,0)}
 function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S.view='meetings';render();toast('Vous voyez l\'application comme : '+RLm[r].l)}
-const viewOk=v=>v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
+const viewOk=v=>v==='retex'?rxCan():v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
 function render(){
  if(!viewOk(S.view))S.view='meetings';
  {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}}
  const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Outils','gauge']};
  ['meetings','unite','acces','mails','perfos'].forEach(k=>{
-  const cur=S.view===k||(k==='meetings'&&(S.view==='meeting'||S.view==='recap'));
+  const cur=S.view===k||(k==='meetings'&&(S.view==='meeting'||S.view==='recap'||S.view==='retex'));
   [$('nav-'+k),$('bnav-'+k)].forEach(b=>{b.hidden=!viewOk(k);b.innerHTML=ic(nm[k][1],18)+'<span>'+nm[k][0]+'</span>';if(cur)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
  });
  $('role').innerHTML=`<optgroup label="Patrouille de France">${ROLES.filter(r=>r.side==='paf').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Meeting">${ROLES.filter(r=>r.side==='meet').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Visiteurs">${ROLES.filter(r=>r.side==='suivi').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Lien public"><option value="ro">Volontaires (lien public)</option></optgroup>`;
  $('role').value=ROLE;$('rolebox').hidden=!(ME&&ME.role==='chef');
  if(S.view==='meetings')setTimeout(duePopup,400);
- $('view').innerHTML=roBar()+({meetings:vMeetings,meeting:vMeeting,unite:vUnite,acces:vAcces,mails:vMails,perfos:vPerfos,recap:()=>{const m=DB.meetings.find(x=>x.id===S.mid);return m?vRecap(m):vMeetings()}}[S.view]||vMeetings)();
+ $('view').innerHTML=roBar()+({meetings:vMeetings,meeting:vMeeting,unite:vUnite,acces:vAcces,mails:vMails,perfos:vPerfos,retex:vRetex,recap:()=>{const m=DB.meetings.find(x=>x.id===S.mid);return m?vRecap(m):vMeetings()}}[S.view]||vMeetings)();
  relive();
 }
 function roBar(){
@@ -1118,13 +1148,13 @@ function vMeetings(){
  if(!isMeetRole()){S.calGo=true;const SQ=seqs(true),cal=calMonth(SQ);S.calGo=false;
   const up=L.filter(m=>{const d=firstDemo(m);return !d||daysTo(d)>=0}),past=L.filter(m=>!up.includes(m));
   return `${NOTE}<div class="head"><div><h1>Meetings</h1><p class="muted">${L.length?L.length+' meeting'+(L.length>1?'s':'')+' de la saison':'Aucun meeting pour l\'instant'}</p></div>
-  ${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:''}</div>
+  <span class="hbtns">${rxCan()?`<button class="btn big" onclick="S.rxSite=null;go('retex')">${ic('book',18)} RETEX</button>`:''}${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:''}</span></div>
   ${cal}
   ${up.length?`<h2 class="ih" style="margin-top:22px">À venir</h2><div class="mgrid">${up.map(mCard).join('')}</div>`:''}
   ${past.length?`<h2 class="ih" style="margin-top:22px">Passés</h2><div class="mgrid" style="opacity:.7">${past.map(mCard).join('')}</div>`:''}
   ${L.length?'':`<div class="empty">${tile(FU[1],'lg')}<h2 style="margin-top:12px">Créez votre premier meeting</h2><p class="muted">Deux questions : où, et quand.</p>${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:''}</div>`}`}
  return `${NOTE}<div class="head"><div><h1>Meetings</h1><p class="muted">${L.length?L.length+' meeting'+(L.length>1?'s':'')+' de la saison':'Aucun meeting pour l\'instant'}</p></div>
- ${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:''}</div>
+ <span class="hbtns">${rxCan()?`<button class="btn big" onclick="S.rxSite=null;go('retex')">${ic('book',18)} RETEX</button>`:''}${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:''}</span></div>
  ${L.length?`<div class="mgrid">${L.map(mCard).join('')}</div>`:`<div class="empty">${tile(FU[1],'lg')}<h2 style="margin-top:12px">Créez votre premier meeting</h2><p class="muted">Deux questions : où, et quand.</p>${canEdit('meet')?`<button class="btn pri big" onclick="wizard()">${ic('plus',18)} Nouveau meeting</button>`:'<p class="small muted">Le chef des opérations crée les meetings.</p>'}</div>`}`;
 }
 function jx(m){const d=firstDemo(m);if(!d)return `<div class="jx"><b>?</b><span>dates</span></div>`;const n=daysTo(d);return `<div class="jx"><b>${n<0?'✓':'J-'+n}</b><span>${n<0?'passé':'démonstration'}</span></div>`}
@@ -1215,6 +1245,7 @@ function vMeeting(){
   {k:'contacts',l:'Contacts',d:'Organisation du meeting',i:'users',c1:'#10b981',c2:'#047857',on:canSee('contacts'),h:contactsH,p:()=>({done:cs.length,tot:0}),u:'contact'},
   {k:'aero',l:'Directeur des vols',d:'Plan, pilot book, créneaux',i:'radio',c1:'#6366f1',c2:'#3730a3',on:canSee('aero')&&ROLE!=='org',h:()=>vAero(m),p:()=>aeroProgress(m),o:()=>aero(m)},
   {k:'pdocs',l:'Dossier pilotes',d:'CERFA, licences…',i:'folder',c1:'#64748b',c2:'#334155',on:canSee('pdocs'),h:()=>vPdocs(),p:()=>({done:DB.pdocs.length,tot:0}),u:'document'}
+  ,{k:'retex',l:'RETEX',d:'Retours d\'expérience',i:'book',c1:'#0ea5e9',c2:'#0369a1',on:rxCan(),h:()=>vRetexMeeting(m),p:()=>({done:rxAll().filter(e=>e.mid===m.id).length+rxNotes().filter(e=>e.mid===m.id).length,tot:0}),u:'note'}
  ].filter(r=>r.on);
  if(S.rub&&!RUBS.some(r=>r.k===S.rub))S.rub=null;
  const tileR=r=>{const pr=r.p(),o=r.o?r.o():null,st=o&&o.status;
@@ -3054,7 +3085,7 @@ function pushHTML(){const chef=isChef();
 /* Au démarrage : réveille l'abonnement (le lien personnel a pu changer) */
 async function pushInit(){await pushRefresh();if(PST==='on'&&isOnline()){await pushCfg();try{const reg=await navigator.serviceWorker.getRegistration();const sub=await reg.pushManager.getSubscription();if(sub)api('sub',{sub:sub.toJSON()})}catch(e){}}}
 /* Ouverture depuis une notification : ?go=fea, ?go=mails */
-function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='mails'&&isChef())go('mails')}
+function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='retex'){const t=iso(new Date()),L=DB.meetings.filter(m=>{const d=rxLast(m);return d&&d<t&&daysTo(d)>=-14}).sort((a,b)=>String(rxLast(b)).localeCompare(rxLast(a)));if(L[0]){S.rub='retex';go('meeting',L[0].id)}else go('retex')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='mails'&&isChef())go('mails')}
 if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.go)deepLink(e.data.go)});
 
 /* ====================== Centrage Cirrus SR20 / SR22 ====================== */
@@ -3247,9 +3278,11 @@ function pcDoPropose(w){const q=pcAskL(w).length;if(q){toast(q+' vol'+(q>1?'s':'
 async function pcSync(){if(typeof flush!=='function')return;clearTimeout(saveT);try{if(SAVING)await SAVING}catch(e){}await flush();try{if(SAVING)await SAVING}catch(e){}}
 async function pcValidate(w){if(pcAskL(w).length){toast('Confirmez d\'abord les vols marqués « PC ? »');return}const W=pcWk(w),miss=W.fl.filter(f=>!f.no&&!(W.prop||{})[f.id]).length;
  if(miss&&!confirm(miss+' vol'+(miss>1?'s':'')+' sans PC. Valider quand même ?'))return;
- W.val={t:Date.now()};save();render();
+ if(isOnline()&&pcDB().cal&&W.wasVal)await pcAgenda(w,true);   // déjà validée une fois : l'agenda (changements faits à la main) passe d'abord
+ W.val={t:Date.now()};W.wasVal=1;save();render();
  if(!isOnline()){toast('Planning validé · chaque PC reçoit une notification (maquette)');return}
  await pcSync();let r;try{r=await api('pcValidate',{w,cal:!!(pcDB().cal&&pcDB().calW!==false)})}catch(e){r={error:'Connexion impossible : le planning est validé mais les PC ne sont pas encore prévenus'}}
+ if(r&&r.wr){Object.keys(r.wr).forEach(id=>{const f=W.fl.find(x=>x.id===id);if(f){f.pcW=r.wr[id];f.pcExt=''}});save()}
  toast(r.error||('Planning validé · '+r.notified+' PC prévenu'+(r.notified>1?'s':'')+(r.cal!=null?' · '+r.cal+' plaquette'+(r.cal>1?'s':'')+' complétée'+(r.cal>1?'s':''):'')+(r.calErr?' · agenda : '+r.calErr:'')))}
 function pcUnval(w){if(!confirm('Rouvrir le planning de cette semaine pour le modifier ?'))return;pcWk(w).val=null;save();render()}
 async function pcRelance(w){const L=pcTodo(w);if(!L.length)return;if(!isOnline()){toast('Rappel envoyé à '+L.map(pcShort).join(', ')+' (maquette)');return}
@@ -3260,18 +3293,25 @@ async function pcAgenda(w,quiet){
  if(!pcDB().cal){if(!quiet)pcSettings();return}
  S.pcBusy=1;if(!quiet)render();let r;try{r=await api('pcAgenda',{w})}catch(e){r={error:'Connexion impossible'}}S.pcBusy=0;
  if(!r||r.error){render();if(!quiet)toast(r&&r.error||'Agenda illisible');return}
- const W=pcWk(w),before=JSON.stringify(W.fl);pcMergeFl(w,r.ev||[]);W.agT=Date.now();if(JSON.stringify(W.fl)!==before||!quiet)save();render();
- if(!quiet)toast((r.ev||[]).length+' plaquette'+((r.ev||[]).length>1?'s':'')+' trouvée'+((r.ev||[]).length>1?'s':'')+' dans l\'agenda')}
-function pcMergeFl(w,ev){const W=pcWk(w),old=new Map(W.fl.filter(f=>f.ev).map(f=>[f.ev,f]));
- const nf=ev.map(e=>{const o=old.get(e.id);const k=pcKind(e.title),same=o&&o.title===e.title;return {id:o?o.id:uid(),ev:e.id,d:e.d,time:e.time,title:e.title,no:same?o.no:k!=='pc',ask:same?!!o.ask:k==='ask'}});
+ const W=pcWk(w),before=JSON.stringify([W.fl,W.prop]);const chg=pcMergeFl(w,r.ev||[]);W.agT=Date.now();if(JSON.stringify([W.fl,W.prop])!==before||!quiet)save();render();
+ if(chg)toast(chg+' PC modifié'+(chg>1?'s':'')+' à la main dans l\'agenda : repris dans l\'application');else if(!quiet)toast((r.ev||[]).length+' plaquette'+((r.ev||[]).length>1?'s':'')+' trouvée'+((r.ev||[]).length>1?'s':'')+' dans l\'agenda')}
+/* « 🎙️ PC = 9 "Kéké" » lu dans la description → la personne (par son n° Athos, sinon par son surnom ou son nom) */
+function pcParsePC(raw){const m=String(raw||'').match(/^\s*(\d{1,2})?\s*"?([^"]*)"?/)||[],n=+m[1],nm=String(m[2]||'').trim().toLowerCase(),M=pcMembers();
+ return (n&&M.find(x=>athN(x)===n))||(nm&&(M.find(x=>lc(x.nick)===nm||lc(x.last)===nm)||DB.members.find(x=>lc(x.nick)===nm||lc(x.last)===nm)))||null}
+function pcMergeFl(w,ev){const W=pcWk(w),old=new Map(W.fl.filter(f=>f.ev).map(f=>[f.ev,f]));let chg=0;
+ const nf=ev.map(e=>{const o=old.get(e.id);const k=pcKind(e.title),same=o&&o.title===e.title;const f={id:o?o.id:uid(),ev:e.id,d:e.d,time:e.time,title:e.title,no:same?o.no:k!=='pc',ask:same?!!o.ask:k==='ask',pcW:o?o.pcW:undefined,pcExt:o?o.pcExt:''};
+  // L'agenda fait foi : si la ligne PC n'est plus celle que l'application a écrite, quelqu'un l'a changée à la main → on la reprend
+  if(e.pc!=null&&e.pc!==f.pcW&&!f.no){const x=pcParsePC(e.pc);W.prop=W.prop||{};const v=x?x.id:'';if(W.prop[f.id]!==v||f.pcExt!==(x?'':e.pc))chg++;W.prop[f.id]=v;f.pcExt=x?'':e.pc;f.pcW=e.pc}
+  return f});
  W.fl=nf.concat(W.fl.filter(f=>!f.ev&&!nf.some(n=>n.d===f.d&&n.time===f.time))).sort(pcFsort);
- if(W.prop)Object.keys(W.prop).forEach(k=>{if(!W.fl.some(f=>f.id===k))delete W.prop[k]})}
+ if(W.prop)Object.keys(W.prop).forEach(k=>{if(!W.fl.some(f=>f.id===k))delete W.prop[k]});return chg}
+const pcChipF=(f,x,me)=>x?pcChip(x,me):f.pcExt?`<span class="pcn" style="--c:#64748b">${esc(f.pcExt)}</span>`:pcChip(null);
 function pcDemoAgenda(w,quiet){const T=[[0,'09:30','8 FUS+100'],[0,'16:00','4N1 4 FUS+100'],[1,'09:30','8 FUS+100'],[1,'12:30','1 N2'],[2,'12:30','2 N1 R276'],[1,'16:00','8 FUS+100'],[2,'09:30','8 FUS+100'],[2,'16:00','4N1 4 FUS+100'],[3,'09:30','8 FUS+100'],[3,'16:00','8 FUS+100'],[4,'09:30','8 FUS+100'],[4,'12:25','8 FUS+100']];
  pcMergeFl(w,T.map(([d,t,ti])=>({id:'demo-'+w+'-'+d+'-'+t,d,time:t,title:ti})));pcWk(w).agT=Date.now();save();render();if(!quiet)toast(T.length+' plaquettes trouvées dans l\'agenda (exemple)')}
 function pcAuto(){const w=S.pcW||pcNextWk();
  if(!isOnline()&&isChef()&&w===pcNextWk()&&!pcW0(w).agT){pcDemoAgenda(w,1);const M=pcMembers(),W=pcWk(w),D={9:['4d','0m','2a','3m'],15:['0a','1m','2m','3a','4m'],16:['0m','1a','2d','3a']};
   M.forEach(x=>{const k=D[athN(x)];if(k&&!W.dispo[x.id]){W.dispo[x.id]={t:Date.now()-36e5*(20-athN(x)),ok:Object.fromEntries(k.map(c=>[c,1])),note:''}}});save();render();return}
- if(!isChef()||!pcDB().cal||!isOnline())return;const W=pcW0(w);if(W.val||S.pcBusy)return;if(W.agT&&Date.now()-W.agT<10*60e3)return;pcAgenda(w,true)}
+ if(!isChef()||!pcDB().cal||!isOnline())return;const W=pcW0(w);if(S.pcBusy)return;if(W.agT&&Date.now()-W.agT<10*60e3)return;pcAgenda(w,true)}
 /* ---- Saisie des dispos (le PC lui-même, ou le chef ops pour lui) ---- */
 let PCD=null;
 function pcDispoStart(w,mid){const W=pcW0(w),r=W.dispo[mid],x=DB.members.find(y=>y.id===mid),o=x&&pcOk(x,w);const ok={};if(o)Object.assign(ok,o);else pcHab(x).forEach(c=>ok[c]=1);PCD={w,mid,ok,note:(r&&r.note)||''}}
@@ -3311,8 +3351,7 @@ function pcSetHTML(){const P=pcDB(),M=pcMembers(),O=n=>[0,1,2,3,4,5,6].map(i=>`<
   <label class="l" for="pc-cal">Identifiant de l'agenda Google des plaquettes</label>
   <input class="in" id="pc-cal" placeholder="xxxxxxxx@group.calendar.google.com" value="${esc(P.cal||'')}" onchange="pcDB().cal=this.value.trim();save()">
   <div class="hint">Dans Google Agenda : ⚙️ Paramètres › l'agenda › « Intégrer l'agenda » › Identifiant de l'agenda. Il doit être partagé avec le compte de PAF OPS (« Apporter des modifications » pour y inscrire les PC).</div>
-  <label class="tgl" style="margin-top:10px"><input type="checkbox" ${P.calW!==false?'checked':''} onchange="pcDB().calW=this.checked;save();$('sheet').innerHTML=pcSetHTML()"> <span>À la validation, inscrire « PC = Surnom » sur chaque plaquette</span></label>
-  ${P.calW!==false?`<div class="chips" style="margin-top:8px">${[['title','À la fin du titre (ex. : 8 FUS+100 · PC = Kéké)'],['desc','En 1re ligne de la description']].map(o=>`<button aria-pressed="${(P.calPos||'title')===o[0]}" onclick="pcDB().calPos='${o[0]}';save();$('sheet').innerHTML=pcSetHTML()">${o[1]}</button>`).join('')}</div>`:''}
+  <label class="tgl" style="margin-top:10px"><input type="checkbox" ${P.calW!==false?'checked':''} onchange="pcDB().calW=this.checked;save()"> <span>À la validation, écrire <b>🎙️ PC = 9 "Kéké"</b> en haut de la description de chaque plaquette (le reste de la description est conservé)</span></label>
   <label class="l" style="margin-top:16px">Les PC</label>
   ${M.length?`<div class="pcset">${M.map(x=>{const o=pcWho(x);return `<div class="pcsr">${pcChip(x)}<div class="pcsf">${x.res?`<span class="small muted">Réserviste : vous cochez ses jours de présence chaque semaine. Pas d'alerte.</span>`:`<label>Objectif / semaine <select class="in" onchange="pcSetWho('${x.id}','min',this.value)">${O(+o.min||0)}</select> à <select class="in" onchange="pcSetWho('${x.id}','max',this.value)">${O(+o.max||0)}</select></label>
      <label>Vol habituel <select class="in" onchange="pcSetWho('${x.id}','hab',this.value)">${cells.map(c=>`<option value="${c[0]}" ${((o.hab||[])[0]||'')===c[0]?'selected':''}>${c[1]}</option>`).join('')}</select></label>`}</div></div>`}).join('')}</div>`:''}
@@ -3326,7 +3365,7 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
  const F=W.fl.filter(f=>!f.no),todo=pcTodo(w),nonRes=M.filter(x=>!x.res);
  const planning=(w2,title)=>{const W2=pcW0(w2),F2=W2.fl.filter(f=>!f.no&&W2.prop);if(!W2.val||!F2.length)return '';
   return `<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('check',18)} ${title} <span class="pill ok">Validé</span></h3><p class="small muted" style="margin:-4px 0 10px">Semaine du ${pcWkLabel(w2)}</p>
-   <div class="pcplan">${PC_J.map((j,d)=>{const L=F2.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w2,d)}</b>${L.length?L.map(f=>{const x=DB.members.find(y=>y.id===W2.prop[f.id]);return `<div class="pcpf ${me&&x===me?'mine':''}"><span class="pct">${f.time.replace(':','h')}</span>${pcChip(x,me&&x===me)}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
+   <div class="pcplan">${PC_J.map((j,d)=>{const L=F2.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w2,d)}</b>${L.length?L.map(f=>{const x=DB.members.find(y=>y.id===W2.prop[f.id]);return `<div class="pcpf ${me&&x===me?'mine':''}"><span class="pct">${f.time.replace(':','h')}</span>${pcChipF(f,x,me&&x===me)}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
    ${me?(()=>{const mine=F2.filter(f=>W2.prop[f.id]===me.id);return `<p class="small" style="margin:10px 0 0"><b>Vous :</b> ${mine.length?mine.map(f=>PC_J[f.d].toLowerCase()+' '+f.time.replace(':','h')).join(', '):'pas de PC cette semaine'}</p>`})():''}</div></section>`};
  const head=`${NOTE}<div class="head"><div><h1>Points centraux</h1><p class="muted">Qui surveille les vols d'entraînement depuis le sol, semaine par semaine.</p></div>${chef?`<button class="btn" onclick="pcSettings()">${ic('gear',16)} Réglages</button>`:''}</div>${tabs}`;
  let myCard='';
@@ -3362,15 +3401,158 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
  const prop=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('target',18)} Répartition ${W.val?`<span class="pill ok">Validée le ${new Date(W.val.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>`:W.prop?'<span class="pill sent">À valider</span>':''}</h3>
   ${!F.length?`<p class="small muted">Ajoutez d'abord les vols de la semaine.</p>`:!W.prop?`<p class="small muted" style="margin-top:0">${allIn?'Tout le monde a répondu.':`En attente de ${todo.map(pcShort).join(', ')}. Vous pouvez proposer quand même : sans réponse = pas disponible.`}</p><button class="btn pri big" onclick="pcDoPropose('${w}')">${ic('target',18)} Proposer la répartition</button>`:
   `<div class="pcplan">${PC_J.map((j,d)=>{const L=F.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w,d)}</b>${L.length?L.map(f=>{const cur=W.prop[f.id]||'',x=DB.members.find(y=>y.id===cur),ok=x&&pcAvail(x,f,w);
-    return `<div class="pcpf ${cur?'':'miss'}"><span class="pct">${f.time.replace(':','h')}</span>${W.val?pcChip(x):`<select class="in pcsel" style="--c:${x?pcCol(x):'var(--bad)'}" onchange="pcSetProp('${w}','${f.id}',this.value)"><option value="">À pourvoir</option>${M.map(y=>`<option value="${y.id}" ${y.id===cur?'selected':''}>${esc(pcName(y))}${pcAvail(y,f,w)?(y.res?'  ✓ présent':'  ✓ dispo'):''}</option>`).join('')}</select>`}${x&&!ok?`<small class="bad">pas dispo</small>`:''}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
+    return `<div class="pcpf ${cur?'':'miss'}"><span class="pct">${f.time.replace(':','h')}</span>${W.val?pcChipF(f,x):`<select class="in pcsel" style="--c:${x?pcCol(x):'var(--bad)'}" onchange="pcSetProp('${w}','${f.id}',this.value)"><option value="">À pourvoir</option>${M.map(y=>`<option value="${y.id}" ${y.id===cur?'selected':''}>${esc(pcName(y))}${pcAvail(y,f,w)?(y.res?'  ✓ présent':'  ✓ dispo'):''}</option>`).join('')}</select>`}${x&&!ok?`<small class="bad">pas dispo</small>`:''}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
    <div class="pccnt">${M.map(x=>`<span>${pcChip(x)} <b>${cntW[x.id]}</b>${(()=>{const o=pcWho(x);return o&&+o.min>0?`<small class="muted"> / ${o.min}${+o.max>+o.min?'–'+o.max:''}</small>`:''})()}</span>`).join('')}</div>
    ${W.val?`<div class="pcbtns"><button class="btn" onclick="pcUnval('${w}')">${ic('edit',15)} Modifier</button></div>`:`<div class="pcbtns"><button class="btn" onclick="pcDoPropose('${w}')">${ic('target',15)} Recalculer</button><button class="btn pri big" onclick="pcValidate('${w}')">${ic('check',18)} Valider et prévenir les PC</button></div>
-   <p class="hint">Dans chaque menu, tout le monde est proposé ; « ✓ dispo » marque ceux qui ont coché ce vol. Tonio, quand il est présent, est PC de base (sauf le vendredi T2, réservé au 9). À la validation, chaque PC reçoit une notification avec ses vols${pcDB().cal&&pcDB().calW!==false?' et les plaquettes de l\'agenda sont complétées':''}.</p>`}`}
+   <p class="hint">Dans chaque menu, tout le monde est proposé ; « ✓ dispo » marque ceux qui ont coché ce vol. Tonio, quand il est présent, est PC de base (sauf le vendredi T2, réservé au 9). À la validation, chaque PC reçoit une notification avec ses vols${pcDB().cal&&pcDB().calW!==false?' et « 🎙️ PC = … » s\'inscrit en haut de la description des plaquettes':''}.</p>`}`}
   </div></section>`;
  // 4. Bilan
  const tot=M.map(x=>({x,n:pcSeason(x.id)})),mx=Math.max(1,...tot.map(t=>t.n));
  const bil=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('star',18)} Bilan de la saison</h3>${tot.map(t=>`<div class="pcbar">${pcChip(t.x)}<span class="pcbt"><i style="width:${t.n/mx*100}%;background:${pcCol(t.x)}"></i></span><b>${t.n}</b></div>`).join('')}<p class="hint">PC des semaines validées.</p></div></section>`;
  return `${head}${nav}${steps}${askB}<div class="pccols">${myCard}${fl}${disp}${prop}${bil}</div>`}
+
+/* ====================== RETEX : retours d'expérience par lieu ====================== */
+/* Une remarque = un lieu, une année, une rubrique (OPS, Rayonnement, Log, Comm), un type (synthèse du #5, remarque, compte rendu DT/CST ou Comm) et une diffusion (interne par défaut).
+   Jamais envoyé à l'organisateur ni au DV : le serveur ne transmet le RETEX qu'aux rôles de la Patrouille. */
+const RX_R=[['ops','OPS','#3b82f6','#1d4ed8','plane'],['ray','Rayonnement','#ec4899','#be185d','star'],['log','Log','#a855f7','#7e22ce','bed'],['com','Comm','#f59e0b','#c2410c','mega']];
+const RX_V=[['int','Interne PAF','#64748b','lock'],['org','À dire à l\'organisateur','#16a34a','send'],['dv','À dire au DV','#6366f1','radio'],['gen','Leçon générale','#d97706','star']];
+const RX_K={syn:'Synthèse',rem:'Remarque',crt:'Compte rendu DT / CST',crc:'Compte rendu Comm'};
+const rxRm=Object.fromEntries(RX_R.map(r=>[r[0],r])),rxVm=Object.fromEntries(RX_V.map(v=>[v[0],v]));
+const rxCan=()=>['chef','sec','dt','cst','comm','visit'].includes(ROLE);
+const rxKey=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\bSTE\b/g,'SAINTE').replace(/\bST\b/g,'SAINT').trim();
+const rxNice=s=>String(s||'').toLowerCase().replace(/(^|[\s\-'’(])(\p{L})/gu,(a,b,c)=>b+c.toUpperCase());
+const rxSynN=()=>+(DB.rxSyn||5);
+const rxSiteOf=m=>m.rxSite||rxKey(m.city);
+const rxYear=m=>+(String(firstDemo(m)||'').slice(0,4))||new Date().getFullYear();
+const rxLast=m=>(m.demos||[]).filter(Boolean).sort().slice(-1)[0]||firstDemo(m);
+function rxAll(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind!=='note')}   // synthèses (historique)
+function rxNotes(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind==='note')}
+function rxSiteL(k){const e=(DB.retex||[]).find(x=>x.site===k&&x.siteL);if(e)return e.siteL;const m=DB.meetings.find(x=>rxSiteOf(x)===k);return m&&m.city?m.city:rxNice(k)}
+function rxSites(){const M=new Map();rxAll().forEach(e=>{if(!e.site)return;const s=M.get(e.site)||{k:e.site,n:0,y:new Set(),say:0};s.n++;s.y.add(e.y);if(e.vis==='org'||e.vis==='dv')s.say++;M.set(e.site,s)});
+ DB.meetings.forEach(m=>{const k=rxSiteOf(m);if(k&&!M.has(k))M.set(k,{k,n:0,y:new Set(),say:0})});
+ return [...M.values()].map(s=>Object.assign(s,{l:rxSiteL(s.k)})).sort((a,b)=>a.l.localeCompare(b.l,'fr'))}
+/* Qui suis-je ? */
+function rxMe(){const c17=()=>DB.members.find(x=>x.fn==='DIR'&&athN(x)===17)||DB.members.find(x=>x.kp==='chef')||null;
+ if(isOnline()){const x=ME&&memOf(ME.mail);return x||(ME&&ME.role==='chef'?c17():null)}
+ if(isChef())return c17();return DB.members.find(x=>x.id===S.rxAs)||null}
+const rxIsSyn=me=>!!me&&(me.fn==='DIR'||(me.fn==='PILOTES'&&[1,rxSynN()].includes(athN(me))));   // leader, 5 et direction
+const rxCanSyn=()=>isChef()||rxIsSyn(rxMe());
+const rxCanRem=()=>['chef','visit','dt','cst','comm'].includes(ROLE);   // notes : pilotes, direction, DT / CST, Comm
+function rxMine(e){const me=rxMe();if(isOnline())return !!(ME&&e.byMail&&lc(e.byMail)===lc(ME.mail));return !!(me&&e.byId===me.id)}
+function rxCanEdit(e){return e.kind==='note'?(isChef()||rxMine(e)):rxCanSyn()}
+function rxAuthor(){const me=rxMe();return {by:me?memLabel(me):((ME&&ME.name)||(RLm[ROLE]||{}).l||''),byS:me?((athN(me)<1e6?'Athos '+athN(me)+' · ':(me.fn==='DIR'?'Dir · ':me.fn?me.fn+' · ':''))+(me.nick||(me.last?rxNice(me.last):me.first)||'')):((RLm[ROLE]||{}).l||''),byMail:me?(me.mail||''):((ME&&ME.mail)||''),byId:me?me.id:''}}
+const rxWho=e=>e.byS||e.by||'';
+const rxSay1=e=>e.vis==='org'||e.vis==='dv';
+/* ---- Saisie ---- */
+function rxAdd(mid,rub,kind){const i=$((kind==='note'?'rxn-':'rxa-')+rub),t=(i&&i.value||'').trim();if(!t)return;const m=DB.meetings.find(x=>x.id===mid);DB.retex=DB.retex||[];
+ DB.retex.push(Object.assign({id:uid(),site:rxSiteOf(m),siteL:rxSiteL(rxSiteOf(m)),y:rxYear(m),mid,kind:kind||'syn',rub,txt:t,vis:'int',t:Date.now()},rxAuthor()));save();S.rxFocus=(kind==='note'?'rxn-':'rxa-')+rub;render();toast(kind==='note'?'Note enregistrée':'Point ajouté à la synthèse')}
+function rxLift(id){const n=(DB.retex||[]).find(x=>x.id===id);if(!n)return;DB.retex.push(Object.assign({id:uid(),site:n.site,siteL:n.siteL,y:n.y,mid:n.mid,kind:'syn',rub:n.rub,txt:n.txt,vis:'int',t:Date.now(),from:n.id},rxAuthor()));save();render();toast('Repris dans la synthèse : touchez-le pour le reformuler')}
+let RXF=null;
+function rxEdit(id){const e=(DB.retex||[]).find(x=>x.id===id);if(!e)return;RXF={id,txt:e.txt,say:rxSay1(e),rub:e.rub};openSheet(rxHTML)}
+function rxHTML(){const e=(DB.retex||[]).find(x=>x.id===RXF.id)||{},note=e.kind==='note';
+ return `<div class="sh"><div class="t"><div class="q">${note?'Note':'Point de la synthèse'}</div><div class="small muted">${esc(rxSiteL(e.site))} ${e.y||''}${rxWho(e)?' · '+esc(rxWho(e)):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><div class="chips">${RX_R.map(r=>`<button aria-pressed="${RXF.rub===r[0]}" onclick="RXF.rub='${r[0]}';$('sheet').innerHTML=rxHTML()">${r[1]}</button>`).join('')}</div>
+  <textarea class="in iqt" id="rx-t" rows="5" style="margin-top:10px" oninput="RXF.txt=this.value">${esc(RXF.txt)}</textarea>
+  ${!note&&rxCanSyn()?`<label class="tgl" style="margin-top:10px"><input type="checkbox" ${RXF.say?'checked':''} onchange="RXF.say=this.checked"> <span>📣 <b>À dire à l'organisateur</b> l'an prochain</span></label>`:''}</div>
+ <div class="sf"><button class="btn danger" onclick="rxDel('${RXF.id}')">${ic('trash',16)} Supprimer</button><button class="btn pri big" onclick="rxSave()">${ic('check',18)} Enregistrer</button></div>`}
+function rxSave(){const e=(DB.retex||[]).find(x=>x.id===RXF.id),t=RXF.txt.trim();if(!e)return;if(!t){rxDel(e.id);return}
+ Object.assign(e,{txt:t,rub:RXF.rub,vis:e.kind!=='note'&&RXF.say?'org':'int',tm:Date.now()});save();closeSheet();render()}
+function rxDel(id){const e=(DB.retex||[]).find(x=>x.id===id);if(e){e.del=1;e.tm=Date.now()}save();closeSheet();render();toast('Supprimé')}
+function rxSay(L){return L.filter(rxSay1)}
+function rxSayBox(L,site){const S0=rxSay(L);if(!S0.length||!isChef())return '';
+ return `<section class="rxsay"><div class="rxsh"><b>📣 À évoquer avec l'organisateur</b><button class="btn" onclick="rxCopy('${site}')">${ic('copy',15)} Copier</button></div>
+  <ul>${S0.sort((a,b)=>b.y-a.y).map(e=>`<li><b>${e.y}</b> · ${esc(e.txt)}</li>`).join('')}</ul></section>`}
+function rxCopy(site){const L=rxSay(rxAll().filter(e=>e.site===site)).sort((a,b)=>b.y-a.y);const t='Retours des éditions précédentes :\n'+L.map(e=>'- '+e.txt.replace(/\s*\n\s*/g,' ')).join('\n');
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Copié : collez-le dans votre message'),()=>toast('Copie impossible sur ce navigateur'))}
+function rxNotesCopy(mid){const m=DB.meetings.find(x=>x.id===mid),N=rxNotes().filter(e=>e.mid===mid);
+ const t='RETEX '+mName(m)+' — notes de l\'équipe\n'+RX_R.map(r=>{const E=N.filter(e=>e.rub===r[0]);return E.length?'\n'+r[1].toUpperCase()+'\n'+E.map(e=>'- '+e.txt.replace(/\s*\n\s*/g,' ')+' ('+rxWho(e)+')').join('\n'):''}).join('');
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Notes copiées pour le débriefing'),()=>toast('Copie impossible sur ce navigateur'))}
+/* Le tableau, comme dans l'Excel : une ligne par année, une colonne par rubrique */
+const rxPt=(e,ro)=>`<li class="${rxSay1(e)?'say':''}" ${!ro&&rxCanEdit(e)?`onclick="rxEdit('${e.id}')" role="button" tabindex="0"`:''}>${rxSay1(e)?'📣 ':''}${esc(e.txt)}</li>`;
+function rxTable(L,years,ro){return `<div class="rxtab"><div class="rxtr rxth"><span></span>${RX_R.map(r=>`<b style="--c:${r[2]}">${r[1]}</b>`).join('')}</div>
+ ${years.map(y=>`<div class="rxtr"><span class="rxyy">${y}</span>${RX_R.map(r=>{const E=L.filter(e=>e.y===y&&e.rub===r[0]);return `<div><i class="rxml" style="--c:${r[2]}">${r[1]}</i>${E.length?`<ul>${E.map(e=>rxPt(e,ro)).join('')}</ul>`:'<span class="muted">—</span>'}</div>`}).join('')}</div>`).join('')}</div>`}
+const rxNoteC=(e,syn)=>`<div class="rxn"><div class="rxnh"><b>${esc(rxWho(e))}</b><span class="muted">${new Date(e.tm||e.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>${syn&&e.kind==='note'?`<button class="ib" title="Reprendre dans la synthèse" aria-label="Reprendre dans la synthèse" onclick="rxLift('${e.id}')">${ic('send',13)}</button>`:''}${rxCanEdit(e)?`<button class="ib" aria-label="Modifier" onclick="rxEdit('${e.id}')">${ic('edit',13)}</button>`:''}</div><p>${esc(e.txt)}</p></div>`;
+/* ---- Rubrique RETEX d'un meeting ---- */
+function vRetexMeeting(m){const site=rxSiteOf(m),y=rxYear(m),All=rxAll(),syn=rxCanSyn(),can=rxCanRem();
+ const here=All.filter(e=>e.mid===m.id),prev=All.filter(e=>e.site===site&&e.mid!==m.id),notes=rxNotes().filter(e=>e.mid===m.id&&(syn||rxMine(e)));
+ const years=[...new Set(prev.map(e=>e.y))].sort((a,b)=>b-a);
+ const demo=!isOnline()&&!isChef()?`<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.rxAs=this.value;render()"><option value="">—</option>${DB.members.filter(x=>['PILOTES','DIR','DT','CST','COMM'].includes(x.fn)).sort(mSort).map(x=>`<option value="${x.id}" ${S.rxAs===x.id?'selected':''}>${esc((athN(x)<1e6?'Athos '+athN(x)+' · ':'')+x.fn+' · '+memLabel(x))}</option>`).join('')}</select></div>`:'';
+ setTimeout(()=>{if(S.rxFocus){const i=$(S.rxFocus);if(i)i.focus();S.rxFocus=null}},30);
+ const noteBox=can||notes.length?`<section class="dvbox rxbox"><div class="dvsec">
+  <div class="rxbh"><div><b>${syn?'Notes de l\'équipe':'Mes notes'} ${notes.length?`<span class="n">${notes.length}</span>`:''}</b><span class="small muted">${syn?'Tout ce qui a été écrit, avec son auteur. Touchez '+ic('send',12)+' pour reprendre une note dans la synthèse.':'Écrivez librement, à tout moment. Vos notes sont lues par le leader, le 5 et la direction pour la synthèse.'}</span></div>${syn&&notes.length?`<button class="btn" onclick="rxNotesCopy('${m.id}')">${ic('copy',15)} Copier pour le débriefing</button>`:''}</div>
+  <div class="rxnow">${RX_R.map(r=>{const E=notes.filter(e=>e.rub===r[0]).sort((a,b)=>(a.t||0)-(b.t||0));return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}</h4>${E.map(e=>rxNoteC(e,syn)).join('')}
+   ${can?`<div class="rxadd"><textarea class="in" id="rxn-${r[0]}" rows="2" placeholder="Écrire une note…" maxlength="2000"></textarea><button class="ib" aria-label="Ajouter la note" onclick="rxAdd('${m.id}','${r[0]}','note')">${ic('plus',16)}</button></div>`:''}</div>`}).join('')}</div></div></section>`:'';
+ const synBox=`<section class="dvbox rxbox rxsynb"><div class="dvsec">
+  <div class="rxbh"><div><b>Synthèse ${y} · débriefing du lundi</b><span class="small muted">Les gros points retenus par le leader, le 5 et la direction. C'est elle qui reste dans l'historique du lieu.</span></div></div>
+  <div class="rxnow">${RX_R.map(r=>{const E=here.filter(e=>e.rub===r[0]);return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}</h4>${E.length?`<ul>${E.map(e=>rxPt(e)).join('')}</ul>`:syn?'':'<span class="small muted">—</span>'}
+   ${syn?`<div class="rxadd"><input class="in" id="rxa-${r[0]}" placeholder="+ un point" maxlength="400" onkeydown="if(event.key==='Enter'){event.preventDefault();rxAdd('${m.id}','${r[0]}','syn')}"><button class="ib" aria-label="Ajouter" onclick="rxAdd('${m.id}','${r[0]}','syn')">${ic('plus',16)}</button></div>`:''}</div>`}).join('')}</div>
+  ${syn?`<p class="hint" style="margin:8px 0 0">Touchez un point pour le reformuler ou le marquer 📣 « à dire à l'organisateur » l'an prochain.</p>`:''}</div></section>`;
+ return `${demo}${noteBox}${synBox}${rxSayBox(prev,site)}
+ <div class="rxsite"><span>${ic('pin',15)} <b>${esc(rxSiteL(site))}</b> · ${years.length?'années précédentes':'pas encore d\'historique'}</span>${isChef()?`<button class="more" onclick="rxSitePick('${m.id}')">Changer de lieu</button>`:''}</div>
+ ${years.length?rxTable(prev,years,true):''}`}
+function rxSitePick(mid){S.rxPick={mid,q:''};openSheet(rxPickHTML)}
+function rxPickHTML(){const m=DB.meetings.find(x=>x.id===S.rxPick.mid),q=rxKey(S.rxPick.q),L=rxSites().filter(s=>!q||s.k.includes(q)),cur=rxSiteOf(m);
+ return `<div class="sh"><div class="t"><div class="q">Lieu du RETEX</div><div class="small muted">${esc(mName(m))} : quel historique lui rattacher ?</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><input class="in" id="rxp-q" placeholder="Rechercher un lieu…" value="${esc(S.rxPick.q)}" oninput="S.rxPick.q=this.value;clearTimeout(window._rq);window._rq=setTimeout(()=>{$('sheet').innerHTML=rxPickHTML();const i=$('rxp-q');i.focus();i.setSelectionRange(i.value.length,i.value.length)},200)">
+  <div class="rxpl">${L.slice(0,60).map(s=>`<button class="person" aria-pressed="${s.k===cur}" onclick="rxSetSite('${s.k}')">${ic('pin',13)}<span>${esc(s.l)} <small class="muted">· ${[...s.y].sort().join(', ')}</small></span></button>`).join('')}</div>
+  ${S.rxPick.q.trim()&&!L.some(s=>s.k===q)?`<button class="btn" style="margin-top:10px" onclick="rxSetSite('${q}')">${ic('plus',15)} Nouveau lieu « ${esc(S.rxPick.q.trim())} »</button>`:''}</div>`}
+function rxSetSite(k){const m=DB.meetings.find(x=>x.id===S.rxPick.mid);m.rxSite=k===rxKey(m.city)?'':k;(DB.retex||[]).forEach(e=>{if(e.mid===m.id){e.site=k;e.siteL=rxSiteL(k)}});save();closeSheet();render();toast('Lieu du RETEX : '+rxSiteL(k))}
+/* ---- Page RETEX : les lieux ---- */
+function vRetex(){const q=(S.rxQ||'').trim().toLowerCase(),All=rxAll();
+ const head=`${NOTE}<div class="head"><div><h1>RETEX</h1><p class="muted">Les gros points de chaque meeting, lieu par lieu. Réservé à la Patrouille.</p></div>${isChef()?`<span class="hbtns"><button class="btn" onclick="rxImport()">${ic('upload',16)} Importer l'Excel</button><button class="btn" onclick="rxCSV()">${ic('download',16)} Exporter</button></span>`:''}</div>`;
+ const bar=`<div class="search">${ic('search',18)}<input class="in" id="rx-q" placeholder="Rechercher un lieu ou un mot (axe, parking, hôtel…)" value="${esc(S.rxQ||'')}" oninput="S.rxQ=this.value;clearTimeout(window._rq);window._rq=setTimeout(()=>{render();const i=$('rx-q');i.focus();i.setSelectionRange(i.value.length,i.value.length)},250)"></div>`;
+ if(S.rxSite){const k=S.rxSite,L=All.filter(e=>e.site===k),Y=[...new Set(L.map(e=>e.y))].sort((a,b)=>b-a),Ms=DB.meetings.filter(m=>rxSiteOf(m)===k);
+  return `${head}<div class="pfbar"><button class="btn" onclick="S.rxSite=null;render();window.scrollTo(0,0)">${ic('back',16)} Tous les lieux</button></div><h2 style="margin:4px 0 6px">${ic('pin',20)} ${esc(rxSiteL(k))}</h2>
+   ${Ms.length?`<p class="small muted" style="margin:0 0 10px">${Ms.map(m=>`<a href="#" onclick="event.preventDefault();S.rub='retex';go('meeting','${m.id}')">${esc(mName(m))} ${rxYear(m)}</a>`).join(' · ')}</p>`:''}
+   ${rxSayBox(L,k)}${Y.length?rxTable(L,Y,!isChef()):'<p class="muted">Pas encore de RETEX pour ce lieu.</p>'}`}
+ if(q){const L=All.filter(e=>(e.txt+' '+rxSiteL(e.site)).toLowerCase().includes(q)).sort((a,b)=>b.y-a.y);
+  return `${head}${bar}<p class="small muted">${L.length} point${L.length>1?'s':''}</p><ul class="rxfound">${L.slice(0,200).map(e=>`<li><button class="more" onclick="S.rxSite='${e.site}';S.rxQ='';render();window.scrollTo(0,0)">${esc(rxSiteL(e.site))} ${e.y}</button> <span class="rxr" style="--c:${(rxRm[e.rub]||RX_R[0])[2]}">${(rxRm[e.rub]||RX_R[0])[1]}</span> ${esc(e.txt)}</li>`).join('')}</ul>`}
+ const Ss=rxSites();
+ return `${head}${bar}<div class="rxsites">${Ss.map(s=>{const yy=[...s.y].sort();return `<button class="rxst" onclick="S.rxSite='${s.k}';render();window.scrollTo(0,0)"><b>${esc(s.l)}</b><span>${yy.length?(yy.length>1?yy[0]+'–'+yy[yy.length-1]:yy[0]):'pas encore de RETEX'}</span>${s.say&&isChef()?`<i class="rxsay1">📣 ${s.say}</i>`:''}</button>`}).join('')}</div>
+  ${Ss.length?'':`<div class="empty">${tile({i:'book',c1:'#0ea5e9',c2:'#0369a1'},'lg')}<h2 style="margin-top:12px">Pas encore de RETEX</h2><p class="muted">${isChef()?'Importez le fichier Excel, ou écrivez le RETEX depuis la page d\'un meeting.':'Le RETEX s\'écrit depuis la page d\'un meeting.'}</p></div>`}`}
+function rxCSV(){const L=rxAll().sort((a,b)=>rxSiteL(a.site).localeCompare(rxSiteL(b.site))||a.y-b.y);const rows=[['Lieu','Année','Rubrique','À dire à l\'orga','Auteur','Point']].concat(L.map(e=>[rxSiteL(e.site),e.y,(rxRm[e.rub]||[])[1]||'',rxSay1(e)?'oui':'',e.imp?'Fichier historique':e.by||'',e.txt]));
+ const csv='﻿'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='RETEX PAF.csv';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),2000)}
+/* ---- Import du fichier Excel historique (lu dans le navigateur, rien n'est envoyé ailleurs) ---- */
+let RXI=null;
+function rxLib(){return window.XLSX?Promise.resolve():new Promise((ok,ko)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=ok;s.onerror=()=>ko(new Error('lecteur Excel indisponible'));document.head.appendChild(s)})}
+function rxImport(){const i=document.createElement('input');i.type='file';i.accept='.xlsx,.xls';i.onchange=async()=>{const f=i.files&&i.files[0];if(!f)return;toast('Lecture de '+f.name+'…');
+ try{await rxLib();const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});const L=rxParse(wb,2022);RXI={L,name:f.name,from:2022};openSheet(rxImpHTML)}catch(e){toast('Lecture impossible : '+(e.message||e))}};i.click()}
+const RX_HEAD=t=>{t=String(t??'').trim().toUpperCase().replace(/\s+/g,' ');return /^OPS( ?\/ ?LOG)? ?:?$/.test(t)?'ops':/^RAYONNEMENT ?:?$/.test(t)?'ray':/^LOG(ISTIQUE)? ?:?$/.test(t)?'log':/^COMM(UNICATION)? ?:?$/.test(t)?'com':null};
+const RX_STOP=/^(POINTS (POSITIFS|NEGATIFS)|NOM$)/;
+const RX_TITLE=/^(?:[A-ZÀ-Ü0-9'’ .()\-]{2,40}\s(?:19|20)\d\d|(?:19|20)\d\d\s+[A-ZÀ-Ü].{0,40})\s*:?$/;
+const RX_PRE=/^(OPS|LOG(?:ISTIQUE)?|RAYONNEMENT|COMM(?:UNICATION)?|RESUME)\s*:\s*/i;
+/* Lit le classeur RETEX : un onglet par lieu ; blocs « année + OPS / RAYONNEMENT / LOGISTIQUE », lignes d'année sans en-tête, ou ancien format « LIEU 2019 » + « OPS : … » */
+function rxParse(wb,from){const out=[];
+ wb.SheetNames.forEach(sn=>{if(/cahier/i.test(sn))return;const A=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:true,defval:null,blankrows:true});
+  const yOf=v=>{if(typeof v==='number'&&v>=2000&&v<2100)return Math.floor(v);const m=String(v??'').trim().match(/(?:^|\s)((?:19|20)\d\d)(?:\s|$|\n)/);return m?+m[1]:null};
+  const heads=A.map(row=>{const cols=[];(row||[]).forEach((v,c)=>{const k=RX_HEAD(v);if(k)cols.push({c,k})});return cols.length>=2?cols.sort((a,b)=>a.c-b.c):null});
+  const anyL=heads.find(Boolean)||[{c:1,k:'ops'},{c:5,k:'ray'},{c:9,k:'log'}];let lay=anyL,cur=null,lastH=-1;
+  const push=(y,k,t)=>{t=String(t).trim();if(t.length<3||y<from)return;const p=t.match(RX_PRE);if(p){k=RX_HEAD(p[1])||(/^RESUME/i.test(p[1])?'ops':k);if(!t.slice(p[0].length).trim())return}out.push({sheet:sn,y,rub:k,txt:t})};
+  A.forEach((row,r)=>{row=row||[];const cells=row.map((v,c)=>({v,c})).filter(x=>x.v!=null&&String(x.v).trim()!=='');if(!cells.length)return;
+   const U=cells.map(x=>String(x.v).trim().toUpperCase());
+   if(heads[r]){lay=heads[r];let y=null;for(let rr=r;rr>=Math.max(lastH+1,r-3)&&!y;rr--)(A[rr]||[]).forEach(v=>{if(!y&&!RX_HEAD(v))y=yOf(v)});lastH=r;cur={y,mode:'grid',start:r,cols:lay};return}
+   if(U.some(t=>RX_STOP.test(t))){cur=null;return}
+   const f=cells[0],fy=yOf(f.v),title=typeof f.v==='string'&&RX_TITLE.test(String(f.v).trim().toUpperCase());
+   if(title&&fy){cur={y:fy,mode:'lines',start:r};return}
+   if(typeof f.v==='number'&&fy&&f.c<lay[0].c){cur={y:fy,mode:'grid',start:r-1,cols:lay};if(cells.length===1)return}
+   if(!cur||!cur.y)return;
+   if(cur.mode==='grid'){if(r-cur.start>19){cur=null;return}cells.forEach(x=>{if(x.c<cur.cols[0].c)return;let k=null;cur.cols.forEach(cc=>{if(x.c>=cc.c)k=cc.k});if(k)push(cur.y,k,x.v)})}
+   else{if(r-cur.start>25){cur=null;return}cells.forEach(x=>{const t=String(x.v).trim();if(RX_PRE.test(t))push(cur.y,'ops',t)})}})});
+ return out}
+const rxHash=s=>{let h=0;for(const ch of String(s))h=(h*31+ch.charCodeAt(0))|0;return (h>>>0).toString(36)};
+function rxImpHTML(){const L=RXI.L,sites=new Map();L.forEach(e=>{const s=sites.get(e.sheet)||{n:0,y:new Set()};s.n++;s.y.add(e.y);sites.set(e.sheet,s)});
+ const have=new Set((DB.retex||[]).map(e=>e.imp).filter(Boolean)),fresh=L.filter(e=>!have.has(rxKey(e.sheet)+'|'+e.y+'|'+e.rub+'|'+rxHash(e.txt)));
+ const byR=RX_R.map(r=>[r[1],L.filter(e=>e.rub===r[0]).length]);
+ return `<div class="sh">${tile({i:'upload',c1:'#0ea5e9',c2:'#0369a1'},'lg')}<div class="t"><div class="q">Importer le RETEX</div><div class="small muted">${esc(RXI.name)} · années ${RXI.from} et suivantes</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><div class="fstats">${[[sites.size,'lieux'],[L.length,'remarques'],[fresh.length,'nouvelles']].map(([n,l])=>`<div class="fst"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
+  <p class="small muted">${byR.map(([l,n])=>l+' : '+n).join(' · ')}. Chaque cellule devient un point ; vous marquerez ensuite 📣 ce qui est à dire à l'organisateur.</p>
+  <div class="rxil">${[...sites.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([k,s])=>`<span>${esc(rxNice(k))} <small class="muted">${s.n} · ${[...s.y].sort().join(', ')}</small></span>`).join('')}</div>
+  <p class="hint">Le fichier est lu sur cet appareil. Une remarque déjà importée ne l'est pas deux fois. Le classement des onglets au format irrégulier peut demander une relecture.</p></div>
+ <div class="sf"><span></span><button class="btn pri big" ${fresh.length?'':'disabled'} onclick="rxImpGo()">${ic('check',18)} Importer ${fresh.length} remarque${fresh.length>1?'s':''}</button></div>`}
+function rxImpGo(){DB.retex=DB.retex||[];const have=new Set(DB.retex.map(e=>e.imp).filter(Boolean));let n=0;
+ RXI.L.forEach(e=>{const site=rxKey(e.sheet),imp=site+'|'+e.y+'|'+e.rub+'|'+rxHash(e.txt);if(have.has(imp))return;have.add(imp);n++;
+  DB.retex.push({id:uid(),imp,site,siteL:rxNice(e.sheet),y:e.y,rub:e.rub,kind:'rem',txt:e.txt,vis:'int',t:Date.now()})});
+ save();closeSheet();S.rxSite=null;render();toast(n+' remarque'+(n>1?'s':'')+' importée'+(n>1?'s':''))}
 
 /* Illustrations des trois outils */
 function pfArt(k){
