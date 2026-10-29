@@ -29,7 +29,7 @@
 :root[data-theme="dark"]{--bg:#0b1222;--surface:#131c31;--surface2:#18233c;--line:#26324d;--fg:#e8edf7;--muted:#9aa7c1;--navy:#e8edf7;--navy2:#9fb8ff;--gold2:#3a2f14;--ok2:#12321f;--warn2:#3a2a10;--bad2:#3b161b;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);--pri:#2f63d8;--pri2:#4677e6;color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body{overflow-x:clip;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 h1,h2,h3{font-family:var(--f-disp);margin:0;letter-spacing:.01em;text-wrap:balance}
@@ -757,6 +757,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 .iqh{display:flex;gap:10px;align-items:center;margin-bottom:8px}.iqh b{display:block}.iqh small{color:var(--muted)}
 .iqt{font-family:var(--f-body);font-size:15px;line-height:1.5;resize:vertical;min-height:140px}
 .person.hold{border-style:dashed;color:var(--muted)}
+@media (max-width:400px){.brand b{font-size:17px}.role select{max-width:30vw}}
 .instbar{max-width:1040px;margin:10px 12px 0;padding:10px 12px;display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 .instbar img{border-radius:10px;flex:none}.instbar>div{flex:1;min-width:0;font-size:13px;line-height:1.35}.instbar>div>b{display:block;font-size:14px}.instbar>div>span{color:var(--muted)}
 @media (min-width:1064px){.instbar{margin:10px auto 0}}
@@ -765,7 +766,9 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 @media (max-width:720px){
  h1{font-size:24px}
  .top .nav,.role span{display:none}
- .role select{max-width:36vw;min-width:0;padding-right:20px}
+ .role select{max-width:34vw;min-width:0;padding-right:20px}
+ body.kb .bnav{display:none}
+ .top .tin{gap:8px}.role{min-width:0;flex:0 1 auto}.top .sp{min-width:0}
  .brand img{width:36px;height:36px}
  .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:6px}
  .bnav button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700;color:var(--muted);padding:6px;border-radius:12px}
@@ -3946,6 +3949,13 @@ $('filein').addEventListener('change',async e=>{
  if(/^image\//.test(f.type)){try{FILES[m.id+P.key]=URL.createObjectURL(f)}catch(err){}}else delete FILES[m.id+P.key];
  save();render();toast((P.key==='axe'?'Plan du site':'Pilot book')+' déposé');
 });
+/* iPhone : après la fermeture du clavier, la barre du bas pouvait rester remontée au-dessus de l'ancien clavier.
+   Pendant la saisie, elle est masquée ; à la fermeture du clavier, la page est recalée. */
+(()=>{const vv=window.visualViewport;const typing=()=>{const a=document.activeElement;return !!a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&!/^(checkbox|radio|file|button)$/.test(a.type||'')};
+ const sync=()=>{const kb=typing()&&!!vv&&vv.height<window.innerHeight*0.8;document.body.classList.toggle('kb',kb)};
+ if(vv){vv.addEventListener('resize',sync);vv.addEventListener('scroll',sync)}
+ document.addEventListener('focusin',()=>setTimeout(sync,300));
+ document.addEventListener('focusout',()=>setTimeout(()=>{sync();if(!typing())window.scrollTo(window.scrollX,window.scrollY)},120));})();
 /* ---- Application installable sur téléphone (PWA) ---- */
 let INSTALL=null;
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}
