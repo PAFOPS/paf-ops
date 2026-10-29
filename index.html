@@ -664,10 +664,10 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .rxil{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;max-height:40vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:10px}
 .ghostc.sm{padding:8px 12px;font-size:13px;gap:6px;width:100%;justify-content:center}
 @media (max-width:760px){.rxgrid{grid-template-columns:1fr}.rxvis{grid-template-columns:1fr}}
-.rxnow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.rxcol{background:var(--surface2);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:8px 10px;display:grid;gap:6px;align-content:start}.rxcol h4{margin:0;color:var(--c);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.rxnow{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:10px}.rxcol{background:var(--surface2);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:8px 10px;display:grid;gap:6px;align-content:start}.rxcol h4{margin:0;color:var(--c);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
 .rxcol ul,.rxtab ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:14px;line-height:1.35}.rxcol li[role=button],.rxtab li[role=button]{cursor:pointer}.rxcol li[role=button]:hover{text-decoration:underline}li.say{color:#15803d;font-weight:600}
 .rxadd{display:flex;gap:4px;align-items:flex-end}.rxadd textarea{font-family:var(--f-body);resize:vertical;min-height:44px;font-size:14px;padding:6px 8px}.rxn{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 8px}.rxnh{display:flex;gap:6px;align-items:center;font-size:12px}.rxnh b{color:var(--c)}.rxnh .ib{width:26px;height:26px;margin-left:auto}.rxnh .ib+.ib{margin-left:0}.rxn p{margin:3px 0 0;font-size:14px;white-space:pre-wrap;line-height:1.35}.rxbh .n{font-size:12px;background:var(--surface2);border-radius:99px;padding:1px 8px;margin-left:4px}.rxsynb{border:2px solid #0ea5e9}.rxadd .in{padding:6px 8px;font-size:14px}.rxadd .ib{width:34px;height:34px;flex:none}
-.rxtab{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}.rxcol h4 small,.rxth b small{display:block;font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted);margin-top:2px}.rxtr{display:grid;grid-template-columns:64px repeat(3,minmax(0,1fr));gap:10px;padding:10px 12px;border-top:1px solid var(--line)}.rxtr.rxth{border-top:0;background:var(--surface2)}.rxth b{color:var(--c);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.rxtab{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}.rxcol h4 small,.rxth b small{display:block;font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted);margin-top:2px}.rxtr{display:grid;grid-template-columns:64px repeat(var(--n,4),minmax(0,1fr));gap:10px;padding:10px 12px;border-top:1px solid var(--line)}.rxtr.rxth{border-top:0;background:var(--surface2)}.rxth b{color:var(--c);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
 .rxyy{font-family:var(--f-disp);font-size:20px;font-weight:800}.rxml{display:none}.rxtab ul{white-space:pre-wrap}.rxfound{padding-left:0;list-style:none;display:grid;gap:8px}.rxfound li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:14px;white-space:pre-wrap}
 @media (max-width:760px){.rxnow{grid-template-columns:1fr}.rxtr{grid-template-columns:1fr}.rxth{display:none!important}.rxml{display:block;font-style:normal;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--c)}}
 .pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
@@ -3414,8 +3414,9 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
 /* ====================== RETEX : retours d'expérience par lieu ====================== */
 /* Une remarque = un lieu, une année, une rubrique (OPS, Rayonnement, Log, Comm), un type (synthèse du #5, remarque, compte rendu DT/CST ou Comm) et une diffusion (interne par défaut).
    Jamais envoyé à l'organisateur ni au DV : le serveur ne transmet le RETEX qu'aux rôles de la Patrouille. */
-/* 3 rubriques : OPS (DV, démonstration en vol, technique des mécas) · Rayonnement / Comm · Log (hébergement, repas, locomotion) */
-const RX_R=[['ops','OPS','#3b82f6','#1d4ed8','plane','Travail du DV, démonstration en vol, technique (mécas)'],['ray','Rayonnement / Comm','#ec4899','#be185d','star','Public, médias, relations publiques'],['log','Log','#a855f7','#7e22ce','bed','Hébergement, repas, locomotion']];
+/* 4 rubriques : OPS (DV, démonstration en vol) · Technique (mécas) · Rayonnement / Comm · Log (hébergement, repas, locomotion)
+   Accès (lecture et écriture) : pilotes et direction → tout ; DT / CST → Technique, Rayonnement / Comm, Log ; Comm → Rayonnement / Comm, Log ; secrétaire ops → Log */
+const RX_R=[['ops','OPS','#3b82f6','#1d4ed8','plane','Travail du DV, démonstration en vol'],['tech','Technique','#64748b','#334155','wrench','Mécas : avions, parking, servitudes, pièces'],['ray','Rayonnement / Comm','#ec4899','#be185d','star','Public, médias, relations publiques'],['log','Log','#a855f7','#7e22ce','bed','Hébergement, repas, locomotion']];
 const rxRub=e=>e.rub==='com'?'ray':(e.rub||'ops');   // l'ancienne rubrique Comm est rangée avec le Rayonnement
 const RX_V=[['int','Interne PAF','#64748b','lock'],['org','À dire à l\'organisateur','#16a34a','send'],['dv','À dire au DV','#6366f1','radio'],['gen','Leçon générale','#d97706','star']];
 const RX_K={syn:'Synthèse',rem:'Remarque',crt:'Compte rendu DT / CST',crc:'Compte rendu Comm'};
@@ -3427,8 +3428,8 @@ const rxSynN=()=>+(DB.rxSyn||5);
 const rxSiteOf=m=>m.rxSite||rxKey(m.city);
 const rxYear=m=>+(String(firstDemo(m)||'').slice(0,4))||new Date().getFullYear();
 const rxLast=m=>(m.demos||[]).filter(Boolean).sort().slice(-1)[0]||firstDemo(m);
-function rxAll(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind!=='note')}   // synthèses (historique)
-function rxNotes(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind==='note')}
+function rxAll(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind!=='note'&&rxRubOk(rxRub(e)))}   // synthèses (historique)
+function rxNotes(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind==='note'&&rxRubOk(rxRub(e)))}
 function rxSiteL(k){const e=(DB.retex||[]).find(x=>x.site===k&&x.siteL);if(e)return e.siteL;const m=DB.meetings.find(x=>rxSiteOf(x)===k);return m&&m.city?m.city:rxNice(k)}
 function rxSites(){const M=new Map();rxAll().forEach(e=>{if(!e.site)return;const s=M.get(e.site)||{k:e.site,n:0,y:new Set(),say:0};s.n++;s.y.add(e.y);if(e.vis==='org'||e.vis==='dv')s.say++;M.set(e.site,s)});
  DB.meetings.forEach(m=>{const k=rxSiteOf(m);if(k&&!M.has(k))M.set(k,{k,n:0,y:new Set(),say:0})});
@@ -3440,7 +3441,11 @@ function rxMe(){const c17=()=>DB.members.find(x=>x.fn==='DIR'&&athN(x)===17)||DB
 const rxIsSyn=me=>!!me&&(me.fn==='DIR'||(me.fn==='PILOTES'&&[1,rxSynN()].includes(athN(me))));   // leader, 5 et direction
 const rxCanSyn=()=>isChef()||rxIsSyn(rxMe());
 const rxCanRem=()=>['chef','visit','dt','cst','comm','sec'].includes(ROLE);   // la secrétaire ops : dans Log
-const rxRubOk=k=>ROLE!=='sec'||k==='log';   // notes : pilotes, direction, DT / CST, Comm
+function rxRubKeys(){if(isChef())return ['ops','tech','ray','log'];const fn=(rxMe()||{}).fn;
+ if(ROLE==='sec')return ['log'];if(ROLE==='comm'||(ROLE==='visit'&&fn==='COMM'))return ['ray','log'];if(ROLE==='dt'||ROLE==='cst'||(ROLE==='visit'&&(fn==='DT'||fn==='CST')))return ['tech','ray','log'];
+ return ROLE==='visit'?['ops','tech','ray','log']:[]}
+const rxRubOk=k=>rxRubKeys().includes(k==='com'?'ray':k);
+const rxRubs=()=>RX_R.filter(r=>rxRubOk(r[0]));   // notes : pilotes, direction, DT / CST, Comm
 function rxMine(e){const me=rxMe();if(isOnline())return !!(ME&&e.byMail&&lc(e.byMail)===lc(ME.mail));return !!(me&&e.byId===me.id)}
 function rxCanEdit(e){return e.kind==='note'?(isChef()||rxMine(e)):rxCanSyn()}
 function rxAuthor(){const me=rxMe();return {by:me?memLabel(me):((ME&&ME.name)||(RLm[ROLE]||{}).l||''),byS:me?((athN(me)<1e6?'Athos '+athN(me)+' · ':(me.fn==='DIR'?'Dir · ':me.fn?me.fn+' · ':''))+(me.nick||(me.last?rxNice(me.last):me.first)||'')):((RLm[ROLE]||{}).l||''),byMail:me?(me.mail||''):((ME&&ME.mail)||''),byId:me?me.id:''}}
@@ -3468,12 +3473,12 @@ function rxSayBox(L,site){const S0=rxSay(L);if(!S0.length||!isChef())return '';
 function rxCopy(site){const L=rxSay(rxAll().filter(e=>e.site===site)).sort((a,b)=>b.y-a.y);const t='Retours des éditions précédentes :\n'+L.map(e=>'- '+e.txt.replace(/\s*\n\s*/g,' ')).join('\n');
  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Copié : collez-le dans votre message'),()=>toast('Copie impossible sur ce navigateur'))}
 function rxNotesCopy(mid){const m=DB.meetings.find(x=>x.id===mid),N=rxNotes().filter(e=>e.mid===mid);
- const t='RETEX '+mName(m)+' — notes de l\'équipe\n'+RX_R.map(r=>{const E=N.filter(e=>rxRub(e)===r[0]);return E.length?'\n'+r[1].toUpperCase()+'\n'+E.map(e=>'- '+e.txt.replace(/\s*\n\s*/g,' ')+' ('+rxWho(e)+')').join('\n'):''}).join('');
+ const t='RETEX '+mName(m)+' — notes de l\'équipe\n'+rxRubs().map(r=>{const E=N.filter(e=>rxRub(e)===r[0]);return E.length?'\n'+r[1].toUpperCase()+'\n'+E.map(e=>'- '+e.txt.replace(/\s*\n\s*/g,' ')+' ('+rxWho(e)+')').join('\n'):''}).join('');
  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Notes copiées pour le débriefing'),()=>toast('Copie impossible sur ce navigateur'))}
 /* Le tableau, comme dans l'Excel : une ligne par année, une colonne par rubrique */
 const rxPt=(e,ro)=>`<li class="${rxSay1(e)?'say':''}" ${!ro&&rxCanEdit(e)?`onclick="rxEdit('${e.id}')" role="button" tabindex="0"`:''}>${rxSay1(e)?'📣 ':''}${esc(e.txt)}</li>`;
-function rxTable(L,years,ro){return `<div class="rxtab"><div class="rxtr rxth"><span></span>${RX_R.map(r=>`<b style="--c:${r[2]}">${r[1]}<small>${r[5]}</small></b>`).join('')}</div>
- ${years.map(y=>`<div class="rxtr"><span class="rxyy">${y}</span>${RX_R.map(r=>{const E=L.filter(e=>e.y===y&&rxRub(e)===r[0]);return `<div><i class="rxml" style="--c:${r[2]}">${r[1]}</i>${E.length?`<ul>${E.map(e=>rxPt(e,ro)).join('')}</ul>`:'<span class="muted">—</span>'}</div>`}).join('')}</div>`).join('')}</div>`}
+function rxTable(L,years,ro){return `<div class="rxtab" style="--n:${rxRubs().length}"><div class="rxtr rxth"><span></span>${rxRubs().map(r=>`<b style="--c:${r[2]}">${r[1]}<small>${r[5]}</small></b>`).join('')}</div>
+ ${years.map(y=>`<div class="rxtr"><span class="rxyy">${y}</span>${rxRubs().map(r=>{const E=L.filter(e=>e.y===y&&rxRub(e)===r[0]);return `<div><i class="rxml" style="--c:${r[2]}">${r[1]}</i>${E.length?`<ul>${E.map(e=>rxPt(e,ro)).join('')}</ul>`:'<span class="muted">—</span>'}</div>`}).join('')}</div>`).join('')}</div>`}
 const rxNoteC=(e,syn)=>`<div class="rxn"><div class="rxnh"><b>${esc(rxWho(e))}</b><span class="muted">${new Date(e.tm||e.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>${syn&&e.kind==='note'?`<button class="ib" title="Reprendre dans la synthèse" aria-label="Reprendre dans la synthèse" onclick="rxLift('${e.id}')">${ic('send',13)}</button>`:''}${rxCanEdit(e)?`<button class="ib" aria-label="Modifier" onclick="rxEdit('${e.id}')">${ic('edit',13)}</button>`:''}</div><p>${esc(e.txt)}</p></div>`;
 /* ---- Rubrique RETEX d'un meeting ---- */
 function vRetexMeeting(m){const site=rxSiteOf(m),y=rxYear(m),All=rxAll(),syn=rxCanSyn(),can=rxCanRem();
@@ -3483,11 +3488,11 @@ function vRetexMeeting(m){const site=rxSiteOf(m),y=rxYear(m),All=rxAll(),syn=rxC
  setTimeout(()=>{if(S.rxFocus){const i=$(S.rxFocus);if(i)i.focus();S.rxFocus=null}},30);
  const noteBox=can||notes.length?`<section class="dvbox rxbox"><div class="dvsec">
   <div class="rxbh"><div><b>${syn?'Notes de l\'équipe':'Mes notes'} ${notes.length?`<span class="n">${notes.length}</span>`:''}</b><span class="small muted">${syn?'Tout ce qui a été écrit, avec son auteur. Touchez '+ic('send',12)+' pour reprendre une note dans la synthèse.':'Écrivez librement, à tout moment. Vos notes sont lues par le leader, le 5 et la direction pour la synthèse.'}</span></div>${syn&&notes.length?`<button class="btn" onclick="rxNotesCopy('${m.id}')">${ic('copy',15)} Copier pour le débriefing</button>`:''}</div>
-  <div class="rxnow">${RX_R.map(r=>{const E=notes.filter(e=>rxRub(e)===r[0]).sort((a,b)=>(a.t||0)-(b.t||0));return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}<small>${r[5]}</small></h4>${E.map(e=>rxNoteC(e,syn)).join('')}
+  <div class="rxnow" style="--n:${rxRubs().length}">${rxRubs().map(r=>{const E=notes.filter(e=>rxRub(e)===r[0]).sort((a,b)=>(a.t||0)-(b.t||0));return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}<small>${r[5]}</small></h4>${E.map(e=>rxNoteC(e,syn)).join('')}
    ${can&&rxRubOk(r[0])?`<div class="rxadd"><textarea class="in" id="rxn-${r[0]}" rows="2" placeholder="Écrire une note…" maxlength="2000"></textarea><button class="ib" aria-label="Ajouter la note" onclick="rxAdd('${m.id}','${r[0]}','note')">${ic('plus',16)}</button></div>`:''}</div>`}).join('')}</div></div></section>`:'';
  const synBox=`<section class="dvbox rxbox rxsynb"><div class="dvsec">
   <div class="rxbh"><div><b>Synthèse ${y} · débriefing du lundi</b><span class="small muted">Les gros points retenus par le leader, le 5 et la direction. C'est elle qui reste dans l'historique du lieu.</span></div></div>
-  <div class="rxnow">${RX_R.map(r=>{const E=here.filter(e=>rxRub(e)===r[0]);return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}<small>${r[5]}</small></h4>${E.length?`<ul>${E.map(e=>rxPt(e)).join('')}</ul>`:syn?'':'<span class="small muted">—</span>'}
+  <div class="rxnow" style="--n:${rxRubs().length}">${rxRubs().map(r=>{const E=here.filter(e=>rxRub(e)===r[0]);return `<div class="rxcol" style="--c:${r[2]}"><h4>${r[1]}<small>${r[5]}</small></h4>${E.length?`<ul>${E.map(e=>rxPt(e)).join('')}</ul>`:syn?'':'<span class="small muted">—</span>'}
    ${syn?`<div class="rxadd"><input class="in" id="rxa-${r[0]}" placeholder="+ un point" maxlength="400" onkeydown="if(event.key==='Enter'){event.preventDefault();rxAdd('${m.id}','${r[0]}','syn')}"><button class="ib" aria-label="Ajouter" onclick="rxAdd('${m.id}','${r[0]}','syn')">${ic('plus',16)}</button></div>`:''}</div>`}).join('')}</div>
   ${syn?`<p class="hint" style="margin:8px 0 0">Touchez un point pour le reformuler ou le marquer 📣 « à dire à l'organisateur » l'an prochain.</p>`:''}</div></section>`;
  return `${demo}${noteBox}${synBox}${rxSayBox(prev,site)}
