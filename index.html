@@ -234,7 +234,7 @@ label.l{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:1
 .fdrop b{display:block}
 .fdrop.has{border-style:solid;background:var(--surface)}
 .fdrop .t{flex:1;min-width:0}
-.fdrop .fn{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fdrop .fn{display:block;max-width:100%;font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.files>div{min-width:0}.fdrop .t{overflow:hidden}.files img{max-width:100%}
 .draft{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin-top:8px;color:var(--muted)}
 .draft input{width:18px;height:18px;accent-color:var(--gold)}
 .qrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
@@ -1009,7 +1009,7 @@ if(K&&!location.search){try{history.replaceState(null,'',location.pathname+'?k='
 /* Manifeste avec le lien personnel : l'application installée s'ouvre directement connectée */
 try{if(K){const abs=u=>new URL(u,location.href).href;const man={name:'PAF OPS — Meeting Manager',short_name:'PAF OPS',lang:'fr',display:'standalone',background_color:'#f2f4f8',theme_color:'#0c1f4a',start_url:abs(location.pathname+'?k='+encodeURIComponent(K)),scope:abs('./'),icons:[{src:abs('icon-192.png'),sizes:'192x192',type:'image/png'},{src:abs('icon-512.png'),sizes:'512x512',type:'image/png'},{src:abs('icon-maskable-512.png'),sizes:'512x512',type:'image/png',purpose:'maskable'}]};
  const l=document.querySelector('link[rel=manifest]');if(l)l.href=URL.createObjectURL(new Blob([JSON.stringify(man)],{type:'application/manifest+json'}))}}catch(e){}
-async function api(op,p){const r=await fetch(API_URL,{method:'POST',body:JSON.stringify({op,p:Object.assign({k:K},p||{})}),credentials:'omit',redirect:'follow'});return r.json()}
+async function api(op,p){const body=JSON.stringify({op,p:Object.assign({k:K},p||{})});const r=await fetch(API_URL,{method:'POST',body,credentials:'omit',redirect:'follow',keepalive:body.length<60000});return r.json()}
 function fatal(msg,paste){$('view').innerHTML=`<div class="empty" style="margin-top:40px">${tile({i:'lock',c1:'#64748b',c2:'#334155'},'lg')}<h2 style="margin-top:12px">PAF OPS</h2><p class="muted" style="max-width:420px;margin:8px auto 0">${msg}</p>${paste?`<div style="max-width:420px;margin:18px auto 0;text-align:left"><label class="l" for="pk">Ou collez ici votre lien personnel</label><input class="in" id="pk" inputmode="url" placeholder="https://pafops.github.io/paf-ops/?k=…" onkeydown="if(event.key==='Enter')useLink()"><button class="btn pri big" style="margin-top:10px;width:100%" onclick="useLink()">Ouvrir PAF OPS</button><p class="small muted" style="margin-top:10px">Sur un téléphone : ouvrez d'abord le lien reçu par email dans le navigateur, puis « Ajouter à l'écran d'accueil » depuis cette page.</p></div>`:''}</div>`}
 function useLink(){let v=($('pk').value||'').trim();try{v=decodeURIComponent(v)}catch(e){}try{v=decodeURIComponent(v)}catch(e){}
  let k='';const m=v.match(/[?&]k=(ro:[a-z0-9]+|[a-f0-9]{16,})/i)||v.match(/(ro:[a-z0-9]{6,}|[a-f0-9]{32,})/i);if(m)k=m[1];
@@ -1033,6 +1033,7 @@ if(DB.rxDemo!==3&&typeof api!=='function'){const m=(DB.meetings||[]).find(x=>x.e
  DB.retex=(DB.retex||[]).filter(e=>!e.ex).concat(E.map(([yy,rub,txt,vis])=>({id:uid(),ex:1,imp:'ex',site:k,siteL:m.city,y:yy,rub,kind:'rem',txt,vis,t:Date.now()})));
  const P=n=>(DB.members||[]).find(x=>x.fn==='PILOTES'&&(+x.athos===n||new RegExp('^Athos '+n+'\\b').test(x.role||''))),N=[[3,'ops','Axe difficile à voir par contre-jour le matin, à signaler au DV.'],[7,'ops','Parking avions trop serré, attention aux saumons.'],[5,'ray','Beaucoup de monde au stand dédicaces, prévoir plus de cartes.'],[3,'log','Hôtel très bien, mais petit-déjeuner trop tard (7h30).']];
  N.forEach(([n,rub,txt],i)=>{const x=P(n);DB.retex.push({id:uid(),ex:1,site:k,siteL:m.city,y:y,mid:m.id,kind:'note',rub,txt,vis:'int',t:Date.now()-i*36e5,by:x?[x.grade,String(x.last||'').toUpperCase(),x.first].filter(Boolean).join(' '):'Athos '+n,byS:'Athos '+n+(x&&x.nick?' · '+x.nick:''),byId:x?x.id:'',byMail:x?x.mail||'':''})})}DB.rxDemo=3}
+if(!DB.pdocV&&typeof api==='function'&&typeof ME!=='undefined'&&ME&&ME.role==='chef'){DB.pdocs=(DB.pdocs||[]).filter(d=>!d.ex);DB.pdocV=1}   // en ligne : plus de documents d'exemple dans le dossier pilotes
 if(!DB.mecaV){(DB.members||[]).forEach(x=>{if(x.fn==='DEP'&&(x.kp==='dt'||/^dt$/i.test(String(x.role||'').trim())))x.fn='DT';else if(x.fn==='DEP'&&(x.kp==='cst'||/^cst$/i.test(String(x.role||'').trim())))x.fn='CST'});DB.mecaV=1}
 if(!DB.athV){(DB.members||[]).forEach(x=>{if(!x.athos){const m=String(x.role||'').match(/athos\s*(\d{1,2})/i);if(m)x.athos=m[1]}});DB.athV=1}
 if(!DB.rV7){const old=['leader','n5','n7','dmma','dir','diradj'];if(DB.rights)old.forEach(k=>delete DB.rights[k]);(DB.access||[]).forEach(a=>{if(old.includes(a.role))a.role='visit'});DB.rV7=1}
@@ -1073,6 +1074,10 @@ async function refresh(){if(SAVING||DIRTY||!DB||!$('ov').hidden)return;   // jam
 try{const r=await api('load');if(r.db&&r.rev>REV){DB=r.db;REV=r.rev;BASE=clone(r.db);migrate();render()}}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refresh()});
 setInterval(refresh,120000);
+/* Fermeture de la page ou passage en arrière-plan : la case en cours de saisie est validée et tout est enregistré aussitôt */
+function saveNow(){const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&a.closest('#view,#sheet'))a.blur();if(DIRTY){clearTimeout(saveT);flush()}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveNow()});
+window.addEventListener('pagehide',saveNow);
 async function boot(){
  if(!/^https:\/\/script\.google\.com\//.test(API_URL))return fatal('Adresse du serveur manquante : collez l\'URL Apps Script dans index.html (ligne API_URL).');
  if(!K)return fatal('Ouvrez PAF OPS avec le lien personnel reçu par email.',true);
@@ -1492,7 +1497,7 @@ function zrtBlock(){
    <figure class="zfig" style="margin:0">${zrtSvgSide()}<figcaption>Vue de profil<small>Du sol jusqu'à 5 500 ft AGL (hauteur exagérée)</small></figcaption></figure>
   </div>
   <div class="zret"><h4>${ic('check',16,3)} À retenir</h4><ul>
-   ${li('file','#3b82f6','#1d4ed8','Faire publier la ZRT par <b>SUP AIP plutôt que par NOTAM</b> quand c\'est possible : il y a moins de pénétrations de zone.')}
+   ${li('file','#3b82f6','#1d4ed8','Faire publier la ZRT par <b>SUP AIP plutôt que par NOTAM</b> quand c\'est possible : il y a moins de pénétrations de zone. Astuce : <b>un volume de ZRT complexe, non circulaire, favorise la diffusion par SUP AIP</b>.')}
    ${li('shield','#ef4444','#b91c1c','<b>Aucun vol ne doit pénétrer dans la zone</b>, VFR comme IFR. Seule exception : les évacuations sanitaires (EVASAN).')}
    ${li('clock','#f59e0b','#c2410c','Activer la ZRT <b>sur la plus grande partie de la journée</b>, pour absorber un retard dû à une panne ou à la météo.')}
    ${li('radio','#6366f1','#4338ca','<b>Un drone doit voler</b> (forces de l\'ordre, sécurité ou autre besoin) ? <b>Prévenez la Patrouille</b> à l\'avance pour coordonner.')}
@@ -1518,7 +1523,7 @@ function vAero(m){
  return `<div class="sect"><h2>${ic('radio',20)} Directeur des vols</h2>${st}</div>
  <section class="dvbox">
   <div class="dvsec">${zrtBlock()}</div>
-  <div class="dvsec"><div class="ask">${tile({i:'map',c1:'#22c55e',c2:'#15803d'},'')}<div><p>Afin de préparer notre présentation aérienne, déposez ici un <b>plan détaillé du site de présentation</b> (par exemple un export Google Earth). Plus besoin de l'envoyer par email.</p>${due}</div></div></div>
+  <div class="dvsec"><div class="ask">${tile({i:'map',c1:'#22c55e',c2:'#15803d'},'')}<div><p>Afin de préparer notre présentation aérienne, déposez ici un <b>plan détaillé du site de présentation</b> (par exemple un export Google Earth). Plus besoin de l'envoyer par email.</p><p class="small muted" style="margin-top:6px"><b>Le fichier KML/KMZ, c'est quoi ?</b> Dans Google Earth, placez des repères sur les points de l'axe (début, fin, show center, point central), puis clic droit sur le dossier › « Enregistrer le lieu sous… » › KML. Nous l'ouvrons directement dans nos outils de préparation : c'est plus précis qu'une image et nous fait gagner du temps. Un PDF ou une image conviennent aussi.</p>${due}</div></div></div>
   <div class="dvsec"><h3><span class="stepn ${A.axe&&A.pb?'ok':''}">${A.axe&&A.pb?ic('check',13,3):'1'}</span> Documents</h3>
    <div class="files">${fileTile('axe','Plan détaillé du site','map','#22c55e','#15803d','Google Earth (KML/KMZ), PDF ou image')}${fileTile('pb','Pilot book','book','#a855f7','#7e22ce','Même en version provisoire')}</div>
 </div>
