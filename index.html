@@ -3931,19 +3931,20 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('ov').hidden&&(!
 
 $('filein').addEventListener('change',async e=>{
  const f=e.target.files[0];if(!f||!PICK)return;
- if(f.size>20*1024*1024){toast('Fichier trop lourd (20 Mo maximum)');PICK=null;return}
+ const P=PICK;PICK=null;   // le dépôt est lié à la tuile choisie, même si on en choisit une autre pendant l'envoi
+ if(f.size>20*1024*1024){toast('Fichier trop lourd (20 Mo maximum)');return}
  toast('Envoi de '+f.name+'…');
  const b64=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.readAsDataURL(f)});
- const mid=PICK.mid||PICK.park||null,label=PICK.pdoc?'Dossier pilotes':PICK.park?'Parking':PICK.key==='axe'?'Plan du site':PICK.key==='pb'?'Pilot book':'';
+ const mid=P.mid||P.park||null,label=P.pdoc?'Dossier pilotes':P.park?'Parking':P.key==='axe'?'Plan du site':P.key==='pb'?'Pilot book':'';
  let up;try{up=await api('upload',{name:f.name,type:f.type,b64,mid,label})}catch(err){up={error:'Connexion impossible'}}
- if(!up||up.error){toast(up&&up.error||'Envoi impossible');PICK=null;return}
+ if(!up||up.error){toast(up&&up.error||'Envoi impossible');return}
  const meta={name:f.name,size:f.size,t:Date.now(),url:up.url,driveId:up.id};
- if(PICK.park){const T=tech(DB.meetings.find(x=>x.id===PICK.park));T.parkFile=meta;if(/^image\//.test(f.type)){try{FILES[PICK.park+'park']=URL.createObjectURL(f)}catch(err){}}else delete FILES[PICK.park+'park'];save();render();toast('Schéma du parking déposé');PICK=null;return}
- if(PICK.pdoc){const nid=uid();try{FILEB[nid]=URL.createObjectURL(f)}catch(err){}DB.pdocs.unshift(Object.assign({id:nid,cat:PICK.pdoc},meta));save();closeSheet();render();toast('Document ajouté au dossier des pilotes');PICK=null;return}
- const m=DB.meetings.find(x=>x.id===PICK.mid),A=aero(m),old=A[PICK.key];
- A[PICK.key]=Object.assign(meta,PICK.key==='pb'?{draft:old?!!old.draft:true}:{});
- if(/^image\//.test(f.type)){try{FILES[m.id+PICK.key]=URL.createObjectURL(f)}catch(err){}}else delete FILES[m.id+PICK.key];
- save();render();toast((PICK.key==='axe'?'Axe':'Pilot book')+' déposé');PICK=null;
+ if(P.park){const T=tech(DB.meetings.find(x=>x.id===P.park));T.parkFile=meta;if(/^image\//.test(f.type)){try{FILES[P.park+'park']=URL.createObjectURL(f)}catch(err){}}else delete FILES[P.park+'park'];save();render();toast('Schéma du parking déposé');return}
+ if(P.pdoc){const nid=uid();try{FILEB[nid]=URL.createObjectURL(f)}catch(err){}DB.pdocs.unshift(Object.assign({id:nid,cat:P.pdoc},meta));save();closeSheet();render();toast('Document ajouté au dossier des pilotes');return}
+ const m=DB.meetings.find(x=>x.id===P.mid),A=aero(m),old=A[P.key];
+ A[P.key]=Object.assign(meta,P.key==='pb'?{draft:old?!!old.draft:true}:{});
+ if(/^image\//.test(f.type)){try{FILES[m.id+P.key]=URL.createObjectURL(f)}catch(err){}}else delete FILES[m.id+P.key];
+ save();render();toast((P.key==='axe'?'Plan du site':'Pilot book')+' déposé');
 });
 /* ---- Application installable sur téléphone (PWA) ---- */
 let INSTALL=null;
