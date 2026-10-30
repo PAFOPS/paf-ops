@@ -670,6 +670,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .rxtab{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:8px}.rxcol h4 small,.rxth b small{display:block;font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted);margin-top:2px}.rxtr{display:grid;grid-template-columns:64px repeat(var(--n,4),minmax(0,1fr));gap:10px;padding:10px 12px;border-top:1px solid var(--line)}.rxtr.rxth{border-top:0;background:var(--surface2)}.rxth b{color:var(--c);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
 .rxyy{font-family:var(--f-disp);font-size:20px;font-weight:800}.rxml{display:none}.rxtab ul{white-space:pre-wrap}.rxfound{padding-left:0;list-style:none;display:grid;gap:8px}.rxfound li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:14px;white-space:pre-wrap}
 @media (max-width:760px){.rxnow{grid-template-columns:1fr}.rxtr{grid-template-columns:1fr}.rxth{display:none!important}.rxml{display:block;font-style:normal;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--c)}}
+.dmmab{display:flex;gap:10px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-left:5px solid #8b5cf6;border-radius:14px;background:var(--surface);margin:0 0 14px}.dmmab>span{display:grid}
 .pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
 .pcdemo{display:flex;gap:8px;align-items:center;margin:0 0 10px}.pcdemo select{width:auto}
 @media (max-width:760px){.pcdays,.pcplan{grid-template-columns:1fr}.pcday,.pcpd{grid-template-columns:52px 1fr;align-items:center}.pcday>b,.pcpd>b{grid-row:span 9;align-self:start}.pcbar{grid-template-columns:120px 1fr 28px}.pcc{min-height:48px}.pcgl b{font-size:11.5px}}
@@ -1101,7 +1102,8 @@ const canEdit=a=>right(a)==='e';
 const canSee=a=>right(a)!=='n';
 const isMeetRole=()=>RLm[ROLE].side==='meet';
 // Un organisateur ou un DV ne voit que son meeting (ici : le premier de la liste, pour la démonstration)
-const myMeetings=()=>{const L=[...DB.meetings].sort((a,b)=>(firstDemo(a)||'9').localeCompare(firstDemo(b)||'9'));if(!isMeetRole())return L;const mid=(typeof ME!=='undefined'&&ME&&ME.mid)||null;return mid?L.filter(m=>m.id===mid):L.slice(0,1)};
+const dmmaMid=()=>ROLE==='dmma'&&typeof ME!=='undefined'&&ME&&ME.role==='dmma'&&ME.mid||null;   // DMMA invité pour un meeting
+const myMeetings=()=>{const L=[...DB.meetings].sort((a,b)=>(firstDemo(a)||'9').localeCompare(firstDemo(b)||'9'));if(dmmaMid())return L.filter(m=>m.id===dmmaMid());if(!isMeetRole())return L;const mid=(typeof ME!=='undefined'&&ME&&ME.mid)||null;return mid?L.filter(m=>m.id===mid):L.slice(0,1)};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fromISO=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
@@ -1127,7 +1129,7 @@ const lineMail=m=>m?`<div class="line">${ic('mail',15)}<span>${esc(m)}</span><bu
 /* ====================== Navigation ====================== */
 function go(v,mid){S.view=v;if(mid!==undefined)S.mid=mid;closeSheet();render();window.scrollTo(0,0)}
 function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S.view='meetings';render();toast('Vous voyez l\'application comme : '+RLm[r].l)}
-const viewOk=v=>v==='retex'?rxCan():v==='unite'?canSee('annu'):v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
+const viewOk=v=>v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'):true;
 function render(){
  if(!viewOk(S.view))S.view='meetings';
  {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}}
@@ -1145,7 +1147,7 @@ function render(){
 function roBar(){
  if(ROLE==='chef'||isMeetRole()||ROLE==='ro')return '';
  const ed=AREAS.filter(a=>!a.soon&&canEdit(a.k)).map(a=>a.l);
- return `<div class="ro">${tile(RLm[ROLE],'xs')}<span>Vue <b>${RLm[ROLE].l}</b> : ${ROLE==='ro'?'peut proposer sa participation aux meetings':RLm[ROLE].side==='suivi'?'consulte tous les meetings, sans rien modifier · aucun email après l\'invitation':ed.length?'peut modifier '+ed.join(', ').toLowerCase():'consultation uniquement'}${isMeetRole()?' · ne voit que son meeting':''}.</span></div>`;
+ return `<div class="ro">${tile(RLm[ROLE],'xs')}<span>Vue <b>${RLm[ROLE].l}</b> : ${ROLE==='ro'?'peut proposer sa participation aux meetings':dmmaMid()?'consulte son meeting, sans rien modifier':RLm[ROLE].side==='suivi'?'consulte tous les meetings, sans rien modifier · aucun email après l\'invitation':ed.length?'peut modifier '+ed.join(', ').toLowerCase():'consultation uniquement'}${isMeetRole()?' · ne voit que son meeting':''}.</span></div>`;
 }
 const NOTE='';
 
@@ -1235,6 +1237,8 @@ function vMeeting(){
  // Le directeur des vols garde sa page unique
  if(ROLE==='ro')return vVote();
  if(ROLE==='dv')return head+(canSee('aero')?vAero(m):'')+(canSee('pdocs')?vPdocs():'')+kpBlock();
+ // Le DMMA d'un meeting : en consultation, la partie du DV, le dossier pilotes, l'équipe et l'interlocuteur PAF
+ if(dmmaMid())return head+`<div class="dmmab">${tile(RLm.dmma,'sm')}<span><b>Accès DMMA · consultation</b><span class="small muted">Éléments transmis par le directeur des vols, dossier des pilotes et équipe de la Patrouille. Pour toute question sur une présentation, contactez le chef des opérations.</span></span></div>`+vAero(m)+vPdocs()+vTeam(m)+kpBlock();
  const contactsH=()=>`<div class="sect"><h2>${ic('users',20)} Contacts du meeting</h2>${canEdit('contacts')?`<button class="btn pri" onclick="contactSheet('${m.id}')">${ic('plus',16)} Ajouter</button>`:''}</div>
  <div class="cgrid">
   ${sorted.map(c=>cCard(m,c)).join('')}
@@ -2086,13 +2090,13 @@ function vTeam(m){
    <div class="small muted" style="margin-top:8px">Ce total est repris pour le logement (une chambre par personne) et la restauration.</div></div></div></div>
   ${pend.length?`<div class="dvsec">${stepH('!',false,'Volontaires pour cette séquence')}<p class="small muted" style="margin:-2px 0 10px">${sq?seqLabel(sq)+' · ':''}Classés par préférence, puis par nombre de meetings déjà faits, pour répartir équitablement.</p>${pend.map(({k,V,p,n})=>{const x=V.mem?DB.members.find(y=>y.id===V.mem):null;return `<div class="volr">${x?avatar(x,40):tile(FUm[V.fn]||FU[0],'sm')}<div class="t"><b>${esc(V.name)}</b> ${p<4?`<span class="prio p${p}">Préférence n°${p}</span>`:'<span class="prio">Sans préférence</span>'}<div class="small muted">${(FUm[V.fn]||{}).d||''} · ${n} meeting${n>1?'s':''} déjà cette saison</div></div>${ed?`<button class="btn" onclick="voteAns('${m.id}','${k}',false)">Écarter</button><button class="btn pri" onclick="voteAns('${m.id}','${k}',true)">${ic('check',15)} Retenir</button>`:''}</div>`}).join('')}</div>`:''}
   <div class="dvsec">${stepH('1',true,'Qui part ?')}
-   <p class="small muted" style="margin:-2px 0 6px">Les pilotes et l'équipe de piste sont ajoutés d'office sur tous les meetings : touchez un nom pour le retirer (absence, indisponibilité…). Touchez un nom grisé pour l'ajouter, ou « Ajouter » pour créer une nouvelle personne dans l'annuaire.</p>
-   ${FU.map(f=>{const ms=DB.members.filter(x=>x.fn===f.k),ex=t.ext.filter(e=>e.fn===f.k);if(!ms.length&&!ex.length&&!ed)return '';
-    return `<div class="tgrp"><h4>${tile(f,'xs')} ${f.d} <span class="n">${ms.filter(x=>ids.has(x.id)).length+ex.length} / ${ms.length+ex.length}${f.k==='PILOTES'||f.k==='PISTE'?' · ajoutés d\'office':''}</span></h4>
+   ${ed?'':`<p class="small muted" style="margin:-2px 0 6px">Les personnes qui se déplacent sur ce meeting.</p>`}<p class="small muted" style="margin:-2px 0 6px;${ed?'':'display:none'}">Les pilotes et l'équipe de piste sont ajoutés d'office sur tous les meetings : touchez un nom pour le retirer (absence, indisponibilité…). Touchez un nom grisé pour l'ajouter, ou « Ajouter » pour créer une nouvelle personne dans l'annuaire.</p>
+   ${FU.map(f=>{const ms=DB.members.filter(x=>x.fn===f.k&&(ed||ids.has(x.id))),ex=t.ext.filter(e=>e.fn===f.k);if(!ms.length&&!ex.length&&!ed)return '';
+    return `<div class="tgrp"><h4>${tile(f,'xs')} ${f.d} <span class="n">${ms.filter(x=>ids.has(x.id)).length+ex.length}${ed?' / '+(ms.length+ex.length):''}${f.k==='PILOTES'||f.k==='PISTE'?' · ajoutés d\'office':''}</span></h4>
      <div class="mchips">${ms.map(x=>`<button class="mchip" aria-pressed="${ids.has(x.id)}" ${ed?`onclick="togMember('${m.id}','${x.id}')"`:'disabled'}>${avatar(x)}${pname(x)}${x.role?` <span class="small muted" style="font-weight:600">· ${esc(x.role)}</span>`:''}</button>`).join('')}
       ${ex.map(e=>`<span class="mchip" aria-pressed="true"><span class="av">${ic('hand',12,2.5)}</span>${esc(e.name)} <span class="small muted" style="font-weight:600">· volontaire</span>${ed?`<button class="ib" style="width:24px;height:24px" onclick="delExtP('${m.id}','${e.id}')" aria-label="Retirer">${ic('x',12)}</button>`:''}</span>`).join('')}
       ${ed?`<button class="mchip" style="border-style:dashed;color:var(--pri)" onclick="memberSheet(null,'${f.k}');MF.toMeet='${m.id}'"><span class="av">${ic('plus',13,2.5)}</span>Ajouter ${f.k==='PILOTES'?'un pilote':f.k==='PISTE'?'un mécanicien':'une personne'}</button>`:''}</div></div>`}).join('')}
-   <div class="cnt" style="margin-top:12px">${tile({i:'plus',c1:'#64748b',c2:'#334155'},'sm')}<div><b>Autres personnes hors annuaire</b><span class="small muted" style="display:block">Ex. : équipage de l'avion d'accompagnement, invités.</span></div>
+   <div class="cnt" style="margin-top:12px;${ed||t.other?'':'display:none'}">${tile({i:'plus',c1:'#64748b',c2:'#334155'},'sm')}<div><b>Autres personnes hors annuaire</b><span class="small muted" style="display:block">Ex. : équipage de l'avion d'accompagnement, invités.</span></div>
     <div class="step"><button ${ed?`onclick="setOther('${m.id}',-1)"`:'disabled'} aria-label="Retirer une personne">−</button><b>${t.other}</b><button ${ed?`onclick="setOther('${m.id}',1)"`:'disabled'} aria-label="Ajouter une personne">+</button></div></div></div>
  </section>`;
 }
@@ -2140,14 +2144,15 @@ function invMsg(role,mid,name){const m=mid?DB.meetings.find(x=>x.id===mid):null,
  const sig='\n\nCordialement\n'+sigTxt();
  if(role==='org')return `${hello}\n\nNous nous réjouissons de venir chez vous pour ${artN(nm)}${m&&m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nPour préparer au mieux notre venue, voici votre accès personnel à PAF OPS : vous y trouverez, rubrique par rubrique, les informations pratiques dont nous avons besoin (technique, logement, restauration, locomotion, salles, communication). Quelques minutes suffisent, depuis un ordinateur ou un téléphone, et vos réponses sont enregistrées automatiquement.\n\nNous restons à votre disposition pour toute question.${sig}`;
  if(role==='dv')return `${hello}\n\nVous êtes directeur des vols pour ${artN(nm)}${m&&m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nVoici votre accès personnel à PAF OPS, où nous rassemblons les éléments aéronautiques de la présentation : plan du site et axe de présentation, pilot book, créneaux, zone réglementée temporaire. Vous y trouverez aussi les documents de la Patrouille utiles à la constitution de votre dossier.\n\nEn bas de la page qui vous est dédiée dans l'application, vous trouverez tous les contacts dont vous pourriez avoir besoin à la Patrouille de France.\n\nNous restons à votre disposition pour en parler de vive voix.${sig}`;
+ if(role==='dmma'&&m)return `${hello}\n\nVous êtes DMMA pour ${artN(nm)}${m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nVoici votre accès personnel à PAF OPS, en consultation : vous y trouverez les éléments transmis par le directeur des vols (plan du site et axe, pilot book, zone réglementée temporaire, créneaux), le dossier des pilotes et la composition de l'équipe de la Patrouille. Aucun mot de passe : conservez ce message.\n\nPour toute question sur la présentation, je reste à votre disposition.${sig}`;
  if(role==='visit'||role==='dmma')return `${hello}\n\nVoici votre accès personnel à PAF OPS pour suivre la préparation des meetings de la saison, en consultation. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`;
  return `${hello}\n\nVoici votre accès personnel à PAF OPS (${(RLm[role]||{}).l||role}). Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`}
 /* Accès de l'organisateur et du DV d'un meeting : inviter plus tard, corriger, renvoyer */
 function accBlock(m){const one=(w,lab)=>{const L=DB.access.filter(a=>a.role===w&&a.mid===m.id);const c=(m.contacts||[]).find(x=>x.fn===w&&!L.some(a=>a.mail&&x.mail&&a.mail.toLowerCase()===x.mail.toLowerCase()));
-  return `<div class="accr">${tile(FCm[w],'sm')}<div class="t"><b>${lab}</b>${L.length?L.map(a=>`<div class="acp"><span><b>${esc(a.name||'—')}</b> · ${esc(a.mail)}<small>${a.hold?'Lien pas encore envoyé':a.sent||a.at?'Lien envoyé'+(a.at?' le '+new Date(a.at).toLocaleDateString('fr-FR'):''):'Lien envoyé'}</small></span>
+  return `<div class="accr">${tile(FCm[w]||RLm[w],'sm')}<div class="t"><b>${lab}</b>${L.length?L.map(a=>`<div class="acp"><span><b>${esc(a.name||'—')}</b> · ${esc(a.mail)}<small>${a.hold?'Lien pas encore envoyé':a.sent||a.at?'Lien envoyé'+(a.at?' le '+new Date(a.at).toLocaleDateString('fr-FR'):''):'Lien envoyé'}</small></span>
    ${a.hold?`<button class="btn pri" onclick="invQueue('${m.id}')">${ic('send',14)} Envoyer</button>`:`<button class="btn" onclick="accResend('${a.id}')">${ic('send',14)} Renvoyer</button>`}<button class="btn" onclick="accSheet('${a.id}')">${ic('edit',14)} Modifier</button></div>`).join(''):`<div class="small muted">Pas encore invité${c&&(c.first||c.last)?' · contact : '+esc([c.first,c.last].filter(Boolean).join(' ')):''}</div>`}</div>
    <button class="btn ${L.length?'ghost':'pri'}" onclick="inviteSheet('${w}','${m.id}','${esc((c?[c.first,c.last].filter(Boolean).join(' '):'').replace(/'/g,''))}','${esc(c&&c.mail||'')}')">${ic('plus',14)} ${L.length?'Ajouter':'Inviter'}</button></div>`};
- return `<div class="accb"><div class="small" style="margin-bottom:6px">${ic('send',15)} <b>Accès de l'organisateur et du directeur des vols</b> <span class="muted">· vous relisez chaque message avant l'envoi</span></div>${one('org','Organisateur')}${one('dv','Directeur des vols')}</div>`}
+ return `<div class="accb"><div class="small" style="margin-bottom:6px">${ic('send',15)} <b>Accès de l'organisateur, du directeur des vols et du DMMA</b> <span class="muted">· vous relisez chaque message avant l'envoi</span></div>${one('org','Organisateur')}${one('dv','Directeur des vols')}${one('dmma','DMMA (consultation)')}</div>`}
 let AE=null;
 function accSheet(id){const a=DB.access.find(x=>x.id===id);if(!a)return;AE={id,name:a.name||'',mail:a.mail||''};openSheet(aeHTML)}
 function aeHTML(){const a=DB.access.find(x=>x.id===AE.id),r=RLm[a.role]||FCm[a.role]||{},m=a.mid?DB.meetings.find(x=>x.id===a.mid):null;
@@ -3776,7 +3781,7 @@ function vUnite(){
  ${groups.map(({f,L},i)=>(f.grp&&(i===0||groups[i-1].f.grp!==f.grp)?`<div class="supgrp">${tile(MECAS,'sm')} <b>${MECAS.l}</b><span class="n">${MECAS.d} · ${groups.filter(g=>g.f.grp===f.grp).reduce((a,g)=>a+g.L.length,0)}</span></div>`:'')+`<div class="${f.grp?'ingrp':''}">${grpHTML(f,L,q)}</div>`).join('')}`;
 }
 /* Accès PAF OPS des membres de l'unité : reliés par l'adresse email (un accès déjà envoyé est reconnu, rien n'est renvoyé) */
-const U_ROLES=['visit','sec','cst','dt','comm','dmma'];
+const U_ROLES=['visit','sec','cst','dt','comm'];   // le DMMA s'invite depuis la page de son meeting
 const U_DEF={PILOTES:'visit',DIR:'visit',DT:'dt',CST:'cst'};
 const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
