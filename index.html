@@ -698,7 +698,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .rgbox{max-width:760px;margin-bottom:12px}.rgbox .dvsec{border:0}.rgdrop{text-align:center;display:grid;justify-items:center;border:2px dashed var(--line)!important;border-radius:18px;padding:22px 14px}.rgdrop.on{border-color:var(--pri)!important;background:color-mix(in srgb,var(--pri) 6%,transparent)}
 .rghd{display:flex;gap:10px;align-items:center;margin-bottom:8px}.rghd>div{flex:1;display:grid}.rghd b{font-family:var(--f-disp);font-size:17px}
 .rgwho{display:flex;flex-wrap:wrap;gap:6px}.rgwho label{display:grid;justify-items:center;gap:2px;border:2px solid var(--c);border-radius:12px;padding:4px 6px;min-width:62px}.rgwho select{border:0;background:var(--c);color:#fff;font-weight:800;font-size:16px;border-radius:8px;padding:2px 6px}.rgwho small{font-size:10px;color:var(--muted);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rgset{display:grid;gap:8px;margin-top:10px}.rgset .l{margin:0 0 4px;display:block}
+.rgset{display:grid;gap:8px;margin-top:10px}.rgmulti{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);margin:4px 0 10px}.rgmulti>div{display:grid;gap:2px}.rgmulti span{font-size:13px;color:var(--muted)}.rgq{display:grid;gap:4px;margin:4px 0 12px;padding:12px;border-radius:14px;border:2px solid color-mix(in srgb,var(--pri) 40%,transparent);background:color-mix(in srgb,var(--pri) 5%,var(--surface))}.rgq>b{font-family:var(--f-disp);font-size:18px}.rgfl{display:grid;gap:6px;margin-top:6px}.rgfl button{display:grid;justify-items:start;text-align:left;gap:1px;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px}.rgfl button span{font-size:12.5px;color:var(--muted)}.rgfl button[aria-pressed=true]{border-color:var(--pri);box-shadow:0 0 0 2px color-mix(in srgb,var(--pri) 25%,transparent)}.rgset .l{margin:0 0 4px;display:block}
 .rgseg{grid-template-columns:repeat(3,1fr)!important;max-width:760px!important}
 .rgview{position:relative;max-width:760px;border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-bottom:8px}#rg-cv{display:block;width:100%;height:min(62vh,520px);touch-action:none}
 .rgov{position:absolute;left:10px;top:8px;display:grid;gap:2px;pointer-events:none}#rg-ck{font-family:var(--f-disp);font-size:22px;font-weight:800;color:var(--fg);text-shadow:0 1px 0 var(--bg)}.rgord{font-size:12px;font-weight:700;color:var(--muted)}
@@ -2846,6 +2846,7 @@ function pfAutoBox(){const o=pfIn(),ad=pfAd(o.ad),wx=pfWxAt(),L=pfFlights(),f=o.
   ${cfg?`<p class="pfcfg">${ic('fuel',15)} Plaquette « ${esc(f.title)} » → plein <b>${(PF_CFG.find(c=>c[0]===cfg)||[cfg,cfg])[1]}</b></p>`:''}
   <p class="hint" style="margin:8px 0 0">Les valeurs sont reportées dans « Conditions du jour » : vous pouvez toujours les ajuster à la main.</p></div></section>`}
 /* ---- Décollage en 2 box : le box avant aligné 300 m devant (à défaut 150 m) dispose de moins de piste ---- */
+const pfB2On=()=>pfIn().box2!==false;   // coché par défaut, on le décoche au besoin
 const pfPass=(x,L)=>x.dist<=L&&x.vs>=x.vr;
 function pfB2(){const o=pfIn(),L=+o.L||0,a=pfCalc(L-300),b=pfCalc(L-150);return {L,a,b,okA:pfPass(a,L-300),okB:pfPass(b,L-150)}}
 const pfWhy=(x,L)=>[x.dist>L?`distance de décollage ${x.dist} m pour ${L} m`:'',x.vs<x.vr?`Vstop ${x.vs} kt sous Vr ${x.vr} kt`:''].filter(Boolean).join(' et ');
@@ -2860,8 +2861,8 @@ function pfBox2(x){const B=pfB2(),L=B.L,cols=[['Box arrière',`piste entière ·
 /* ---- Perfos dans la plaquette : l'Athos 4 (ou le chef) inscrit les perfos du jour à la fin de la description du vol choisi ---- */
 const pfN4=()=>+(DB.pfN||4);
 function pfCan4(){if(isChef())return true;if(isOnline()){if(!ME||ME.role!==ROLE)return false;const x=memOf(ME.mail);return !!x&&x.fn==='PILOTES'&&athN(x)===pfN4()}return ROLE==='visit'}
-const pfVals=x=>{const v={acc:Math.round(x.acc),vr:Math.round(x.vr),vlof:Math.round(x.vlof),vs:Math.round(x.vs),vc:Math.round(x.vc)};if(pfIn().box2){const B=pfB2();if(B.okA){v.b2off=300;v.b2vs=B.a.vs}else if(B.okB){v.b2off=150;v.b2vs=B.b.vs}else v.b2off=-1}return v};
-const pfTxt=v=>`Perfos :\n90kt ${v.acc}"\nVr ${v.vr} kt\nVlof ${v.vlof} kt\nVstop ${v.vs} kt\nVc ${v.vc} kt`+(v.b2off>0?`\nBox avant (${v.b2off} m devant) : Vstop ${v.b2vs} kt`:v.b2off===-1?'\nBox avant : décollage en 2 box impossible':'');
+const pfVals=x=>{const v={acc:Math.round(x.acc),vr:Math.round(x.vr),vlof:Math.round(x.vlof),vs:Math.round(x.vs),vc:Math.round(x.vc)};if(pfB2On()){const B=pfB2();if(B.okA){v.b2off=300;v.b2vs=B.a.vs}else if(B.okB){v.b2off=150;v.b2vs=B.b.vs}else v.b2off=-1}return v};
+const pfTxt=v=>`Perfos :\n90kt ${v.acc}"\nVr ${v.vr} kt\nVlof ${v.vlof} kt\n${v.b2off>0?`Vstop (box avant ${v.b2off}m) ${v.b2vs}kt Vstop (box arrière) ${v.vs}kt`:`Vstop ${v.vs} kt`}\nVc ${v.vc} kt`+(v.b2off===-1?'\nDécollage en 2 box impossible':'');
 const pfFlT=f=>new Date(pcAdd(f.w,f.d)+'T'+f.time+':00').getTime();
 /* Vols à venir : semaine en cours et suivante (agenda en ligne ; vols d'exemple dans la maquette) */
 function pfFlights(){const w0=pcCurWk();let L;
@@ -2901,7 +2902,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
    <label class="l">Pression</label><div class="chips" style="margin-bottom:6px"><button aria-pressed="${o.mode==='qfe'}" onclick="pfSet('mode','qfe')">QFE</button><button aria-pressed="${o.mode==='qnh'}" onclick="pfSet('mode','qnh')">QNH + altitude terrain</button></div>
    ${o.mode==='qfe'?num('qfe','QFE','hPa',1,850,1060):num('qnh','QNH','hPa',1,900,1060)+num('alt','Altitude du terrain','ft',50,0,9000)+`<div class="small muted" style="margin:-4px 0 8px">QFE calculé : <b>${x.qfe} hPa</b> (≈ 1 hPa par 27 ft)</div>`}
    <label class="l">État de la piste</label><div class="chips">${PF_WET.map(([k,l])=>`<button aria-pressed="${o.wet===k}" onclick="pfSet('wet','${k}')">${l}</button>`).join('')}</div>
-   <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Décollage en 2 box</b><span class="small muted" style="display:block">Le box avant s'aligne 300 m devant le box arrière : moins de piste devant lui.</span></div><button class="switch" role="switch" aria-checked="${!!o.box2}" aria-label="Décollage en 2 box" onclick="pfSet('box2',!pfIn().box2)"></button></label>
+   <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Décollage en 2 box</b><span class="small muted" style="display:block">Le box avant s'aligne 300 m devant le box arrière : moins de piste devant lui.</span></div><button class="switch" role="switch" aria-checked="${pfB2On()}" aria-label="Décollage en 2 box" onclick="pfSet('box2',!pfB2On())"></button></label>
    <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Aérofreins sortis à l'interruption</b><span class="small muted" style="display:block">Vc freinage +2,5 % (abaque) · longueur de piste nécessaire −10 %.</span></div><button class="switch" role="switch" aria-checked="${!!o.ab}" aria-label="Aérofreins sortis" onclick="pfSet('ab',!pfIn().ab)"></button></label>
   </div></section>
   <section>
@@ -2913,7 +2914,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
     ${card('Vc · freinage',x.vc,'kt','vitesse max de début de freinage (énergie détresse)',x.vc<x.vs?'ko':'')}
     ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vr?'ko':x.vs>=x.vlof?'ok':'')}
    </div>
-   ${pfIn().box2?pfBox2(x):''}
+   ${pfB2On()?pfBox2(x):''}
    ${pfPlq(x)}
    ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
    <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Références et corrections appliquées</span></span><span class="chev">${ic('chev',20)}</span></summary>
@@ -4035,6 +4036,23 @@ function rgParse(txt,name){const d=new DOMParser().parseFromString(txt,'applicat
  const pts=[];P.forEach(p=>{const la=+p.getAttribute('lat'),lo=+p.getAttribute('lon'),te=p.getElementsByTagName('time')[0],ee=p.getElementsByTagName('ele')[0];const t=te?Date.parse(te.textContent.trim()):NaN;
   if(isFinite(la)&&isFinite(lo)&&isFinite(t)&&(la||lo))pts.push({la,lo,t,z:ee?parseFloat(ee.textContent):NaN})});
  pts.sort((a,b)=>a.t-b.t);const out=[];pts.forEach(p=>{if(!out.length||p.t>out[out.length-1].t)out.push(p)});return {name,pts:out}}
+/* Plusieurs vols dans un même fichier : on découpe chaque trace en sessions (trou de plus de 20 min, ou plus de 15 min à l'arrêt),
+   on repère les décollages, et on garde le vol commun au plus grand nombre de fichiers */
+function rgSplit(f){const p=f.pts,S0=[];if(p.length<2)return S0;const v=[0];
+ for(let i=1;i<p.length;i++){const dt=(p[i].t-p[i-1].t)/1000,dy=(p[i].la-p[i-1].la)*110540,dx=(p[i].lo-p[i-1].lo)*111320*Math.cos(p[i].la*Math.PI/180);v.push(dt>0?Math.hypot(dx,dy)/dt*1.94384:0)}
+ const cut=[0];let st=-1;for(let i=1;i<p.length;i++){if(p[i].t-p[i-1].t>20*60000){cut.push(i);st=-1;continue}
+  if(v[i]<2){if(st<0)st=i}else{if(st>=0&&p[i-1].t-p[st].t>15*60000)cut.push(Math.round((st+i)/2));st=-1}}
+ cut.push(p.length);for(let c=0;c<cut.length-1;c++){const q=p.slice(cut[c],cut[c+1]),w=v.slice(cut[c],cut[c+1]);if(q.length<60)continue;let to=null;
+  for(let i=0;i<q.length&&to==null;i++){if(w[i]>60){let n=0,j=i;while(j<q.length&&w[j]>60&&q[j].t-q[i].t<10000){n++;j++}if(j<q.length&&q[j].t-q[i].t>=10000||n>=10)to=q[i].t}}
+  if(to!=null)S0.push({pts:q,to})}
+ return S0}
+function rgPickFlight(F,want){const ses=F.map(f=>({name:f.name,s:rgSplit(f)})),all=[];ses.forEach((x,k)=>x.s.forEach(s=>all.push({k,to:s.to})));
+ if(!all.length)return {F,cands:[],multi:false};
+ const W=15*60000,cands=[];all.slice().sort((a,b)=>a.to-b.to).forEach(a=>{const c=cands.find(c=>Math.abs(c.to-a.to)<=W);if(c){if(!c.ks.has(a.k)){c.ks.add(a.k)}c.tos.push(a.to)}else cands.push({to:a.to,ks:new Set([a.k]),tos:[a.to]})});
+ cands.forEach(c=>{c.n=c.ks.size;c.to=c.tos.slice().sort((a,b)=>a-b)[c.tos.length>>1]});cands.sort((a,b)=>b.n-a.n||b.to-a.to);
+ const pick=want!=null?cands.find(c=>Math.abs(c.to-want)<=W)||cands[0]:cands[0];
+ const F2=[],out=[];ses.forEach((x,k)=>{const s=x.s.filter(s=>Math.abs(s.to-pick.to)<=W).sort((a,b)=>Math.abs(a.to-pick.to)-Math.abs(b.to-pick.to))[0];if(s)F2.push({name:x.name,pts:s.pts});else out.push(x.name)});
+ return {F:F2,cands:cands.map(c=>({to:c.to,n:c.n})),pick:pick.to,out,multi:ses.some(x=>x.s.length>1)||cands.length>1}}
 /* Une grille commune à la seconde ; positions en mètres autour du terrain */
 function rgBuild(files){const F=files.filter(f=>f.pts.length>60);if(F.length<2)throw new Error('Il faut au moins deux traces GPX lisibles (avec l\'heure de chaque point).');
  const la0=F[0].pts[0].la,lo0=F[0].pts[0].lo,kx=Math.cos(la0*Math.PI/180)*111320,ky=110540;
@@ -4088,13 +4106,16 @@ function rgPick(dir){const i=document.createElement('input');i.type='file';i.mul
  i.onchange=()=>rgFiles([...(i.files||[])]);i.click()}
 async function rgFiles(list){list=list.filter(f=>/\.gpx$/i.test(f.name));if(!list.length){toast('Aucun fichier GPX');return}S.rgBusy=1;render();
  try{const F=[];for(const f of list)F.push(rgParse(await f.text(),f.name));rgLoad(F)}catch(e){S.rgBusy=0;toast(e.message||String(e));render()}}
-function rgLoad(F){try{RG=rgBuild(F)}catch(e){S.rgBusy=0;toast(e.message||String(e));render();return}S.rgBusy=0;S.rgSeg='out';const w=rgSegWin(RG,'out');S.rgT=w[0];S.rgPlay=false;S.rgFol=true;S.rgSp=S.rgSp||4;
+function rgLoad(F,want){let PK;try{PK=rgPickFlight(F,want);RG=rgBuild(PK.F);RG.raw=F;RG.pk=PK}catch(e){S.rgBusy=0;toast(e.message||String(e));render();return}S.rgBusy=0;S.rgSeg='out';const w=rgSegWin(RG,'out');S.rgT=w[0];S.rgPlay=false;S.rgFol=true;S.rgSp=S.rgSp||4;
  const L=RG.A[RG.ordOut[0]],d=new Date((RG.T0+L.to)*1000);RG.date=iso(d);RG.time=d.toTimeString().slice(0,5);RG.fl=null;rgFindFl();render()}
 /* Le vol de l'agenda le plus proche de l'heure de décollage du leader */
-async function rgFindFl(){if(!RG)return;const w=iso(pcMon(fromISO(RG.date))),dd=(fromISO(RG.date)-fromISO(w))/864e5;let L=[];
- if(isOnline()){try{const r=await api('perfAgenda',{w});L=(r&&r.ev||[]).filter(x=>x.w===w)}catch(e){}}else L=exFlights(w).map(f=>({id:f.id,w,d:f.d,time:f.time,title:f.title}));
- RG.fls=L.filter(f=>f.d===dd);const m=h=>{const[a,b]=String(h).split(':').map(Number);return a*60+b};RG.fls.sort((a,b)=>Math.abs(m(a.time)-m(RG.time))-Math.abs(m(b.time)-m(RG.time)));
- RG.fl=RG.fls[0]||null;if(S.pfTab==='rg')render()}
+/* Vols déjà passés (semaine des traces et la précédente), le plus proche de l'heure de décollage en tête */
+async function rgFindFl(){if(!RG)return;const w=iso(pcMon(fromISO(RG.date))),W=[pcAdd(w,-7),w];let L=[];
+ if(isOnline()){for(const x of W){try{const r=await api('perfAgenda',{w:x});L=L.concat((r&&r.ev||[]).filter(f=>f.w===x))}catch(e){}}}
+ else W.forEach(x=>{L=L.concat(exFlights(x).map(f=>({id:f.id,w:x,d:f.d,time:f.time,title:f.title})))});
+ const ms=f=>new Date(pcAdd(f.w,f.d)+'T'+f.time+':00').getTime(),tk=new Date(RG.date+'T'+RG.time+':00').getTime(),now=Date.now();
+ const seen={};RG.fls=L.filter(f=>{if(seen[f.id])return false;seen[f.id]=1;return ms(f)<=now}).sort((a,b)=>Math.abs(ms(a)-tk)-Math.abs(ms(b)-tk)).slice(0,8);
+ RG.fl=RG.fls[0]&&Math.abs(ms(RG.fls[0])-tk)<6*36e5?RG.fls[0]:null;RG.flAsk=true;if(S.pfTab==='rg')render()}
 /* ---- Lecture ---- */
 let RGV=null,RGraf=0,RGlast=0;
 function rgSeg(k){S.rgSeg=k;const w=rgSegWin(RG,k);S.rgT=w[0];S.rgPlay=false;RGV=null;render()}
@@ -4151,14 +4172,15 @@ function rgDemoGpx(){const P=(pts,sk,ak)=>{const c=[0];for(let i=1;i<pts.length;
  const n=pl();n.push([600,-7000]);n.push([600,800]);n.mark.brk=n.length-1;arc(n,1500,800,900,Math.PI,0,30);n.mark.dw0=n.length-1;n.push([2400,-1800]);n.mark.dw1=n.length-1;arc(n,1500,-1800,900,0,-Math.PI,30);n.mark.fin=n.length-1;
  n.push([600,-250]);n.mark.td=n.length-1;n.push([600,250]);n.mark.stop=n.length-1;[[700,250],[700,-150],[0,-150],[0,0]].forEach(p=>n.push(p));n.mark.park=n.length-1;
  const IN=P(n,[[0,154],['brk',154],['dw0',100],['dw1',77],['fin',72],['td',64],['stop',8],['park',8]],[[0,360],['brk',360],['dw0',304],['dw1',304],['fin',250],['td',60],['park',60]]);
- const S0=Date.UTC(2026,10,3,8,25,0)/1000,land=[3,1,2,4,6,5,8,7],Tin=S0+OUT.dur+9*7+420,la0=43.6064,lo0=5.1093,kx=Math.cos(la0*Math.PI/180)*111320;
+ const dd0=new Date();do{dd0.setDate(dd0.getDate()-1)}while(dd0.getDay()===0||dd0.getDay()===6);dd0.setHours(9,25,0,0);const S0=Math.floor(dd0.getTime()/1000),land=[3,1,2,4,6,5,8,7],Tin=S0+OUT.dur+9*7+420,la0=43.6064,lo0=5.1093,kx=Math.cos(la0*Math.PI/180)*111320;
  const out=[];for(let k=0;k<8;k++){const dOut=t=>k*6.6+1.9*Math.sin(t/31+k*1.7),r=land.indexOf(k+1),dIn=t=>r*6.8+1.2*Math.sin(t/23+k),start=S0+dOut(0),end=Tin+dIn(0)+IN.dur;const pts=[];
   const oEnd=S0+OUT.dur+dOut(S0+OUT.dur),iBeg=Tin+dIn(Tin),A=OUT.pos(OUT.dur),B=IN.pos(0);
   for(let t=Math.ceil(start);t<=end;t++){let p;if(t<=oEnd)p=OUT.pos(t-S0-dOut(t));else if(t<iBeg){const f=(t-oEnd)/(iBeg-oEnd),ang=f*2*Math.PI;p=[A[0]+(B[0]-A[0])*f+6000*Math.sin(ang/2),A[1]+(B[1]-A[1])*f,1500]}else p=IN.pos(t-Tin-dIn(t));
    pts.push(`<trkpt lat="${(la0+p[1]/110540).toFixed(7)}" lon="${(lo0+p[0]/kx).toFixed(7)}"><ele>${p[2].toFixed(1)}</ele><time>${new Date(t*1000).toISOString().replace('.000','')}</time></trkpt>`)}
   out.push({name:'track_'+String(4711+k*37)+'.gpx',txt:`<?xml version="1.0"?><gpx version="1.1" creator="exemple"><trk><trkseg>${pts.join('')}</trkseg></trk></gpx>`})}
  return out.sort(()=>0).reverse()}
-function rgDemo(){rgLoad(rgDemoGpx().map(f=>rgParse(f.txt,f.name)))}
+function rgDemo(){const F=rgDemoGpx().map(f=>rgParse(f.txt,f.name));[1,4,6].forEach(i=>{const f=F[i],sh=4*3600e3+i*20e3;f.pts=f.pts.concat(f.pts.map(p=>Object.assign({},p,{t:p.t+sh,lo:p.lo+0.002})))});
+ const G=rgDemoGpx().map(f=>rgParse(f.txt,f.name));F[2].pts=G[2].pts.map(p=>Object.assign({},p,{t:p.t-26*3600e3})).concat(F[2].pts);rgLoad(F)}
 /* ---- Vue ---- */
 function vRg(tabs){const head=`${NOTE}<div class="head"><div><h1>Débriefing des roulages</h1><p class="muted">Roulage aller, vent arrière et roulage retour : la distance du N sur le N-1, à chaque instant.</p></div></div>${tabs}`;
  const hist=(DB.rg||[]).filter(e=>!e.del).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
@@ -4168,13 +4190,16 @@ function vRg(tabs){const head=`${NOTE}<div class="head"><div><h1>Débriefing des
  const sets=`<div class="rgset"><div><span class="l">Roulage</span><div class="chips">${RG_TX.map(([k,l,m])=>`<button aria-pressed="${(S.rgTx||'CE')===k}" title="${l}" onclick="S.rgTx='${k}';render()">${k} · ${m} m</button>`).join('')}</div></div>
   <div><span class="l">Vent arrière et atterrissage</span><div class="chips">${RG_PL.map(([k,l,m])=>`<button aria-pressed="${(S.rgPl||'n')===k}" onclick="S.rgPl='${k}';render()">${l} · ${m} m</button>`).join('')}</div></div></div>`;
  if(!RG)return `${head}<section class="dvbox rgbox"><div class="dvsec rgdrop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');rgFiles([...event.dataTransfer.files])">
-  ${tile({i:'upload',c1:'#3b82f6',c2:'#1e3a8a'},'lg')}<h3 style="margin:10px 0 4px">Déposez les GPX du vol</h3><p class="small muted" style="margin:0 0 12px">Les 8 ou 9 fichiers, sans les renommer. Ils sont lus sur cet appareil et ne sont envoyés nulle part.</p>
+  ${tile({i:'upload',c1:'#3b82f6',c2:'#1e3a8a'},'lg')}<h3 style="margin:10px 0 4px">Déposez les GPX du vol</h3><p class="small muted" style="margin:0 0 12px">Les fichiers GPX du vol, sans les renommer. Ils sont lus sur cet appareil et ne sont envoyés nulle part.</p>
   <div class="pcbtns" style="justify-content:center">${S.rgBusy?'<span class="muted">Lecture…</span>':`<button class="btn pri" onclick="rgPick()">${ic('upload',16)} Choisir les fichiers</button><button class="btn" onclick="rgPick(1)">Choisir le dossier</button>${!isOnline()?`<button class="more" onclick="rgDemo()">Voir un exemple</button>`:''}`}</div></div></section>${histB}`;
  const R=RG,key=S.rgSeg||'out',win=rgSegWin(R,key),tgt=rgTgt(key),bad=R.A.filter(a=>a.bad),L=R.P[key].map(pr=>{const s=rgStat(pr.d);return s?[rgNum(pr.a),rgNum(pr.b),s.min,s.avg,s.max]:null}).filter(Boolean);
  const ordK=key==='out'?R.ordOut:key==='dw'?R.ordDw:R.ordIn;setTimeout(rgMount,30);
  return `${head}<section class="dvbox rgbox"><div class="dvsec">
-  <div class="rghd"><div><b>${fmtD(R.date)} · décollage ${R.time.replace(':','h')}</b><span class="small muted">${R.A.length} traces${bad.length?` · ${bad.length} illisible${bad.length>1?'s':''}`:''}</span></div><button class="more" onclick="RG=null;render()">Changer de fichiers</button></div>
-  <label class="l">Vol de l'agenda</label>${R.fls&&R.fls.length?`<select class="in" onchange="RG.fl=RG.fls.find(f=>f.id===this.value)||null">${R.fls.map(f=>`<option value="${esc(f.id)}" ${R.fl&&R.fl.id===f.id?'selected':''}>${esc(f.time.replace(':','h')+' · '+(f.title||'Vol'))}</option>`).join('')}<option value="">Aucun</option></select>`:`<p class="small muted" style="margin:0">Aucun vol trouvé dans l'agenda ce jour-là.</p>`}
+  <div class="rghd"><div><b>${fmtD(R.date)} · décollage ${R.time.replace(':','h')}</b>${bad.length?`<span class="small muted">${bad.length} trace${bad.length>1?'s':''} illisible${bad.length>1?'s':''}</span>`:''}</div><button class="more" onclick="RG=null;render()">Changer de fichiers</button></div>
+  ${R.pk&&R.pk.multi?`<div class="rgmulti">${ic('info',15)}<div><b>Plusieurs vols dans les fichiers</b><span>Le vol commun au plus grand nombre de traces est retenu${R.pk.out.length?` ; sans ce vol : ${R.pk.out.map(n=>esc(n.replace(/\.gpx$/i,''))).join(', ')}`:''}.</span>
+   ${R.pk.cands.filter(c=>c.n>1).length>1?`<div class="chips" style="margin-top:6px">${R.pk.cands.filter(c=>c.n>1).slice(0,6).map(c=>`<button aria-pressed="${c.to===R.pk.pick}" onclick="rgLoad(RG.raw,${c.to})">${esc(new Date(c.to).toLocaleString('fr-FR',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))} · ${c.n} trace${c.n>1?'s':''}</button>`).join('')}</div>`:''}</div></div>`:''}
+  <div class="rgq"><b>De quel vol s'agit-il ?</b>${!R.flAsk?'<span class="small muted">Lecture de l\'agenda…</span>':R.fls&&R.fls.length?`<span class="small muted">Vols passés de l'agenda, le plus proche de l'heure des traces en premier.</span>
+   <div class="rgfl">${R.fls.slice(0,3).concat(R.fl&&R.fls.indexOf(R.fl)>2?[R.fl]:[]).map((f,i)=>`<button aria-pressed="${!!(R.fl&&R.fl.id===f.id)}" onclick="RG.fl=RG.fls.find(x=>x.id==='${esc(f.id)}')||null;render()"><b>${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h'))}</b><span>${esc(f.title||'Vol')}${i===0&&R.fl&&R.fl.id===f.id?' · proposé':''}</span></button>`).join('')}${R.fls.length>3?`<select class="in" onchange="if(this.value){RG.fl=RG.fls.find(x=>x.id===this.value)||null;render()}"><option value="">Un autre vol…</option>${R.fls.slice(3).map(f=>`<option value="${esc(f.id)}">${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h')+' · '+(f.title||'Vol'))}</option>`).join('')}</select>`:''}<button class="more" style="justify-self:start" onclick="RG.fl=null;render()">${R.fl?'Aucun de ces vols':'✓ Sans vol de l\'agenda'}</button></div>`:`<span class="small muted">Aucun vol passé trouvé dans l'agenda autour du ${fmtD(R.date)}.</span>`}</div>
   <label class="l" style="margin-top:10px">Qui est qui <span style="font-weight:500">(ordre du roulage aller ; touchez pour corriger)</span></label>
   <div class="rgwho">${R.ordOut.map(k=>{const a=R.A[k],n=rgNum(k);return `<label style="--c:${RG_COL[(n-1+9)%9]}"><select onchange="rgSetNum(${k},+this.value)">${R.ordOut.map((_,i)=>`<option ${n===i+1?'selected':''}>${i+1}</option>`).join('')}</select><small>${esc(a.name.replace(/\.gpx$/i,''))}</small></label>`}).join('')}</div>
   ${sets}</div></section>
