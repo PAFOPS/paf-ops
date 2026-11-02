@@ -671,6 +671,30 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .rxyy{font-family:var(--f-disp);font-size:20px;font-weight:800}.rxml{display:none}.rxtab ul{white-space:pre-wrap}.rxfound{padding-left:0;list-style:none;display:grid;gap:8px}.rxfound li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:14px;white-space:pre-wrap}
 @media (max-width:760px){.rxnow{grid-template-columns:1fr}.rxtr{grid-template-columns:1fr}.rxth{display:none!important}.rxml{display:block;font-style:normal;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--c)}}
 .dmmab{display:flex;gap:10px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-left:5px solid #8b5cf6;border-radius:14px;background:var(--surface);margin:0 0 14px}.dmmab>span{display:grid}
+.exdays{display:grid;gap:10px;max-width:760px}.exday{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;display:grid;gap:6px}.exday.today{border:2px solid var(--pri)}.exday>b{font-family:var(--f-disp);font-size:16px;display:flex;gap:8px;align-items:center}
+.exfl{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:10px 12px;min-height:52px}.exfl .pcti{font-size:14px;color:var(--fg)}.exfl:hover{border-color:var(--fg)}
+.exhead{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 16px;margin:0 0 12px;max-width:760px}.exwhen{display:grid}.exwhen b{font-family:var(--f-disp);font-size:16px}.exwhen span{font-family:var(--f-disp);font-size:28px;font-weight:800;line-height:1}.exttl{flex:1;display:grid;min-width:0}.extot{display:grid;text-align:center}.extot b{font-family:var(--f-disp);font-size:30px;line-height:1}.extot span{font-size:12px;color:var(--muted)}
+.exbox{max-width:760px;margin-bottom:12px}.exbox .dvsec{border:0}
+.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}#ex-note{font-family:var(--f-body)}@media (max-width:760px){.exgrid{grid-template-columns:repeat(2,1fr);gap:8px}.extile{min-height:76px;padding:12px}.extile b{font-size:19px}}.extile{border:0;border-radius:18px;padding:16px 14px;min-height:92px;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));display:grid;align-content:center;gap:4px;text-align:left;box-shadow:var(--shadow);transition:transform .08s}.extile:active{transform:scale(.96)}.extile b{font-family:var(--f-disp);font-size:22px;line-height:1.1}.extile span{font-size:12.5px;opacity:.9}.extile:disabled{opacity:.5}
+.expick{border-radius:18px;padding:12px;background:color-mix(in srgb,var(--c1) 10%,var(--surface));border:2px solid var(--c1)}.exbc{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.exbc>b{font-family:var(--f-disp);font-size:20px}.exchip{background:var(--c1);color:#fff;border-radius:99px;padding:3px 10px;font-weight:800;font-size:13px}
+.exq{margin:12px 0 8px;font-weight:800;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em}.exopts{display:grid;gap:10px}.exopts.n2,.exopts.n4{grid-template-columns:repeat(2,1fr)}.exopts.n3{grid-template-columns:repeat(3,1fr)}
+.exopts button{border:0;border-radius:16px;min-height:72px;font-family:var(--f-disp);font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:var(--shadow);transition:transform .08s}.exopts button:active{transform:scale(.95)}
+.exlist{display:grid;gap:6px}.exrow{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:6px 8px 6px 12px;background:var(--surface)}.exrow.new{box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 40%,transparent)}.exl{flex:1;font-weight:600;font-size:14px}.exn{font-family:var(--f-disp);font-size:22px;min-width:28px;text-align:center}.exrow .ib{width:36px;height:36px;font-size:20px;font-weight:800}
+.exbl{font-weight:800;font-size:13px;color:var(--c)}
+.exico{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.18);margin-bottom:2px}.exico.sm{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--c1),var(--c2))}.exico.xs{width:28px;height:28px;border-radius:8px;flex:0 0 28px;background:linear-gradient(135deg,var(--c1),var(--c2))}.exico.txt{color:#fff;font-size:10px;font-weight:800;letter-spacing:-.02em}
+.extile{position:relative}.extile .exico{position:absolute;top:10px;right:10px}.extile b,.extile>span:last-child{padding-right:46px}
+.exrow{display:grid!important;gap:6px}.exr1{display:flex;gap:8px;align-items:center}.exr1 .exl{display:flex;gap:8px;align-items:center}
+.exgr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.exgr button{border:2px solid var(--g);background:color-mix(in srgb,var(--g) 8%,var(--surface));color:var(--fg);border-radius:10px;min-height:34px;font-size:12px;font-weight:700;padding:2px}.exgr button[aria-pressed=true]{background:var(--g);color:#fff;box-shadow:0 2px 8px color-mix(in srgb,var(--g) 45%,transparent)}
+.exgr.big{gap:8px}.exgr.big button{min-height:76px;border-radius:16px;font-family:var(--f-disp);font-size:16px;background:var(--g);color:#fff;box-shadow:var(--shadow);transition:transform .08s}.exgr.big button:active{transform:scale(.95)}.exgr.big button[aria-pressed=true]{outline:3px solid var(--fg);outline-offset:2px}
+.exgl{display:inline-block;justify-self:start;background:var(--g);color:#fff;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:800}
+.exdots{display:inline-flex;gap:3px;align-items:center}.exdots i{width:10px;height:10px;border-radius:50%;display:block}
+.exseg{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:var(--surface2);border:1px solid var(--line);margin:0 0 14px;max-width:420px;width:100%}.exseg button{border:0;background:none;border-radius:10px;min-height:40px;font-weight:800;display:flex;gap:6px;align-items:center;justify-content:center;color:var(--muted)}.exseg button[aria-selected=true]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
+.exkpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:760px;margin-bottom:12px}.exkpi>div{--g:var(--fg);background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--g);border-radius:14px;padding:10px 12px;display:grid}.exkpi b{font-family:var(--f-disp);font-size:30px;line-height:1;color:var(--g)}.exkpi span{font-size:12px;color:var(--muted);font-weight:700}
+.excols{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:760px;margin-bottom:12px}.exsum{border-radius:18px;padding:12px;display:grid;gap:8px;align-content:start}.exsum h3{margin:0;display:flex;gap:8px;align-items:center;font-family:var(--f-disp);font-size:18px}.exsum.work{background:color-mix(in srgb,#ef4444 9%,var(--surface));border:2px solid color-mix(in srgb,#ef4444 45%,transparent)}.exsum.work h3{color:#dc2626}.exsum.ok{background:color-mix(in srgb,#3b82f6 9%,var(--surface));border:2px solid color-mix(in srgb,#3b82f6 45%,transparent)}.exsum.ok h3{color:#2563eb}
+.excard{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--g);border-radius:12px;padding:8px 10px}.excard>div{display:grid;gap:2px}.excard b{font-size:14px}.excard span{font-size:12px;color:var(--muted)}
+.exgh{display:flex;gap:8px;align-items:center;margin:14px 0 6px;padding-bottom:4px;border-bottom:2px solid var(--c1)}.exgh:first-of-type{margin-top:4px}.exgh b{font-family:var(--f-disp);font-size:17px}
+.exst{display:grid;grid-template-columns:1fr auto auto 104px;gap:10px;align-items:center;padding:7px 2px;border-bottom:1px solid var(--line);font-size:14px}.exstn{font-size:12.5px;color:var(--muted)}.exstn b{color:var(--fg);font-size:15px}.exavg{background:var(--g);color:#fff;border-radius:99px;padding:3px 8px;font-size:12px;font-weight:800;text-align:center}.exavg[style*="var(--line)"]{color:var(--muted)}
+@media (max-width:760px){.exkpi{grid-template-columns:repeat(2,1fr);gap:8px}.excols{grid-template-columns:1fr}.exst{grid-template-columns:1fr auto;row-gap:4px}.exst .exdots{grid-column:1}.exgr.big button{min-height:64px;font-size:14px}.exgr button{font-size:11px}.exseg{max-width:none}}
 .pcset{display:grid;gap:8px}.pcsr{display:grid;gap:6px;padding:10px;border:1px solid var(--line);border-radius:14px}.pcsf{display:flex;flex-wrap:wrap;gap:10px;font-size:13px}.pcsf label{display:flex;gap:6px;align-items:center}.pcsf select{width:auto;padding:4px 8px}
 .pcdemo{display:flex;gap:8px;align-items:center;margin:0 0 10px}.pcdemo select{width:auto}
 @media (max-width:760px){.pcdays,.pcplan{grid-template-columns:1fr}.pcday,.pcpd{grid-template-columns:52px 1fr;align-items:center}.pcday>b,.pcpd>b{grid-row:span 9;align-self:start}.pcbar{grid-template-columns:120px 1fr 28px}.pcc{min-height:48px}.pcgl b{font-size:11.5px}}
@@ -1061,7 +1085,7 @@ function merge3(base,mine,theirs){const out=clone(theirs);if(!base)return out;co
  ['meetings','members','access','pdocs','retex'].forEach(k=>{if(!mine[k]&&!theirs[k])return;const B=new Map((base[k]||[]).map(x=>[x.id,x])),M=new Map((mine[k]||[]).map(x=>[x.id,x]));let T=(out[k]||[]).slice();const Ti=new Map(T.map((x,i)=>[x.id,i]));
   (mine[k]||[]).forEach(x=>{const b0=B.get(x.id);if(!b0){if(!Ti.has(x.id))T.push(x)}else if(J(b0)!==J(x)){if(Ti.has(x.id))T[Ti.get(x.id)]=x;else T.push(x)}});
   B.forEach((x,id)=>{if(!M.has(id))T=T.filter(y=>y.id!==id)});out[k]=T});
- Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','retex','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=k==='pc'?mergeObj(base[k],mine[k],out[k]):mine[k]});
+ Object.keys(mine).forEach(k=>{if(['meetings','members','access','pdocs','retex','rev','ro'].includes(k))return;if(J(mine[k])!==J(base[k]))out[k]=(k==='pc'||k==='ex')?mergeObj(base[k],mine[k],out[k]):mine[k]});
  return out}
 /* Fusion fine (points centraux) : chacun ne réécrit que ce qu'il a changé (ses dispos, une case du planning…) */
 function mergeObj(b,m,t){const J=JSON.stringify,isO=v=>v&&typeof v==='object'&&!Array.isArray(v);if(!isO(m)||!isO(t)||!isO(b))return m;const o=Object.assign({},t);
@@ -2708,7 +2732,7 @@ function pfCalc(){const C=pfCfg(),o=pfIn();
 }
 function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
-  <div class="pfhome">${PF_HOME.filter(k=>k!=='pc'||pcCan()).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
+  <div class="pfhome">${PF_HOME.filter(k=>(k!=='pc'||pcCan())&&(k!=='ex'||exCan())).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
  if(PF_DIR[sub]){const D=PF_DIR[sub];return `${NOTE}<div class="head"><div><h1>${D[0]}</h1><p class="muted">${D[1]}</p></div></div><div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>
   <div class="pfhome">${D[2].map(k=>{const t=PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span></button>`}).join('')}</div>`}
  const par=pfParent(sub);
@@ -2717,6 +2741,7 @@ function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='cto')return vCPerf(tabs);
  if(sub==='fea')return vFea(tabs);
  if(sub==='pc'&&!pcCan()){S.pfTab='home';return vPerfos()}
+ if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
  if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
  if(sub==='pod')return `${NOTE}<div class="head"><div><h1>Réchauffement du POD fumigène</h1><p class="muted">Temps d'attente après un transit en altitude à température négative, avant de considérer les membranes dégelées.</p></div></div>${tabs}${vPod()}`;
  return vPerfTO(tabs)}
@@ -3583,6 +3608,124 @@ function rxImpGo(){DB.retex=DB.retex||[];const have=new Set(DB.retex.map(e=>e.im
   DB.retex.push({id:uid(),imp,site,siteL:rxNice(e.sheet),y:e.y,rub:e.rub,kind:'rem',txt:e.txt,vis:'int',t:Date.now()})});
  save();closeSheet();S.rxSite=null;render();toast(n+' remarque'+(n>1?'s':'')+' importée'+(n>1?'s':''))}
 
+/* ====================== INSTRUCTION · Suivi des vols : exercices de chaque vol d'entraînement (Athos 7) ====================== */
+/* Une fiche par vol (vols de la semaine lus comme pour les points centraux). On compte un exercice en 1 à 4 touchers
+   (catégorie › variante › angle › base), puis on lui donne UNE note moyenne pour le vol : 1 rouge (mauvais) · 2 jaune (faible) · 3 vert (satisfaisant) · 4 bleu (bon).
+   Données : DB.ex[<id du vol>] = {w, d, time, title, ev, c:{<clé>:nombre}, g:{<clé>:1..4}, note} — tout est archivé pour le suivi de la saison. */
+const EX_B2=[['dia','Diamant'],['con','Concorde']],EX_B3=EX_B2.concat([['mr','MR']]);
+const EX_CAT=[
+ {k:'cc',l:'CC',d:'Cacahuète',c1:'#f59e0b',c2:'#b45309',ico:'cc',steps:[]},
+ {k:'bou',l:'Boucle',d:'Pure, TG, TD',c1:'#3b82f6',c2:'#1d4ed8',ico:'loop',steps:[{k:'t',q:'Quelle boucle ?',o:[['pure','Pure'],['tg','TG'],['td','TD']]},{k:'a',q:'Angle',o:[['30','30°'],['45','45°'],['60','60°'],['90','90°']],when:s=>s.t!=='pure'},{k:'b',q:'Base',o:EX_B3}]},
+ {k:'gt',l:'GTG / GTD',d:'Diamant, Concorde',c1:'#22c55e',c2:'#15803d',steps:[{k:'s',q:'Sens',o:[['gtg','GTG'],['gtd','GTD']]},{k:'b',q:'Base',o:EX_B2}]},
+ {k:'tt',l:'TGTD / TDTG',d:'Diamant, Concorde',c1:'#14b8a6',c2:'#0f766e',steps:[{k:'s',q:'Sens',o:[['tgtd','TGTD'],['tdtg','TDTG']]},{k:'b',q:'Base',o:EX_B2}]},
+ {k:'tr',l:'Trèfle',d:'À gauche, à droite',c1:'#a855f7',c2:'#7e22ce',ico:'clover',steps:[{k:'s',q:'Sens',o:[['g','À gauche'],['d','À droite']]},{k:'b',q:'Base',o:EX_B2}]},
+ {k:'tno',l:'TNO envoyé',d:'Diamant, Concorde',c1:'#ef4444',c2:'#b91c1c',ico:'barrel',steps:[{k:'b',q:'Base',o:EX_B2}]},
+ {k:'tns',l:'TNO Simus',d:'Un toucher',c1:'#64748b',c2:'#334155',ico:'arc',steps:[]}];
+const exCm=Object.fromEntries(EX_CAT.map(c=>[c.k,c]));
+const EX_G=[null,['Mauvais','#ef4444'],['Faible','#eab308'],['Satisfaisant','#22c55e'],['Bon','#3b82f6']];
+const exGc=v=>v?EX_G[v<1.75?1:v<2.5?2:v<3.25?3:4][1]:'var(--line)';
+const exN=()=>+(DB.exN||7);
+/* Symboles des tuiles */
+function exIco(k,s){s=s||34;const w='#fff';
+ if(k==='cc')return `<svg viewBox="0 0 34 34" width="${s}" height="${s}" aria-hidden="true"><g transform="rotate(-35 17 17)" fill="${w}" fill-opacity=".95"><circle cx="17" cy="10.5" r="7"/><circle cx="17" cy="23.5" r="7.6"/><rect x="12" y="12" width="10" height="10"/></g><g fill="rgba(0,0,0,.18)"><circle cx="14" cy="12" r="1.2"/><circle cx="18" cy="16" r="1.2"/><circle cx="16" cy="22" r="1.2"/><circle cx="20" cy="25" r="1.2"/></g></svg>`;
+ if(k==='loop')return `<svg viewBox="0 0 34 34" width="${s}" height="${s}" aria-hidden="true" fill="none" stroke="${w}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 28 C12 28 17 26 19 19 C21 11 15 6 11 9 C6 12 9 21 17 24 C22 26 27 25 31 22"/><path d="M27 19.5 L31 22 L27.5 25.5"/></svg>`;
+ if(k==='clover')return `<svg viewBox="0 0 34 34" width="${s}" height="${s}" aria-hidden="true" fill="${w}"><circle cx="17" cy="10" r="6"/><circle cx="10.5" cy="19" r="6"/><circle cx="23.5" cy="19" r="6"/><path d="M17 18 C18 24 20 28 24 31" fill="none" stroke="${w}" stroke-width="2.6" stroke-linecap="round"/></svg>`;
+ if(k==='barrel')return `<svg viewBox="0 0 34 34" width="${s}" height="${s}" aria-hidden="true" fill="none" stroke="${w}" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-28 17 18)"><path d="M1 18 H14.6 M19.6 18 H33" stroke-width="1.8" stroke-opacity=".6"/><path d="M17 18 C19.5 24.5 24.5 24.5 26.5 18" stroke-width="2.3" stroke-opacity=".55"/><path d="M5 18 C7.5 5 14.5 5 17 18" stroke-width="2.9"/><path d="M26.5 18 L27.7 13.4" stroke-width="2.8"/><path d="M23.6 15.6 L27.8 13 L30.4 17.8" stroke-width="2.6"/></g></svg>`;
+ if(k==='arc')return `<svg viewBox="0 0 34 34" width="${s}" height="${s}" aria-hidden="true" fill="none" stroke="${w}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5 A12 12 0 1 0 29 17"/><path d="M25.4 20.4 L29 16.2 L32.4 20.4"/></svg>`;
+ return ''}
+/* Qui : Athos 7 (le n° se règle) et le chef ops */
+function exMe(){if(isOnline()){if(ME&&ME.role!==ROLE)return null;const x=ME&&memOf(ME.mail);return x}return isChef()?null:DB.members.find(x=>x.id===S.exAs)||null}
+const exIs7=()=>{const x=exMe();return !!x&&x.fn==='PILOTES'&&athN(x)===exN()};
+const exCan=()=>!isOnline()&&ROLE==='visit'||isChef()||exIs7();
+const exCanEdit=()=>isChef()||exIs7();
+/* Clé et libellé d'un exercice */
+function exKey(cat,sel){const C=exCm[cat];return [cat].concat(C.steps.filter(s=>!s.when||s.when(sel)).map(s=>sel[s.k])).join(':')}
+function exLabel(key){const p=String(key).split(':'),C=exCm[p[0]];if(!C)return key;let i=1;const sel={};const parts=[];
+ C.steps.forEach(s=>{if(s.when&&!s.when(sel))return;const v=p[i++];sel[s.k]=v;const o=s.o.find(x=>x[0]===v);parts.push(o?o[1]:v)});
+ if(C.k==='bou'){const t=parts.shift(),a=sel.t!=='pure'?parts.shift():'';return `Boucle ${t==='Pure'?'pure':t}${a?' '+a:''} · ${parts.join(' ')}`}
+ if(C.k==='tr')return `Trèfle ${parts[0].toLowerCase()} · ${parts[1]}`;
+ if(C.k==='gt'||C.k==='tt')return `${parts[0]} · ${parts[1]}`;
+ if(C.k==='tno')return `TNO envoyé · ${parts[0]}`;return C.l}
+const exCatOf=k=>exCm[String(k).split(':')[0]]||EX_CAT[0];
+const exOrd=(a,b)=>EX_CAT.indexOf(exCatOf(a))-EX_CAT.indexOf(exCatOf(b))||a.localeCompare(b);
+/* Les vols de la semaine : agenda (comme les PC), vols des PC, fiches déjà remplies */
+const exWk=()=>S.exW||(S.exW=pcCurWk());
+function exFlights(w){const M=new Map(),put=f=>{const id=f.ev||('m-'+w+'-'+f.d+'-'+f.time);if(!M.has(id))M.set(id,{id,ev:f.ev||'',d:f.d,date:pcAdd(w,f.d),time:f.time,title:f.title||''})};
+ (pcW0(w).fl||[]).forEach(put);((S.exEv||{})[w]||[]).forEach(put);
+ if(!M.size&&!isOnline())[0,1,2,3,4].forEach(d=>['09:30','16:00'].forEach(t=>put({d,time:t,title:'8 FUS+100',ev:'demo-'+w+'-'+d+'-'+t})));
+ Object.entries(DB.ex||{}).forEach(([id,e])=>{if(e.w===w&&!e.del&&!M.has(id))M.set(id,{id,ev:e.ev||'',d:e.d,date:pcAdd(w,e.d),time:e.time,title:e.title||''})});
+ return [...M.values()].sort((a,b)=>a.d-b.d||a.time.localeCompare(b.time))}
+async function exAgenda(w,quiet){if(!isOnline()||S.exBusy)return;S.exBusy=1;if(!quiet)render();let r;try{r=await api('pcAgenda',{w})}catch(e){r={error:'Connexion impossible'}}S.exBusy=0;
+ if(r&&r.ev){S.exEv=S.exEv||{};S.exEv[w]=r.ev;S.exAgT=S.exAgT||{};S.exAgT[w]=Date.now()}render();if(!quiet)toast(r&&r.error?r.error:(r.ev||[]).length+' vol'+((r.ev||[]).length>1?'s':'')+' lu'+((r.ev||[]).length>1?'s':'')+' dans l\'agenda')}
+function exAuto(){const w=exWk();if(!isOnline()||(S.exAgT||{})[w])return;exAgenda(w,true)}
+/* ---- Saisie : 1 à 4 touchers, puis la note ---- */
+function exE(f){DB.ex=DB.ex||{};let e=DB.ex[f.id];if(!e){e=DB.ex[f.id]={w:exWk(),d:f.d,time:f.time,title:f.title,ev:f.ev,c:{},g:{},note:'',t:Date.now()}}e.g=e.g||{};if(e.del)delete e.del;return e}
+const exCur=()=>exFlights(exWk()).find(x=>x.id===S.exF)||((DB.ex||{})[S.exF]&&Object.assign({id:S.exF},DB.ex[S.exF]));
+function exOpen(id){S.exF=id;S.exPick=null;S.exRate=null;render();window.scrollTo(0,0)}
+function exTap(cat){const C=exCm[cat];if(!C.steps.length){exAdd(exKey(cat,{}));return}S.exPick={cat,sel:{}};render();exScroll()}
+function exStep(k,v){const P=S.exPick,C=exCm[P.cat];P.sel[k]=v;const next=C.steps.find(s=>(!s.when||s.when(P.sel))&&P.sel[s.k]==null);if(!next){exAdd(exKey(P.cat,P.sel));return}render();exScroll()}
+function exBack(){const P=S.exPick;if(!P)return;const C=exCm[P.cat],done=C.steps.filter(s=>P.sel[s.k]!=null);if(!done.length){S.exPick=null}else delete P.sel[done[done.length-1].k];render()}
+function exScroll(){setTimeout(()=>{const e=$('expick');if(e)e.scrollIntoView({behavior:'smooth',block:'nearest'})},30)}
+function exAdd(key,n){const f=exCur();if(!f)return;const e=exE(f);n=n||1;
+ e.c[key]=Math.max(0,(e.c[key]||0)+n);if(!e.c[key]){delete e.c[key];delete e.g[key]}e.tm=Date.now();e.by=(exMe()&&memLabel(exMe()))||(RLm[ROLE]||{}).l;S.exPick=null;S.exLast=key;
+ S.exRate=n>0&&e.c[key]&&!e.g[key]?key:null;save();render();if(S.exRate)exScroll()}
+function exGrade(key,v){const f=exCur();if(!f)return;const e=exE(f);if(e.g[key]===v)delete e.g[key];else e.g[key]=v;e.tm=Date.now();S.exRate=null;S.exLast=key;save();render()}
+function exNote(v){const f=exCur();if(!f)return;const e=exE(f);e.note=String(v||'').trim();e.tm=Date.now();save()}
+/* ---- Suivi de la saison : chaque exercice, son total, ses notes dans le temps ---- */
+function exStats(){const S0={};Object.values(DB.ex||{}).filter(e=>!e.del).sort((a,b)=>String(a.w+a.d+a.time).localeCompare(String(b.w+b.d+b.time))).forEach(e=>{
+  Object.entries(e.c||{}).forEach(([k,n])=>{const s=S0[k]=S0[k]||{k,n:0,fl:0,g:[],last:''};s.n+=n;s.fl++;s.last=pcAdd(e.w,e.d);const g=(e.g||{})[k];if(g)s.g.push(g)})});
+ return Object.values(S0).map(s=>{const r=s.g.slice(-5);s.avg=r.length?r.reduce((a,b)=>a+b,0)/r.length:null;s.st=s.avg==null?'nr':s.avg<2.5?'work':s.avg>=3.25?'ok':'mid';return s})}
+const exAvgL=v=>v==null?'pas encore noté':v<1.75?'mauvais':v<2.5?'faible':v<3.25?'satisfaisant':'bon';
+function exDots(g,n){return `<span class="exdots">${g.slice(-(n||8)).map(v=>`<i style="background:${EX_G[v][1]}" title="${EX_G[v][0]}"></i>`).join('')}</span>`}
+function exSummaryTxt(){const L=exStats(),W=L.filter(s=>s.st==='work').sort((a,b)=>a.avg-b.avg),O=L.filter(s=>s.st==='ok').sort((a,b)=>b.avg-a.avg);
+ return 'INSTRUCTION · Suivi des vols — '+new Date().toLocaleDateString('fr-FR')+'\n\nÀ travailler :\n'+(W.length?W.map(s=>'- '+exLabel(s.k)+' ('+exAvgL(s.avg)+', '+s.n+' fois)').join('\n'):'- rien de signalé')+'\n\nMaîtrisés :\n'+(O.length?O.map(s=>'- '+exLabel(s.k)+' ('+exAvgL(s.avg)+', '+s.n+' fois)').join('\n'):'- pas encore')}
+function exCopy(){const t=exSummaryTxt();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Résumé copié'),()=>toast('Copie impossible sur ce navigateur'))}
+/* ---- Vues ---- */
+const exTot=e=>Object.values((e&&e.c)||{}).reduce((a,b)=>a+b,0);
+function exCatTile(C,ed){return `<button class="extile" style="--c1:${C.c1};--c2:${C.c2}" ${ed?`onclick="exTap('${C.k}')"`:'disabled'}>${C.ico?`<span class="exico">${exIco(C.ico)}</span>`:''}<b>${C.l}</b><span>${C.d}</span></button>`}
+function exGradeBtns(k,cur,big){return `<div class="exgr ${big?'big':''}">${[1,2,3,4].map(v=>`<button style="--g:${EX_G[v][1]}" aria-pressed="${cur===v}" onclick="exGrade('${k}',${v})">${big?`<b>${EX_G[v][0]}</b>`:EX_G[v][0]}</button>`).join('')}</div>`}
+function vEx(tabs){const w=exWk(),ed=exCanEdit(),F=exFlights(w),rel=pcWkRel(w),tab=S.exTab||'vols';
+ const head=`${NOTE}<div class="head"><div><h1>INSTRUCTION <span class="muted" style="font-weight:600">· Suivi des vols</span></h1><p class="muted">Chaque exercice des vols d'entraînement, compté en quelques touchers et noté de rouge à bleu.</p></div>${isChef()?`<label class="small muted" style="display:flex;gap:6px;align-items:center">Saisie par Athos <input class="in" style="width:56px;padding:4px 6px;text-align:center" type="number" min="1" max="99" value="${exN()}" onchange="DB.exN=+this.value||7;save();render()"></label>`:''}</div>${tabs}`;
+ const demo=!isOnline()&&!isChef()?`<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.exAs=this.value;render()"><option value="">—</option>${DB.members.filter(x=>x.fn==='PILOTES').sort(mSort).map(x=>`<option value="${x.id}" ${S.exAs===x.id?'selected':''}>${esc((athN(x)<1e6?'Athos '+athN(x)+' · ':'')+memLabel(x))}</option>`).join('')}</select>${exIs7()?'':' <span class="muted">(choisissez Athos '+exN()+' pour saisir)</span>'}</div>`:'';
+ /* --- La fiche d'un vol --- */
+ const f=S.exF&&F.find(x=>x.id===S.exF);
+ if(f){const e=(DB.ex||{})[f.id]||{c:{},g:{}},keys=Object.keys(e.c||{}).sort(exOrd),G=e.g||{};
+  const pcW=pcW0(w),pcF=(pcW.fl||[]).find(x=>(x.ev&&x.ev===f.ev)||(x.d===f.d&&x.time===f.time)),pcX=pcF&&pcW.prop&&DB.members.find(y=>y.id===pcW.prop[pcF.id]);
+  const P=S.exPick,C=P&&exCm[P.cat],step=C&&C.steps.find(s=>(!s.when||s.when(P.sel))&&P.sel[s.k]==null),R=S.exRate&&e.c&&e.c[S.exRate]?S.exRate:null,RC=R&&exCatOf(R);
+  return `${head}${demo}<div class="pfbar"><button class="btn" onclick="S.exF=null;S.exPick=null;S.exRate=null;render();window.scrollTo(0,0)">${ic('back',16)} Vols de la semaine</button></div>
+  <section class="exhead"><div class="exwhen"><b>${PC_J[f.d]} ${pcDay(w,f.d)} ${PC_MO[fromISO(f.date).getMonth()]}</b><span>${f.time.replace(':','h')}</span></div><div class="exttl"><b>${esc(f.title||'Vol d\'entraînement')}</b>${pcX?`<span class="small muted">PC : ${esc(pcName(pcX))}</span>`:''}</div><div class="extot"><b>${exTot(e)}</b><span>exercice${exTot(e)>1?'s':''}</span></div></section>
+  ${ed?`<section class="dvbox exbox"><div class="dvsec">
+   ${R?`<div id="expick" class="expick" style="--c1:${RC.c1};--c2:${RC.c2}"><div class="exbc">${RC.ico?`<span class="exico sm">${exIco(RC.ico,26)}</span>`:''}<b>${esc(exLabel(R))}</b><span class="exchip">× ${e.c[R]}</span><button class="more" style="margin-left:auto" onclick="S.exRate=null;render()">Plus tard</button></div>
+     <p class="exq">Note moyenne sur ce vol</p>${exGradeBtns(R,G[R],1)}</div>`:
+   !P?`<div class="exgrid">${EX_CAT.map(c=>exCatTile(c,ed)).join('')}</div><p class="hint" style="margin-top:10px">Touchez un exercice : il est compté au dernier choix, puis vous le notez d'un toucher.</p>`:
+   `<div id="expick" class="expick" style="--c1:${C.c1};--c2:${C.c2}"><div class="exbc"><button class="ib" onclick="exBack()" aria-label="Retour">${ic('back',16)}</button>${C.ico?`<span class="exico sm">${exIco(C.ico,26)}</span>`:''}<b>${C.l}</b>${C.steps.filter(s=>P.sel[s.k]!=null).map(s=>`<span class="exchip">${(s.o.find(o=>o[0]===P.sel[s.k])||[])[1]}</span>`).join('')}<button class="more" style="margin-left:auto" onclick="S.exPick=null;render()">Annuler</button></div>
+    <p class="exq">${step.q}</p><div class="exopts n${step.o.length}">${step.o.map(o=>`<button onclick="exStep('${step.k}','${o[0]}')">${o[1]}</button>`).join('')}</div></div>`}
+  </div></section>`:''}
+  <section class="dvbox exbox"><div class="dvsec"><h3 class="pch">${ic('check',18)} Exercices du vol <span class="n">${exTot(e)}</span></h3>
+   ${keys.length?`<div class="exlist">${keys.map(k=>{const c=exCatOf(k);return `<div class="exrow ${S.exLast===k?'new':''}" style="--c:${G[k]?EX_G[G[k]][1]:c.c1}"><div class="exr1"><span class="exl">${c.ico?`<span class="exico xs" style="--c1:${c.c1};--c2:${c.c2}">${exIco(c.ico,18)}</span>`:''}${esc(exLabel(k))}</span>${ed?`<button class="ib" aria-label="Retirer un" onclick="exAdd('${k}',-1)">−</button>`:''}<b class="exn">${e.c[k]}</b>${ed?`<button class="ib" aria-label="Ajouter un" onclick="exAdd('${k}',1)">+</button>`:''}</div>
+    ${ed?exGradeBtns(k,G[k]):G[k]?`<span class="exgl" style="--g:${EX_G[G[k]][1]}">${EX_G[G[k]][0]}</span>`:''}</div>`}).join('')}</div>`:`<p class="small muted" style="margin:0">Aucun exercice pour l'instant.</p>`}
+   <label class="l" for="ex-note" style="margin-top:12px">Remarque <span style="font-weight:500">(facultatif)</span></label><textarea class="in" id="ex-note" rows="2" ${ed?'':'disabled'} placeholder="Météo, plafond, figure interrompue…" onchange="exNote(this.value)">${esc(e.note||'')}</textarea>
+   ${e.by?`<p class="small muted" style="margin:8px 0 0">Saisi par ${esc(e.by)}${e.tm?' · '+new Date(e.tm).toLocaleString('fr-FR',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):''}</p>`:''}</div></section>`}
+ const seg=`<div class="exseg" role="tablist"><button role="tab" aria-selected="${tab==='vols'}" onclick="S.exTab='vols';render()">${ic('plane',16)} Les vols</button><button role="tab" aria-selected="${tab==='bilan'}" onclick="S.exTab='bilan';render()">${ic('star',16)} Le suivi</button></div>`;
+ /* --- Le suivi de la saison --- */
+ if(tab==='bilan'){const L=exStats(),W=L.filter(s=>s.st==='work').sort((a,b)=>a.avg-b.avg),O=L.filter(s=>s.st==='ok').sort((a,b)=>b.avg-a.avg),nF=Object.values(DB.ex||{}).filter(e=>!e.del&&exTot(e)).length,nE=L.reduce((a,s)=>a+s.n,0);
+  const card=s=>{const c=exCatOf(s.k);return `<div class="excard" style="--g:${exGc(s.avg)}">${c.ico?`<span class="exico xs" style="--c1:${c.c1};--c2:${c.c2}">${exIco(c.ico,18)}</span>`:`<span class="exico xs txt" style="--c1:${c.c1};--c2:${c.c2}">${c.l.slice(0,3)}</span>`}<div><b>${esc(exLabel(s.k))}</b><span>${exAvgL(s.avg)} · ${s.n} fois</span>${exDots(s.g,6)}</div></div>`};
+  const byCat=EX_CAT.map(c=>({c,L:L.filter(s=>exCatOf(s.k)===c).sort((a,b)=>a.k.localeCompare(b.k))})).filter(x=>x.L.length);
+  return `${head}${demo}${seg}
+   <div class="exkpi"><div><b>${nF}</b><span>vols suivis</span></div><div><b>${nE}</b><span>exercices</span></div><div style="--g:#ef4444"><b>${W.length}</b><span>à travailler</span></div><div style="--g:#3b82f6"><b>${O.length}</b><span>maîtrisés</span></div></div>
+   <div class="excols"><section class="exsum work"><h3>${ic('target',18)} À travailler</h3>${W.length?W.map(card).join(''):'<p class="small muted">Rien de signalé.</p>'}</section>
+   <section class="exsum ok"><h3>${ic('check',18)} Maîtrisés</h3>${O.length?O.map(card).join(''):'<p class="small muted">Pas encore.</p>'}</section></div>
+   <div class="pcbtns"><button class="btn" onclick="exCopy()">${ic('copy',15)} Copier le résumé</button><span class="small muted">Moyenne des 5 dernières notes : à travailler sous « faible », maîtrisé à partir de « satisfaisant » tirant vers « bon ».</span></div>
+   <section class="dvbox exbox" style="max-width:none"><div class="dvsec"><h3 class="pch">${ic('grid',18)} Tous les exercices <span class="n">${L.length}</span></h3>
+    ${byCat.length?byCat.map(({c,L})=>`<div class="exgh" style="--c1:${c.c1};--c2:${c.c2}">${c.ico?`<span class="exico xs">${exIco(c.ico,18)}</span>`:''}<b>${c.l}</b><span class="n">${L.reduce((a,s)=>a+s.n,0)}</span></div>
+     ${L.map(s=>`<div class="exst"><span class="exl">${esc(exLabel(s.k))}</span><span class="exstn"><b>${s.n}</b> fois · ${s.fl} vol${s.fl>1?'s':''}</span>${exDots(s.g,8)}<span class="exavg" style="--g:${exGc(s.avg)}">${exAvgL(s.avg)}</span></div>`).join('')}`).join(''):'<p class="small muted" style="margin:0">Le suivi apparaîtra avec les premières fiches de vol.</p>'}
+   </div></section>`}
+ /* --- Les vols de la semaine --- */
+ const nav=`<div class="pcnav"><button class="ib" onclick="S.exW=pcAdd(exWk(),-7);render();exAuto()" aria-label="Semaine précédente" style="transform:rotate(90deg)">${ic('chev',18)}</button><div><b>Semaine du ${pcWkLabel(w)}</b>${rel?`<small>${rel}</small>`:''}</div><button class="ib" onclick="S.exW=pcAdd(exWk(),7);render();exAuto()" aria-label="Semaine suivante" style="transform:rotate(-90deg)">${ic('chev',18)}</button></div>`;
+ const today=iso(new Date());
+ const days=PC_J.map((j,d)=>{const L=F.filter(x=>x.d===d);if(!L.length)return '';return `<div class="exday ${pcAdd(w,d)===today?'today':''}"><b>${PC_JS[d]} ${pcDay(w,d)}${pcAdd(w,d)===today?' <span class="pill ok">Aujourd\'hui</span>':''}</b>${L.map(x=>{const e=(DB.ex||{})[x.id],n=exTot(e),gs=e?Object.keys(e.c||{}).sort(exOrd).map(k=>(e.g||{})[k]).filter(Boolean):[];return `<button class="exfl" onclick="exOpen('${x.id}')"><span class="pct">${x.time.replace(':','h')}</span><span class="pcti">${esc(x.title||'Vol')}</span>${n?`${exDots(gs,10)}<span class="pill ok">${n} ex.</span>`:`<span class="pill todo">${ed?'À remplir':'—'}</span>`}${ic('chev',16)}</button>`}).join('')}</div>`}).join('');
+ return `${head}${demo}${seg}${nav}<div class="pcbtns">${isOnline()?`<button class="btn" ${S.exBusy?'disabled':''} onclick="exAgenda(exWk())">${ic('cal',15)} ${S.exBusy?'Lecture…':'Relire l\'agenda'}</button>`:''}</div>
+  ${days?`<div class="exdays">${days}</div>`:`<p class="muted">Aucun vol trouvé pour cette semaine.${isOnline()?' Les vols viennent de l\'agenda des plaquettes (réglé dans Points centraux).':''}</p>`}`}
 /* Illustrations des trois outils */
 function pfArt(k){
  const bg=(a,b,id)=>`<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="120" height="120" rx="28" fill="url(#${id})"/>`;
@@ -3602,6 +3745,9 @@ function pfArt(k){
  if(k==='cirrus')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_ci')}
   <path d="M60 22 C64 24 65 32 65 40 L104 46 C107 46 107 54 104 54 L65 58 L63 88 L80 92 L80 98 L60 97 L40 98 L40 92 L57 88 L55 58 L16 54 C13 54 13 46 16 46 L55 40 C55 32 56 24 60 22 Z" fill="#fff"/>
   <path d="M46 16 H74" stroke="#fde68a" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="18" r="3.5" fill="#fde68a"/><path d="M57 30 H63 V36 H57 Z" fill="#5eead4"/></svg>`;
+ if(k==='ex')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#0ea5e9','#0c4a6e','g_ex')}
+  <rect x="26" y="18" width="68" height="86" rx="10" fill="#fff"/><rect x="44" y="12" width="32" height="14" rx="5" fill="#bae6fd"/>
+  <path d="M38 46h26M38 64h26M38 82h26" stroke="#0c4a6e" stroke-width="5" stroke-linecap="round"/><circle cx="78" cy="46" r="5" fill="#0ea5e9"/><circle cx="78" cy="64" r="5" fill="#0ea5e9"/><circle cx="78" cy="82" r="5" fill="#cbd5e1"/></svg>`;
  if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
   <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/><circle cx="60" cy="60" r="18" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/>
   <path d="M60 18 V34 M60 86 V102 M18 60 H34 M86 60 H102" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="60" r="7" fill="#fde68a"/></svg>`;
@@ -3616,9 +3762,9 @@ function pfArt(k){
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
 const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']]};
-const PF_HOME=['alpha','cirrus','fea','pc'];
+const PF_HOME=['alpha','cirrus','fea','pc','ex'];
 const pfParent=k=>Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine']];
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
