@@ -700,6 +700,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 @media (max-width:760px){.pcdays,.pcplan{grid-template-columns:1fr}.pcday,.pcpd{grid-template-columns:52px 1fr;align-items:center}.pcday>b,.pcpd>b{grid-row:span 9;align-self:start}.pcbar{grid-template-columns:120px 1fr 28px}.pcc{min-height:48px}.pcgl b{font-size:11.5px}}
 .pfn{display:grid;gap:4px;margin:8px 0;font-size:13px;font-weight:800;color:var(--muted)}
 .pfin{display:flex;align-items:center;gap:6px}.pfin input{width:110px;text-align:center;font-weight:800;font-size:16px}.pfin button{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);font-size:18px;font-weight:800;color:var(--fg)}.pfin b{color:var(--muted)}
+.pfplq{margin-top:12px}.pfplq .dvsec{border:0}.pfpre{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px;font-family:ui-monospace,Menlo,monospace;font-size:14px;line-height:1.5;white-space:pre-wrap}.pfdone{display:flex;gap:6px;align-items:center;color:#15803d;font-weight:700;margin:10px 0 0}
 .pfcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .pfc{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;display:grid;gap:2px;box-shadow:var(--shadow)}
 .pfc .pfl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
@@ -2745,6 +2746,33 @@ function vPerfos(){const sub=S.pfTab||'home';
  if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
  if(sub==='pod')return `${NOTE}<div class="head"><div><h1>Réchauffement du POD fumigène</h1><p class="muted">Temps d'attente après un transit en altitude à température négative, avant de considérer les membranes dégelées.</p></div></div>${tabs}${vPod()}`;
  return vPerfTO(tabs)}
+/* ---- Perfos dans la plaquette : l'Athos 4 (ou le chef) inscrit les perfos du jour à la fin de la description du vol choisi ---- */
+const pfN4=()=>+(DB.pfN||4);
+function pfCan4(){if(isChef())return true;if(isOnline()){if(!ME||ME.role!==ROLE)return false;const x=memOf(ME.mail);return !!x&&x.fn==='PILOTES'&&athN(x)===pfN4()}return ROLE==='visit'}
+const pfVals=x=>({acc:Math.round(x.acc),vr:Math.round(x.vr),vlof:Math.round(x.vlof),vs:Math.round(x.vs),vc:Math.round(x.vc)});
+const pfTxt=v=>`Perfos :\n90kt ${v.acc}"\nVr ${v.vr} kt\nVlof ${v.vlof} kt\nVstop ${v.vs} kt\nVc ${v.vc} kt`;
+const pfFlT=f=>new Date(pcAdd(f.w,f.d)+'T'+f.time+':00').getTime();
+/* Vols à venir : semaine en cours et suivante (agenda en ligne ; vols d'exemple dans la maquette) */
+function pfFlights(){const w0=pcCurWk();let L;
+ if(isOnline())L=(S.pfFl||{})[w0]||[];
+ else L=[w0,pcAdd(w0,7)].flatMap(w=>exFlights(w).map(f=>({id:f.id,w,d:f.d,time:f.time,title:f.title,perf:!!(S.pfDone||{})[f.id]})));
+ const now=Date.now()-45*60000;return L.filter(f=>pfFlT(f)>=now).sort((a,b)=>pfFlT(a)-pfFlT(b))}
+async function pfLoad(force){const w0=pcCurWk();if(!isOnline()||S.pfBusy||(!force&&(S.pfFl||{})[w0]))return;S.pfBusy=1;let r;try{r=await api('perfAgenda',{w:w0})}catch(e){r={error:'Connexion impossible'}}S.pfBusy=0;
+ if(r&&r.ev){S.pfFl={[w0]:r.ev}}else{S.pfErr=(r&&r.error)||'Lecture impossible';S.pfFl={[w0]:[]}}if(S.pfTab==='to')render()}
+const pfFlL=f=>`${PC_JS[f.d]} ${pcDay(f.w,f.d)} ${PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]} · ${f.time.replace(':','h')} · ${f.title||'Vol'}`;
+async function pfPut(){const x=pfCalc(),v=pfVals(x),L=pfFlights(),f=L.find(y=>y.id===S.pfSel)||L[0];if(!f)return;
+ if(f.perf&&!confirm('Cette plaquette contient déjà des perfos : les remplacer ?'))return;
+ if(!isOnline()){S.pfDone=S.pfDone||{};S.pfDone[f.id]=pfTxt(v);S.pfOk=f.id;render();toast('Maquette : perfos inscrites dans la plaquette');return}
+ S.pfBusy=1;render();let r;try{r=await api('perfWrite',Object.assign({w:f.w,id:f.id},v))}catch(e){r={error:'Connexion impossible'}}S.pfBusy=0;
+ if(r&&r.ok){f.perf=true;S.pfOk=f.id;toast('Perfos inscrites dans la plaquette')}else toast((r&&r.error)||'Échec');render()}
+function pfPlq(x){if(!pfCan4())return '';if(isOnline())setTimeout(()=>pfLoad(),30);const v=pfVals(x),L=pfFlights(),sel=L.find(f=>f.id===S.pfSel)||L[0];
+ return `<section class="dvbox pfplq"><div class="dvsec"><h3 class="pch">${ic('cal',18)} Mettre dans la plaquette</h3>
+  <p class="small muted" style="margin:-4px 0 10px">Ajoutées à la fin de la description du vol dans l'agenda. D'anciennes perfos sont remplacées, le reste ne bouge pas.</p>
+  <pre class="pfpre">${esc(pfTxt(v))}</pre>
+  ${S.pfBusy&&!L.length?'<p class="small muted">Lecture de l\'agenda…</p>':L.length?`<label class="l" for="pf-fl">Vol</label><select class="in" id="pf-fl" onchange="S.pfSel=this.value;S.pfOk=null;render()">${L.map((f,i)=>`<option value="${f.id}" ${sel&&sel.id===f.id?'selected':''}>${esc(pfFlL(f))}${i===0?' — prochain vol':''}${f.perf?' ✓ perfos':''}</option>`).join('')}</select>
+  <div class="pcbtns" style="margin-top:10px"><button class="btn pri" ${S.pfBusy?'disabled':''} onclick="pfPut()">${ic('check',16)} ${S.pfBusy?'Envoi…':'Inscrire dans la plaquette'}</button>${isOnline()?`<button class="more" onclick="pfLoad(1)">Relire l'agenda</button>`:''}</div>
+  ${S.pfOk&&sel&&S.pfOk===sel.id?`<p class="pfdone">${ic('check',16)} Inscrit dans la plaquette du ${esc(pfFlL(sel))}</p>`:''}`:`<p class="small muted">${esc(S.pfErr||'Aucun vol à venir trouvé dans l\'agenda (cette semaine et la suivante).')}</p>`}
+ </div></section>`}
 function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
  const num=(k,lab,unit,step,min,max)=>`<label class="pfn"><span>${lab}</span><div class="pfin"><button onclick="pfSet('${k}',${(+o[k]||0)-step})" aria-label="Moins">−</button><input class="in" type="number" inputmode="decimal" step="${step}" ${min!=null?`min="${min}"`:''} ${max!=null?`max="${max}"`:''} value="${esc(String(o[k]))}" onchange="pfSet('${k}',this.value===''?0:+this.value)"><button onclick="pfSet('${k}',${(+o[k]||0)+step})" aria-label="Plus">+</button><b>${unit}</b></div></label>`;
  const card=(lab,v,unit,sub,cls)=>`<div class="pfc ${cls||''}"><span class="pfl">${lab}</span><b>${v}<small>${unit}</small></b>${sub?`<span class="pfs">${sub}</span>`:''}</div>`;
@@ -2772,6 +2800,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
     ${card('Vc · freinage',x.vc,'kt','vitesse max de début de freinage (énergie détresse)',x.vc<x.vs?'ko':'')}
     ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vr?'ko':x.vs>=x.vlof?'ok':'')}
    </div>
+   ${pfPlq(x)}
    ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
    <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Références et corrections appliquées</span></span><span class="chev">${ic('chev',20)}</span></summary>
     <div class="small" style="margin-top:10px;line-height:1.6">
