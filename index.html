@@ -677,7 +677,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .exbox{max-width:760px;margin-bottom:12px}.exbox .dvsec{border:0}
 .exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}#ex-note{font-family:var(--f-body)}@media (max-width:760px){.exgrid{grid-template-columns:repeat(2,1fr);gap:8px}.extile{min-height:76px;padding:12px}.extile b{font-size:19px}}.extile{border:0;border-radius:18px;padding:16px 14px;min-height:92px;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));display:grid;align-content:center;gap:4px;text-align:left;box-shadow:var(--shadow);transition:transform .08s}.extile:active{transform:scale(.96)}.extile b{font-family:var(--f-disp);font-size:22px;line-height:1.1}.extile span{font-size:12.5px;opacity:.9}.extile:disabled{opacity:.5}
 .expick{border-radius:18px;padding:12px;background:color-mix(in srgb,var(--c1) 10%,var(--surface));border:2px solid var(--c1)}.exbc{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.exbc>b{font-family:var(--f-disp);font-size:20px}.exchip{background:var(--c1);color:#fff;border-radius:99px;padding:3px 10px;font-weight:800;font-size:13px}
-.exq{margin:12px 0 8px;font-weight:800;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em}.exopts{display:grid;gap:10px}.exopts.n2,.exopts.n4{grid-template-columns:repeat(2,1fr)}.exopts.n3{grid-template-columns:repeat(3,1fr)}
+.exq{margin:12px 0 8px;font-weight:800;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.06em}.exopts{display:grid;gap:10px}.exopts.n2,.exopts.n4{grid-template-columns:repeat(2,1fr)}.exopts.n3{grid-template-columns:repeat(3,1fr)}.exopts.n5{grid-template-columns:repeat(6,1fr)}.exopts button{min-width:0;padding:0 4px}@media (max-width:760px){.exopts.n3 button{font-size:17px}}.exopts.n5 button{grid-column:span 2}.exopts.n5 button:nth-child(n+4){grid-column:span 3;font-size:19px}
 .exopts button{border:0;border-radius:16px;min-height:72px;font-family:var(--f-disp);font-size:22px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:var(--shadow);transition:transform .08s}.exopts button:active{transform:scale(.95)}
 .exlist{display:grid;gap:6px}.exrow{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:6px 8px 6px 12px;background:var(--surface)}.exrow.new{box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 40%,transparent)}.exl{flex:1;font-weight:600;font-size:14px}.exn{font-family:var(--f-disp);font-size:22px;min-width:28px;text-align:center}.exrow .ib{width:36px;height:36px;font-size:20px;font-weight:800}
 .exbl{font-weight:800;font-size:13px;color:var(--c)}
@@ -3614,8 +3614,8 @@ function rxImpGo(){DB.retex=DB.retex||[];const have=new Set(DB.retex.map(e=>e.im
    Données : DB.ex[<id du vol>] = {w, d, time, title, ev, c:{<clé>:nombre}, g:{<clé>:1..4}, note} — tout est archivé pour le suivi de la saison. */
 const EX_B2=[['dia','Diamant'],['con','Concorde']],EX_B3=EX_B2.concat([['mr','MR']]);
 const EX_CAT=[
- {k:'cc',l:'CC',d:'Cacahuète',c1:'#f59e0b',c2:'#b45309',ico:'cc',steps:[]},
- {k:'bou',l:'Boucle',d:'Pure, TG, TD',c1:'#3b82f6',c2:'#1d4ed8',ico:'loop',steps:[{k:'t',q:'Quelle boucle ?',o:[['pure','Pure'],['tg','TG'],['td','TD']]},{k:'a',q:'Angle',o:[['30','30°'],['45','45°'],['60','60°'],['90','90°']],when:s=>s.t!=='pure'},{k:'b',q:'Base',o:EX_B3}]},
+ {k:'cc',l:'CC',d:'Diamant, Concorde, MR',c1:'#f59e0b',c2:'#b45309',ico:'cc',steps:[{k:'b',q:'Base',o:EX_B3}]},
+ {k:'bou',l:'Boucle',d:'Pure, TG, TD, oblique',c1:'#3b82f6',c2:'#1d4ed8',ico:'loop',steps:[{k:'t',q:'Quelle boucle ?',o:[['pure','Pure'],['tg','TG'],['td','TD'],['og','Oblique gauche'],['od','Oblique droite']]},{k:'a',q:'Angle',o:[['30','30°'],['45','45°'],['60','60°'],['90','90°']],when:s=>s.t==='tg'||s.t==='td'},{k:'b',q:'Base',o:EX_B3}]},
  {k:'gt',l:'GTG / GTD',d:'Diamant, Concorde',c1:'#22c55e',c2:'#15803d',steps:[{k:'s',q:'Sens',o:[['gtg','GTG'],['gtd','GTD']]},{k:'b',q:'Base',o:EX_B2}]},
  {k:'tt',l:'TGTD / TDTG',d:'Diamant, Concorde',c1:'#14b8a6',c2:'#0f766e',steps:[{k:'s',q:'Sens',o:[['tgtd','TGTD'],['tdtg','TDTG']]},{k:'b',q:'Base',o:EX_B2}]},
  {k:'tr',l:'Trèfle',d:'À gauche, à droite',c1:'#a855f7',c2:'#7e22ce',ico:'clover',steps:[{k:'s',q:'Sens',o:[['g','À gauche'],['d','À droite']]},{k:'b',q:'Base',o:EX_B2}]},
@@ -3642,10 +3642,11 @@ const exCanEdit=()=>isChef()||exIs7();
 function exKey(cat,sel){const C=exCm[cat];return [cat].concat(C.steps.filter(s=>!s.when||s.when(sel)).map(s=>sel[s.k])).join(':')}
 function exLabel(key){const p=String(key).split(':'),C=exCm[p[0]];if(!C)return key;let i=1;const sel={};const parts=[];
  C.steps.forEach(s=>{if(s.when&&!s.when(sel))return;const v=p[i++];sel[s.k]=v;const o=s.o.find(x=>x[0]===v);parts.push(o?o[1]:v)});
- if(C.k==='bou'){const t=parts.shift(),a=sel.t!=='pure'?parts.shift():'';return `Boucle ${t==='Pure'?'pure':t}${a?' '+a:''} · ${parts.join(' ')}`}
+ if(C.k==='bou'){const t=parts.shift(),a=(sel.t==='tg'||sel.t==='td')?parts.shift():'';return `Boucle ${t==='Pure'?'pure':sel.t==='og'?'oblique par la gauche':sel.t==='od'?'oblique par la droite':t}${a?' '+a:''} · ${parts.join(' ')}`}
  if(C.k==='tr')return `Trèfle ${parts[0].toLowerCase()} · ${parts[1]}`;
  if(C.k==='gt'||C.k==='tt')return `${parts[0]} · ${parts[1]}`;
- if(C.k==='tno')return `TNO envoyé · ${parts[0]}`;return C.l}
+ if(C.k==='tno')return `TNO envoyé · ${parts[0]}`;
+ if(C.k==='cc')return parts[0]?`CC · ${parts[0]}`:'CC';return C.l}
 const exCatOf=k=>exCm[String(k).split(':')[0]]||EX_CAT[0];
 const exOrd=(a,b)=>EX_CAT.indexOf(exCatOf(a))-EX_CAT.indexOf(exCatOf(b))||a.localeCompare(b);
 /* Les vols de la semaine : agenda (comme les PC), vols des PC, fiches déjà remplies */
@@ -3680,6 +3681,14 @@ function exDots(g,n){return `<span class="exdots">${g.slice(-(n||8)).map(v=>`<i 
 function exSummaryTxt(){const L=exStats(),W=L.filter(s=>s.st==='work').sort((a,b)=>a.avg-b.avg),O=L.filter(s=>s.st==='ok').sort((a,b)=>b.avg-a.avg);
  return 'INSTRUCTION · Suivi des vols — '+new Date().toLocaleDateString('fr-FR')+'\n\nÀ travailler :\n'+(W.length?W.map(s=>'- '+exLabel(s.k)+' ('+exAvgL(s.avg)+', '+s.n+' fois)').join('\n'):'- rien de signalé')+'\n\nMaîtrisés :\n'+(O.length?O.map(s=>'- '+exLabel(s.k)+' ('+exAvgL(s.avg)+', '+s.n+' fois)').join('\n'):'- pas encore')}
 function exCopy(){const t=exSummaryTxt();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Résumé copié'),()=>toast('Copie impossible sur ce navigateur'))}
+/* Maquette seulement : une saison d'exemple pour voir le suivi */
+function exDemo(){const w0=exWk(),P={'cc:dia':[1,2,2,3,3,3,4],'cc:con':[2,2,3,3],'cc:mr':[3,4,4],'bou:pure:dia':[3,4,4,4,4],'bou:tg:45:dia':[2,3,3,3],'bou:td:60:con':[1,2,1,2],'bou:pure:mr':[3,3,4],'gt:gtg:dia':[2,3,3,4],'gt:gtd:con':[2,2,1],'tt:tgtd:dia':[3,3,4,4],'tr:g:dia':[2,3,4,4],'tr:d:con':[1,2,2],'tno:dia':[3,4,4],'tno:con':[1,1,2,2],'tns':[3,3,3,4]};
+ const keys=Object.keys(P),pos={};DB.ex=DB.ex||{};let i=0;
+ [-35,-28,-21,-14,-7].forEach(dw=>{const w=pcAdd(w0,dw);[0,1,2,3,4].forEach(d=>['09:30','16:00'].forEach(t=>{if((d+i)%3===2){i++;return}
+  const id='demo-'+w+'-'+d+'-'+t,c={},g={};keys.forEach((k,j)=>{if((i+j)%3)return;const L=P[k],p=pos[k]=(pos[k]||0);if(p>=L.length)return;c[k]=1+((i+j)%3===0&&j%2?1:0)+(k==='cc:dia'?1:0);g[k]=L[p];pos[k]=p+1});
+  i++;if(Object.keys(c).length)DB.ex[id]={w,d,time:t,title:'8 FUS+100',ev:id,c,g,note:'',by:'Exemple',t:Date.now(),tm:Date.now(),demo:1}}))});
+ save();render();toast('Saison d\'exemple chargée')}
+function exDemoOff(){Object.keys(DB.ex||{}).forEach(k=>{if(DB.ex[k].demo)delete DB.ex[k]});save();render()}
 /* ---- Vues ---- */
 const exTot=e=>Object.values((e&&e.c)||{}).reduce((a,b)=>a+b,0);
 function exCatTile(C,ed){return `<button class="extile" style="--c1:${C.c1};--c2:${C.c2}" ${ed?`onclick="exTap('${C.k}')"`:'disabled'}>${C.ico?`<span class="exico">${exIco(C.ico)}</span>`:''}<b>${C.l}</b><span>${C.d}</span></button>`}
@@ -3718,7 +3727,7 @@ function vEx(tabs){const w=exWk(),ed=exCanEdit(),F=exFlights(w),rel=pcWkRel(w),t
    <div class="pcbtns"><button class="btn" onclick="exCopy()">${ic('copy',15)} Copier le résumé</button><span class="small muted">Moyenne des 5 dernières notes : à travailler sous « faible », maîtrisé à partir de « satisfaisant » tirant vers « bon ».</span></div>
    <section class="dvbox exbox" style="max-width:none"><div class="dvsec"><h3 class="pch">${ic('grid',18)} Tous les exercices <span class="n">${L.length}</span></h3>
     ${byCat.length?byCat.map(({c,L})=>`<div class="exgh" style="--c1:${c.c1};--c2:${c.c2}">${c.ico?`<span class="exico xs">${exIco(c.ico,18)}</span>`:''}<b>${c.l}</b><span class="n">${L.reduce((a,s)=>a+s.n,0)}</span></div>
-     ${L.map(s=>`<div class="exst"><span class="exl">${esc(exLabel(s.k))}</span><span class="exstn"><b>${s.n}</b> fois · ${s.fl} vol${s.fl>1?'s':''}</span>${exDots(s.g,8)}<span class="exavg" style="--g:${exGc(s.avg)}">${exAvgL(s.avg)}</span></div>`).join('')}`).join(''):'<p class="small muted" style="margin:0">Le suivi apparaîtra avec les premières fiches de vol.</p>'}
+     ${L.map(s=>`<div class="exst"><span class="exl">${esc(exLabel(s.k))}</span><span class="exstn"><b>${s.n}</b> fois · ${s.fl} vol${s.fl>1?'s':''}</span>${exDots(s.g,8)}<span class="exavg" style="--g:${exGc(s.avg)}">${exAvgL(s.avg)}</span></div>`).join('')}`).join(''):'<p class="small muted" style="margin:0">Le suivi apparaîtra avec les premières fiches de vol.</p>'}${!isOnline()?`<p style="margin:12px 0 0">${Object.values(DB.ex||{}).some(e=>e.demo)?`<button class="more" onclick="exDemoOff()">Retirer la saison d'exemple</button>`:`<button class="btn" onclick="exDemo()">Voir une saison d'exemple</button> <span class="small muted">(maquette)</span>`}</p>`:''}
    </div></section>`}
  /* --- Les vols de la semaine --- */
  const nav=`<div class="pcnav"><button class="ib" onclick="S.exW=pcAdd(exWk(),-7);render();exAuto()" aria-label="Semaine précédente" style="transform:rotate(90deg)">${ic('chev',18)}</button><div><b>Semaine du ${pcWkLabel(w)}</b>${rel?`<small>${rel}</small>`:''}</div><button class="ib" onclick="S.exW=pcAdd(exWk(),7);render();exAuto()" aria-label="Semaine suivante" style="transform:rotate(-90deg)">${ic('chev',18)}</button></div>`;
