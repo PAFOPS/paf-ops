@@ -729,6 +729,8 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .pfrw{display:flex;flex-wrap:wrap;gap:8px}.pfrw button{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:8px 12px;display:grid;justify-items:start;gap:1px;min-width:110px;text-align:left}.pfrw b{font-family:var(--f-disp);font-size:20px}.pfrw span{font-size:12px;color:var(--muted)}.pfrw i{font-style:normal;font-size:12px;font-weight:800;color:#15803d}.pfrw i.tw{color:#dc2626}.pfrw button[aria-pressed=true]{border-color:var(--pri);box-shadow:0 0 0 2px color-mix(in srgb,var(--pri) 30%,transparent)}
 .pfcfg{display:flex;gap:6px;align-items:center;margin:10px 0 0;font-size:14px}
 @media (max-width:760px){.pfvol{grid-template-columns:1fr 1fr;gap:8px}.pfvol label:nth-child(2){grid-column:1/-1;grid-row:2}.pfoaci{font-size:18px}}
+.pfb2{margin-top:12px}.pfb2 .dvsec{border:0}.pfb2b{display:flex;gap:8px;align-items:center;border-radius:12px;padding:8px 10px;margin:0 0 6px;font-size:14px}.pfb2b.ok{background:color-mix(in srgb,#22c55e 12%,var(--surface));color:#15803d}.pfb2b.bad{background:color-mix(in srgb,#ef4444 12%,var(--surface));color:#b91c1c}
+.pfb2t{display:grid;margin-top:8px}.pfb2r{display:grid;grid-template-columns:72px repeat(var(--n),1fr);gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}.pfb2r>span{font-size:13px;font-weight:700;color:var(--muted)}.pfb2r b{font-family:var(--f-disp);font-size:18px}.pfb2r b small{font-size:11px;color:var(--muted)}.pfb2r b.chg{color:#b45309}.pfb2h b{font-family:var(--f-body);font-size:13px;display:grid}.pfb2h b small{font-weight:600}
 .pfplq{margin-top:12px}.pfplq .dvsec{border:0}.pfpre{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px;font-family:ui-monospace,Menlo,monospace;font-size:14px;line-height:1.5;white-space:pre-wrap}.pfdone{display:flex;gap:6px;align-items:center;color:#15803d;font-weight:700;margin:10px 0 0}
 .pfcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .pfc{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:12px 14px;display:grid;gap:2px;box-shadow:var(--shadow)}
@@ -2736,9 +2738,9 @@ function pfIndex(C,P,T){const rows=C.idxP.map((p,i)=>[p,lerp(C.idxT,C.idx[i],T)]
 const PFK=localStorage?KEY+':perf':null;
 function pfIn(){if(!S.pf){let o=null;try{o=JSON.parse(localStorage.getItem(PFK)||'null')}catch(e){}S.pf=Object.assign({cfg:'N1',L:2400,wind:0,T:15,mode:'qfe',qfe:1013,qnh:1013,alt:0,wet:'seche',ab:false},o||{})}return S.pf}
 function pfSet(k,v){const o=pfIn();o[k]=v;try{localStorage.setItem(PFK,JSON.stringify(o))}catch(e){}render()}
-function pfCalc(){const C=pfCfg(),o=pfIn();
+function pfCalc(Lx){const C=pfCfg(),o=pfIn();
  const qfe=o.mode==='qnh'?Math.round((+o.qnh||1013)-(+o.alt||0)/27.3):(+o.qfe||1013);
- const T=+o.T||0,L=+o.L||0,W=+o.wind||0,mix=PF_MIX[o.cfg],row=o.cfg==='N2'?'N2':o.cfg==='D'?'D':'N1';
+ const T=+o.T||0,L=Lx!=null?Lx:(+o.L||0),W=+o.wind||0,mix=PF_MIX[o.cfg],row=o.cfg==='N2'?'N2':o.cfg==='D'?'D':'N1';
  const idx=pfIndex(C,qfe,T);
  const mx=(a,b)=>mix!=null?a+(b-a)*mix:a;
  const acc=Math.round(mx(lerp(C.accT,C.acc[row],T),lerp(C.accT,C.acc.N2,T))),vr=Math.round(mx(C.vr[row][idx-1],C.vr.N2[idx-1])),vlof=Math.round(mx(C.vlof[row][idx-1],C.vlof.N2[idx-1])),dist=Math.round(mx(C.dist[row][idx-1],C.dist.N2[idx-1]));
@@ -2843,11 +2845,23 @@ function pfAutoBox(){const o=pfIn(),ad=pfAd(o.ad),wx=pfWxAt(),L=pfFlights(),f=o.
   ${R.length?`<label class="l" style="margin-top:10px">Piste</label><div class="pfrw">${R.map(r=>`<button aria-pressed="${o.rw===r.id}" onclick="pfRwPick('${esc(r.id)}')"><b>${esc(r.id)}</b><span>${r.L.toLocaleString('fr-FR')} m</span>${wx&&wx.T!=null?`<i class="${r.hw<0?'tw':''}">${r.hw<0?'−'+(-r.hw)+' kt arrière':'+'+r.hw+' kt face'}${r.xw>=10?' · '+r.xw+' kt travers':''}</i>`:''}</button>`).join('')}</div>`:''}
   ${cfg?`<p class="pfcfg">${ic('fuel',15)} Plaquette « ${esc(f.title)} » → plein <b>${(PF_CFG.find(c=>c[0]===cfg)||[cfg,cfg])[1]}</b></p>`:''}
   <p class="hint" style="margin:8px 0 0">Les valeurs sont reportées dans « Conditions du jour » : vous pouvez toujours les ajuster à la main.</p></div></section>`}
+/* ---- Décollage en 2 box : le box avant aligné 300 m devant (à défaut 150 m) dispose de moins de piste ---- */
+const pfPass=(x,L)=>x.dist<=L&&x.vs>=x.vr;
+function pfB2(){const o=pfIn(),L=+o.L||0,a=pfCalc(L-300),b=pfCalc(L-150);return {L,a,b,okA:pfPass(a,L-300),okB:pfPass(b,L-150)}}
+const pfWhy=(x,L)=>[x.dist>L?`distance de décollage ${x.dist} m pour ${L} m`:'',x.vs<x.vr?`Vstop ${x.vs} kt sous Vr ${x.vr} kt`:''].filter(Boolean).join(' et ');
+function pfBox2(x){const B=pfB2(),L=B.L,cols=[['Box arrière',`piste entière · ${L} m`,x,L],['Box avant',`aligné 300 m devant · ${L-300} m`,B.a,L-300]].concat(B.okA?[]:[['Box avant',`aligné 150 m devant · ${L-150} m`,B.b,L-150]]);
+ const row=(lab,k,u)=>`<div class="pfb2r"><span>${lab}</span>${cols.map(c=>{const v=c[2][k],d=v!==x[k];return `<b class="${d?'chg':''}">${v} <small>${u}</small></b>`}).join('')}</div>`;
+ const ban=B.okA?`<div class="pfb2b ok">${ic('check',16)} <span>Box avant à 300 m : <b>ça passe</b>.</span></div>`
+  :`<div class="pfb2b bad">${ic('alert',16)} <span>À 300 m, ça ne passe pas : ${pfWhy(B.a,L-300)}.</span></div>`+(B.okB?`<div class="pfb2b ok">${ic('check',16)} <span>Aligner le box avant <b>150 m devant</b> : ça passe.</span></div>`:`<div class="pfb2b bad">${ic('alert',16)} <span>Même à 150 m, ça ne passe pas (${pfWhy(B.b,L-150)}) : décollage en un seul box à envisager.</span></div>`);
+ return `<section class="dvbox pfb2"><div class="dvsec"><h3 class="pch">${ic('plane',18)} Décollage en 2 box</h3>${ban}
+  <div class="pfb2t" style="--n:${cols.length}"><div class="pfb2r pfb2h"><span></span>${cols.map(c=>`<b>${c[0]}<small>${c[1]}</small></b>`).join('')}</div>
+  ${row('90 kt','acc','s')}${row('Vr','vr','kt')}${row('Vlof','vlof','kt')}${row('Distance','dist','m')}${row('Vc','vc','kt')}${row('Vstop','vs','kt')}</div>
+  <p class="small muted" style="margin:8px 0 0">Seules la longueur de piste disponible et donc Vstop changent pour le box avant (+${pfCfg().kL} kt par 100 m de piste). En couleur : ce qui diffère du box arrière.</p></div></section>`}
 /* ---- Perfos dans la plaquette : l'Athos 4 (ou le chef) inscrit les perfos du jour à la fin de la description du vol choisi ---- */
 const pfN4=()=>+(DB.pfN||4);
 function pfCan4(){if(isChef())return true;if(isOnline()){if(!ME||ME.role!==ROLE)return false;const x=memOf(ME.mail);return !!x&&x.fn==='PILOTES'&&athN(x)===pfN4()}return ROLE==='visit'}
-const pfVals=x=>({acc:Math.round(x.acc),vr:Math.round(x.vr),vlof:Math.round(x.vlof),vs:Math.round(x.vs),vc:Math.round(x.vc)});
-const pfTxt=v=>`Perfos :\n90kt ${v.acc}"\nVr ${v.vr} kt\nVlof ${v.vlof} kt\nVstop ${v.vs} kt\nVc ${v.vc} kt`;
+const pfVals=x=>{const v={acc:Math.round(x.acc),vr:Math.round(x.vr),vlof:Math.round(x.vlof),vs:Math.round(x.vs),vc:Math.round(x.vc)};if(pfIn().box2){const B=pfB2();if(B.okA){v.b2off=300;v.b2vs=B.a.vs}else if(B.okB){v.b2off=150;v.b2vs=B.b.vs}else v.b2off=-1}return v};
+const pfTxt=v=>`Perfos :\n90kt ${v.acc}"\nVr ${v.vr} kt\nVlof ${v.vlof} kt\nVstop ${v.vs} kt\nVc ${v.vc} kt`+(v.b2off>0?`\nBox avant (${v.b2off} m devant) : Vstop ${v.b2vs} kt`:v.b2off===-1?'\nBox avant : décollage en 2 box impossible':'');
 const pfFlT=f=>new Date(pcAdd(f.w,f.d)+'T'+f.time+':00').getTime();
 /* Vols à venir : semaine en cours et suivante (agenda en ligne ; vols d'exemple dans la maquette) */
 function pfFlights(){const w0=pcCurWk();let L;
@@ -2887,6 +2901,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
    <label class="l">Pression</label><div class="chips" style="margin-bottom:6px"><button aria-pressed="${o.mode==='qfe'}" onclick="pfSet('mode','qfe')">QFE</button><button aria-pressed="${o.mode==='qnh'}" onclick="pfSet('mode','qnh')">QNH + altitude terrain</button></div>
    ${o.mode==='qfe'?num('qfe','QFE','hPa',1,850,1060):num('qnh','QNH','hPa',1,900,1060)+num('alt','Altitude du terrain','ft',50,0,9000)+`<div class="small muted" style="margin:-4px 0 8px">QFE calculé : <b>${x.qfe} hPa</b> (≈ 1 hPa par 27 ft)</div>`}
    <label class="l">État de la piste</label><div class="chips">${PF_WET.map(([k,l])=>`<button aria-pressed="${o.wet===k}" onclick="pfSet('wet','${k}')">${l}</button>`).join('')}</div>
+   <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Décollage en 2 box</b><span class="small muted" style="display:block">Le box avant s'aligne 300 m devant le box arrière : moins de piste devant lui.</span></div><button class="switch" role="switch" aria-checked="${!!o.box2}" aria-label="Décollage en 2 box" onclick="pfSet('box2',!pfIn().box2)"></button></label>
    <label class="mrule" style="padding:10px 0 0;border:0"><div><b>Aérofreins sortis à l'interruption</b><span class="small muted" style="display:block">Vc freinage +2,5 % (abaque) · longueur de piste nécessaire −10 %.</span></div><button class="switch" role="switch" aria-checked="${!!o.ab}" aria-label="Aérofreins sortis" onclick="pfSet('ab',!pfIn().ab)"></button></label>
   </div></section>
   <section>
@@ -2898,6 +2913,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
     ${card('Vc · freinage',x.vc,'kt','vitesse max de début de freinage (énergie détresse)',x.vc<x.vs?'ko':'')}
     ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vr?'ko':x.vs>=x.vlof?'ok':'')}
    </div>
+   ${pfIn().box2?pfBox2(x):''}
    ${pfPlq(x)}
    ${x.al.map(a=>`<div class="pfal" style="--c:${AL[a.t][0]}">${tile({i:AL[a.t][2],c1:AL[a.t][0],c2:AL[a.t][1]},'sm')}<div><b>${a.h}</b><span>${a.p}</span></div></div>`).join('')}
    <details class="zrt" style="margin-top:12px"><summary>${tile({i:'info',c1:'#64748b',c2:'#334155'},'sm')}<span class="t"><b>Comment c'est calculé</b><span class="small muted">Références et corrections appliquées</span></span><span class="chev">${ic('chev',20)}</span></summary>
