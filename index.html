@@ -3985,7 +3985,8 @@ function vEx(tabs){exMigrate();const w=exWk(),ed=exCanEdit(),F=exFlights(w),rel=
 function exSheetBox(){const id=DB.exSheet||'';return `<section class="dvbox exbox" style="max-width:none"><div class="dvsec"><h3 class="pch">${ic('file',18)} Classeur exercices 2027 <span class="small muted" style="font-weight:600">· Google Sheets sur le Drive</span></h3>
  <p class="small muted">Chaque vol saisi ici est recopié dans le classeur (onglet @4 ou @8, une ligne par vol : date, tour, DOM's, exercices). ${isOnline()?'':'Dans la maquette, rien n\'est envoyé.'}</p>
  <div class="pcbtns" style="margin-bottom:10px"><button class="btn" onclick="exImport()">${ic('upload',15)} Importer le classeur Excel</button><span class="small muted">Les vols déjà saisis dans @4 et @8 entrent dans le suivi (sans note).</span></div>
- <label class="l" for="ex-sheet">ID ou lien du classeur Google Sheets</label><div class="pcbtns"><input class="in" id="ex-sheet" style="flex:1;min-width:200px" placeholder="https://docs.google.com/spreadsheets/d/…" value="${esc(id)}" onchange="DB.exSheet=exSheetId(this.value);save();render()">${isOnline()?`<button class="btn" onclick="exSheetSync()">${ic('refresh',15)} Tout renvoyer</button>`:''}</div>
+ <label class="l" for="ex-sheet">ID ou lien du classeur Google Sheets</label><div class="pcbtns"><input class="in" id="ex-sheet" style="flex:1;min-width:200px" placeholder="https://docs.google.com/spreadsheets/d/…" value="${esc(id)}" onchange="DB.exSheet=exSheetId(this.value);save();render()">
+ </div>${id?`<p class="small muted" style="margin:4px 0 0">Identifiant retenu : <code>${esc(id)}</code> · <a href="https://docs.google.com/spreadsheets/d/${esc(id)}/edit" target="_blank" rel="noopener">ouvrir le classeur</a></p>`:''}<div class="pcbtns" hidden>${isOnline()?`<button class="btn" onclick="exSheetSync()">${ic('refresh',15)} Tout renvoyer</button>`:''}</div>
  ${S.exSheetMsg?`<p class="small" style="margin:8px 0 0">${esc(S.exSheetMsg)}</p>`:''}
  <p class="hint" style="margin-top:8px">Mise en place (une fois) : dans le Drive de athos17.paf, dossier <b>PAF OPS › Instruction</b>, déposez le fichier Excel, ouvrez-le avec Google Sheets puis <i>Fichier › Enregistrer au format Google Sheets</i>, et collez ici le lien du classeur obtenu. Dans l'éditeur Apps Script, lancez une fois <b>preparerClasseur</b> pour ajouter la formation « MR → Diamant → Concorde » aux listes.</p></div></section>`}
 /* Import du classeur Excel (onglets @4 et @8) : chaque ligne devient une fiche de vol, sans note ; lu sur l'appareil */
@@ -4001,7 +4002,7 @@ function exImportWb(wb){DB.ex=DB.ex||{};let n=0;const TT={T1:'09:30',T2:'12:30',
    const old=DB.ex[id],e={w,d:dd,time,title:'@'+box+' · classeur',ev:id,tour,box,dom,c,g:old&&old.g||{},note:old&&old.note||'',by:'Classeur Excel',t:old&&old.t||Date.now(),tm:Date.now(),v2:1,xl:1,sheet:Date.now()};
    if(!old||JSON.stringify([old.dom,old.c])!==JSON.stringify([dom,c])){DB.ex[id]=e;n++}}});
  return n}
-const exSheetId=v=>{const m=String(v||'').match(/[-\w]{25,}/);return m?m[0]:''};
+const exSheetId=v=>{v=String(v||'');const m=v.match(/\/spreadsheets\/d\/([-\w]{25,})/)||v.match(/(?:^|[^-\w])([-\w]{25,})(?:[^-\w]|$)/);return m?m[1]:''};
 async function exSheetSync(){if(!isOnline())return;S.exSheetMsg='Envoi en cours…';render();let r;try{r=await api('exSheet',{all:1})}catch(e){r={error:'Connexion impossible'}}S.exSheetMsg=r&&r.ok?`${r.n} vol${r.n>1?'s':''} recopié${r.n>1?'s':''} dans le classeur.`:(r&&r.error)||'Échec';render()}
 /* ====================== COMM : interviews des Athos et cadres remis ====================== */
 /* Interviews : DB.itw = [{id, ath (1 à 9), med ('tv'|'radio'|'presse'), nm (nom du média, facultatif), d (date), mid (meeting), by, t, del}]
