@@ -1318,6 +1318,7 @@ function vMeeting(){
   {k:'room',l:'Salles',d:'Ce qu\'il faut prévoir',i:'screen',c1:'#f43f5e',c2:'#be123c',on:canSee('logi'),h:()=>vRoomInfo(m),p:()=>({done:0,tot:0}),u:'',info:1},
   {k:'soir',l:'Soirée officielle',d:'Jour, lieu, tenue',i:'star',c1:'#f5c24a',c2:'#b7860f',on:isChef()||ROLE==='sec',h:()=>vSoir(m),p:()=>({done:[soir(m).day,soir(m).info].filter(Boolean).length,tot:2}),o:()=>soir(m)},
   {k:'com',l:'Communication',d:'Public, médias',i:'mega',c1:'#ec4899',c2:'#be185d',on:canSee('com'),h:()=>vGrid(m,'com','Communication','mega','#ec4899','#be185d','com','Communication'),p:()=>gridProg(m,'com'),o:()=>com(m)},
+  {k:'press',l:'Dossier de presse',d:'Visuels, logos, dossier',i:'folder',c1:'#06b6d4',c2:'#0e7490',on:canSee('com')||pressCan(),h:()=>vPress(),p:()=>({done:pressL().length,tot:0}),u:'document'},
   {k:'contacts',l:'Contacts',d:'Organisation du meeting',i:'users',c1:'#10b981',c2:'#047857',on:canSee('contacts'),h:contactsH,p:()=>({done:cs.length,tot:0}),u:'contact'},
   {k:'aero',l:'Directeur des vols',d:'Plan, pilot book, créneaux',i:'radio',c1:'#6366f1',c2:'#3730a3',on:canSee('aero')&&ROLE!=='org',h:()=>vAero(m),p:()=>aeroProgress(m),o:()=>aero(m)},
   {k:'pdocs',l:'Dossier pilotes',d:'CERFA, licences…',i:'folder',c1:'#64748b',c2:'#334155',on:canSee('pdocs'),h:()=>vPdocs(),p:()=>({done:DB.pdocs.length,tot:0}),u:'document'}
@@ -2488,9 +2489,7 @@ ITM.com0=m=>[
 const WISH_TXT='Dites-nous tout ce que vous imaginez pour la communication autour de la venue de la Patrouille : médias à accueillir, reportages ou prises de vues, rencontres avec les autorités, les partenaires ou le public, dédicaces… La cellule communication de la Patrouille étudie chaque souhait et revient vers vous pour en confirmer la faisabilité.';
 ITM.com=m=>[
  {k:'wish',l:'Vos souhaits <small class="lsub">(médias, rencontres…)</small>',i:'mega',c1:'#ec4899',c2:'#be185d',kind:'sheet',open:`wishSheet('${m.id}')`,done:o=>!!(o.wish||'').trim()||o.chk.wish==='non',warn:()=>false,
-  sub:o=>(o.wish||'').trim()?'Transmis à la comm':o.chk.wish==='non'?'Pas de demande':'À dire',info:'<p>'+WISH_TXT+'</p>'},
- {k:'press',l:'Dossier de presse',i:'folder',c1:'#06b6d4',c2:'#0e7490',kind:'sheet',opt:1,open:`pressSheet()`,done:()=>pressL().length>0,warn:()=>false,sub:()=>pressL().length?pressL().length+' document'+(pressL().length>1?'s':''):'Bientôt',
-  info:'<p>Les documents et liens mis à disposition par la cellule communication de la Patrouille : dossier de presse, visuels, logos, vidéos.</p>'}];
+  sub:o=>(o.wish||'').trim()?'Transmis à la comm':o.chk.wish==='non'?'Pas de demande':'À dire',info:'<p>'+WISH_TXT+'</p>'}];
 function wishSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.id===S.fs.mid),C=com(m),ed=canEdit('com')&&C.status!=='sent'&&C.status!=='ok';
  return shHead({i:'mega',c1:'#ec4899',c2:'#be185d'},'Vos souhaits pour la communication','Médias, reportages, rencontres, dédicaces…')+`<div class="sb">${lockNote(C,'com','com')}<p class="small" style="margin:0 0 10px">${WISH_TXT}</p>
   <textarea class="in tnote" rows="7" ${ed?'':'disabled'} placeholder="Ex. : France 3 souhaite un reportage le samedi matin ; le maire aimerait rencontrer les pilotes ; une séance de dédicaces pour les écoles…" onchange="S.skipLive=true;setSecVal('${mid}','com','wish',this.value);S.skipLive=false">${esc(C.wish||'')}</textarea>
@@ -2797,7 +2796,7 @@ function pfCalc(Lx){const C=pfCfg(),o=pfIn();
 function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
  if(isOsab())return vFea('');
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
-  <div class="pfhome">${PF_HOME.filter(k=>ROLE==='comm'?(k==='itw'||k==='cad'||k==='press'):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='press'||pressCan())).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
+  <div class="pfhome">${PF_HOME.filter(k=>ROLE==='comm'?(k==='itw'||k==='cad'):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
  if(PF_DIR[sub]){const D=PF_DIR[sub];return `${NOTE}<div class="head"><div><h1>${D[0]}</h1><p class="muted">${D[1]}</p></div></div><div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>
   <div class="pfhome">${D[2].map(k=>{const t=PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span></button>`}).join('')}</div>`}
  const par=pfParent(sub);
@@ -2809,7 +2808,6 @@ function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
  if(sub==='rg'){if(!rgCan()){S.pfTab='home';return vPerfos()}return vRg(tabs)}
  if(sub==='itw'){if(!itwCan()){S.pfTab='home';return vPerfos()}return vItw(tabs)}
  if(sub==='cad'){if(!cadCan()){S.pfTab='home';return vPerfos()}return vCad(tabs)}
- if(sub==='press'){if(!pressCan()){S.pfTab='home';return vPerfos()}return vPress(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
  if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
  if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
@@ -4156,9 +4154,10 @@ function pressDel(id){const e=(DB.press||[]).find(x=>x.id===id);if(!e||!confirm(
 function pressRow(e,ed){window.__IA[e.id]=e;return `<div class="drow">${tile(e.kind==='link'?{i:'link',c1:'#06b6d4',c2:'#0e7490'}:{i:'file',c1:'#ec4899',c2:'#be185d'},'sm')}<div class="t"><b>${esc(e.name)}</b><small>${e.kind==='link'?esc(e.url.replace(/^https?:\/\/(www\.)?/,'').slice(0,50)):fsize(e.size)+' · '+new Date(e.t).toLocaleDateString('fr-FR')}</small></div>
  ${e.kind==='link'?`<a class="ib" href="${esc(e.url)}" target="_blank" rel="noopener" aria-label="Ouvrir">${ic('link',16)}</a>`:`<button class="ib" onclick="dlFile(window.__IA['${e.id}'])" aria-label="Télécharger" title="Télécharger">${ic('download',16)}</button>`}${ed?`<button class="ib" onclick="pressDel('${e.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:''}</div>`}
 function pressListH(ed){const L=pressL();return `<div class="docs">${L.length?L.map(e=>pressRow(e,ed)).join(''):'<p class="small muted">Aucun document pour l\'instant.</p>'}</div>`}
-function vPress(tabs){const ed=pressCan();
- return `${NOTE}<div class="head"><div><h1>Dossier de presse</h1><p class="muted">Tout ce dont un organisateur peut avoir besoin pour sa communication : dossier de presse, visuels, logos, vidéos, liens. Il le retrouve dans la rubrique Communication de son meeting.</p></div></div>${tabs}${ccDemo()}
- <section class="dvbox ccbox"><div class="dvsec">${ed?`<div class="pcbtns" style="margin-bottom:12px"><button class="btn pri" onclick="PICK={press:1};const i=$('filein');i.value='';i.click()">${ic('upload',15)} Déposer un fichier</button><button class="btn" onclick="pressLinkSheet()">${ic('link',15)} Ajouter un lien</button><span class="small muted">PDF, images, vidéos… 20 Mo maximum par fichier.</span></div>`:''}${pressListH(ed)}</div></section>`}
+function vPress(){const ed=pressCan();
+ return `<div class="sect"><h2>${ic('folder',20)} Dossier de presse</h2>${ed?`<span style="display:flex;gap:8px"><button class="btn pri" onclick="PICK={press:1};const i=$('filein');i.value='';i.click()">${ic('upload',16)} Fichier</button><button class="btn" onclick="pressLinkSheet()">${ic('link',16)} Lien</button></span>`:''}</div>
+ <p class="small muted" style="margin:-4px 0 12px">${ed?'Tout ce dont un organisateur peut avoir besoin pour sa communication : dossier de presse, visuels, logos, vidéos, liens (PDF, images, vidéos… 20 Mo maximum par fichier). Le même dossier est proposé à tous les organisateurs.':'Documents et liens mis à disposition par la cellule communication de la Patrouille de France : dossier de presse, visuels, logos, vidéos… Touchez '+ic('download',13)+' pour télécharger.'}</p>
+ ${pressListH(ed)}`}
 /* ---------------- Cadres ---------------- */
 const cadL=()=>(DB.cad||[]).filter(e=>!e.del);
 function cadAdd(){const i=$('cad-w'),w=(i&&i.value||'').trim();if(!w){if(i)i.focus();return}const mid=S.cadM!==undefined?S.cadM:((ccNext()||{}).id||'');if(!mid){toast('Choisissez le meeting');return}
@@ -4247,17 +4246,31 @@ function rgBuild(files){const F=files.filter(f=>f.pts.length>60);if(F.length<2)t
 function rgShift(a,d){if(!d)return;const N=a.x.length,sh=arr=>{const o=new Float32Array(N).fill(NaN);for(let i=0;i<N;i++){const s=i+d,j=Math.floor(s),f=s-j;if(j<0||j+1>=N||isNaN(arr[j])||isNaN(arr[j+1]))continue;o[i]=arr[j]+(arr[j+1]-arr[j])*f}return o};
  a.x=sh(a.x);a.y=sh(a.y);a.z=sh(a.z);a.v=sh(a.v);const c=new Float64Array(N);for(let i=1;i<N;i++)c[i]=c[i-1]+(isNaN(a.x[i])||isNaN(a.x[i-1])?0:Math.hypot(a.x[i]-a.x[i-1],a.y[i]-a.y[i-1]));a.c=c;
  ['out','in','dw'].forEach(k=>{if(a[k])a[k]=[Math.round(a[k][0]-d),Math.round(a[k][1]-d)]});['to','td','roll','brk'].forEach(k=>{if(a[k]!=null)a[k]=Math.round(a[k]-d)})}
-/* 1. Recalage grossier : l'instant où le plus d'avions sont réunis (à moins de 60 m du centre du groupe, en vol) ; ceux qui en sont loin n'ont pas
-   la bonne référence de temps → on décale toute leur trace (−30 à +30 s) jusqu'à ce qu'ils rejoignent le groupe.  2. Recalage fin (±6 s) sur le leader. */
-function rgAlign(R){R.align={};const ok=R.A.filter(a=>!a.bad),N=R.N;
+/* Recalage des horloges GPS. En formation, les avions forment un groupe compact ; un avion décalé en temps apparaît « un peu plus loin,
+   dans la même direction » que le groupe. On vérifie la cohérence à de nombreux instants du vol (toutes les 5 s, en vol, avant le break) :
+   à chaque instant, le groupe = le plus grand ensemble d'avions à moins de 150 m les uns des autres ; s'il réunit la majorité, chaque avion
+   hors du groupe est testé : quel décalage (−30 à +30 s) le ramène dans le groupe ? Un avion presque toujours hors du groupe, avec un décalage
+   stable sur tout le vol (ex. le 2 et le 7 toujours à +2 s), a une mauvaise référence de temps : toute sa trace est décalée. On revérifie ensuite
+   la cohérence (part des instants où chaque avion est dans le groupe). Enfin, recalage fin (±6 s) sur le leader, par la stabilité de la distance au leader. */
+function rgAlign(R){R.align={};R.coh=null;const ok=R.A.filter(a=>!a.bad),N=R.N,RAD=150;
  if(ok.length>=3){const at=(a,i)=>{const j=Math.floor(i),f=i-j;if(j<0||j+1>=N||isNaN(a.x[j])||isNaN(a.x[j+1]))return null;return [a.x[j]+(a.x[j+1]-a.x[j])*f,a.y[j]+(a.y[j+1]-a.y[j])*f]};
-  const cen=(P,i)=>{let cx=0,cy=0;P.forEach(a=>{cx+=a.x[i];cy+=a.y[i]});return [cx/P.length,cy/P.length]};
-  let bt=-1,bn=0,bs=1e9;for(let i=0;i<N;i+=2){const P=ok.filter(a=>!isNaN(a.x[i])&&a.v[i]>150);if(P.length<=ok.length/2)continue;const c=cen(P,i);let n=0,sd=0;P.forEach(a=>{const d=Math.hypot(a.x[i]-c[0],a.y[i]-c[1]);if(d<60){n++;sd+=d}});if(n>bn||(n===bn&&sd<bs)){bn=n;bt=i;bs=sd}}
-  if(bt>=0&&bn>ok.length/2){const c=cen(ok.filter(a=>!isNaN(a.x[bt])&&a.v[bt]>150),bt),G=ok.filter(a=>!isNaN(a.x[bt])&&Math.hypot(a.x[bt]-c[0],a.y[bt]-c[1])<60);
-   const win=[];for(let i=Math.max(2,bt-20);i<=Math.min(N-3,bt+20);i++){if(G.every(a=>!isNaN(a.x[i])&&a.v[i]>150))win.push([i,cen(G,i)])}
-   ok.forEach(a=>{if(G.includes(a))return;const cost=d=>{const D=[];win.forEach(([i,c])=>{const p=at(a,i+d);if(p)D.push(Math.hypot(p[0]-c[0],p[1]-c[1]))});return D.length<win.length/2?1e9:rgMed(D)};
-    const c0=cost(0);let best=0,bc=c0;for(let d=-30;d<=30;d+=0.5){if(!d)continue;const q=cost(d);if(q<bc-1){bc=q;best=d}}
-    if(best&&bc<80&&bc<c0*0.6){rgShift(a,best);R.align[a.k]=best}})}}
+  const fly=(a,i)=>!isNaN(a.x[i])&&a.v[i]>120&&i>a.to+30&&i<a.dw[0]-20;
+  /* le groupe à l'instant i : le plus grand ensemble d'avions à moins de RAD les uns des autres (autour de l'avion qui a le plus de voisins) */
+  const grp=i=>{const P=ok.filter(a=>fly(a,i));if(P.length<3)return null;let best=null;P.forEach(a=>{const G=P.filter(b=>Math.hypot(a.x[i]-b.x[i],a.y[i]-b.y[i])<RAD);if(!best||G.length>best.length)best=G});
+   if(best.length<Math.max(3,Math.ceil(ok.length/2)))return null;let x=0,y=0;best.forEach(a=>{x+=a.x[i];y+=a.y[i]});return {G:best,c:[x/best.length,y/best.length]}};
+  const maj=Math.max(3,Math.ceil(ok.length/2));
+  const analyse=()=>{const T=[];for(let i=0;i<N;i+=5){const g=grp(i);if(g)T.push([i,g])}if(T.length<8)return null;
+   const E={};ok.forEach(a=>E[a.k]={in:0,n:0,d:[]});
+   T.forEach(([i,g])=>{ok.forEach(a=>{if(!fly(a,i))return;const e=E[a.k];e.n++;if(g.G.includes(a)){e.in++;return}
+     /* hors du groupe : le décalage qui le ramène le plus près du centre du groupe */
+     let bd=0,bc=1e9;for(let d=-30;d<=30;d+=0.5){const p=at(a,i+d);if(!p)continue;const q=Math.hypot(p[0]-g.c[0],p[1]-g.c[1]);if(q<bc){bc=q;bd=d}}if(bc<RAD)e.d.push(bd)})});
+   return {T,E}};
+  for(let pass=0;pass<2;pass++){const A=analyse();if(!A)break;let moved=false;
+   ok.forEach(a=>{const e=A.E[a.k];if(e.n<8||e.in/e.n>0.3||e.d.length<Math.max(4,e.n*0.5))return;   // presque toujours hors du groupe, et un décalage le ramène
+    const D=e.d.slice().sort((p,q)=>p-q),med=D[Math.floor(D.length/2)],q1=D[Math.floor(D.length/4)],q3=D[Math.floor(D.length*3/4)];
+    if(Math.abs(med)>=1&&q3-q1<=1.5){rgShift(a,med);R.align[a.k]=Math.round(((R.align[a.k]||0)+med)*2)/2;moved=true}});
+   if(!moved)break}
+  const A=analyse();if(A)R.coh=ok.map(a=>{const e=A.E[a.k];return [a.k,e.n?e.in/e.n:0]})}
  rgAlignFine(R)}
 function rgAlignFine(R){const L=R.A[R.ordOut[0]];if(!L||L.bad)return;
  R.A.forEach(a=>{if(a.bad||a===L)return;const idx=[];for(let i=L.to+30;i<Math.min(L.td,a.td)-30;i++){if(isNaN(a.x[i])||isNaN(L.x[i])||!(L.v[i]>150))continue;if(Math.hypot(a.x[i]-L.x[i],a.y[i]-L.y[i])<200)idx.push(i)}
@@ -4495,7 +4508,7 @@ function vRg(tabs){const head=`${NOTE}<div class="head"><div><h1>Espacement</h1>
    <div class="rgfl">${R.fls.slice(0,3).concat(R.fl&&R.fls.indexOf(R.fl)>2?[R.fl]:[]).map((f,i)=>`<button aria-pressed="${!!(R.fl&&R.fl.id===f.id)}" onclick="RG.fl=RG.fls.find(x=>x.id==='${esc(f.id)}')||null;render()"><b>${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h'))}</b><span>${esc(f.title||'Vol')}${i===0&&R.fl&&R.fl.id===f.id?' · proposé':''}</span></button>`).join('')}${R.fls.length>3?`<select class="in" onchange="if(this.value){RG.fl=RG.fls.find(x=>x.id===this.value)||null;render()}"><option value="">Un autre vol…</option>${R.fls.slice(3).map(f=>`<option value="${esc(f.id)}">${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h')+' · '+(f.title||'Vol'))}</option>`).join('')}</select>`:''}<button class="more" style="justify-self:start" onclick="RG.fl=null;render()">${R.fl?'Aucun de ces vols':'✓ Sans vol de l\'agenda'}</button></div>`:`<span class="small muted">Aucun vol passé trouvé dans l'agenda autour du ${fmtD(R.date)}.</span>`}</div>
   <label class="l" style="margin-top:10px">Qui est qui <span style="font-weight:500">(ordre du roulage aller ; touchez pour corriger)</span></label>
   <div class="rgwho">${R.ordOut.map(k=>{const a=R.A[k],n=rgNum(k);return `<label style="--c:${rgColN(n)};${[1,4,9].includes(n)?'--t:#0f172a;--b:#0f172a':'--t:#fff;--b:'+rgColN(n)}"><select onchange="rgSetNum(${k},+this.value)">${R.ordOut.map((_,i)=>`<option ${n===i+1?'selected':''}>${i+1}</option>`).join('')}</select><small>${esc(a.name.replace(/\.gpx$/i,''))}</small></label>`}).join('')}</div>
-  ${al.length?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} Horloges GPS recalées sur le groupe : ${al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(2).replace('.',',')+' s').join(', ')}.</p>`:''}
+  ${al.length||R.coh?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} ${al.length?'Horloges GPS recalées sur le groupe : '+al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(1).replace('.',',')+' s').join(', ')+'.':'Horloges GPS cohérentes, aucun recalage.'}${R.coh?(()=>{const bad=R.coh.filter(([k,c])=>c<0.8);return bad.length?' Cohérence à vérifier : '+bad.map(([k,c])=>'n°'+rgNum(+k)+' dans le groupe '+Math.round(c*100)+' % du temps').join(', ')+'.':' Cohérence vérifiée sur tout le vol.'})():''}</p>`:''}
   ${sets}</div></section>
  <section class="rgview"><canvas id="rg-cv"></canvas>
   <div class="exseg rgseg" role="tablist">${RG_SEG.map(([k,l])=>`<button role="tab" aria-selected="${key===k}" onclick="rgSeg('${k}')">${l}</button>`).join('')}</div><div class="rgov"><span id="rg-ck">${rgClock(R,Math.round(S.rgT))}</span><span class="rgord">${key==='out'?'Ordre des numéros':key==='dw'?'Ordre au break : ':'Ordre au retour : '}${key==='out'?'':ordK.map(k=>rgNum(k)).join(' · ')}</span></div>
@@ -4555,9 +4568,9 @@ function pfArt(k){
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
 const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']]};
-const PF_HOME=['alpha','cirrus','fea','pc','ex','rg','itw','cad','press'];
+const PF_HOME=['alpha','cirrus','fea','pc','ex','rg','itw','cad'];
 const pfParent=k=>Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['press','Dossier de presse','Documents et liens pour les organisateurs']];
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
