@@ -4251,32 +4251,39 @@ function rgShift(a,d){if(!d)return;const N=a.x.length,sh=arr=>{const o=new Float
    à chaque instant, le groupe = le plus grand ensemble d'avions à moins de 150 m les uns des autres ; s'il réunit la majorité, chaque avion
    hors du groupe est testé : quel décalage (−30 à +30 s) le ramène dans le groupe ? Un avion presque toujours hors du groupe, avec un décalage
    stable sur tout le vol (ex. le 2 et le 7 toujours à +2 s), a une mauvaise référence de temps : toute sa trace est décalée. On revérifie ensuite
-   la cohérence (part des instants où chaque avion est dans le groupe). Enfin, recalage fin (±6 s) sur le leader, par la stabilité de la distance au leader. */
-function rgAlign(R){R.align={};R.coh=null;const ok=R.A.filter(a=>!a.bad),N=R.N,RAD=150;
+   la cohérence (part des instants où chaque avion est dans le groupe). */
+function rgAlign(R){R.align={};R.coh=null;const ok=R.A.filter(a=>!a.bad),N=R.N,RAD=120;
  if(ok.length>=3){const at=(a,i)=>{const j=Math.floor(i),f=i-j;if(j<0||j+1>=N||isNaN(a.x[j])||isNaN(a.x[j+1]))return null;return [a.x[j]+(a.x[j+1]-a.x[j])*f,a.y[j]+(a.y[j+1]-a.y[j])*f]};
   const fly=(a,i)=>!isNaN(a.x[i])&&a.v[i]>120&&i>a.to+30&&i<a.dw[0]-20;
   /* le groupe à l'instant i : le plus grand ensemble d'avions à moins de RAD les uns des autres (autour de l'avion qui a le plus de voisins) */
   const grp=i=>{const P=ok.filter(a=>fly(a,i));if(P.length<3)return null;let best=null;P.forEach(a=>{const G=P.filter(b=>Math.hypot(a.x[i]-b.x[i],a.y[i]-b.y[i])<RAD);if(!best||G.length>best.length)best=G});
-   if(best.length<Math.max(3,Math.ceil(ok.length/2)))return null;let x=0,y=0;best.forEach(a=>{x+=a.x[i];y+=a.y[i]});return {G:best,c:[x/best.length,y/best.length]}};
-  const maj=Math.max(3,Math.ceil(ok.length/2));
-  const analyse=()=>{const T=[];for(let i=0;i<N;i+=5){const g=grp(i);if(g)T.push([i,g])}if(T.length<8)return null;
+   if(best.length<MAJ)return null;let x=0,y=0;best.forEach(a=>{x+=a.x[i];y+=a.y[i]});return {G:best,c:[x/best.length,y/best.length]}};
+  /* le groupe doit réunir presque tout le monde (tous sauf 2) : en vol à deux box, un box seul n'est pas « le groupe » et l'autre box n'est pas décalé.
+     S'il n'existe aucun instant de ce type, on se contente de la majorité stricte. */
+  let MAJ=Math.max(3,ok.length-2);
+  const analyse=()=>{let T=[];for(let i=0;i<N;i+=5){const g=grp(i);if(g)T.push([i,g])}if(T.length<8&&MAJ>Math.floor(ok.length/2)+1){MAJ=Math.floor(ok.length/2)+1;T=[];for(let i=0;i<N;i+=5){const g=grp(i);if(g)T.push([i,g])}}if(T.length<8)return null;
    const E={};ok.forEach(a=>E[a.k]={in:0,n:0,d:[]});
-   T.forEach(([i,g])=>{ok.forEach(a=>{if(!fly(a,i))return;const e=E[a.k];e.n++;if(g.G.includes(a)){e.in++;return}
-     /* hors du groupe : le décalage qui le ramène le plus près du centre du groupe */
-     let bd=0,bc=1e9;for(let d=-30;d<=30;d+=0.5){const p=at(a,i+d);if(!p)continue;const q=Math.hypot(p[0]-g.c[0],p[1]-g.c[1]);if(q<bc){bc=q;bd=d}}if(bc<RAD)e.d.push(bd)})});
+   T.forEach(([i,g])=>{ok.forEach(a=>{if(!fly(a,i))return;const e=E[a.k];e.n++;const inG=g.G.includes(a);if(inG)e.in++;
+     let c=g.c;if(inG&&g.G.length>2){const n=g.G.length;c=[(c[0]*n-a.x[i])/(n-1),(c[1]*n-a.y[i])/(n-1)]}
+     /* le décalage qui le ramène le plus près du centre des autres (0 s si sa place est bonne) */
+     let bd=0,bc=1e9;for(let d=-30;d<=30;d+=0.5){const p=at(a,i+d);if(!p)continue;const q=Math.hypot(p[0]-c[0],p[1]-c[1]);if(q<bc){bc=q;bd=d}}if(bc<RAD)e.d.push(bd)})});
    return {T,E}};
   for(let pass=0;pass<2;pass++){const A=analyse();if(!A)break;let moved=false;
-   ok.forEach(a=>{const e=A.E[a.k];if(e.n<8||e.in/e.n>0.3||e.d.length<Math.max(4,e.n*0.5))return;   // presque toujours hors du groupe, et un décalage le ramène
+   ok.forEach(a=>{const e=A.E[a.k];if(e.n<8||e.d.length<Math.max(4,e.n*0.5))return;   // un décalage stable, sur tout le vol, le ramène dans le groupe
     const D=e.d.slice().sort((p,q)=>p-q),med=D[Math.floor(D.length/2)],q1=D[Math.floor(D.length/4)],q3=D[Math.floor(D.length*3/4)];
-    if(Math.abs(med)>=1&&q3-q1<=1.5){rgShift(a,med);R.align[a.k]=Math.round(((R.align[a.k]||0)+med)*2)/2;moved=true}});
-   if(!moved)break}
-  const A=analyse();if(A)R.coh=ok.map(a=>{const e=A.E[a.k];return [a.k,e.n?e.in/e.n:0]})}
- rgAlignFine(R)}
+    if(Math.abs(med)>=1&&q3-q1<=1.5){rgShift(a,med);R.align[a.k]=Math.round(((R.align[a.k]||0)+med)*2)/2;a._sh=(a._sh||0)+med;moved=true}});
+   if(!moved)break;
+   /* vérification : un avion recalé doit maintenant être dans le groupe la plupart du temps, sinon on annule son recalage */
+   const cohOf=a=>{const V=analyse(),e=V&&V.E[a.k];return e&&e.n?e.in/e.n:0};
+   ok.forEach(a=>{if(!a._sh)return;   // affinage à ±0,5 s : on garde le décalage qui met l'avion le plus souvent dans le groupe
+    let c=cohOf(a);for(const d of [0.5,-0.5,1,-1]){rgShift(a,d);const c2=cohOf(a);if(c2>c+0.02){c=c2;a._sh+=d;R.align[a.k]=Math.round(a._sh*2)/2}else rgShift(a,-d)}
+    if(c<0.6){rgShift(a,-a._sh);delete R.align[a.k];a._sh=0}})}   // vérification : un avion recalé doit être dans le groupe la plupart du temps, sinon on annule
+  const A=analyse();if(A)R.coh=ok.map(a=>{const e=A.E[a.k];return [a.k,e.n?e.in/e.n:0]})}}
 function rgAlignFine(R){const L=R.A[R.ordOut[0]];if(!L||L.bad)return;
  R.A.forEach(a=>{if(a.bad||a===L)return;const idx=[];for(let i=L.to+30;i<Math.min(L.td,a.td)-30;i++){if(isNaN(a.x[i])||isNaN(L.x[i])||!(L.v[i]>150))continue;if(Math.hypot(a.x[i]-L.x[i],a.y[i]-L.y[i])<200)idx.push(i)}
   if(idx.length<60)return;const cost=d=>{const D=[];for(let q=0;q<idx.length;q+=2){const i=idx[q],s=i+d,j=Math.floor(s),f=s-j;if(j<1||j+1>=a.x.length||isNaN(a.x[j])||isNaN(a.x[j+1]))continue;D.push(Math.hypot(a.x[j]+(a.x[j+1]-a.x[j])*f-L.x[i],a.y[j]+(a.y[j+1]-a.y[j])*f-L.y[i]))}return rgMed(D)};
-  const c0=cost(0);let best=0,bc=c0;for(let d=-6;d<=6;d+=0.5){if(!d)continue;const c=cost(d);if(c<bc-1){bc=c;best=d}}
-  if(best&&bc<c0*0.8&&c0-bc>3){rgShift(a,best);R.align[a.k]=Math.round(((R.align[a.k]||0)+best)*2)/2}})}
+  const c0=cost(0);let best=0,bc=c0;for(let d=-1.5;d<=1.5;d+=0.5){if(!d)continue;const c=cost(d);if(c<bc-1){bc=c;best=d}}
+  if(best&&bc<c0*0.7&&c0-bc>10){rgShift(a,best);R.align[a.k]=Math.round(((R.align[a.k]||0)+best)*2)/2}})}
 /* Le break : l'instant où chaque avion entame son virage (taux > 5°/s tenu 3 s) après le passage à grande vitesse */
 function rgBreaks(R){R.A.forEach(a=>{if(a.bad)return;const hd=i=>Math.atan2(a.x[i+1]-a.x[i-1],a.y[i+1]-a.y[i-1]),rate=i=>{let d=(hd(i+1)-hd(i-1))*180/Math.PI/2;while(d>180)d-=360;while(d<-180)d+=360;return Math.abs(d)};
   let b=-1;for(let i=a.dw[0]-20;i<a.td-10;i++){if(i<2||isNaN(a.x[i-2])||isNaN(a.x[i+2])||!(a.v[i]>170))continue;if(rate(i)>5&&rate(i+1)>5&&rate(i+2)>5){b=i;break}}
