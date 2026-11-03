@@ -869,7 +869,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
   <button id="nav-unite" onclick="go('unite')"></button>
   <button id="nav-acces" onclick="go('acces')"></button>
   <button id="nav-mails" onclick="go('mails')"></button>
-  <button id="nav-perfos" onclick="go('perfos')"></button>
+  <button id="nav-perfos" onclick="S.pfTab='home';go('perfos')"></button>
  </nav>
  <div class="sp"></div>
  <button class="ib bell" id="bell" hidden onclick="pushSheet()" aria-label="Notifications" title="Notifications"></button>
@@ -883,7 +883,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
  <button id="bnav-unite" onclick="go('unite')"></button>
  <button id="bnav-acces" onclick="go('acces')"></button>
  <button id="bnav-mails" onclick="go('mails')"></button>
- <button id="bnav-perfos" onclick="go('perfos')"></button>
+ <button id="bnav-perfos" onclick="S.pfTab='home';go('perfos')"></button>
 </nav>
 
 <div class="ov" id="ov" hidden onpointerdown="OVD=event.target===this" onclick="ovClick(event)"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
