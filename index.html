@@ -4246,35 +4246,45 @@ function rgBuild(files){const F=files.filter(f=>f.pts.length>60);if(F.length<2)t
 function rgShift(a,d){if(!d)return;const N=a.x.length,sh=arr=>{const o=new Float32Array(N).fill(NaN);for(let i=0;i<N;i++){const s=i+d,j=Math.floor(s),f=s-j;if(j<0||j+1>=N||isNaN(arr[j])||isNaN(arr[j+1]))continue;o[i]=arr[j]+(arr[j+1]-arr[j])*f}return o};
  a.x=sh(a.x);a.y=sh(a.y);a.z=sh(a.z);a.v=sh(a.v);const c=new Float64Array(N);for(let i=1;i<N;i++)c[i]=c[i-1]+(isNaN(a.x[i])||isNaN(a.x[i-1])?0:Math.hypot(a.x[i]-a.x[i-1],a.y[i]-a.y[i-1]));a.c=c;
  ['out','in','dw'].forEach(k=>{if(a[k])a[k]=[Math.round(a[k][0]-d),Math.round(a[k][1]-d)]});['to','td','roll','brk'].forEach(k=>{if(a[k]!=null)a[k]=Math.round(a[k]-d)})}
-/* Recalage des horloges GPS par régression : l'avance (ou le retard) d'un avion sur le groupe, mesurée en secondes à chaque instant,
-   vaut dt + g/v : dt = décalage d'horloge (constant), g = sa place dans la formation (en mètres, constante), v = vitesse du groupe.
-   Comme la vitesse varie beaucoup au cours du vol (120 à 370 kt), on sépare les deux : la pente en 1/v donne la place, l'ordonnée à
-   l'origine donne le décalage d'horloge. Régression robuste (Theil-Sen), deux passes, puis vérification de la cohérence. */
-function rgAlign(R){R.align={};R.coh=null;const ok=R.A.filter(a=>!a.bad),N=R.N;if(ok.length<3)return;
+/* Recalage des horloges GPS, par paires d'avions, à partir de deux mesures indépendantes :
+   1. Le roulage au décollage en formation (deux avions qui lâchent les freins ensemble, à moins de 3 s) : l'écart de position le long de la
+      piste vaut place + horloge × vitesse ; la vitesse passe de 15 à 170 kt en quelques secondes → une droite très nette, précision ~0,05 s.
+   2. En vol : pour deux avions sur la même trajectoire, l'avance τ(t) de l'un sur l'autre vaut horloge + place / vitesse ; régression
+      robuste sur 1/v (la vitesse varie de 120 à 370 kt sur un vol), précision ~0,3 s.
+   Chaque paire donne un décalage d'horloge et son incertitude ; on résout l'ensemble aux moindres carrés pondérés (référence : médiane),
+   on décale les traces, puis on vérifie que la cohérence de chaque avion (part du temps dans le groupe) s'est améliorée, sinon on annule. */
+function rgAlign(R){R.align={};R.coh=null;R.pairs=null;const ok=R.A.filter(a=>!a.bad),N=R.N;if(ok.length<2)return;
  const at=(a,i)=>{const j=Math.floor(i),f=i-j;if(j<0||j+1>=N||isNaN(a.x[j])||isNaN(a.x[j+1]))return null;return [a.x[j]+(a.x[j+1]-a.x[j])*f,a.y[j]+(a.y[j+1]-a.y[j])*f]};
  const fly=(a,i)=>!isNaN(a.x[i])&&a.v[i]>120&&i>a.to+30&&i<a.dw[0]-20;
- const need=Math.max(3,ok.length-2);
  const med=A=>{const B=A.slice().sort((p,q)=>p-q);return B.length?B[Math.floor(B.length/2)]:0};
- /* à chaque instant : le groupe = les avions à moins de 500 m du point médian ; il doit réunir presque tout le monde (tous sauf 2) */
+ const need=Math.max(2,Math.min(3,ok.length),ok.length-2);
  const samples=()=>{const T=[];for(let i=0;i<N;i+=5){const Q=ok.filter(a=>fly(a,i));if(Q.length<need)continue;const mx=med(Q.map(a=>a.x[i])),my=med(Q.map(a=>a.y[i]));
    const P=Q.filter(a=>Math.hypot(a.x[i]-mx,a.y[i]-my)<500);if(P.length<need)continue;let cx=0,cy=0,v=0;P.forEach(a=>{cx+=a.x[i];cy+=a.y[i];v+=a.v[i]});cx/=P.length;cy/=P.length;v/=P.length;T.push({i,P,Q,cx,cy,v})}return T};
- const measure=()=>{const T=samples();if(T.length<12)return null;const M={};ok.forEach(a=>M[a.k]=[]);
-  T.forEach(s=>{s.Q.forEach(a=>{const n=s.P.length,inP=s.P.includes(a),cx=inP?(s.cx*n-a.x[s.i])/(n-1):s.cx,cy=inP?(s.cy*n-a.y[s.i])/(n-1):s.cy;let bd=0,bc=1e9;
-   for(let d=-30;d<=30;d+=0.25){const p=at(a,s.i+d);if(!p)continue;const q=Math.hypot(p[0]-cx,p[1]-cy);if(q<bc){bc=q;bd=d}}
-   if(bc<150)M[a.k].push([1/(s.v*0.514444),bd])})});return {T,M}};
- const fit=L=>{ /* Theil-Sen : pente = médiane des pentes de paires, ordonnée = médiane de (y - pente·x) */
-  if(L.length<12)return null;const xs=L.map(p=>p[0]),spread=Math.max(...xs)-Math.min(...xs);
-  if(spread<0.005){const dt=med(L.map(p=>p[1]));return {g:0,dt:Math.abs(dt)>=1?dt:0,narrow:true}}   // vitesse trop peu variée pour séparer place et horloge : on ne corrige que les gros décalages
-  const S=[];let r=12345;const rnd=()=>(r=(r*1103515245+12345)%2147483648)/2147483648;for(let q=0;q<600;q++){const a=L[Math.floor(rnd()*L.length)],b=L[Math.floor(rnd()*L.length)];if(Math.abs(a[0]-b[0])>5e-4)S.push((a[1]-b[1])/(a[0]-b[0]))}
-  if(S.length<30)return null;const g=med(S);return {g,dt:med(L.map(([x,y])=>y-g*x))}};
- const cohere=()=>{const A=measure();if(!A)return null;const o={};ok.forEach(a=>{let n=0,m=0;A.T.forEach(s=>{if(!s.Q.includes(a))return;m++;if(Math.hypot(a.x[s.i]-s.cx,a.y[s.i]-s.cy)<150)n++});o[a.k]=m?n/m:0});return o};
- const coh0=cohere();if(!coh0)return;
- for(let pass=0;pass<2;pass++){const A=measure();if(!A)break;const F={};ok.forEach(a=>F[a.k]=fit(A.M[a.k]));
-  const dts=ok.map(a=>F[a.k]?F[a.k].dt:null).filter(x=>x!=null);if(dts.length<3)break;const ref=med(dts);let moved=false;
-  ok.forEach(a=>{const f=F[a.k];if(!f)return;const d=Math.round((f.dt-ref)*4)/4;if(Math.abs(d)>=0.5){rgShift(a,d);R.align[a.k]=Math.round(((R.align[a.k]||0)+d)*4)/4;moved=true}});
-  R.fit=F;if(!moved)break}
- /* vérification : un recalage doit améliorer la cohérence de l'avion (part du temps dans le groupe), sinon il est annulé */
- let c1=cohere();if(c1){let undo=false;ok.forEach(a=>{const d=R.align[a.k];if(d&&(c1[a.k]<0.6||c1[a.k]<coh0[a.k]-0.05)){rgShift(a,-d);delete R.align[a.k];undo=true}});if(undo)c1=cohere()}
+ const cohere=()=>{const T=samples();if(T.length<12)return null;const o={};ok.forEach(a=>{let n=0,m=0;T.forEach(s=>{if(!s.Q.includes(a))return;m++;if(Math.hypot(a.x[s.i]-s.cx,a.y[s.i]-s.cy)<150)n++});o[a.k]=m?n/m:0});return o};
+ /* 1. roulage au décollage : Δx = g + dt·v, moindres carrés, pour les paires qui lâchent les freins ensemble */
+ const roll=()=>{const PR={};ok.forEach(A=>ok.forEach(B=>{if(A.k>=B.k||Math.abs(A.to-B.to)>3)return;const i0=A.to,i1=A.to+20;if(isNaN(A.x[i0])||isNaN(A.x[i1]))return;const ux=A.x[i1]-A.x[i0],uy=A.y[i1]-A.y[i0],n=Math.hypot(ux,uy);if(n<100)return;const ex=ux/n,ey=uy/n;
+   const X=[],Y=[];for(let i=Math.min(A.to,B.to)-15;i<Math.max(A.to,B.to)+45;i++){if(i<0||i>=N||isNaN(A.x[i])||isNaN(B.x[i])||!(A.v[i]>15)||!(B.v[i]>15)||A.v[i]>175||B.v[i]>175)continue;X.push((A.v[i]+B.v[i])/2*0.514444);Y.push((A.x[i]-B.x[i])*ex+(A.y[i]-B.y[i])*ey)}
+   if(X.length<10)return;const mx=X.reduce((s,v)=>s+v,0)/X.length,my=Y.reduce((s,v)=>s+v,0)/Y.length;let sxx=0,sxy=0;X.forEach((x,k)=>{sxx+=(x-mx)**2;sxy+=(x-mx)*(Y[k]-my)});if(sxx<200)return;
+   const dt=sxy/sxx,g=my-dt*mx;let se=0;X.forEach((x,k)=>se+=(Y[k]-g-dt*x)**2);se=Math.sqrt(se/(X.length-2)/sxx);
+   if(se<0.3&&Math.abs(g)<150)PR[A.k+'|'+B.k]={dt:-dt,se:Math.max(0.05,se),g,n:X.length,src:'roulage'}}));return PR};
+ /* 2. en vol : τ = dt + g/v, Theil-Sen */
+ const fit=L=>{if(L.length<12)return null;const xs=L.map(p=>p[0]),spread=Math.max(...xs)-Math.min(...xs);if(spread<0.005){const dt=med(L.map(p=>p[1]));return {g:0,dt:Math.abs(dt)>=1?dt:0,n:L.length,mad:med(L.map(p=>Math.abs(p[1]-dt))),narrow:true}}   // vitesse trop peu variée pour séparer place et horloge : seuls les gros décalages comptent
+  const S=[];let r=12345;const rnd=()=>(r=(r*1103515245+12345)%2147483648)/2147483648;for(let q=0;q<600;q++){const a=L[Math.floor(rnd()*L.length)],b=L[Math.floor(rnd()*L.length)];if(Math.abs(a[0]-b[0])>1e-3)S.push((a[1]-b[1])/(a[0]-b[0]))}
+  if(S.length<30)return null;const g=med(S),res=L.map(([x,y])=>y-g*x),dt=med(res),mad=med(res.map(e=>Math.abs(e-dt)));return {g,dt,n:L.length,mad}};
+ const flight=()=>{const T=samples();if(T.length<12)return {};const PR={};
+  ok.forEach(a=>ok.forEach(b=>{if(a.k>=b.k)return;const L=[];T.forEach(s=>{if(!s.Q.includes(a)||!s.Q.includes(b))return;let bd=0,bc=1e9;
+   for(let d=-30;d<=30;d+=0.25){const p=at(a,s.i+d);if(!p)continue;const q=Math.hypot(p[0]-b.x[s.i],p[1]-b.y[s.i]);if(q<bc){bc=q;bd=d}}
+   if(bc<60)L.push([1/(s.v*0.514444),bd])});const f=fit(L);if(f&&f.mad<1.5)PR[a.k+'|'+b.k]={dt:f.dt,se:f.narrow?0.6:Math.max(0.3,1.5*f.mad),g:f.g,n:f.n,src:'vol'}}));return PR};
+ const solve=PR=>{const K=ok.map(a=>a.k),idx={};K.forEach((k,i)=>idx[k]=i);const n=K.length,M=[],B=[];for(let i=0;i<n;i++){M.push(new Array(n).fill(0));B.push(0)}
+  let m=0;Object.entries(PR).forEach(([key,f])=>{const [a,b]=key.split('|').map(Number),i=idx[a],j=idx[b],w=1/(f.se*f.se);M[i][i]+=w;M[j][j]+=w;M[i][j]-=w;M[j][i]-=w;B[i]+=w*f.dt;B[j]-=w*f.dt;m++});
+  if(m<n-1)return null;for(let i=0;i<n;i++)M[i][i]+=1e-6;
+  const A=M.map((r,i)=>r.concat([B[i]]));for(let c=0;c<n;c++){let p=c;for(let r=c+1;r<n;r++)if(Math.abs(A[r][c])>Math.abs(A[p][c]))p=r;[A[c],A[p]]=[A[p],A[c]];if(Math.abs(A[c][c])<1e-9)return null;for(let r=0;r<n;r++){if(r===c)continue;const f=A[r][c]/A[c][c];for(let q=c;q<=n;q++)A[r][q]-=f*A[c][q]}}
+  const X=A.map((r,i)=>r[n]/r[i]),ref=med(X),o={};K.forEach((k,i)=>o[k]=X[i]-ref);return o};
+ const coh0=cohere();
+ for(let pass=0;pass<2;pass++){const PR=Object.assign({},flight(),roll());   // le roulage (plus précis) prime sur le vol pour une même paire
+  const X=solve(PR);if(!X)break;R.pairs=PR;let moved=false;
+  ok.forEach(a=>{const d=Math.round(X[a.k]*10)/10;if(Math.abs(d)>=0.3){rgShift(a,d);R.align[a.k]=Math.round(((R.align[a.k]||0)+d)*10)/10;moved=true}});if(!moved)break}
+ let c1=cohere();if(c1&&coh0){let undo=false;ok.forEach(a=>{const d=R.align[a.k];if(d&&(c1[a.k]<0.6||c1[a.k]<coh0[a.k]-0.05)){rgShift(a,-d);delete R.align[a.k];undo=true}});if(undo)c1=cohere()}
  if(c1)R.coh=ok.map(a=>[a.k,c1[a.k]])}
 function rgAlignFine(R){const L=R.A[R.ordOut[0]];if(!L||L.bad)return;
  R.A.forEach(a=>{if(a.bad||a===L)return;const idx=[];for(let i=L.to+30;i<Math.min(L.td,a.td)-30;i++){if(isNaN(a.x[i])||isNaN(L.x[i])||!(L.v[i]>150))continue;if(Math.hypot(a.x[i]-L.x[i],a.y[i]-L.y[i])<200)idx.push(i)}
@@ -4512,7 +4522,7 @@ function vRg(tabs){const head=`${NOTE}<div class="head"><div><h1>Espacement</h1>
    <div class="rgfl">${R.fls.slice(0,3).concat(R.fl&&R.fls.indexOf(R.fl)>2?[R.fl]:[]).map((f,i)=>`<button aria-pressed="${!!(R.fl&&R.fl.id===f.id)}" onclick="RG.fl=RG.fls.find(x=>x.id==='${esc(f.id)}')||null;render()"><b>${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h'))}</b><span>${esc(f.title||'Vol')}${i===0&&R.fl&&R.fl.id===f.id?' · proposé':''}</span></button>`).join('')}${R.fls.length>3?`<select class="in" onchange="if(this.value){RG.fl=RG.fls.find(x=>x.id===this.value)||null;render()}"><option value="">Un autre vol…</option>${R.fls.slice(3).map(f=>`<option value="${esc(f.id)}">${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h')+' · '+(f.title||'Vol'))}</option>`).join('')}</select>`:''}<button class="more" style="justify-self:start" onclick="RG.fl=null;render()">${R.fl?'Aucun de ces vols':'✓ Sans vol de l\'agenda'}</button></div>`:`<span class="small muted">Aucun vol passé trouvé dans l'agenda autour du ${fmtD(R.date)}.</span>`}</div>
   <label class="l" style="margin-top:10px">Qui est qui <span style="font-weight:500">(ordre du roulage aller ; touchez pour corriger)</span></label>
   <div class="rgwho">${R.ordOut.map(k=>{const a=R.A[k],n=rgNum(k);return `<label style="--c:${rgColN(n)};${[1,4,9].includes(n)?'--t:#0f172a;--b:#0f172a':'--t:#fff;--b:'+rgColN(n)}"><select onchange="rgSetNum(${k},+this.value)">${R.ordOut.map((_,i)=>`<option ${n===i+1?'selected':''}>${i+1}</option>`).join('')}</select><small>${esc(a.name.replace(/\.gpx$/i,''))}</small></label>`}).join('')}</div>
-  ${al.length||R.coh?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} ${al.length?'Horloges GPS recalées sur le groupe : '+al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(1).replace('.',',')+' s').join(', ')+'.':'Horloges GPS cohérentes, aucun recalage.'}${R.coh?(()=>{const bad=R.coh.filter(([k,c])=>c<0.8);return bad.length?' Cohérence à vérifier : '+bad.map(([k,c])=>'n°'+rgNum(+k)+' dans le groupe '+Math.round(c*100)+' % du temps').join(', ')+'.':' Cohérence vérifiée sur tout le vol.'})():''}</p>`:''}
+  ${al.length||R.coh?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} ${al.length?'Horloges GPS recalées sur le groupe : '+al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(1).replace('.',',')+' s').join(', ')+' (mesuré au roulage de décollage en formation et en vol).':'Horloges GPS cohérentes, aucun recalage.'}${R.coh?(()=>{const bad=R.coh.filter(([k,c])=>c<0.8);return bad.length?' Cohérence à vérifier : '+bad.map(([k,c])=>'n°'+rgNum(+k)+' dans le groupe '+Math.round(c*100)+' % du temps').join(', ')+'.':' Cohérence vérifiée sur tout le vol.'})():''}</p>`:''}
   ${sets}</div></section>
  <section class="rgview"><canvas id="rg-cv"></canvas>
   <div class="exseg rgseg" role="tablist">${RG_SEG.map(([k,l])=>`<button role="tab" aria-selected="${key===k}" onclick="rgSeg('${k}')">${l}</button>`).join('')}</div><div class="rgov"><span id="rg-ck">${rgClock(R,Math.round(S.rgT))}</span><span class="rgord">${key==='out'?'Ordre des numéros':key==='dw'?'Ordre au break : ':'Ordre au retour : '}${key==='out'?'':ordK.map(k=>rgNum(k)).join(' · ')}</span></div>
