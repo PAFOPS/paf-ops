@@ -4305,10 +4305,12 @@ function rgAdjBase(a){if(!a._b0)a._b0={x:a.x,y:a.y,z:a.z,v:a.v,c:a.c,out:a.out&&
 function rgAdjRestore(a){const b=a._b0;if(!b)return;a.x=b.x;a.y=b.y;a.z=b.z;a.v=b.v;a.c=b.c;a.out=b.out&&b.out.slice();a.in=b.in&&b.in.slice();a.dw=b.dw&&b.dw.slice();a.to=b.to;a.td=b.td;a.roll=b.roll;a.brk=b.brk;a.dwE=b.dwE&&b.dwE.slice()}
 function rgAdjStep(d){const R=RG;if(!R)return;const a=R.A.find(x=>x.k===+S.rgAdjK);if(!a||a.bad)return;S.rgTmp=S.rgTmp||{};const t=Math.round(((S.rgTmp[a.name]||0)+d)*10)/10;
  rgAdjBase(a);rgAdjRestore(a);if(t){rgShift(a,t);S.rgTmp[a.name]=t}else delete S.rgTmp[a.name];rgBreaks(R);rgPairsAll(R);rgDraw();rgAdjBar()}
+/* rafraîchir sans casser le plein écran : dans la vue seulement, le reste de la page sera re-rendu à la sortie */
+function rgRefresh(){if(document.querySelector('.rgview.full')){S.rgDirty=1;rgBreaks(RG);rgDraw();rgAdjBar();return}render()}
 function rgAdjOk(){const R=RG;if(!R)return;S.rgAdj=S.rgAdj||{};R.adj=R.adj||{};Object.entries(S.rgTmp||{}).forEach(([nm,t])=>{S.rgAdj[nm]=Math.round(((S.rgAdj[nm]||0)+t)*10)/10;if(!S.rgAdj[nm])delete S.rgAdj[nm];const a=R.A.find(x=>x.name===nm);if(a){R.adj[a.k]=Math.round(((R.adj[a.k]||0)+t)*10)/10;if(!R.adj[a.k])delete R.adj[a.k];delete a._b0}});
- S.rgTmp={};toast('Recalage appliqué à tout le vol : roulage aller, vent arrière / finale, roulage retour');render()}
-function rgAdjCancel(){const R=RG;if(!R)return;R.A.forEach(a=>{if(a._b0){rgAdjRestore(a);delete a._b0}});S.rgTmp={};rgBreaks(R);rgPairsAll(R);render()}
-function rgAdjOpen(){S.rgAdjOpen=!S.rgAdjOpen;if(!S.rgAdjOpen&&Object.keys(S.rgTmp||{}).length){rgAdjCancel();return}render();if(S.rgAdjOpen){const v=document.getElementById('rg-adjbar');if(v)v.scrollIntoView({block:'start',behavior:'smooth'})}}
+ S.rgTmp={};toast('Recalage appliqué à tout le vol : roulage aller, vent arrière / finale, roulage retour');rgRefresh()}
+function rgAdjCancel(){const R=RG;if(!R)return;R.A.forEach(a=>{if(a._b0){rgAdjRestore(a);delete a._b0}});S.rgTmp={};rgBreaks(R);rgPairsAll(R);rgRefresh()}
+function rgAdjOpen(){S.rgAdjOpen=!S.rgAdjOpen;if(!S.rgAdjOpen&&Object.keys(S.rgTmp||{}).length){rgAdjCancel();return}if(document.querySelector('.rgview.full')){rgAdjBar();return}render();if(S.rgAdjOpen){const v=document.getElementById('rg-adjbar');if(v)v.scrollIntoView({block:'start',behavior:'smooth'})}}
 function rgAdjBarH(){const R=RG;if(!R||!S.rgAdjOpen)return '';const ok=R.A.filter(a=>!a.bad).slice().sort((p,q)=>rgNum(p.k)-rgNum(q.k));if(!ok.length)return '';if(S.rgAdjK==null||!ok.some(a=>a.k===+S.rgAdjK))S.rgAdjK=ok[0].k;
  const a=ok.find(x=>x.k===+S.rgAdjK),tot=((R.align||{})[a.k]||0)+((R.adj||{})[a.k]||0)+((S.rgTmp||{})[a.name]||0),pend=Object.keys(S.rgTmp||{}),f=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1).replace('.',',')+' s';
  return `<div class="rgadjbar"><span class="small" style="font-weight:800">Recalage</span><select class="in" onchange="S.rgAdjK=+this.value;rgAdjBar()">${ok.map(x=>`<option value="${x.k}" ${x.k===a.k?'selected':''}>n°${rgNum(x.k)}${(S.rgTmp||{})[x.name]?' *':''}</option>`).join('')}</select><button class="btn" onclick="rgAdjStep(-0.1)" title="Recule l'avion de 0,1 s sur sa trajectoire">− 0,1 s</button><b>${f(tot)}</b><button class="btn" onclick="rgAdjStep(0.1)" title="Avance l'avion de 0,1 s sur sa trajectoire">+ 0,1 s</button>
@@ -4494,9 +4496,10 @@ function rgBind(cv){if(cv.dataset.b)return;cv.dataset.b=1;const pts=new Map();le
   RGV.sc=Math.max(.02,Math.min(40,RGV.sc*f));RGV.cx=wx-(mx-W/2)/RGV.sc;RGV.cy=wy+(my-RGCY)/RGV.sc;S.rgMan=true;rgDraw()},{passive:false});
  cv.addEventListener('dblclick',()=>{S.rgMan=false;RGV=null;rgDraw()})}
 function rgAdjPlace(on){const bar=document.getElementById('rg-adjbar'),v=document.querySelector('.rgview');if(!bar||!v)return;if(on){if(bar.parentNode!==v)v.appendChild(bar)}else if(bar.parentNode===v)v.parentNode.insertBefore(bar,v)}
-function rgFull(){const v=document.querySelector('.rgview');if(!v)return;const on=!v.classList.contains('full');v.classList.toggle('full',on);document.body.classList.toggle('rgfull',on);rgAdjPlace(on);
+function rgFull(){const v=document.querySelector('.rgview');if(!v)return;const on=!v.classList.contains('full');v.classList.toggle('full',on);document.body.classList.toggle('rgfull',on);rgAdjPlace(on);if(!on&&S.rgDirty){S.rgDirty=0;setTimeout(render,60);return}
  if(on&&v.requestFullscreen)v.requestFullscreen().catch(()=>{});else if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});setTimeout(()=>{RGV=null;rgDraw()},50)}
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement){const v=document.querySelector('.rgview.full');if(v){v.classList.remove('full');document.body.classList.remove('rgfull');rgAdjPlace(false);setTimeout(()=>{RGV=null;rgDraw()},50)}}});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement){const v=document.querySelector('.rgview.full');if(v){v.classList.remove('full');document.body.classList.remove('rgfull');rgAdjPlace(false);if(S.rgDirty){S.rgDirty=0;setTimeout(render,60);return}setTimeout(()=>{RGV=null;rgDraw()},50)}}});
+document.addEventListener('keydown',e=>{if(e.key===' '&&RG&&$('rg-cv')&&!/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test((e.target&&e.target.tagName)||'')){e.preventDefault();rgPlayT()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('.rgview.full')&&!document.fullscreenElement)rgFull()});
 function rgMount(){if(!RG||!$('rg-cv'))return;rgBind($('rg-cv'));rgDraw();rgCtl()}
 /* Vue en coupe (vent arrière seulement) : la file vue de côté, le leader à droite, chaque avion à sa hauteur sol (ft) ;
@@ -4506,14 +4509,15 @@ function rgProf(){const cv=$('rg-pf');if(!cv||!RG)return;const R=RG,dpr=window.d
  g.fillStyle=dark?'#0f172a':'#f8fafc';g.fillRect(0,0,W,H);
  const t=S.rgT,ti=Math.round(t),ft=(a,i)=>(a.z[i]-a.gz)*3.28084;
  const ok=R.A.filter(a=>!a.bad&&!isNaN(a.gz)&&ti>=a.dw[0]-5&&ti<=a.td+5&&!isNaN(a.x[ti])&&!isNaN(a.z[ti]));
- const pad={l:30,r:10,t:14,b:4},lo=600,hi=1100,Y=h=>pad.t+(1-(Math.min(hi,Math.max(lo,h))-lo)/(hi-lo))*(H-pad.t-pad.b);
+ const pad={l:30,r:10,t:14,b:9},lo=600,hi=1100,Y=h=>pad.t+(1-(Math.min(hi,Math.max(lo,h))-lo)/(hi-lo))*(H-pad.t-pad.b);
  /* lignes de hauteur */
  g.lineWidth=1;g.font='700 9px system-ui';g.textAlign='right';g.textBaseline='middle';for(let h=lo;h<=hi;h+=100){const y=Y(h);g.strokeStyle=h===800?'#22c55e':dark?'#334155':'#e2e8f0';g.setLineDash(h===800?[6,4]:[]);g.lineWidth=h===800?1.5:1;g.beginPath();g.moveTo(pad.l,y);g.lineTo(W-pad.r,y);g.stroke();g.setLineDash([]);if(h%100===0&&(h===600||h===800||h===1000||h===1100)){g.fillStyle=h===800?'#16a34a':'#94a3b8';g.fillText(h,pad.l-3,y)}}
  g.fillStyle='#94a3b8';g.font='700 9px system-ui';g.textAlign='left';g.textBaseline='top';g.fillText('Coupe vent arrière · ft sol',pad.l,2);
  if(!ok.length){g.fillStyle='#94a3b8';g.font='11px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('En attente des avions en vent arrière',W/2,H/2);return}
  /* abscisse : distance le long de la route du premier de la file (à droite), les suivants derrière lui */
- const order=R.ordDw.filter(k=>ok.some(a=>a.k===k)),lead=R.A[order[0]]||ok[0],pl=rgAt(lead,t)||{x:lead.x[ti],y:lead.y[ti],h:0},ux=Math.sin(pl.h),uy=Math.cos(pl.h);
- const items=ok.map(a=>{const p=rgAt(a,t)||{x:a.x[ti],y:a.y[ti]};return {a,n:rgNum(a.k),s:(p.x-pl.x)*ux+(p.y-pl.y)*uy,h:ft(a,ti)}});
+ /* abscisse : la file dépliée. Le premier à droite ; chacun placé derrière le précédent à la distance mesurée le long de son chemin
+    (virages compris), à défaut en ligne droite : l'avion qui tourne vers la piste garde sa place dans la file */
+ const order=R.ordDw.filter(k=>ok.some(a=>a.k===k)),items=[];let sPrev=0;order.forEach((k,r)=>{const a=R.A[k];let s=0;if(r){const pk=order[r-1],pr=(R.P.dw||[]).find(q=>q.a===pk&&q.b===k),i=pr?ti-pr.lo:-1;let d=pr&&i>=0&&i<pr.d.length?pr.d[i]:NaN;if(isNaN(d)){const b=R.A[pk];d=Math.hypot(a.x[ti]-b.x[ti],a.y[ti]-b.y[ti])}s=sPrev-d}sPrev=s;items.push({a,n:rgNum(k),s,h:ft(a,ti)})});
  const smin=Math.min(0,...items.map(o=>o.s)),smax=Math.max(0,...items.map(o=>o.s)),span=Math.max(400,smax-smin),x0=smin-span*0.06,x1=smax+span*0.06,X=sv=>pad.l+6+(sv-x0)/(x1-x0)*(W-pad.l-pad.r-12);
  /* échelle */
  const m=[100,200,500,1000,2000].find(v=>v/(x1-x0)*(W-pad.l-pad.r)>50)||5000;g.strokeStyle='#94a3b8';g.lineWidth=1.5;g.beginPath();g.moveTo(W-pad.r-4-m/(x1-x0)*(W-pad.l-pad.r-12),H-6);g.lineTo(W-pad.r-4,H-6);g.stroke();g.fillStyle='#94a3b8';g.font='700 9px system-ui';g.textAlign='right';g.textBaseline='bottom';g.fillText(m+' m',W-pad.r-4,H-7);
