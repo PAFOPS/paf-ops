@@ -791,7 +791,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 .orph{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.orph .person{cursor:pointer;border-style:dashed}
 .feaby{display:block;color:var(--muted)}.feaby a{color:inherit}
 .feast{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.fty{font-weight:800;font-size:11px;letter-spacing:.06em;padding:2px 8px;border-radius:6px;background:#dbeafe;color:#1d4ed8}.fty.cri{background:#fef3c7;color:#b45309}.fty.cre{background:#fee2e2;color:#b91c1c}
-.feac.done{opacity:.75}.pill.osab{background:#d1fae5;color:#047857}.feadone.off{opacity:.5}.feachef{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px dashed var(--line);padding-top:8px;margin-bottom:8px}.feadone{display:flex;align-items:center;gap:6px;font-weight:800}.feadone input{width:20px;height:20px}
+.feac.done{opacity:.75}.pill.osab{background:#d1fae5;color:#047857}.itwatt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}.itwatt .pill{text-decoration:none;cursor:pointer;border:0;font:inherit;font-size:12px}.itwatt .btn.ghost{padding:4px 8px;font-size:12px}.feadone.off{opacity:.5}.feachef{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px dashed var(--line);padding-top:8px;margin-bottom:8px}.feadone{display:flex;align-items:center;gap:6px;font-weight:800}.feadone input{width:20px;height:20px}
 .fstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}.fst{border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:8px 10px;background:var(--surface)}.fst b{display:block;font-family:var(--f-disp);font-size:24px;line-height:1}.fst span{font-size:12px;color:var(--muted)}
 .fphs{display:flex;flex-wrap:wrap;gap:8px}.fph{position:relative;width:76px;height:76px;border-radius:12px;overflow:hidden;border:1px solid var(--line);padding:0;background:var(--surface2)}.fph img{width:100%;height:100%;object-fit:cover;display:block}
 .fph .ib{position:absolute;top:3px;right:3px;width:24px;height:24px;background:rgba(0,0,0,.55);color:#fff;border:0}.fphs.sm{margin:0 0 8px}.fphs.sm .fph{width:64px;height:64px;cursor:zoom-in}
@@ -1316,6 +1316,7 @@ function vMeeting(){
   {k:'food',l:'Restauration',d:'Repas jour par jour',i:'food',c1:'#f97316',c2:'#c2410c',on:canSee('logi'),h:()=>vGrid(m,'food','Restauration','food','#f97316','#c2410c','logi','Restauration',teamN(m)?teamN(m)+' personnes par repas':''),p:()=>gridProg(m,'food'),o:()=>food(m)},
   {k:'move',l:'Locomotion',d:'Véhicules et accès',i:'car',c1:'#06b6d4',c2:'#0e7490',on:canSee('logi'),h:()=>vGrid(m,'move','Locomotion','car','#06b6d4','#0e7490','logi','Locomotion'),p:()=>gridProg(m,'move'),o:()=>move(m)},
   {k:'room',l:'Salles',d:'Ce qu\'il faut prévoir',i:'screen',c1:'#f43f5e',c2:'#be123c',on:canSee('logi'),h:()=>vRoomInfo(m),p:()=>({done:0,tot:0}),u:'',info:1},
+  {k:'soir',l:'Soirée officielle',d:'Jour, lieu, tenue',i:'star',c1:'#f5c24a',c2:'#b7860f',on:isChef()||ROLE==='sec',h:()=>vSoir(m),p:()=>({done:[soir(m).day,soir(m).info].filter(Boolean).length,tot:2}),o:()=>soir(m)},
   {k:'com',l:'Communication',d:'Public, médias',i:'mega',c1:'#ec4899',c2:'#be185d',on:canSee('com'),h:()=>vGrid(m,'com','Communication','mega','#ec4899','#be185d','com','Communication'),p:()=>gridProg(m,'com'),o:()=>com(m)},
   {k:'contacts',l:'Contacts',d:'Organisation du meeting',i:'users',c1:'#10b981',c2:'#047857',on:canSee('contacts'),h:contactsH,p:()=>({done:cs.length,tot:0}),u:'contact'},
   {k:'aero',l:'Directeur des vols',d:'Plan, pilot book, créneaux',i:'radio',c1:'#6366f1',c2:'#3730a3',on:canSee('aero')&&ROLE!=='org',h:()=>vAero(m),p:()=>aeroProgress(m),o:()=>aero(m)},
@@ -2127,6 +2128,17 @@ function vCom(m){
  </section>`;
 }
 
+/* ====================== Soirée officielle (chef ops et secrétaire ops) ====================== */
+function soir(m){m.soir=m.soir||{day:'',info:'',map:'',dress:'',note:''};return m.soir}
+function setSoir(mid,k,v){const o=soir(DB.meetings.find(x=>x.id===mid));o[k]=String(v||'').trim();save();render()}
+function vSoir(m){const o=soir(m),ed=isChef()||ROLE==='sec',days=foodDays(m);
+ return `<div class="sect"><h2>${ic('star',20)} Soirée officielle</h2></div>
+ <section class="dvbox"><div class="dvsec"><p class="small muted" style="margin:0 0 12px">Réception ou soirée officielle offerte par l'organisation : les informations utiles à l'équipe, tenues par le chef des opérations et la secrétaire ops.</p>
+  <label class="l">Quel jour ?</label><div class="chips">${days.map(([d,ty])=>`<button aria-pressed="${o.day===d}" ${ed?`onclick="setSoir('${m.id}','day',soir(DB.meetings.find(x=>x.id==='${m.id}')).day==='${d}'?'':'${d}')"`:'disabled'}>${ic('cal',13)} ${fromISO(d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})}${ty==='meet'?' <span class="star">★</span>':''}</button>`).join('')||'<span class="small muted">Renseignez d\'abord les dates du meeting.</span>'}</div>
+  <label class="l" style="margin-top:12px">Lieu et heure</label><input class="in" value="${esc(o.info)}" placeholder="Ex. : mairie, salle des fêtes, 19h30" ${ed?'':'disabled'} onchange="setSoir('${m.id}','info',this.value)">
+  <label class="l" style="margin-top:12px">Lien Google Maps du lieu</label><input class="in" type="url" inputmode="url" value="${esc(o.map)}" placeholder="https://…" ${ed?'':'disabled'} onchange="setSoir('${m.id}','map',this.value)">${o.map&&/^https?:\/\//i.test(o.map)?`<a class="hmap" href="${esc(o.map)}" target="_blank" rel="noopener">${ic('pin',14)} Voir le lieu sur Google Maps</a>`:''}
+  <label class="l" style="margin-top:12px">Tenue</label><input class="in" value="${esc(o.dress)}" placeholder="Ex. : combinaison de vol, tenue 21…" ${ed?'':'disabled'} onchange="setSoir('${m.id}','dress',this.value)">
+  <label class="l" style="margin-top:12px">Précisions</label><textarea class="in tnote" ${ed?'':'disabled'} placeholder="Invités, discours, transport, horaires de retour…" onchange="setSoir('${m.id}','note',this.value)">${esc(o.note)}</textarea></div></section>`}
 /* ====================== Équipe PAF du meeting (secrétaire ops) ====================== */
 const isDefault=x=>x.fn==='PILOTES'||x.fn==='PISTE';
 function team(m){m.team=m.team||{};const t=m.team;t.out=t.out||[];t.add=t.add||[];t.ext=t.ext||[];t.vol=t.vol||[];t.other=+t.other||0;return t}
@@ -2461,7 +2473,7 @@ function encList(m,C,f,ed,ph,addLab){const L=comL(C,f),days=foodDays(m);
    <div class="encs"><span class="tl">Créneau souhaité</span>${timeBtn(`${esc(x.deb)}`,`setEnc('${m.id}','${f}','${x.id}','deb',v)`,'Début',``,!ed)}<span class="tl">à</span>${timeBtn(`${esc(x.fin)}`,`setEnc('${m.id}','${f}','${x.id}','fin',v)`,'Fin',`${esc(x.deb)}`,!ed)}${ed?`<button class="ib" onclick="delEnc('${m.id}','${f}','${x.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:''}</div></div>`).join('')}
  ${ed?`<button class="btn ghost" onclick="addEnc('${m.id}','${f}')">${ic('plus',16)} ${addLab}</button>`:''}`}
 const encOk=L=>L.length>0&&L.every(x=>x.d&&x.who);
-ITM.com=m=>[
+ITM.com0=m=>[
  {k:'auto',l:'Des rencontres ? <small class="lsub">(Autorités, associations, partenaires…)</small>',i:'building',c1:'#f59e0b',c2:'#c2410c',kind:'sheet',open:`encSheet('${m.id}','auto')`,done:o=>o.chk.auto==='non'||(o.chk.auto==='oui'&&encOk(comL(o,'meet'))),warn:()=>false,
   sub:o=>o.chk.auto==='oui'?comL(o,'meet').length+' rencontre'+(comL(o,'meet').length>1?'s':''):o.chk.auto==='non'?'Pas de rencontre':'À dire',
   info:'<p>Des rencontres peuvent être prévues avec les autorités locales, des associations ou des partenaires, de préférence le jour de l\'entraînement. Indiquez pour chacune le jour, qui, et le créneau souhaité.</p><p>'+CONF+'</p>'},
@@ -2473,6 +2485,18 @@ ITM.com=m=>[
   done:o=>o.chk.podium==='oui'||(o.chk.podium==='non'&&!!o.chk.sono&&!!o.chk.espace&&(o.chk.espace==='oui'||!!o.chk.police)),warn:o=>o.chk.podium==='non'&&(o.chk.sono==='non'||(o.chk.espace==='non'&&o.chk.police==='non')),
   sub:o=>o.chk.podium==='oui'?'Car podium présent':o.chk.podium==='non'?'Sans car podium':'À dire',
   info:'<p>La présence du car podium de l\'armée de l\'Air et de l\'Espace doit être <b>systématique</b> : les commentaires sont toujours faits par un membre de la Patrouille.</p><p>Sans car podium : une sonorisation (2 micros HF, enceintes longue portée) et un espace sécurisé pour la rencontre avec le public ; à défaut, des forces de l\'ordre (posture Vigipirate).</p>'}];
+const WISH_TXT='Dites-nous tout ce que vous imaginez pour la communication autour de la venue de la Patrouille : médias à accueillir, reportages ou prises de vues, rencontres avec les autorités, les partenaires ou le public, dédicaces… La cellule communication de la Patrouille étudie chaque souhait et revient vers vous pour en confirmer la faisabilité.';
+ITM.com=m=>[
+ {k:'wish',l:'Vos souhaits <small class="lsub">(médias, rencontres…)</small>',i:'mega',c1:'#ec4899',c2:'#be185d',kind:'sheet',open:`wishSheet('${m.id}')`,done:o=>!!(o.wish||'').trim()||o.chk.wish==='non',warn:()=>false,
+  sub:o=>(o.wish||'').trim()?'Transmis à la comm':o.chk.wish==='non'?'Pas de demande':'À dire',info:'<p>'+WISH_TXT+'</p>'},
+ {k:'press',l:'Dossier de presse',i:'folder',c1:'#06b6d4',c2:'#0e7490',kind:'sheet',opt:1,open:`pressSheet()`,done:()=>pressL().length>0,warn:()=>false,sub:()=>pressL().length?pressL().length+' document'+(pressL().length>1?'s':''):'Bientôt',
+  info:'<p>Les documents et liens mis à disposition par la cellule communication de la Patrouille : dossier de presse, visuels, logos, vidéos.</p>'}];
+function wishSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.id===S.fs.mid),C=com(m),ed=canEdit('com')&&C.status!=='sent'&&C.status!=='ok';
+ return shHead({i:'mega',c1:'#ec4899',c2:'#be185d'},'Vos souhaits pour la communication','Médias, reportages, rencontres, dédicaces…')+`<div class="sb">${lockNote(C,'com','com')}<p class="small" style="margin:0 0 10px">${WISH_TXT}</p>
+  <textarea class="in tnote" rows="7" ${ed?'':'disabled'} placeholder="Ex. : France 3 souhaite un reportage le samedi matin ; le maire aimerait rencontrer les pilotes ; une séance de dédicaces pour les écoles…" onchange="S.skipLive=true;setSecVal('${mid}','com','wish',this.value);S.skipLive=false">${esc(C.wish||'')}</textarea>
+  <label class="feadone" style="margin-top:10px"><input type="checkbox" ${C.chk.wish==='non'?'checked':''} ${ed?'':'disabled'} onchange="setSecChk('${mid}','com','wish',this.checked?'non':'')"> Pas de demande particulière</label>
+  <div class="rappel" style="margin-top:12px">${ic('info',18)}<span>La cellule communication de la Patrouille revient vers vous pour confirmer ce qui est réalisable, en fonction du programme et des contraintes sur place.</span></div></div>`+shOk})}
+function pressSheet(){openSheet(()=>shHead({i:'folder',c1:'#06b6d4',c2:'#0e7490'},'Dossier de presse','Mis à disposition par la cellule communication de la Patrouille')+`<div class="sb">${pressListH(false)}</div><div class="sf"><span></span><button class="btn pri" onclick="closeSheet()">Fermer</button></div>`)}
 function encSheet(mid,k){S.fs={mid,k};openLive(()=>{const {mid,k}=S.fs,m=DB.meetings.find(x=>x.id===mid),C=com(m),ed=canEdit('com')&&C.status!=='sent'&&C.status!=='ok',it=ITM.com(m).find(x=>x.k===k),f=k==='auto'?'meet':'med';
  const q=k==='auto'?'Des rencontres ? <span class="small muted" style="font-weight:600">(Autorités, associations, partenaires…)</span>':'Des demandes de médias ?';
  const more=C.chk[k]==='oui'?`<label class="l" style="margin-top:12px">${k==='auto'?'Les rencontres':'Les médias'} <span style="font-weight:500">· plusieurs par jour possibles</span></label>${encList(m,C,f,ed,k==='auto'?'Qui ? (maire, préfet, association, partenaires…)':'Quel média ? (journal, télévision, radio, web, GoPro…)',k==='auto'?'Ajouter une rencontre':'Ajouter un média')}
@@ -2773,7 +2797,7 @@ function pfCalc(Lx){const C=pfCfg(),o=pfIn();
 function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
  if(isOsab())return vFea('');
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
-  <div class="pfhome">${PF_HOME.filter(k=>ROLE==='comm'?(k==='itw'||k==='cad'):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
+  <div class="pfhome">${PF_HOME.filter(k=>ROLE==='comm'?(k==='itw'||k==='cad'||k==='press'):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='press'||pressCan())).map(k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${D[2].length} outils</small>`:''}</button>`}).join('')}</div>`;
  if(PF_DIR[sub]){const D=PF_DIR[sub];return `${NOTE}<div class="head"><div><h1>${D[0]}</h1><p class="muted">${D[1]}</p></div></div><div class="pfbar"><button class="btn" onclick="S.pfTab='home';render();window.scrollTo(0,0)">${ic('back',16)} Tous les outils</button></div>
   <div class="pfhome">${D[2].map(k=>{const t=PF_TOOLS.find(x=>x[0]===k);return `<button class="pftool" onclick="S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span></button>`}).join('')}</div>`}
  const par=pfParent(sub);
@@ -2785,6 +2809,7 @@ function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
  if(sub==='rg'){if(!rgCan()){S.pfTab='home';return vPerfos()}return vRg(tabs)}
  if(sub==='itw'){if(!itwCan()){S.pfTab='home';return vPerfos()}return vItw(tabs)}
  if(sub==='cad'){if(!cadCan()){S.pfTab='home';return vPerfos()}return vCad(tabs)}
+ if(sub==='press'){if(!pressCan()){S.pfTab='home';return vPerfos()}return vPress(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
  if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
  if(sub==='pc'){setTimeout(()=>{pcAuto();if(S.pfTab==='pc'&&pcMaybePropose(S.pcW||pcNextWk()))render()},50);return vPc(tabs)}
@@ -3025,9 +3050,8 @@ function vRecap(m,plain){
  ${sec('food','Restauration',F,days.length?`<table class="rctab">${days.map(([d,ty])=>['dej','din'].map(tt=>{const o=F.meals[d+'|'+tt]||{};return rrow(fromISO(d).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})+' · '+(tt==='dej'?'déjeuner':'dîner'),o.lieu?`${esc(MEALL[o.lieu]?MEALL[o.lieu].l:o.lieu)}${o.h?' · '+(o.mode==='c'?'de '+hTxt(o.h)+' à '+hTxt(o.h2):hTxt(o.h)):''}`:'<span class="muted">—</span>')}).join('')).join('')}</table>`:'<p class="muted">Dates non renseignées.</p>')}
  ${sec('car','Locomotion',V,`<table class="rctab">${rrow('Voitures',V.nVeh!==''&&V.nVeh!=null?`${V.nVeh} / 11${+V.nVeh<11?' <b style="color:var(--warn)">(insuffisant)</b>':''} · dont ${+V.nBig||0} grand coffre / 3`:'<span class="muted">—</span>')}${rrow('Utilitaire',yn(V.chk.util))}${rrow('Plein fait',yn(V.chk.plein))}${rrow('Télépéage et parking',yn(V.chk.peage))}${rrow('Axe rouge le jour J',yn(V.chk.axe))}${rrow('Véhicules électriques',V.chk.elec==='oui'?'Oui'+(V.recharge?' · recharge : '+esc(V.recharge):'')+(V.chk.carte==='oui'?' · carte de recharge':''):yn(V.chk.elec))}</table>`)}
  ${sec('screen','Salles',null,`<p class="muted small">Fiche d'information (salle de briefing pilotes, salle de repos mécaniciens).</p>`)}
- ${sec('mega','Communication',C,`<table class="rctab">${rrow('Car podium',C.chk.podium==='oui'?'<b class="okc">Présent</b>':C.chk.podium==='non'?'<b style="color:var(--warn)">Absent</b> · sono '+yn(C.chk.sono)+' · espace sécurisé '+yn(C.chk.espace)+(C.chk.espace==='non'?' · forces de l\'ordre '+yn(C.chk.police):''):'<span class="muted">—</span>')}
-  ${rrow('Rencontres',C.chk.auto==='non'?'Aucune':encL(comL(C,'meet'),'rencontre'))}${rrow('Médias',C.chk.media==='non'?'Aucune demande':encL(comL(C,'med'),'demande'))}
-  ${rrow('Réception officielle',C.chk.soiree==='oui'?`${C.soirDay?fromISO(C.soirDay).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'jour à choisir'}${C.soirInfo?' · '+esc(C.soirInfo):''}${C.soirMap?` · <a href="${esc(C.soirMap)}" target="_blank" rel="noopener">lieu</a>`:''}`:yn(C.chk.soiree))}</table>`)}
+ ${sec('mega','Communication',C,`<table class="rctab">${rrow('Souhaits de l\'organisateur',(C.wish||'').trim()?esc(C.wish).replace(/\n/g,'<br>'):C.chk.wish==='non'?'Pas de demande particulière':'<span class="muted">—</span>')}</table>`)}
+ ${(isChef()||ROLE==='sec')&&(soir(m).day||soir(m).info)?sec('star','Soirée officielle',null,`<table class="rctab">${rrow('Jour',soir(m).day?fromISO(soir(m).day).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}):'<span class="muted">—</span>')}${rrow('Lieu et heure',esc(soir(m).info||'—')+(soir(m).map?` · <a href="${esc(soir(m).map)}" target="_blank" rel="noopener">lieu</a>`:''))}${rrow('Tenue',esc(soir(m).dress||'—'))}${rrow('Précisions',esc(soir(m).note||'—').replace(/\n/g,'<br>'))}</table>`):''}
  ${sec('radio','Directeur des vols',A,`<table class="rctab">${rrow('Plan du site',file(A.axe))}${rrow('Pilot book',A.pb?file(A.pb)+(A.pb.draft?' · <span class="muted">provisoire</span>':''):'<span class="muted">non déposé</span>')}
   ${rrow('Plan et pilot book font ressortir',CHECKS.map(c=>`${c.l.charAt(0).toLowerCase()+c.l.slice(1)} : ${yn(A.chk[c.k])}`).join('<br>'))}
   ${rrow('Créneaux',A.slots.filter(x=>x.deb).length?A.slots.filter(x=>x.deb).sort((a,b)=>(a.date+a.deb).localeCompare(b.date+b.deb)).map(x=>`${fromISO(x.date).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'})} · ${SLOTT[x.type].l} ${hTxt(x.deb)}${x.fin?' – '+hTxt(x.fin):''}`).join('<br>'):'<span class="muted">—</span>')}</table>`)}
@@ -4050,13 +4074,17 @@ function itwIco(k,s){s=s||30;const a=`viewBox="0 0 32 32" width="${s}" height="$
 function ccMe(){if(isOnline()){if(!ME||ME.role!==ROLE)return null;return memOf(ME.mail)||null}return ROLE==='visit'?DB.members.find(x=>x.id===S.ccAs)||null:null}
 const ccIsComm=()=>ROLE==='comm'||(ROLE==='visit'&&(ccMe()||{}).fn==='COMM');
 const ccIs9=()=>{const x=ccMe();return ROLE==='visit'&&!!x&&x.fn==='PILOTES'&&athN(x)===9};
-const itwCan=()=>isChef()||ccIsComm()||(!isOnline()&&ROLE==='visit');
+const ccIs78=()=>{const x=ccMe();return ROLE==='visit'&&!!x&&x.fn==='PILOTES'&&[7,8].includes(athN(x))};
+const ccPilDir=()=>{const x=ccMe();return ROLE==='visit'&&!!x&&(x.fn==='PILOTES'||x.fn==='DIR')};
+const itwCan=()=>isChef()||ccIsComm()||ccIs78()||ccPilDir()||(!isOnline()&&ROLE==='visit');   // lecture : la comm, les 7 et 8, tous les pilotes et la direction
 const cadCan=()=>isChef()||ccIsComm()||ccIs9()||(!isOnline()&&ROLE==='visit');
-const cadAsk=()=>isChef()||ccIs9();      // expression de besoin : le 9
+const cadAsk=()=>isChef()||ccIs9()||ccIsComm();      // expression de besoin : le 9 et la comm
 const cadGive=()=>isChef()||ccIsComm();  // cadre remis : la comm
-const itwEdit=()=>isChef()||ccIsComm();
+const itwEdit=()=>isChef()||ccIsComm()||ccIs78();   // saisie : la comm, les 7 et 8
+const itwAtt=()=>isChef()||ccIsComm();   // lien ou fichier sur une interview : la comm
+const pressCan=()=>isChef()||ccIsComm();  // dossier de presse : la comm
 function ccDemo(){if(isOnline()||isChef()||ROLE!=='visit')return '';
- return `<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.ccAs=this.value;render()"><option value="">—</option>${DB.members.filter(x=>x.fn==='COMM'||(x.fn==='PILOTES'&&athN(x)===9)).sort(mSort).map(x=>`<option value="${x.id}" ${S.ccAs===x.id?'selected':''}>${esc((athN(x)<1e6?'Athos '+athN(x)+' · ':x.fn+' · ')+memLabel(x))}</option>`).join('')}</select></div>`}
+ return `<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.ccAs=this.value;render()"><option value="">—</option>${DB.members.filter(x=>x.fn==='COMM'||x.fn==='DIR'||(x.fn==='PILOTES'&&[1,7,8,9].includes(athN(x)))).sort(mSort).map(x=>`<option value="${x.id}" ${S.ccAs===x.id?'selected':''}>${esc((athN(x)<1e6?'Athos '+athN(x)+' · ':x.fn+' · ')+memLabel(x))}</option>`).join('')}</select></div>`}
 const ccWho=()=>{const x=ccMe();return x?pcName(x):((isOnline()&&ME&&ME.name)||(RLm[ROLE]||{}).l||'')};
 /* Meetings : le plus proche d'abord */
 const ccSpan=m=>{const D=entrs(m).concat((m.demos||[]).filter(Boolean)).sort();return D.length?[D[0],D[D.length-1]]:null};
@@ -4075,12 +4103,21 @@ function itwAdd(med){const a=+S.itwA;if(!a){toast('Choisissez d\'abord l\'Athos'
  const mid=S.itwM!==undefined?S.itwM:((ccNow()||{}).id||'');
  DB.itw.push({id:uid(),ath:a,med,nm:String(S.itwN||'').trim().slice(0,60),d:S.itwD||iso(new Date()),mid,by:ccWho(),t:Date.now()});
  S.itwN='';S.itwLast=DB.itw[DB.itw.length-1].id;save();render();toast(`Athos ${a} · ${itwMm[med][1]} : enregistré`)}
+function itwLinkSheet(id){S.itwLk={id,url:'',nm:''};openSheet(()=>`<div class="sh">${tile({i:'link',c1:'#06b6d4',c2:'#0e7490'},'')}<div class="t"><div class="q">Ajouter un lien</div><div class="small muted">Article, replay, vidéo…</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Adresse</label><input class="in" id="itw-lu" type="url" inputmode="url" placeholder="https://…" value="${esc(S.itwLk.url)}"><label class="l" style="margin-top:10px">Titre (facultatif)</label><input class="in" id="itw-ln" maxlength="80" placeholder="Ex. : reportage France 3" value="${esc(S.itwLk.nm)}"></div>
+ <div class="sf"><span></span><button class="btn pri big" onclick="itwAddLink('${id}',$('itw-lu').value,$('itw-ln').value)">${ic('check',18)} Ajouter</button></div>`)}
+function itwAddLink(id,url,nm){const e=(DB.itw||[]).find(x=>x.id===id);url=String(url||'').trim();if(!e||!/^https?:\/\//i.test(url)){toast('Indiquez une adresse complète (https://…)');return}
+ e.att=(e.att||[]).concat([{id:uid(),kind:'link',url:url.slice(0,500),name:String(nm||'').trim().slice(0,80),t:Date.now()}]);e.tm=Date.now();save();closeSheet();render();toast('Lien ajouté')}
+function itwDelAtt(id,aid){const e=(DB.itw||[]).find(x=>x.id===id);if(!e)return;e.att=(e.att||[]).filter(a=>a.id!==aid);e.tm=Date.now();save();render()}
+function itwAttH(e,ed){const A=e.att||[];if(!A.length&&!ed)return '';
+ return `<div class="itwatt">${A.map(a=>a.kind==='link'?`<a class="pill" href="${esc(a.url)}" target="_blank" rel="noopener">${ic('link',12)} ${esc(a.name||a.url.replace(/^https?:\/\/(www\.)?/,'').slice(0,40))}</a>${ed?`<button class="ib" aria-label="Retirer" onclick="itwDelAtt('${e.id}','${a.id}')">${ic('x',12)}</button>`:''}`:`<button class="pill" onclick="dlFile(window.__IA['${a.id}'])">${ic('file',12)} ${esc(a.name)}</button>${ed?`<button class="ib" aria-label="Retirer" onclick="itwDelAtt('${e.id}','${a.id}')">${ic('x',12)}</button>`:''}`).join('')}${ed?`<button class="btn ghost" onclick="itwLinkSheet('${e.id}')">${ic('link',13)} Lien</button><button class="btn ghost" onclick="PICK={itw:'${e.id}'};const i=$('filein');i.value='';i.click()">${ic('upload',13)} Fichier</button>`:''}</div>`}
+window.__IA={};
 function itwDel(id){const e=(DB.itw||[]).find(x=>x.id===id);if(!e||!confirm('Supprimer cette interview ?'))return;e.del=1;e.tm=Date.now();save();render()}
 function itwBilanTxt(L,lab){const T={};L.forEach(e=>{const r=T[e.ath]=T[e.ath]||{tv:0,radio:0,presse:0};r[e.med]++});
  return `Interviews — ${lab}\n${L.length} au total : ${ITW_M.map(m=>L.filter(e=>e.med===m[0]).length+' '+m[1]).join(', ')}\n\n`+[1,2,3,4,5,6,7,8,9].filter(n=>T[n]).map(n=>{const r=T[n],x=ccAth(n);return `Athos ${n}${x?' « '+pcShort(x)+' »':''} : ${r.tv+r.radio+r.presse} (${ITW_M.filter(m=>r[m[0]]).map(m=>r[m[0]]+' '+m[1]).join(', ')})`}).join('\n')}
 function vItw(tabs){const tab=S.itwTab||(itwEdit()?'add':'bil'),ed=itwEdit(),all=itwL();
- const head=`${NOTE}<div class="head"><div><h1>Interviews</h1><p class="muted">Qui parle aux médias, et sur quel support : TV, radio ou presse écrite.</p></div></div>${tabs}${ccDemo()}`;
- const seg=`<div class="exseg" role="tablist"><button role="tab" aria-selected="${tab==='add'}" onclick="S.itwTab='add';render()">${ic('plus',16)} Saisir</button><button role="tab" aria-selected="${tab==='bil'}" onclick="S.itwTab='bil';render()">${ic('grid',16)} Le bilan</button></div>`;
+ const head=`${NOTE}<div class="head"><div><h1>Interviews</h1><p class="muted">Qui parle aux médias, et sur quel support : TV, radio ou presse écrite.${itwAtt()?' La comm peut joindre à chaque interview un lien ou un fichier (article, vidéo…).':''}</p></div></div>${tabs}${ccDemo()}`;
+ const seg=`<div class="exseg" role="tablist"><button role="tab" aria-selected="${tab==='add'}" onclick="S.itwTab='add';render()">${ed?ic('plus',16)+' Saisir':ic('clock',16)+' Les interviews'}</button><button role="tab" aria-selected="${tab==='bil'}" onclick="S.itwTab='bil';render()">${ic('grid',16)} Le bilan</button></div>`;
  if(tab==='add'){const mid=S.itwM!==undefined?S.itwM:((ccNow()||{}).id||''),a=+S.itwA||0;
   const recent=all.slice().sort((x,y)=>(y.t||0)-(x.t||0)).slice(0,12);
   return `${head}${seg}${ed?`<section class="dvbox ccbox"><div class="dvsec">
@@ -4091,7 +4128,7 @@ function vItw(tabs){const tab=S.itwTab||(itwEdit()?'add':'bil'),ed=itwEdit(),all
    <div class="itwmed ${a?'':'off'}">${ITW_M.map(m=>`<button style="--c1:${m[2]};--c2:${m[3]}" onclick="itwAdd('${m[0]}')">${itwIco(m[0],34)}<b>${m[1]}</b></button>`).join('')}</div>
    <p class="hint" style="margin-top:8px">${a?`Touchez le média : l'interview de l'Athos ${a} est enregistrée.`:'Touchez l\'Athos, puis le média : c\'est enregistré.'}</p></div></section>`:''}
    <section class="dvbox ccbox"><div class="dvsec"><h3 class="pch">${ic('clock',18)} Dernières interviews <span class="n">${all.length}</span></h3>
-   ${recent.length?`<div class="itwlist">${recent.map(e=>{const m=itwMm[e.med]||ITW_M[2],x=ccAth(e.ath),mt=DB.meetings.find(y=>y.id===e.mid);return `<div class="itwr ${S.itwLast===e.id?'new':''}"><span class="itwi" style="--c1:${m[2]};--c2:${m[3]}">${itwIco(e.med,20)}</span><div><b>Athos ${e.ath}${x?' · '+esc(pcShort(x)):''}</b><span>${m[1]}${e.nm?' · '+esc(e.nm):''} · ${fmtD(e.d)}${mt?' · '+esc(mt.city||mName(mt)):''}</span></div>${ed?`<button class="ib" aria-label="Supprimer" onclick="itwDel('${e.id}')">${ic('trash',15)}</button>`:''}</div>`}).join('')}</div>`:'<p class="small muted" style="margin:0">Aucune interview pour l\'instant.</p>'}</div></section>`}
+   ${recent.length?`<div class="itwlist">${recent.map(e=>{const m=itwMm[e.med]||ITW_M[2],x=ccAth(e.ath),mt=DB.meetings.find(y=>y.id===e.mid);return `<div class="itwr ${S.itwLast===e.id?'new':''}"><span class="itwi" style="--c1:${m[2]};--c2:${m[3]}">${itwIco(e.med,20)}</span><div><b>Athos ${e.ath}${x?' · '+esc(pcShort(x)):''}</b><span>${m[1]}${e.nm?' · '+esc(e.nm):''} · ${fmtD(e.d)}${mt?' · '+esc(mt.city||mName(mt)):''}</span>${(e.att||[]).forEach(a=>{if(a.kind==='file')window.__IA[a.id]=a}),itwAttH(e,itwAtt())}</div>${ed?`<button class="ib" aria-label="Supprimer" onclick="itwDel('${e.id}')">${ic('trash',15)}</button>`:''}</div>`}).join('')}</div>`:'<p class="small muted" style="margin:0">Aucune interview pour l\'instant.</p>'}</div></section>`}
  /* Bilan */
  const years=[...new Set(all.map(e=>+String(e.d).slice(0,4)))].sort((a,b)=>b-a),cy=new Date().getFullYear(),per=S.itwP!=null?S.itwP:(years[0]||cy);
  const L=all.filter(e=>!per||+String(e.d).slice(0,4)===+per),lab=per?'saison '+per:'toutes les saisons';
@@ -4108,6 +4145,20 @@ function vItw(tabs){const tab=S.itwTab||(itwEdit()?'add':'bil'),ed=itwEdit(),all
   <section class="dvbox ccbox" style="max-width:760px"><div class="dvsec"><h3 class="pch">${ic('cal',18)} Par meeting</h3>
    ${Ms.length?Ms.map(({m,L})=>`<div class="itwm"><b>${esc(m?ccML(m):'Hors meeting')}</b><span>${ITW_M.map(t=>{const k=L.filter(e=>e.med===t[0]).length;return k?`<i class="itwp" style="--c:${t[2]}">${k} ${t[1]}</i>`:''}).join('')}</span><small class="muted">${[...new Set(L.map(e=>e.ath))].sort((a,b)=>a-b).map(n=>'Athos '+n).join(', ')}</small></div>`).join(''):'<p class="small muted" style="margin:0">Rien sur cette période.</p>'}</div></section>`}
 
+/* ---------------- Dossier de presse : documents et liens que la comm met à disposition des organisateurs ---------------- */
+const pressL=()=>(DB.press||[]).filter(e=>!e.del);
+function pressLinkSheet(){S.prLk={url:'',nm:''};openSheet(()=>`<div class="sh">${tile({i:'link',c1:'#06b6d4',c2:'#0e7490'},'')}<div class="t"><div class="q">Ajouter un lien</div><div class="small muted">Dossier en ligne, vidéo, page web…</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Adresse</label><input class="in" id="pr-lu" type="url" inputmode="url" placeholder="https://…"><label class="l" style="margin-top:10px">Titre</label><input class="in" id="pr-ln" maxlength="80" placeholder="Ex. : dossier de presse 2027 (PDF)"></div>
+ <div class="sf"><span></span><button class="btn pri big" onclick="pressAddLink($('pr-lu').value,$('pr-ln').value)">${ic('check',18)} Ajouter</button></div>`)}
+function pressAddLink(url,nm){url=String(url||'').trim();if(!/^https?:\/\//i.test(url)){toast('Indiquez une adresse complète (https://…)');return}DB.press=DB.press||[];
+ DB.press.unshift({id:uid(),kind:'link',url:url.slice(0,500),name:String(nm||'').trim().slice(0,80)||url.replace(/^https?:\/\/(www\.)?/,'').slice(0,60),by:ccWho(),t:Date.now()});save();closeSheet();render();toast('Lien ajouté au dossier de presse')}
+function pressDel(id){const e=(DB.press||[]).find(x=>x.id===id);if(!e||!confirm('Retirer « '+e.name+' » du dossier de presse ?'))return;e.del=1;e.tm=Date.now();save();render()}
+function pressRow(e,ed){window.__IA[e.id]=e;return `<div class="drow">${tile(e.kind==='link'?{i:'link',c1:'#06b6d4',c2:'#0e7490'}:{i:'file',c1:'#ec4899',c2:'#be185d'},'sm')}<div class="t"><b>${esc(e.name)}</b><small>${e.kind==='link'?esc(e.url.replace(/^https?:\/\/(www\.)?/,'').slice(0,50)):fsize(e.size)+' · '+new Date(e.t).toLocaleDateString('fr-FR')}</small></div>
+ ${e.kind==='link'?`<a class="ib" href="${esc(e.url)}" target="_blank" rel="noopener" aria-label="Ouvrir">${ic('link',16)}</a>`:`<button class="ib" onclick="dlFile(window.__IA['${e.id}'])" aria-label="Télécharger" title="Télécharger">${ic('download',16)}</button>`}${ed?`<button class="ib" onclick="pressDel('${e.id}')" aria-label="Retirer">${ic('trash',15)}</button>`:''}</div>`}
+function pressListH(ed){const L=pressL();return `<div class="docs">${L.length?L.map(e=>pressRow(e,ed)).join(''):'<p class="small muted">Aucun document pour l\'instant.</p>'}</div>`}
+function vPress(tabs){const ed=pressCan();
+ return `${NOTE}<div class="head"><div><h1>Dossier de presse</h1><p class="muted">Tout ce dont un organisateur peut avoir besoin pour sa communication : dossier de presse, visuels, logos, vidéos, liens. Il le retrouve dans la rubrique Communication de son meeting.</p></div></div>${tabs}${ccDemo()}
+ <section class="dvbox ccbox"><div class="dvsec">${ed?`<div class="pcbtns" style="margin-bottom:12px"><button class="btn pri" onclick="PICK={press:1};const i=$('filein');i.value='';i.click()">${ic('upload',15)} Déposer un fichier</button><button class="btn" onclick="pressLinkSheet()">${ic('link',15)} Ajouter un lien</button><span class="small muted">PDF, images, vidéos… 20 Mo maximum par fichier.</span></div>`:''}${pressListH(ed)}</div></section>`}
 /* ---------------- Cadres ---------------- */
 const cadL=()=>(DB.cad||[]).filter(e=>!e.del);
 function cadAdd(){const i=$('cad-w'),w=(i&&i.value||'').trim();if(!w){if(i)i.focus();return}const mid=S.cadM!==undefined?S.cadM:((ccNext()||{}).id||'');if(!mid){toast('Choisissez le meeting');return}
@@ -4196,15 +4247,31 @@ function rgBuild(files){const F=files.filter(f=>f.pts.length>60);if(F.length<2)t
 function rgShift(a,d){if(!d)return;const N=a.x.length,sh=arr=>{const o=new Float32Array(N).fill(NaN);for(let i=0;i<N;i++){const s=i+d,j=Math.floor(s),f=s-j;if(j<0||j+1>=N||isNaN(arr[j])||isNaN(arr[j+1]))continue;o[i]=arr[j]+(arr[j+1]-arr[j])*f}return o};
  a.x=sh(a.x);a.y=sh(a.y);a.z=sh(a.z);a.v=sh(a.v);const c=new Float64Array(N);for(let i=1;i<N;i++)c[i]=c[i-1]+(isNaN(a.x[i])||isNaN(a.x[i-1])?0:Math.hypot(a.x[i]-a.x[i-1],a.y[i]-a.y[i-1]));a.c=c;
  ['out','in','dw'].forEach(k=>{if(a[k])a[k]=[Math.round(a[k][0]-d),Math.round(a[k][1]-d)]});['to','td','roll','brk'].forEach(k=>{if(a[k]!=null)a[k]=Math.round(a[k]-d)})}
-function rgAlign(R){const L=R.A[R.ordOut[0]];if(!L||L.bad)return;R.align={};
+/* 1. Recalage grossier : l'instant où le plus d'avions sont réunis (à moins de 60 m du centre du groupe, en vol) ; ceux qui en sont loin n'ont pas
+   la bonne référence de temps → on décale toute leur trace (−30 à +30 s) jusqu'à ce qu'ils rejoignent le groupe.  2. Recalage fin (±6 s) sur le leader. */
+function rgAlign(R){R.align={};const ok=R.A.filter(a=>!a.bad),N=R.N;
+ if(ok.length>=3){const at=(a,i)=>{const j=Math.floor(i),f=i-j;if(j<0||j+1>=N||isNaN(a.x[j])||isNaN(a.x[j+1]))return null;return [a.x[j]+(a.x[j+1]-a.x[j])*f,a.y[j]+(a.y[j+1]-a.y[j])*f]};
+  const cen=(P,i)=>{let cx=0,cy=0;P.forEach(a=>{cx+=a.x[i];cy+=a.y[i]});return [cx/P.length,cy/P.length]};
+  let bt=-1,bn=0,bs=1e9;for(let i=0;i<N;i+=2){const P=ok.filter(a=>!isNaN(a.x[i])&&a.v[i]>150);if(P.length<=ok.length/2)continue;const c=cen(P,i);let n=0,sd=0;P.forEach(a=>{const d=Math.hypot(a.x[i]-c[0],a.y[i]-c[1]);if(d<60){n++;sd+=d}});if(n>bn||(n===bn&&sd<bs)){bn=n;bt=i;bs=sd}}
+  if(bt>=0&&bn>ok.length/2){const c=cen(ok.filter(a=>!isNaN(a.x[bt])&&a.v[bt]>150),bt),G=ok.filter(a=>!isNaN(a.x[bt])&&Math.hypot(a.x[bt]-c[0],a.y[bt]-c[1])<60);
+   const win=[];for(let i=Math.max(2,bt-20);i<=Math.min(N-3,bt+20);i++){if(G.every(a=>!isNaN(a.x[i])&&a.v[i]>150))win.push([i,cen(G,i)])}
+   ok.forEach(a=>{if(G.includes(a))return;const cost=d=>{const D=[];win.forEach(([i,c])=>{const p=at(a,i+d);if(p)D.push(Math.hypot(p[0]-c[0],p[1]-c[1]))});return D.length<win.length/2?1e9:rgMed(D)};
+    const c0=cost(0);let best=0,bc=c0;for(let d=-30;d<=30;d+=0.5){if(!d)continue;const q=cost(d);if(q<bc-1){bc=q;best=d}}
+    if(best&&bc<80&&bc<c0*0.6){rgShift(a,best);R.align[a.k]=best}})}}
+ rgAlignFine(R)}
+function rgAlignFine(R){const L=R.A[R.ordOut[0]];if(!L||L.bad)return;
  R.A.forEach(a=>{if(a.bad||a===L)return;const idx=[];for(let i=L.to+30;i<Math.min(L.td,a.td)-30;i++){if(isNaN(a.x[i])||isNaN(L.x[i])||!(L.v[i]>150))continue;if(Math.hypot(a.x[i]-L.x[i],a.y[i]-L.y[i])<200)idx.push(i)}
   if(idx.length<60)return;const cost=d=>{const D=[];for(let q=0;q<idx.length;q+=2){const i=idx[q],s=i+d,j=Math.floor(s),f=s-j;if(j<1||j+1>=a.x.length||isNaN(a.x[j])||isNaN(a.x[j+1]))continue;D.push(Math.hypot(a.x[j]+(a.x[j+1]-a.x[j])*f-L.x[i],a.y[j]+(a.y[j+1]-a.y[j])*f-L.y[i]))}return rgMed(D)};
   const c0=cost(0);let best=0,bc=c0;for(let d=-6;d<=6;d+=0.5){if(!d)continue;const c=cost(d);if(c<bc-1){bc=c;best=d}}
-  if(best&&bc<c0*0.8&&c0-bc>3){rgShift(a,best);R.align[a.k]=best}})}
+  if(best&&bc<c0*0.8&&c0-bc>3){rgShift(a,best);R.align[a.k]=Math.round(((R.align[a.k]||0)+best)*2)/2}})}
 /* Le break : l'instant où chaque avion entame son virage (taux > 5°/s tenu 3 s) après le passage à grande vitesse */
 function rgBreaks(R){R.A.forEach(a=>{if(a.bad)return;const hd=i=>Math.atan2(a.x[i+1]-a.x[i-1],a.y[i+1]-a.y[i-1]),rate=i=>{let d=(hd(i+1)-hd(i-1))*180/Math.PI/2;while(d>180)d-=360;while(d<-180)d+=360;return Math.abs(d)};
   let b=-1;for(let i=a.dw[0]-20;i<a.td-10;i++){if(i<2||isNaN(a.x[i-2])||isNaN(a.x[i+2])||!(a.v[i]>170))continue;if(rate(i)>5&&rate(i+1)>5&&rate(i+2)>5){b=i;break}}
-  a.brk=b>=0?b:a.dw[0];a.dw[0]=Math.min(a.dw[0],a.brk)});
+  a.brk=b>=0?b:a.dw[0];a.dw[0]=Math.min(a.dw[0],a.brk);
+  /* vent arrière établi : cap à ~180° du cap d'arrivée au break, sans virage ; fin dès que l'avion revient vers la piste */
+  const h0=hd(Math.max(2,a.brk-4));let s0=-1,e0=-1;for(let i=a.brk+3;i<a.td-5;i++){if(i<2||isNaN(a.x[i-2])||isNaN(a.x[i+2]))continue;let dh=(hd(i)-h0)*180/Math.PI;while(dh>180)dh-=360;while(dh<-180)dh+=360;
+   if(s0<0){if(Math.abs(Math.abs(dh)-180)<30&&rate(i)<2.5&&rate(i+1)<2.5)s0=i}else if(rate(i)>3&&rate(i+1)>3){e0=i;break}}
+  a.dwE=s0>=0?[s0,e0>=0?e0:a.td]:null});
  const ok=R.A.filter(a=>!a.bad);R.ordDw=ok.slice().sort((p,q)=>p.brk-q.brk).map(a=>a.k);
  R.brkGap=[];for(let r=1;r<R.ordDw.length;r++){const A0=R.A[R.ordDw[r-1]],A1=R.A[R.ordDw[r]];R.brkGap.push({a:A0.k,b:A1.k,t:A1.brk,gap:A1.brk-A0.brk})}}
 /* Phases d'un avion : roulage aller, course, vol, break, posé, roulage retour */
@@ -4299,7 +4366,7 @@ function rgSat(g,R,X,Y,W,H){const lat=R.la0,n=z=>Math.pow(2,z),ll2t=(la,lo,z)=>[
   g.drawImage(t.img,px,py,px2-px,py2-py);drawn++}
  return drawn}
 /* Le dessin : chaque image = le fond, la piste, les chemins, les avions numérotés, l'étiquette au milieu de chaque paire, l'écart au break */
-function rgDraw(){rgProf();const cv=$('rg-cv');if(!cv||!RG)return;const R=RG,key=S.rgSeg||'out',t=S.rgT,dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;
+function rgDraw(){const cv=$('rg-cv');if(!cv||!RG)return;const R=RG,key=S.rgSeg||'out',t=S.rgT,dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;
  if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);
  const dark=matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.dataset.theme!=='light'||document.documentElement.dataset.theme==='dark';
  const ok=R.A.filter(a=>!a.bad),P=[];ok.forEach(a=>{const p=rgAt(a,t);if(p)P.push([a,p])});
@@ -4330,6 +4397,8 @@ function rgDraw(){rgProf();const cv=$('rg-cv');if(!cv||!RG)return;const R=RG,key
   g.beginPath();g.arc(x+15,y-15,11,0,Math.PI*2);g.fillStyle=c==='#ffffff'?'#0f172a':'#fff';g.fill();g.lineWidth=2.5;g.strokeStyle=c==='#ffffff'?'#fff':c;g.stroke();g.fillStyle=c==='#ffffff'?'#fff':c;g.font='800 13px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,x+15,y-14.5)});
  /* les étiquettes de distance par-dessus, au milieu exact des deux avions */
  LBL.forEach(([x,y,tx,c,sm])=>pill(x,y,tx,c,false,sm));
+ /* vent arrière établi : la hauteur sol de chaque avion, bleu ±50 ft des 800 ft, vert ±80, jaune ±120, rouge ! au-delà */
+ if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(!a.dwE||i<a.dwE[0]||i>a.dwE[1]||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'');g.font='800 11px system-ui,sans-serif';pill(X(p.x)-24-g.measureText(tx).width/2,Y(p.y)+2,tx,c,false,true)});
  /* échelle et crédit */
  const m=[20,50,100,200,500,1000,2000].find(v=>v*RGV.sc>60)||5000;g.strokeStyle=nT?'#fff':dark?'#e2e8f0':'#334155';g.fillStyle=g.strokeStyle;g.lineWidth=2;g.beginPath();g.moveTo(12,H-14);g.lineTo(12+m*RGV.sc,H-14);g.stroke();g.font='700 11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';g.fillText(m+' m',14,H-20);
  if(nT){g.font='10px system-ui';g.textAlign='right';g.fillStyle='rgba(255,255,255,.8)';g.fillText('Imagerie © Esri',W-8,H-8)}}
@@ -4426,9 +4495,9 @@ function vRg(tabs){const head=`${NOTE}<div class="head"><div><h1>Espacement</h1>
    <div class="rgfl">${R.fls.slice(0,3).concat(R.fl&&R.fls.indexOf(R.fl)>2?[R.fl]:[]).map((f,i)=>`<button aria-pressed="${!!(R.fl&&R.fl.id===f.id)}" onclick="RG.fl=RG.fls.find(x=>x.id==='${esc(f.id)}')||null;render()"><b>${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h'))}</b><span>${esc(f.title||'Vol')}${i===0&&R.fl&&R.fl.id===f.id?' · proposé':''}</span></button>`).join('')}${R.fls.length>3?`<select class="in" onchange="if(this.value){RG.fl=RG.fls.find(x=>x.id===this.value)||null;render()}"><option value="">Un autre vol…</option>${R.fls.slice(3).map(f=>`<option value="${esc(f.id)}">${esc(PC_JS[f.d]+' '+pcDay(f.w,f.d)+' '+PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]+' · '+f.time.replace(':','h')+' · '+(f.title||'Vol'))}</option>`).join('')}</select>`:''}<button class="more" style="justify-self:start" onclick="RG.fl=null;render()">${R.fl?'Aucun de ces vols':'✓ Sans vol de l\'agenda'}</button></div>`:`<span class="small muted">Aucun vol passé trouvé dans l'agenda autour du ${fmtD(R.date)}.</span>`}</div>
   <label class="l" style="margin-top:10px">Qui est qui <span style="font-weight:500">(ordre du roulage aller ; touchez pour corriger)</span></label>
   <div class="rgwho">${R.ordOut.map(k=>{const a=R.A[k],n=rgNum(k);return `<label style="--c:${rgColN(n)};${[1,4,9].includes(n)?'--t:#0f172a;--b:#0f172a':'--t:#fff;--b:'+rgColN(n)}"><select onchange="rgSetNum(${k},+this.value)">${R.ordOut.map((_,i)=>`<option ${n===i+1?'selected':''}>${i+1}</option>`).join('')}</select><small>${esc(a.name.replace(/\.gpx$/i,''))}</small></label>`}).join('')}</div>
-  ${al.length?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} Horloges GPS recalées en formation : ${al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(2).replace('.',',')+' s').join(', ')}.</p>`:''}
+  ${al.length?`<p class="small muted" style="margin:10px 0 0">${ic('clock',13)} Horloges GPS recalées sur le groupe : ${al.map(([k,d])=>'n°'+rgNum(+k)+' '+(d>0?'+':'−')+Math.abs(d).toFixed(2).replace('.',',')+' s').join(', ')}.</p>`:''}
   ${sets}</div></section>
- <section class="rgview"><canvas id="rg-cv"></canvas>${key==='dw'?`<div class="rgprof"><canvas id="rg-pf"></canvas><span class="rgpfl">Hauteur sol · 800 ft · <i style="color:#eab308">±80</i> <i style="color:#ef4444">±150</i></span></div>`:''}
+ <section class="rgview"><canvas id="rg-cv"></canvas>
   <div class="exseg rgseg" role="tablist">${RG_SEG.map(([k,l])=>`<button role="tab" aria-selected="${key===k}" onclick="rgSeg('${k}')">${l}</button>`).join('')}</div><div class="rgov"><span id="rg-ck">${rgClock(R,Math.round(S.rgT))}</span><span class="rgord">${key==='out'?'Ordre des numéros':key==='dw'?'Ordre au break : ':'Ordre au retour : '}${key==='out'?'':ordK.map(k=>rgNum(k)).join(' · ')}</span></div>
   <div class="rgzm"><button onclick="rgFull()" aria-label="Plein écran" title="Plein écran">⛶</button><button onclick="if(RGV){RGV.sc*=1.5;S.rgMan=true}rgDraw()" aria-label="Zoomer">+</button><button onclick="if(RGV){RGV.sc/=1.5;S.rgMan=true}rgDraw()" aria-label="Dézoomer">−</button><button aria-pressed="${!!S.rgFol&&!S.rgMan}" onclick="S.rgFol=true;S.rgMan=false;RGV=null;rgDraw();rgCtl();this.setAttribute('aria-pressed','true')" title="Suivre les avions">${ic('target',15)}</button><button aria-pressed="${!!sat}" onclick="S.rgSat=!(S.rgSat==null?RG.sat:S.rgSat);rgDraw();this.setAttribute('aria-pressed',String(S.rgSat))" title="Fond satellite">🛰</button></div>
   <div class="rghint small">Glissez pour déplacer · molette ou pincement pour zoomer · double-clic : recentrer${R.ad?' · '+esc(R.ad):''}</div>
@@ -4486,9 +4555,9 @@ function pfArt(k){
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
 const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']]};
-const PF_HOME=['alpha','cirrus','fea','pc','ex','rg','itw','cad'];
+const PF_HOME=['alpha','cirrus','fea','pc','ex','rg','itw','cad','press'];
 const pfParent=k=>Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9, cadres remis par la comm']];
+const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['press','Dossier de presse','Documents et liens pour les organisateurs']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -4813,12 +4882,14 @@ $('filein').addEventListener('change',async e=>{
  if(f.size>20*1024*1024){toast('Fichier trop lourd (20 Mo maximum)');return}
  toast('Envoi de '+f.name+'…');
  const b64=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.readAsDataURL(f)});
- const mid=P.mid||P.park||null,label=P.pdoc?'Dossier pilotes':P.park?'Parking':P.key==='axe'?'Plan du site':P.key==='pb'?'Pilot book':'';
+ const mid=P.mid||P.park||null,label=P.pdoc?'Dossier pilotes':P.press?'Dossier de presse':P.itw?'Interview':P.park?'Parking':P.key==='axe'?'Plan du site':P.key==='pb'?'Pilot book':'';
  let up;try{up=await api('upload',{name:f.name,type:f.type,b64,mid,label})}catch(err){up={error:'Connexion impossible'}}
  if(!up||up.error){toast(up&&up.error||'Envoi impossible');return}
  const meta={name:f.name,size:f.size,t:Date.now(),url:up.url,driveId:up.id};
  if(P.park){const T=tech(DB.meetings.find(x=>x.id===P.park));T.parkFile=meta;if(/^image\//.test(f.type)){try{FILES[P.park+'park']=URL.createObjectURL(f)}catch(err){}}else delete FILES[P.park+'park'];save();render();toast('Schéma du parking déposé');return}
  if(P.pdoc){const nid=uid();try{FILEB[nid]=URL.createObjectURL(f)}catch(err){}DB.pdocs.unshift(Object.assign({id:nid,cat:P.pdoc},meta));save();closeSheet();render();toast('Document ajouté au dossier des pilotes');return}
+ if(P.press){const nid=uid();try{FILEB[nid]=URL.createObjectURL(f)}catch(err){}DB.press=DB.press||[];DB.press.unshift(Object.assign({id:nid,kind:'file',by:ccWho()},meta));save();render();toast('Fichier ajouté au dossier de presse');return}
+ if(P.itw){const e=(DB.itw||[]).find(x=>x.id===P.itw);if(!e)return;const nid=uid();try{FILEB[nid]=URL.createObjectURL(f)}catch(err){}e.att=(e.att||[]).concat([Object.assign({id:nid,kind:'file'},meta)]);e.tm=Date.now();save();render();toast('Fichier joint à l\'interview');return}
  const m=DB.meetings.find(x=>x.id===P.mid),A=aero(m),old=A[P.key];
  A[P.key]=Object.assign(meta,P.key==='pb'?{draft:old?!!old.draft:true}:{});
  if(/^image\//.test(f.type)){try{FILES[m.id+P.key]=URL.createObjectURL(f)}catch(err){}}else delete FILES[m.id+P.key];
