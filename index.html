@@ -4481,7 +4481,7 @@ function rgDraw(){if((S.rgSeg||'out')==='dw')rgProf();const cv=$('rg-cv');if(!cv
  /* les étiquettes de distance par-dessus, au milieu exact des deux avions */
  LBL.forEach(([x,y,tx,c,sm])=>pill(x,y,tx,c,false,sm));
  /* vent arrière établi : la hauteur sol de chaque avion, bleu ±50 ft des 800 ft, vert ±80, jaune ±120, rouge ! au-delà */
- if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(!a.dwE||i<a.dwE[0]||i>a.dwE[1]||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'');tagL(X(p.x)-22,Y(p.y)+2,tx,c)});
+ if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(!a.dwE||i<a.dwE[0]||i>a.dwE[1]||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'')+(isNaN(a.v[i])?'':' / '+Math.round(a.v[i])+' kt');tagL(X(p.x)-22,Y(p.y)+2,tx,c)});
  /* roulage aller et retour : la vitesse sol de chaque avion (kt), même cartouche à pointe */
  if(key!=='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(i<a[key][0]||i>a[key][1]||isNaN(a.v[i]))return;const v=Math.round(a.v[i]);tagL(X(p.x)-22,Y(p.y)+2,v+' kt',v>40?'#dc2626':v>30?'#ca8a04':'#475569')});
  /* échelle et crédit */
