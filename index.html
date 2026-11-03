@@ -4482,6 +4482,8 @@ function rgDraw(){if((S.rgSeg||'out')==='dw')rgProf();const cv=$('rg-cv');if(!cv
  LBL.forEach(([x,y,tx,c,sm])=>pill(x,y,tx,c,false,sm));
  /* vent arrière établi : la hauteur sol de chaque avion, bleu ±50 ft des 800 ft, vert ±80, jaune ±120, rouge ! au-delà */
  if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(!a.dwE||i<a.dwE[0]||i>a.dwE[1]||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'');tagL(X(p.x)-22,Y(p.y)+2,tx,c)});
+ /* roulage aller et retour : la vitesse sol de chaque avion (kt), même cartouche à pointe */
+ if(key!=='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(i<a[key][0]||i>a[key][1]||isNaN(a.v[i]))return;const v=Math.round(a.v[i]);tagL(X(p.x)-22,Y(p.y)+2,v+' kt',v>40?'#dc2626':v>30?'#ca8a04':'#475569')});
  /* échelle et crédit */
  const m=[20,50,100,200,500,1000,2000].find(v=>v*RGV.sc>60)||5000;g.strokeStyle=nT?'#fff':dark?'#e2e8f0':'#334155';g.fillStyle=g.strokeStyle;g.lineWidth=2;g.beginPath();g.moveTo(12,H-14);g.lineTo(12+m*RGV.sc,H-14);g.stroke();g.font='700 11px system-ui';g.textAlign='left';g.textBaseline='alphabetic';g.fillText(m+' m',14,H-20);
  if(nT){g.font='10px system-ui';g.textAlign='right';g.fillStyle='rgba(255,255,255,.8)';g.fillText('Imagerie © Esri',W-8,H-8)}}
