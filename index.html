@@ -4480,8 +4480,8 @@ function rgDraw(){if((S.rgSeg||'out')==='dw')rgProf();const cv=$('rg-cv');if(!cv
   g.beginPath();g.arc(x+15,y-15,11,0,Math.PI*2);g.fillStyle=c==='#ffffff'?'#0f172a':'#fff';g.fill();g.lineWidth=2.5;g.strokeStyle=c==='#ffffff'?'#fff':c;g.stroke();g.fillStyle=c==='#ffffff'?'#fff':c;g.font='800 13px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,x+15,y-14.5)});
  /* les étiquettes de distance par-dessus, au milieu exact des deux avions */
  LBL.forEach(([x,y,tx,c,sm])=>pill(x,y,tx,c,false,sm));
- /* vent arrière établi : la hauteur sol de chaque avion, bleu ±50 ft des 800 ft, vert ±80, jaune ±120, rouge ! au-delà */
- if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(!a.dwE||i<a.dwE[0]||i>a.dwE[1]||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'')+(isNaN(a.v[i])?'':' / '+Math.round(a.v[i])+' kt');tagL(X(p.x)-22,Y(p.y)+2,tx,c)});
+ /* du break au posé : la hauteur sol et la vitesse de chaque avion, bleu ±50 ft des 800 ft, vert ±80, jaune ±120, rouge ! au-delà */
+ if(key==='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(i<a.dw[0]||i>a.td||isNaN(a.gz)||isNaN(a.z[i]))return;const h=(a.z[i]-a.gz)*3.28084,e=Math.abs(h-800),c=e<=50?'#2563eb':e<=80?'#16a34a':e<=120?'#ca8a04':'#dc2626';const tx=Math.round(h)+' ft'+(e>120?' !':'')+(isNaN(a.v[i])?'':' / '+Math.round(a.v[i])+' kt');tagL(X(p.x)-22,Y(p.y)+2,tx,c)});
  /* roulage aller et retour : la vitesse sol de chaque avion (kt), même cartouche à pointe */
  if(key!=='dw')P.forEach(([a,p])=>{const i=Math.round(t);if(i<a[key][0]||i>a[key][1]||isNaN(a.v[i]))return;const v=Math.round(a.v[i]);tagL(X(p.x)-22,Y(p.y)+2,v+' kt',v>40?'#dc2626':v>30?'#ca8a04':'#475569')});
  /* échelle et crédit */
@@ -4510,12 +4510,13 @@ function rgProf(){const cv=$('rg-pf');if(!cv||!RG)return;const R=RG,dpr=window.d
  const g=cv.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);const dark=matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.dataset.theme!=='light'||document.documentElement.dataset.theme==='dark';
  g.fillStyle=dark?'#0f172a':'#f8fafc';g.fillRect(0,0,W,H);
  const t=S.rgT,ti=Math.round(t),ft=(a,i)=>(a.z[i]-a.gz)*3.28084;
- const ok=R.A.filter(a=>!a.bad&&!isNaN(a.gz)&&ti>=a.dw[0]-5&&ti<=a.td+5&&!isNaN(a.x[ti])&&!isNaN(a.z[ti]));
+ /* dans la coupe : seulement les avions établis en vent arrière (ils en sortent dès qu'ils tournent vers la piste) */
+ const ok=R.A.filter(a=>!a.bad&&!isNaN(a.gz)&&a.dwE&&ti>=a.dwE[0]&&ti<=a.dwE[1]&&!isNaN(a.x[ti])&&!isNaN(a.z[ti]));
  const pad={l:30,r:10,t:14,b:9},lo=600,hi=1100,Y=h=>pad.t+(1-(Math.min(hi,Math.max(lo,h))-lo)/(hi-lo))*(H-pad.t-pad.b);
  /* lignes de hauteur */
  g.lineWidth=1;g.font='700 9px system-ui';g.textAlign='right';g.textBaseline='middle';for(let h=lo;h<=hi;h+=100){const y=Y(h);g.strokeStyle=h===800?'#22c55e':dark?'#334155':'#e2e8f0';g.setLineDash(h===800?[6,4]:[]);g.lineWidth=h===800?1.5:1;g.beginPath();g.moveTo(pad.l,y);g.lineTo(W-pad.r,y);g.stroke();g.setLineDash([]);if(h%100===0&&(h===600||h===800||h===1000||h===1100)){g.fillStyle=h===800?'#16a34a':'#94a3b8';g.fillText(h,pad.l-3,y)}}
  g.fillStyle='#94a3b8';g.font='700 9px system-ui';g.textAlign='left';g.textBaseline='top';g.fillText('Coupe vent arrière · ft sol',pad.l,2);
- if(!ok.length){g.fillStyle='#94a3b8';g.font='11px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('En attente des avions en vent arrière',W/2,H/2);return}
+ if(!ok.length){g.fillStyle='#94a3b8';g.font='11px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('Aucun avion établi en vent arrière',W/2,H/2);return}
  /* abscisse : distance le long de la route du premier de la file (à droite), les suivants derrière lui */
  /* abscisse : la file dépliée. Le premier à droite ; chacun placé derrière le précédent à la distance mesurée le long de son chemin
     (virages compris), à défaut en ligne droite : l'avion qui tourne vers la piste garde sa place dans la file */
