@@ -879,6 +879,9 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 .mtal{margin-top:6px;padding:7px 10px;border-radius:10px;font-weight:800;font-size:13.5px;background:var(--surface2);border:1px solid var(--line)}.mtal.wa{background:#fef3c7;color:#78350f;border-color:#fcd34d}.mtal.ko{background:#fee2e2;color:#7f1d1d;border-color:#fca5a5}
 .mtcp{margin-top:8px}.mtcp td{white-space:nowrap}
 .mtcat{display:inline-block;min-width:46px;text-align:center;padding:3px 7px;border-radius:7px;font-size:12px;font-weight:900;color:#fff}.mtcat.vfr{background:#16a34a}.mtcat.mvfr{background:#2563eb}.mtcat.ifr{background:#dc2626}.mtcat.lifr{background:#c026d3}
+.mtcf{display:inline-block;margin-top:6px;padding:3px 9px;border-radius:8px;font-size:12.5px;font-weight:800}.mtcf.forte{background:var(--ok2);color:var(--ok)}.mtcf.moyenne{background:var(--warn2);color:var(--warn)}.mtcf.faible{background:var(--bad2);color:var(--bad)}
+.mtpw{display:inline-block;width:46px;height:6px;border-radius:4px;background:var(--surface2);border:1px solid var(--line);margin-right:6px;vertical-align:middle;overflow:hidden}.mtpw i{display:block;height:100%;background:var(--navy2)}
+details.card.mtc>summary{cursor:pointer}
 .card.mtc{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
 </style>
 </head>
@@ -4183,7 +4186,7 @@ const MT_SITE={salon:{n:'Salon',st:'LFMY',el:197,la:43.6072,lo:5.1087,b:340},pdd
 const MT_OMK=['salon','istres','pdd'],MT_LV=[1000,975,950,925,900,850];
 const MT_W=['Salon','Pélissanne','Perp','Péage','Marignane','Cornillon','Public','Casino'];
 const MT_IDS=MT_ST.map(x=>x[0]).join(',');
-const MT_OM_URL='https://api.open-meteo.com/v1/forecast?latitude='+MT_OMK.map(k=>MT_SITE[k].la).join(',')+'&longitude='+MT_OMK.map(k=>MT_SITE[k].lo).join(',')+'&hourly='+['visibility','cloud_cover','cloud_cover_low','cloud_cover_mid','cloud_cover_high','wind_speed_10m','wind_direction_10m','wind_gusts_10m'].concat(...MT_LV.map(l=>['wind_speed_','wind_direction_','geopotential_height_','cloud_cover_'].map(v=>v+l+'hPa'))).join(',')+'&wind_speed_unit=kn&timezone=UTC&timeformat=unixtime&forecast_days=2';
+const MT_OM_URL=()=>'https://api.open-meteo.com/v1/forecast?latitude='+MT_OMK.map(k=>MT_SITE[k].la).join(',')+'&longitude='+MT_OMK.map(k=>MT_SITE[k].lo).join(',')+'&hourly='+MT_OMV.join(',')+'&models='+MT_MOD.map(m=>m[0]).join(',')+'&wind_speed_unit=kn&timezone=UTC&timeformat=unixtime&past_hours=3&forecast_hours=50';
 const mtCan=()=>tcasCan();
 /* --- lecture des messages --- */
 function mtLatest(text,re){const o={};String(text||'').split(re).forEach(p=>{p=p.replace(/\s+/g,' ').trim().replace(/^(METAR|SPECI|TAF)\s+/,'').replace(/^(AMD|COR)\s+/,'');const m=p.match(/^([A-Z]{4}) (\d{6})Z/);if(m&&(!o[m[1]]||m[2]>o[m[1]].k))o[m[1]]={raw:p.replace(/\s+TAF(\s+(AMD|COR))?\s*$/,'').replace(/=\s*$/,''),k:m[2]}});const r={};for(const k in o)r[k]=o[k].raw;return r}
@@ -4222,12 +4225,6 @@ function mtProg(f){const v=f.vis==null?10000:f.vis,c=mtCeil(f),cc=c==null?99999:
  return{k,l:k,sync:!why.length,why}}
 /* --- modèle (vent en altitude, tendance) --- */
 const mtUV=(d,s)=>[-s*Math.sin(d*Math.PI/180),-s*Math.cos(d*Math.PI/180)],mtDS=(u,v)=>({d:Math.round((Math.atan2(-u,-v)*180/Math.PI+360)%360),s:Math.round(Math.hypot(u,v))});
-function mtOM(key,t){const D=S.mt&&S.mt.om;if(!D)return null;const o=Array.isArray(D)?D[MT_OMK.indexOf(key)]:D;if(!o||!o.hourly)return null;const h=o.hourly,tm=h.time;let i=0,b=1e15;tm.forEach((x,j)=>{const d=Math.abs(x*1000-t);if(d<b){b=d;i=j}});if(b>2*36e5)return null;
- const el=MT_SITE[key].el*0.3048,P=[{z:10,uv:mtUV(h.wind_direction_10m[i],h.wind_speed_10m[i])}];let ceil=null;
- MT_LV.map(l=>({z:h['geopotential_height_'+l+'hPa'][i]-el,d:h['wind_direction_'+l+'hPa'][i],s:h['wind_speed_'+l+'hPa'][i],cc:h['cloud_cover_'+l+'hPa'][i]})).filter(x=>x.z>15&&x.s!=null).sort((a,b)=>a.z-b.z).forEach(x=>{P.push({z:x.z,uv:mtUV(x.d,x.s)});if(ceil==null&&x.cc>=60)ceil=Math.round(x.z*3.281/100)*100});
- const at=z=>{let k=P.findIndex(p=>p.z>=z);if(k<0)k=P.length-1;if(k===0)return mtDS(...P[0].uv);const a=P[k-1],c=P[k],r=Math.max(0,Math.min(1,(z-a.z)/(c.z-a.z)));return mtDS(a.uv[0]+(c.uv[0]-a.uv[0])*r,a.uv[1]+(c.uv[1]-a.uv[1])*r)};
- const f={w:{d:Math.round(h.wind_direction_10m[i]),s:Math.round(h.wind_speed_10m[i]),g:h.wind_gusts_10m[i]!=null&&h.wind_gusts_10m[i]>h.wind_speed_10m[i]+9?Math.round(h.wind_gusts_10m[i]):null},vis:h.visibility[i]!=null?Math.round(h.visibility[i]):null,cl:ceil!=null?[{c:'BKN',h:ceil}]:[]};
- return{t:tm[i]*1000,f,a250:at(250),a500:at(500),a1000:at(1000),cc:h.cloud_cover?{t:h.cloud_cover[i],m:h.cloud_cover_mid[i],h:h.cloud_cover_high[i]}:null}}
 /* --- nom du vent, vu de la base (Salon et PDD : vent de Salon = 340° ; Istres : axe inversé, vent de Salon = 150°) --- */
 function mtWN(w,key){if(!w)return'';if(w.s<3)return'Calme';if(w.d==null)return'Variable';const B=MT_SITE[key].b,dl=((w.d-B)%360+360)%360,i=Math.round(dl/45)%8;let off=dl-i*45;if(off>180)off-=360;
  if(Math.abs(off)<10)return'Vent '+MT_W[i];const y=off>0?MT_W[(i+5)%8]:MT_W[(i+3)%8];return'Vent '+MT_W[i]+(Math.abs(off)<17?' tendance ':' ')+y}
@@ -4249,6 +4246,36 @@ function mtTSvg(C,key){const B=MT_SITE[key].b,sl=[[92,128],[252,128],[92,214],[2
  return `<svg viewBox="0 0 340 300" class="mtTsv" role="img" aria-label="Vents sur le T"><defs><marker id="mtah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
  <g class="mtax"><path d="M18 58H322" marker-start="url(#mtah)" marker-end="url(#mtah)"/><path d="M170 58V264" marker-end="url(#mtah)"/></g>
  <text x="322" y="40" text-anchor="end" class="mtlb">Salon</text><text x="18" y="84" class="mtlb">Marignane</text><text x="170" y="292" text-anchor="middle" class="mtlb">Perp</text><text x="170" y="40" text-anchor="middle" class="mtlb sm">Public</text>${g}</svg>`}
+/* --- modèles : AROME, ARPEGE, ICON-EU, ECMWF ; poids selon l'échéance et l'écart au METAR ; consensus et confiance --- */
+const MT_MOD=[['meteofrance_arome_france','AROME','Météo-France · 2,5 km · 2 j'],['meteofrance_arpege_europe','ARPEGE','Météo-France · 11 km · 4 j'],['icon_eu','ICON-EU','DWD · 7 km · 5 j'],['ecmwf_ifs025','ECMWF','CEPMMT · 25 km · 10 j']];
+const MT_WLV=[975,950,925,900,850],MT_CLV=[975,950,925,900,850,800,700];
+const MT_OMV=['visibility','cloud_cover','cloud_cover_mid','cloud_cover_high','wind_speed_10m','wind_direction_10m','wind_gusts_10m'].concat(...MT_WLV.map(l=>['wind_speed_'+l+'hPa','wind_direction_'+l+'hPa']),...MT_CLV.map(l=>['geopotential_height_'+l+'hPa','cloud_cover_'+l+'hPa']));
+function mtBase(id,hh){return id==='meteofrance_arome_france'?(hh<=24?3:hh<=42?2:0.5):id==='meteofrance_arpege_europe'?2:id==='icon_eu'?1.5:(hh<=24?1:hh<=48?1.5:2)}
+function mtMod(h,id,i,el){const g=n=>{const a=h[n+'_'+id]||(MT_MOD.length===1?h[n]:null);return a&&a[i]!=null?a[i]:null};if(g('wind_speed_10m')==null)return null;
+ const P=[{z:10,uv:mtUV(g('wind_direction_10m'),g('wind_speed_10m'))}];MT_WLV.forEach(l=>{const z=g('geopotential_height_'+l+'hPa'),s=g('wind_speed_'+l+'hPa'),d=g('wind_direction_'+l+'hPa');if(z!=null&&s!=null&&d!=null&&z-el>15)P.push({z:z-el,uv:mtUV(d,s)})});P.sort((a,b)=>a.z-b.z);
+ const at=z=>{let k=P.findIndex(p=>p.z>=z);if(k<0)k=P.length-1;if(k===0)return P[0].uv;const a=P[k-1],c=P[k],r=Math.max(0,Math.min(1,(z-a.z)/(c.z-a.z)));return[a.uv[0]+(c.uv[0]-a.uv[0])*r,a.uv[1]+(c.uv[1]-a.uv[1])*r]};
+ let sct=null,bkn=null;MT_CLV.map(l=>({z:g('geopotential_height_'+l+'hPa'),c:g('cloud_cover_'+l+'hPa')})).filter(x=>x.z!=null&&x.c!=null&&x.z-el>30).sort((a,b)=>a.z-b.z).forEach(x=>{const ft=Math.round((x.z-el)*3.281/100)*100;if(x.c>=60&&bkn==null)bkn=ft;if(x.c>=30&&sct==null)sct=ft});
+ const gs=g('wind_gusts_10m'),s10=g('wind_speed_10m');
+ return{uv:{w10:P[0].uv,a250:at(250),a500:at(500),a1000:at(1000)},g:gs!=null&&gs>s10+9?gs:null,vis:g('visibility'),sct,bkn,cc:{t:g('cloud_cover'),m:g('cloud_cover_mid'),h:g('cloud_cover_high')}}}
+const mtCl=(sct,bkn)=>{const L=[];if(sct!=null&&(bkn==null||sct<bkn))L.push({c:'SCT',h:sct});if(bkn!=null)L.push({c:'BKN',h:bkn});return L};
+function mtWMed(L){L=L.filter(x=>x.w>0).sort((a,b)=>a.v-b.v);const W=L.reduce((s,x)=>s+x.w,0);let a=0;for(const x of L){a+=x.w;if(a>=W/2)return x.v}return null}
+function mtOMo(key){const D=S.mt&&S.mt.om;if(!D)return null;const o=Array.isArray(D)?D[MT_OMK.indexOf(key)]:D;return o&&o.hourly?o:null}
+const mtIdx=(tm,t)=>{let i=-1,b=1e15;tm.forEach((x,j)=>{const d=Math.abs(x*1000-t);if(d<b){b=d;i=j}});return b<=2*36e5?i:-1};
+/* écart de chaque modèle au dernier METAR (vent au sol), calculé une fois par chargement */
+function mtSkill(key){S.mt.sk=S.mt.sk||{};if(S.mt.sk[key])return S.mt.sk[key];const o=mtOMo(key),M=mtMetar(S.mt.M[MT_SITE[key].st]),R={};
+ if(o&&M&&M.w&&M.w.d!=null){const i=mtIdx(o.hourly.time,M.t);if(i>=0){const ob=mtUV(M.w.d,M.w.s);MT_MOD.forEach(([id])=>{const m=mtMod(o.hourly,id,i,MT_SITE[key].el*0.3048);if(m)R[id]=Math.round(Math.hypot(m.uv.w10[0]-ob[0],m.uv.w10[1]-ob[1]))})}}
+ return S.mt.sk[key]=R}
+function mtOM(key,t){const o=mtOMo(key);if(!o)return null;const h=o.hourly,i=mtIdx(h.time,t);if(i<0)return null;const el=MT_SITE[key].el*0.3048,hh=Math.max(0,(t-Date.now())/36e5),sk=mtSkill(key);
+ const Ms=MT_MOD.map(([id,n,d])=>{const m=mtMod(h,id,i,el);if(!m)return null;const e=sk[id],w=mtBase(id,hh)*(e==null?1:1/(1+e/6));return Object.assign(m,{id,n,d,err:e,w})}).filter(Boolean);if(!Ms.length)return null;
+ const W=Ms.reduce((s,m)=>s+m.w,0);Ms.forEach(m=>m.p=m.w/W);
+ const mean=k=>{const u=Ms.reduce((s,m)=>s+m.uv[k][0]*m.p,0),v=Ms.reduce((s,m)=>s+m.uv[k][1]*m.p,0);return[u,v]},avgN=f=>{const L=Ms.filter(m=>f(m)!=null);if(!L.length)return null;const w=L.reduce((s,m)=>s+m.p,0);return L.reduce((s,m)=>s+f(m)*m.p,0)/w};
+ const c10=mean('w10'),sct=mtWMed(Ms.map(m=>({v:m.sct==null?99999:m.sct,w:m.p}))),bkn=mtWMed(Ms.map(m=>({v:m.bkn==null?99999:m.bkn,w:m.p}))),vis=avgN(m=>m.vis),gs=avgN(m=>m.g);
+ const f={w:Object.assign(mtDS(...c10),{g:gs!=null&&gs>mtDS(...c10).s+9?Math.round(gs):null}),vis:vis!=null?Math.round(vis):null,cl:mtCl(sct<99999?sct:null,bkn<99999?bkn:null)};
+ Ms.forEach(m=>{m.f={w:mtDS(...m.uv.w10),vis:m.vis!=null?Math.round(m.vis):f.vis,cl:mtCl(m.sct,m.bkn)};m.a1000=mtDS(...m.uv.a1000)});
+ const spread=Math.sqrt(Ms.reduce((s,m)=>s+m.p*((m.uv.w10[0]-c10[0])**2+(m.uv.w10[1]-c10[1])**2),0)),c1k=mean('a1000'),sp1k=Math.sqrt(Ms.reduce((s,m)=>s+m.p*((m.uv.a1000[0]-c1k[0])**2+(m.uv.a1000[1]-c1k[1])**2),0));
+ const kc=mtProg(f).k,agree=Ms.reduce((s,m)=>s+(mtProg(m.f).k===kc?m.p:0),0),sp=Math.max(spread,sp1k*0.7);
+ const conf=Ms.length<2?'faible':sp<4&&agree>=0.75?'forte':sp<8&&agree>=0.5?'moyenne':'faible';
+ return{t:h.time[i]*1000,f,a250:mtDS(...mean('a250')),a500:mtDS(...mean('a500')),a1000:mtDS(...c1k),cc:(()=>{const r=x=>x==null?null:Math.round(x);return{t:r(avgN(m=>m.cc.t)),m:r(avgN(m=>m.cc.m)),h:r(avgN(m=>m.cc.h))}})(),models:Ms,conf,spread:Math.round(sp),agree:Math.round(agree*100),hh:Math.round(hh)}}
 const mtQFE=(q,el)=>q?Math.round(q*Math.pow(1-0.0065*el*0.3048/288.15,5.2559)):null;
 const mtVis=v=>v==null?'—':v>=10000?'≥ 10 km':v>=5000?(Math.round(v/1000))+' km':String(v).replace(/\B(?=(\d{3})+$)/g,' ')+' m';
 const mtFt=h=>String(h).replace(/\B(?=(\d{3})+$)/g,' ');
@@ -4270,15 +4297,24 @@ const mtH=t=>{const d=new Date(t);return String(d.getHours()).padStart(2,'0')+'h
 async function mtLoad(force){if(S.mtBusy)return;if(S.mt&&!force&&Date.now()-S.mt.t<10*60000)return;S.mtBusy=1;if(S.pfTab==='meteo')render();let D=null;
  if(isOnline()){try{const r=await api('meteo',{});if(r&&r.ok)D=r;else S.mtErr=r&&r.error}catch(e){S.mtErr='Connexion impossible'}}
  if(!D){const g=async(u,j)=>{try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return j?await r.json():await r.text()}catch(e){return null}};
-  const [m,t,o]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+MT_IDS+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+MT_IDS+'&format=raw'),g(MT_OM_URL,1)]);
+  const [m,t,o]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+MT_IDS+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+MT_IDS+'&format=raw'),g(MT_OM_URL(),1)]);
   D={t:Date.now(),mtxt:m||'',ttxt:t||'',om:o};if(!m||!Object.keys(mtMetars(m)).length){Object.assign(D,mtDemo(),{demo:1});if(!o)D.om=mtDemoOM()}}
  D.M=mtMetars(D.mtxt);D.T=mtTafs(D.ttxt);S.mt=D;S.mtBusy=0;if(S.pfTab==='meteo')render()}
 function mtDemo(){const n=new Date(),p=x=>String(x).padStart(2,'0'),dd=p(n.getUTCDate()),hh=n.getUTCHours(),z=dd+p(hh)+(n.getUTCMinutes()<30?'00':'30')+'Z',h=k=>{const d=new Date(n.getTime()+k*36e5);return p(d.getUTCDate())+p(d.getUTCHours())};
  const M={LFMY:'33014G24KT 9999 FEW035 SCT060 14/05 Q1018 NOSIG',LFMI:'31016KT 9999 SCT040 15/06 Q1018',LFMO:'35018G28KT 9999 BKN028 12/04 Q1017',LFML:'32015KT CAVOK 16/05 Q1018',LFMV:'34017KT 9999 FEW030 13/04 Q1017',LFME:'33013KT 9999 SCT045 14/05 Q1018'};
  return{mtxt:Object.keys(M).map(k=>k+' '+z+' '+M[k]).join('\n'),ttxt:['LFMY','LFMI','LFMO','LFML'].map(k=>`TAF ${k} ${z} ${h(0)}/${h(24)} 33015G25KT 9999 SCT040 BECMG ${h(6)}/${h(8)} 32008KT TEMPO ${h(3)}/${h(6)} 6000 SHRA BKN018 PROB30 TEMPO ${h(14)}/${h(18)} 3000 BR BKN008`).join('\n')}}
-function mtDemoOM(){const t0=Math.floor(Date.now()/36e5)*3600-6*3600,o=k=>{const h={time:[]},z={1000:110,975:330,950:540,925:770,900:1000,850:1460};const f=(n,fn)=>{h[n]=[]};['visibility','cloud_cover','cloud_cover_low','cloud_cover_mid','cloud_cover_high','wind_speed_10m','wind_direction_10m','wind_gusts_10m'].concat(...MT_LV.map(l=>['wind_speed_','wind_direction_','geopotential_height_','cloud_cover_'].map(v=>v+l+'hPa'))).forEach(n=>h[n]=[]);
- for(let i=0;i<54;i++){h.time.push(t0+i*3600);h.visibility.push(24000);h.cloud_cover_low.push(20);h.cloud_cover.push(i>10?65:25);h.cloud_cover_mid.push(10);h.cloud_cover_high.push(i>10?70:20);h.wind_speed_10m.push(14-i*.1);h.wind_direction_10m.push(330);h.wind_gusts_10m.push(24);MT_LV.forEach((l,j)=>{h['wind_speed_'+l+'hPa'].push(16+j*4);h['wind_direction_'+l+'hPa'].push(335+j*4);h['geopotential_height_'+l+'hPa'].push(z[l]+MT_SITE[k].el*0.3);h['cloud_cover_'+l+'hPa'].push(l===850?70:10)})}return{hourly:h}};return MT_OMK.map(o)}
+function mtDemoOM(){const t0=Math.floor(Date.now()/36e5)*3600-3*3600;return MT_OMK.map(k=>{const h={time:[]},el=MT_SITE[k].el*0.3,Z={975:330,950:540,925:770,900:1000,850:1460,800:1950,700:3010};
+ for(let i=0;i<53;i++)h.time.push(t0+i*3600);
+ MT_MOD.forEach(([id],mi)=>{const put=(n,f)=>{h[n+'_'+id]=h.time.map((_,i)=>f(i))};const dd=[0,8,-6,12][mi],ds=[0,2,-1,3][mi];
+  put('visibility',()=>mi===3?null:24000);put('cloud_cover',i=>i>10?65:25);put('cloud_cover_mid',()=>10);put('cloud_cover_high',i=>i>10?70:20);
+  put('wind_speed_10m',i=>14-i*.1+ds);put('wind_direction_10m',()=>330+dd);put('wind_gusts_10m',()=>24+ds);
+  MT_WLV.forEach((l,j)=>{put('wind_speed_'+l+'hPa',()=>16+j*4+ds);put('wind_direction_'+l+'hPa',()=>335+j*4+dd)});
+  MT_CLV.forEach(l=>{put('geopotential_height_'+l+'hPa',()=>Z[l]+el);put('cloud_cover_'+l+'hPa',i=>l===800?(mi===2?65:45):l===700?70:10)})});
+ return{hourly:h}})}
 /* --- vue --- */
+function mtModH(om,key){const r=om.models.slice().sort((a,b)=>b.p-a.p).map(m=>{const p=mtProg(m.f);return `<tr><td><b>${m.n}</b><div class="small muted">${esc(m.d)}</div></td><td><div class="mtpw"><i style="width:${Math.round(m.p*100)}%"></i></div>${Math.round(m.p*100)} %</td><td>${m.err!=null?m.err+' kt':'—'}</td><td>${mtWT(m.f.w)}</td><td>${mtWT(m.a1000)}</td><td>${mtCeilT(m.f)}</td><td>${mtBadge(p,1)}</td></tr>`}).join('');
+ return `<details class="card mtc"><summary><b>Modèles et fiabilité</b> <span class="small muted">· échéance ${om.hh} h · confiance ${om.conf}</span></summary><div class="mtscroll"><table class="mtt"><thead><tr><th>Modèle</th><th>Poids</th><th>Écart METAR</th><th>Vent sol</th><th>1000 m</th><th>Nuages</th><th></th></tr></thead><tbody>${r}</tbody></table></div>
+ <div class="small muted" style="margin-top:8px;line-height:1.5">Poids = fiabilité selon l'échéance (AROME en tête jusqu'à 24 h, puis ARPEGE et ECMWF prennent le relais) × justesse du modèle face au dernier METAR (vent au sol). Le consensus est la moyenne pondérée des vents et la médiane pondérée des bases de nuages. Confiance forte si les modèles s'accordent à moins de 4 kt et à 75 % sur le programme. Le METAR, puis le TAF, restent prioritaires pour la visi et le plafond quand ils couvrent le créneau.</div></details>`}
 function mtFlights(){if(isOnline()&&!(S.pfFl||{})[pcCurWk()]&&!S.pfBusy)pfLoad();return pfFlights().filter(f=>pfFlT(f)<Date.now()+48*36e5)}
 const mtFlL=f=>pfFlL(f).replace(/ (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/,'');
 const mtSiteOf=f=>/PDD|PLAN ?DE ?DIEU|ORANGE/i.test(f&&f.title||'')?'pdd':/ISTRES|LFMI/i.test(f&&f.title||'')?'istres':'salon';
@@ -4292,14 +4328,15 @@ function vMeteo(tabs){mtLoad();const D=S.mt,head=`${NOTE}<div class="head"><div>
  const key=S.mtS||'salon',site=MT_SITE[key],T=fl?pfFlT(fl):Date.now(),now=Date.now(),M=mtMetar(D.M[site.st]),F=mtTaf(D.T[site.st]),om=mtOM(key,T),ta=mtTafAt(F,T);
  let src,cond,alt=[];
  if(T-now<60*60000&&M&&now-M.t<3*36e5){cond=M;src=`METAR ${site.st} ${mtH(M.t)}`;if(ta)alt=ta.alt}
- else if(ta){cond=ta.pre;alt=ta.alt;src=`TAF ${site.st}`}
- else if(om){cond=om.f;src='Modèle Open-Meteo (hors TAF, moins fiable)'}
+ else if(ta){cond=ta.pre;alt=ta.alt;src=`TAF ${site.st} (prévision officielle)`}
+ else if(om){cond=om.f;src=`consensus de ${om.models.length} modèles (hors TAF)`}
  else{cond=M||{};src=M?`METAR ${site.st} ${mtH(M.t)} (pas de prévision pour ce créneau)`:'Aucune donnée'}
+ const cmpM=om&&!/^consensus/.test(src)?(()=>{const a=mtProg(cond),b=mtProg(Object.assign({},om.f,{vis:cond.vis})),o=['NOGO','MT','INT','BT'];return o.indexOf(b.k)<o.indexOf(a.k)?`Les modèles sont plus pessimistes : ${b.l} (${mtCeilT(om.f)})`:o.indexOf(b.k)>o.indexOf(a.k)?`Les modèles sont plus optimistes : ${b.l}`:''})():'';
  const P=mtProg(cond),qM=mtMetar(D.M[site.st]),qfe=qM&&mtQFE(qM.q,site.el);
  const chips=`<div class="chips mtch"><button class="chip ${!fl?'on':''}" onclick="mtPick('now')">Maintenant</button>${FL.map(f=>`<button class="chip ${fl&&fl.id===f.id?'on':''}" onclick="mtPick('${esc(f.id)}')">${esc(mtFlL(f))}</button>`).join('')}</div>${!FL.length?`<div class="small muted">${isOnline()?(S.pfBusy?'Lecture de l\'agenda…':'Aucun vol dans l\'agenda d\'ici 48 h.'):'Vols de l\'agenda (exemple).'}</div>`:''}`;
  const sites=`<div class="mtseg">${['salon','pdd','istres'].map(k=>`<button class="${k===key?'on':''}" onclick="mtSite('${k}')">${MT_SITE[k].n}</button>`).join('')}</div>`;
  const altH=alt.map(a=>{const p=mtProg(a.f),g=a.g;return `<div class="mtalt">${mtBadge(p,1)}<div><b>${esc(g.ty)} ${mtH(g.from)}–${mtH(g.to)}</b> · ${mtVis(a.f.vis)} · plafond ${mtCeilT(a.f)}${a.f.wx?' · '+esc(a.f.wx.join(' ')):''}${p.k!=='NOGO'&&!p.sync?' · pas de synchro':''}</div></div>`}).join('');
- const res=`<div class="card mtc mtres"><div class="mtrh">${mtBadge(P)}<div class="mtrt"><b>${P.k==='NOGO'?'Pas de vol':P.k==='BT'?'Beau temps':P.k==='INT'?'Intermédiaire':'Mauvais temps'}${P.k!=='NOGO'?` · ${P.sync?'synchro ✓':'pas de synchro'}`:''}</b><div class="small muted">${P.why.length?esc(P.why.join(' · '))+' · ':''}${esc(fl?pfFlL(fl):'Maintenant')} · ${esc(site.n)}</div><div class="small muted">Source : ${esc(src)}${key==='pdd'?' (Orange, à 8 NM de PDD)':''}</div></div></div>${altH?`<div class="mtalts"><div class="small muted">Possible pendant le créneau :</div>${altH}</div>`:''}</div>`;
+ const res=`<div class="card mtc mtres"><div class="mtrh">${mtBadge(P)}<div class="mtrt"><b>${P.k==='NOGO'?'Pas de vol':P.k==='BT'?'Beau temps':P.k==='INT'?'Intermédiaire':'Mauvais temps'}${P.k!=='NOGO'?` · ${P.sync?'synchro ✓':'pas de synchro'}`:''}</b><div class="small muted">${P.why.length?esc(P.why.join(' · '))+' · ':''}${esc(fl?pfFlL(fl):'Maintenant')} · ${esc(site.n)}</div><div class="small muted">Source : ${esc(src)}${key==='pdd'?' (Orange, à 8 NM de PDD)':''}</div>${om?`<div class="mtcf ${om.conf}">Confiance ${om.conf} · ${om.models.length} modèles · écart ${om.spread} kt · ${om.agree} % d'accord sur le programme</div>`:''}${cmpM?`<div class="mtal wa">${esc(cmpM)}</div>`:''}</div></div>${altH?`<div class="mtalts"><div class="small muted">Possible pendant le créneau :</div>${altH}</div>`:''}</div>`;
  const BR=mtBrief(cond,om,key),sm=mtSmoke(cond,om),hi=mtHigh(cond,om),corr=BR.R===BR.X?BR.R:`R ${BR.R} · X ${BR.X}`;
  const sgn=(v,a,b)=>Math.abs(v)<0.5?'0':`${Math.round(Math.abs(v))} kt ${v>0?a:b}`;
  const brief=`<div class="card mtc"><div class="mtk">Briefing · ${esc(site.n)}</div><div class="mtbf">${mtTSvg(BR.C,key)}<div class="mtbr">
@@ -4317,7 +4354,7 @@ function vMeteo(tabs){mtLoad();const D=S.mt,head=`${NOTE}<div class="head"><div>
  const tb=k=>`<tr class="mtgh"><td colspan="7">${k==='mil'?'Militaires':'Civils · déroutement'}</td></tr>`+MT_ST.map((x,i)=>x[2]===k?rows[i]:'').join('');
  const tab=`<div class="card mtc"><div class="mtrh2"><b>Terrains</b><span class="small muted">${D.demo?'<span class="chip demo">EXEMPLE</span> ':''}Mis à jour à ${mtH(D.t)} <button class="btn sm" onclick="mtLoad(1)" ${S.mtBusy?'disabled':''}>${S.mtBusy?'…':'↻ Actualiser'}</button></span></div><div class="mtscroll"><table class="mtt"><thead><tr><th>Terrain</th><th>Vent</th><th>Visi</th><th>Plafond</th><th>QNH</th><th>Cat.</th><th>PAF</th></tr></thead><tbody>${tb('mil')}${tb('civ')}</tbody></table></div></div>`;
  const rules=`<details class="card mtc mtrules"><summary><b>Règles appliquées</b></summary><div class="small">BT : visi ≥ 8 km et nuages ≥ 4500 ft · INT : ≥ 2500 ft · MT : ≥ 1500 ft.<br>Visi &lt; 8 km ou plafond &lt; 1500 ft : pas de synchro. Plafond &lt; 1000 ft ou visi &lt; 5 km : pas de vol.<br>Plafond = première couche SCT, BKN, OVC ou VV jusqu'à 8 000 ft (les FEW ne comptent pas).<br>Corrections : 1 par tranche de 5 kt de composante axe, N si elle vient de Salon, S si elle vient de Marignane. Ruban = moyenne sol, 250, 500 et 1000 m. Croisements = moyenne sol et 250 m. Composante public = moyenne sol et 250 m : alerte au-delà de 10 kt, pas de croisements au-delà de 20 kt ; VQR si elle vient de Perp.<br>Terrains : catégorie de vol VFR (vert) plafond &gt; 3000 ft et visi &gt; 8 km · MVFR (bleu) plafond 1000–3000 ft ou visi 5–8 km · IFR (rouge) plafond 500–999 ft ou visi 1,6–5 km · LIFR (magenta) plafond &lt; 500 ft ou visi &lt; 1,6 km. Plafond = BKN, OVC ou VV.<br>Fumée : couleur s'il y a un fond nuageux (BKN, OVC ou voile), blanche si le ciel est clair.<br>Noms des vents tous les 45°, dans le sens horaire : ${MT_W.join(', ')}. Salon et PDD : vent de Salon = 340°. Istres : vent de Salon = 150°. Entre deux noms : « tendance » de 10 à 17° d'écart, puis les deux noms.</div></details>`;
- return head+`<div class="card mtc"><div class="mtk">Météo pour quel vol ?</div>${chips}<div class="mtk" style="margin-top:10px">Lieu d'entraînement</div>${sites}</div>${res}${brief}${kv}${tab}${rules}`}
+ return head+`<div class="card mtc"><div class="mtk">Météo pour quel vol ?</div>${chips}<div class="mtk" style="margin-top:10px">Lieu d'entraînement</div>${sites}</div>${res}${brief}${kv}${om?mtModH(om,key):''}${tab}${rules}`}
 
 /* ---------------- Nav Salon ⇄ Plan de Dieu (points centraux) : d'après la LOA CFAMI / BA 701 ---------------- */
 const LOA_DATA=null;
@@ -4571,7 +4608,8 @@ function rgPairs(R,ord,key,tol,back){const P=[];for(let r=1;r<ord.length;r++){co
    if(bj>=0&&b<tol*tol){pj=bj;d[i-lo]=L.c[i]-L.c[bj]}else d[i-lo]=Math.hypot(L.x[i]-F.x[i],L.y[i]-F.y[i])}
   P.push({a:L.k,b:F.k,lo,d})}return P}
 /* Fenêtre de calcul du bilan (min, moyenne par point, max) :
-   · roulage aller : du moment où tous les avions roulent (≥ 6 kt) jusqu'à ce que le leader repasse sous 6 kt ;
+   · roulage aller : pour chaque paire, dès que les deux avions sont sortis des cales (premier passage au-dessus de 5 kt), jusqu'à ce que le leader repasse sous 6 kt ;
+     un avion encore dans les cales ne compte pas ;
    · roulage retour : à partir du moment où tous roulent, où le dernier tient au moins 40 % de la vitesse du leader et où chaque écart est sous 150 % de l'objectif, jusqu'à l'arrêt du leader (< 6 kt) ;
    · vent arrière : les deux avions stabilisés entre 120 et 220 kt.
    Dans la fenêtre, un point ne compte que si les deux avions roulent (≥ 3 kt) et l'écart est réel (> 5 m : un 0 est un artefact GPS). */
@@ -4579,6 +4617,13 @@ function rgMask(R,key,tgt){const ord=key==='out'?R.ordOut:key==='dw'?R.ordDw:R.o
  P.forEach(pr=>{pr.ok=new Uint8Array(pr.d.length)});if(key==='dw'){P.forEach(pr=>{const L=R.A[pr.a],F=R.A[pr.b];for(let i=0;i<pr.d.length;i++){const t=pr.lo+i,va=L.v[t],vb=F.v[t];pr.ok[i]=va>=120&&va<=220&&vb>=120&&vb<=220&&pr.d[i]>5?1:0}});return}
  const lead=A[0],w=rgSegWin(R,key),allRoll=t=>A.every(a=>a.v[t]>=6&&a.v[t]<40),last=A[A.length-1];let t0=-1,t1=-1;
  for(let t=w[0];t<=w[1];t++){if(!allRoll(t))continue;if(key==='in'){if(!(last.v[t]>=0.4*lead.v[t]))continue;if(!P.every(pr=>{const i=t-pr.lo;return i>=0&&i<pr.d.length&&!isNaN(pr.d[i])&&pr.d[i]<1.5*tgt*(pr.m||1)}))continue}t0=t;break}
+ if(key==='out'){/* sortie des cales : premier passage au-dessus de 5 kt de chaque avion */
+  const go=a=>{for(let t=w[0];t<=w[1];t++)if(a.v[t]>5)return t;return -1},g0=go(lead);if(g0<0){R.win=R.win||{};R.win[key]=null;return}
+  /* fin : le leader repasse sous 6 kt (après que tous roulent si c'est arrivé, sinon après 30 s de roulage) */
+  const from=t0>=0?t0:g0+30;for(let t=from+1;t<=w[1];t++){if(lead.v[t]<6){t1=t;break}}if(t1<0)t1=w[1];let first=1e9;
+  P.forEach(pr=>{const L=R.A[pr.a],F=R.A[pr.b],gL=go(L),gF=go(F);if(gL<0||gF<0)return;const a0=Math.max(gL,gF);first=Math.min(first,a0);
+   for(let t=a0;t<=t1;t++){const i=t-pr.lo;if(i<0||i>=pr.d.length)continue;pr.ok[i]=L.v[t]>=3&&F.v[t]>=3&&pr.d[i]>5?1:0}});
+  R.win=R.win||{};R.win[key]=first<1e9?[first,t1]:null;return}
  if(t0<0){R.win=R.win||{};R.win[key]=null;return}for(let t=t0+1;t<=w[1];t++){if(lead.v[t]<6){t1=t;break}}if(t1<0)t1=w[1];R.win=R.win||{};R.win[key]=[t0,t1];
  P.forEach(pr=>{const L=R.A[pr.a],F=R.A[pr.b];for(let t=t0;t<=t1;t++){const i=t-pr.lo;if(i<0||i>=pr.d.length)continue;pr.ok[i]=L.v[t]>=3&&F.v[t]>=3&&pr.d[i]>5?1:0}})}
 function rgPairsAll(R){R.P={out:rgPairs(R,R.ordOut,'out',35,600),dw:rgPairs(R,R.ordDw,'dw',350,240),in:rgPairs(R,R.ordIn,'in',35,600),mr:[]};rgGhostPairs(R);rgMasks(R);rgMR(R)}
