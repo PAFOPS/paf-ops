@@ -871,7 +871,7 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
 .mtrh2{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .mtscroll{overflow-x:auto;margin-top:8px}.mtt{width:100%;border-collapse:collapse;font-size:13.5px}.mtt th{text-align:left;font-size:11px;color:var(--muted);padding:4px 6px}.mtt td{padding:6px;border-top:1px solid var(--line);white-space:nowrap;vertical-align:middle}.mtt td svg{vertical-align:-4px;margin-right:2px}.mtt .mtgh td{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--muted);background:var(--surface2)}.mtt .mtraw td{border-top:0;padding-top:0;white-space:normal}.mtraw summary{font-size:12px;color:var(--muted);cursor:pointer}.mtraw code{display:block;font-size:11.5px;white-space:pre-wrap;word-break:break-word;margin-top:4px}
 .mtrules summary{cursor:pointer}.mtrules .small{margin-top:8px;line-height:1.5}
-.mtbf{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;margin-top:6px}.mtTw{flex:1 1 300px;max-width:380px}.mtTsv{width:100%;color:var(--fg)}.mtsun circle{fill:#facc15;stroke:#ca8a04;stroke-width:2}.mtsun path{stroke:#eab308;stroke-width:2.6;stroke-linecap:round}
+.mtbf{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;margin-top:6px}.mtTw{flex:1 1 300px;max-width:380px}.mtTsv{width:100%;color:var(--fg)}.mtsun circle{fill:#facc15;stroke:#ca8a04;stroke-width:2}.mtsun path{stroke:#eab308;stroke-width:2.6;stroke-linecap:round}.mtsun.veil{opacity:.4}.mtcl{fill:#e2e8f0;stroke:#64748b;stroke-width:1.6;opacity:.95}
 .mtunder{margin-top:4px}.mtth{display:flex;gap:18px}.mtth span{display:flex;flex-direction:column}.mtth b{font-size:22px;font-weight:900;color:var(--fg)}.mtth small{font-size:11.5px;color:var(--muted);font-weight:700}.mtsunt{margin-top:8px;font-size:13.5px;padding:7px 10px;border-radius:10px;background:var(--gold2)}.mtbr{flex:1 1 260px;min-width:0}
 .mtax path{stroke:currentColor;stroke-width:2.5;fill:none}.mtlb{font-size:17px;font-weight:800;fill:currentColor}.mtlb.sm{font-size:12px;fill:var(--muted);font-weight:700}.mtsl{font-size:11px;font-weight:800;fill:var(--muted)}
 .mta path,.mta circle{stroke:currentColor;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}.mta .mtf{fill:currentColor}.mta .mto{fill:var(--surface)}.mtsc{fill:var(--surface);stroke:currentColor;stroke-width:2}.mtsv{font-size:11px;font-weight:900;fill:currentColor}
@@ -2929,9 +2929,9 @@ function pfAutoBox(mode){const o=pfIn(),ad=pfAd(o.ad),wx=pfWxAt(),L=mode==='cirr
   <p class="hint" style="margin:8px 0 0">Les valeurs sont reportées dans « Conditions du jour » : vous pouvez toujours les ajuster à la main.</p></div></section>`}
 /* ---- Décollage en 2 box : le box avant aligné 300 m devant (à défaut 150 m) dispose de moins de piste ---- */
 const pfB2On=()=>pfIn().box2!==false;   // coché par défaut, on le décoche au besoin
-const pfPass=(x,L)=>x.dist<=L&&x.vs>=x.vr;
+const pfPass=(x,L)=>x.dist<=L&&x.vs>=x.vlof;
 function pfB2(){const o=pfIn(),L=+o.L||0,a=pfCalc(L-300),b=pfCalc(L-150),want=+o.b2d===150?150:300;return {L,a,b,want,okA:want===300&&pfPass(a,L-300),okB:pfPass(b,L-150)}}
-const pfWhy=(x,L)=>[x.dist>L?`distance de décollage ${x.dist} m pour ${L} m`:'',x.vs<x.vr?`Vstop ${x.vs} kt sous Vr ${x.vr} kt`:''].filter(Boolean).join(' et ');
+const pfWhy=(x,L)=>[x.dist>L?`distance de décollage ${x.dist} m pour ${L} m`:'',x.vs<x.vlof?`Vstop ${x.vs} kt sous Vlof ${x.vlof} kt`:''].filter(Boolean).join(' et ');
 function pfBox2(x){const B=pfB2(),L=B.L,cols=[['Box arrière',`piste entière · ${L} m`,x,L]].concat(B.want===300?[['Box avant',`aligné 300 m devant · ${L-300} m`,B.a,L-300]]:[]).concat(B.okA?[]:[['Box avant',`aligné 150 m devant · ${L-150} m`,B.b,L-150]]);
  const row=(lab,k,u)=>`<div class="pfb2r"><span>${lab}</span>${cols.map(c=>{const v=c[2][k],d=v!==x[k];return `<b class="${d?'chg':''}">${v} <small>${u}</small></b>`}).join('')}</div>`;
  const sel=`<div class="chips" style="margin:0 0 10px"><span class="small muted" style="align-self:center">Box avant aligné</span>${[300,150].map(v=>`<button aria-pressed="${B.want===v}" onclick="pfSet('b2d',${v})">${v} m devant</button>`).join('')}</div>`;
@@ -2996,7 +2996,7 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
     ${card('Vlof · décollage',x.vlof,'kt','')}
     ${card('Distance de décollage',x.dist,'m',`index ${x.idx} · piste ${o.L} m`,x.dist>o.L?'ko':'')}
     ${card('Vc · freinage',x.vc,'kt','vitesse max de début de freinage (énergie détresse)',x.vc<x.vs?'ko':'')}
-    ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vr?'ko':x.vs>=x.vlof?'ok':'')}
+    ${card('Vstop',x.vs,'kt','vitesse max pour interrompre et s\'arrêter en piste',x.vs<x.vlof?'ko':'ok')}
    </div>
    ${pfB2On()?pfBox2(x):''}
    ${pfPlq(x)}
@@ -4234,11 +4234,12 @@ const mtCor=v=>{const n=Math.floor(Math.abs(v)/5+1e-9);return n?n+(v>0?'N':'S'):
 const mtAvg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 function mtBrief(cond,om,key){const L=[['SOL',cond.w],['250',om&&om.a250],['500',om&&om.a500],['1000',om&&om.a1000]].filter(x=>x[1]),C=L.map(x=>Object.assign({l:x[0],w:x[1]},mtCmp(x[1],key)));
  const rub=mtAvg(C.map(c=>c.s)),cx=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.s)),pub=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.p)),al=[];
- const a=Math.round(Math.abs(pub));if(pub<=-1)al.push({c:a>10?'ko':'wa',t:`Warning VQR ${a} kt (vent qui rapproche)`});else if(pub>=1)al.push({c:a>10?'wa':'',t:`Vent public ${a} kt`});
- if(a>20)al.push({c:'ko',t:'Attention : pas de croisements (composante public > 20 kt)'});else if(a>10)al.push({c:'wa',t:'Alerte : composante public > 10 kt'});
+ const a=Math.round(Math.abs(pub));
+ if(pub<=-1)al.push({c:a>10?'ko':'wa',t:`⚠️ VQR ${a} kt`});   // vent qui rapproche : il vient de la Perp
+ else if(pub>=1)al.push(a>20?{c:'ko',t:`⚠️ Vent public ${a} kt · attention, pas de croisements`}:a>10?{c:'wa',t:`⚠️ Vent public ${a} kt`}:{c:'',t:`Vent public ${a} kt`});
  return{C,rub,cx,pub,R:mtCor(rub),X:mtCor(cx),al}}
 function mtTSvg(C,key,sun){const B=MT_SITE[key].b,sl=[[92,128],[252,128],[92,214],[252,214]];let g='';
- if(sun&&sun.el>-1){const a=(sun.az-(B-90))*Math.PI/180,x=170+Math.sin(a)*136,y=162-Math.cos(a)*132;let ry='';for(let k=0;k<8;k++){const b=k*Math.PI/4;ry+=`<path d="M${(x+Math.cos(b)*13).toFixed(1)} ${(y+Math.sin(b)*13).toFixed(1)}L${(x+Math.cos(b)*19).toFixed(1)} ${(y+Math.sin(b)*19).toFixed(1)}"/>`}g+=`<g class="mtsun"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9"/>${ry}</g><text x="${x.toFixed(1)}" y="${(y+(y>150?-24:32)).toFixed(1)}" text-anchor="middle" class="mtsl">${sun.el}°</text>`}
+ if(sun&&sun.el>-1){const a=(sun.az-(B-90))*Math.PI/180,dx=Math.sin(a),dy=-Math.cos(a),k=Math.min(dx>0.01?(334-170)/dx:dx<-0.01?(170-6)/-dx:1e9,dy>0.01?(300-162)/dy:dy<-0.01?(162-6)/-dy:1e9),x=170+dx*k,y=162+dy*k,cl=sun.veil?`<path class="mtcl" d="M${(x-13).toFixed(1)} ${(y+12).toFixed(1)}h26a7 7 0 0 0 -3-13.5a9 9 0 0 0 -17-2a6.5 6.5 0 0 0 -6 15.5z"/>`:'';let ry='';for(let k=0;k<8;k++){const b=k*Math.PI/4;ry+=`<path d="M${(x+Math.cos(b)*13).toFixed(1)} ${(y+Math.sin(b)*13).toFixed(1)}L${(x+Math.cos(b)*19).toFixed(1)} ${(y+Math.sin(b)*19).toFixed(1)}"/>`}g+=`<g class="mtsun${sun.veil?' veil':''}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9"/>${ry}</g>${cl}<text x="${x.toFixed(1)}" y="${(y+(y>150?-24:32)).toFixed(1)}" text-anchor="middle" class="mtsl">${sun.el}°</text>`}
  C.forEach((c,i)=>{const[x,y]=sl[i],w=c.w;g+=`<text x="${x-44}" y="${y-30}" class="mtsl">${c.l==='SOL'?'Sol':c.l+' m'}</text>`;
   if(w.s<3||w.d==null){g+=`<circle cx="${x}" cy="${y}" r="9" class="mtsc"/><text x="${x}" y="${y+24}" class="mtsl" text-anchor="middle">${w.d==null?'variable':'calme'}</text>`;return}
   const rot=((w.d+180)-(B-90))-90,rd=rot*Math.PI/180,sg=Math.cos(rd)<-0.01?1:-1;let tk='',k=0;for(let n=Math.floor(w.s/10);n>0;n--,k++)tk+=`<path d="M${-34+k*6} 0v${13*sg}"/>`;if(w.s%10>=5)tk+=`<path d="M${-34+k*6} 0v${7*sg}"/>`;
@@ -4350,9 +4351,9 @@ function vMeteo(tabs){mtLoad();const D=S.mt,head=`${NOTE}<div class="head"><div>
  const res=`<div class="card mtc mtres"><div class="mtrh">${mtBadge(P)}<div class="mtrt"><b>${P.k==='NOGO'?'Pas de vol':P.k==='BT'?'Beau temps':P.k==='INT'?'Intermédiaire':'Mauvais temps'}${P.k!=='NOGO'?` · ${P.sync?'synchro ✓':'pas de synchro'}`:''}</b><div class="small muted">${P.why.length?esc(P.why.join(' · '))+' · ':''}${esc(fl?pfFlL(fl):'Maintenant')} · ${esc(site.n)}</div><div class="small muted">Source : ${esc(src)}${key==='pdd'?' (Orange, à 8 NM de PDD)':''}</div>${om?`<div class="mtcf ${om.conf}">Confiance ${om.conf} · ${om.models.length} modèles · écart ${om.spread} kt · ${om.agree} % d'accord sur le programme</div>`:''}${cmpM?`<div class="mtal wa">${esc(cmpM)}</div>`:''}</div></div>${altH?`<div class="mtalts"><div class="small muted">Possible pendant le créneau :</div>${altH}</div>`:''}</div>`;
  const BR=mtBrief(cond,om,key),sm=mtSmoke(cond,om),hi=mtHigh(cond,om),corr=BR.R===BR.X?BR.R:`R ${BR.R} · X ${BR.X}`;
  const sgn=(v,a,b)=>Math.abs(v)<0.5?'0':`${Math.round(Math.abs(v))} kt ${v>0?a:b}`;
- const sun=mtSun(T,site.la,site.lo),tT=cond.tt!=null?cond.tt:om&&om.f.tt,rhT=cond.tt!=null&&cond.td!=null?mtRH(cond.tt,cond.td):om&&om.f.rh,thSrc=cond.tt!=null?'METAR':om?'modèles':'';
+ const sun=mtSun(T,site.la,site.lo);sun.veil=hi.voile||(cond.cl||[]).some(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV')||!!(om&&om.cc&&om.cc.t>=70);const tT=cond.tt!=null?cond.tt:om&&om.f.tt,rhT=cond.tt!=null&&cond.td!=null?mtRH(cond.tt,cond.td):om&&om.f.rh,thSrc=cond.tt!=null?'METAR':om?'modèles':'';
  const below=`<div class="mtunder"><div class="mtth"><span><b>${tT!=null?Math.round(tT)+' °C':'—'}</b><small>température sol</small></span><span><b>${rhT!=null?rhT+' %':'—'}</b><small>humidité${cond.td!=null&&cond.tt!=null?' · rosée '+cond.td+' °C':''}</small></span></div>${thSrc?`<div class="small muted">Température et humidité : ${thSrc}</div>`:''}
-  <div class="mtsunt">${sun.el>0?`☀︎ Soleil à ${mtH(T)} : <b>${esc(mtSunN(sun.az,key))}</b> · azimut ${String(sun.az).padStart(3,'0')}° · hauteur ${sun.el}°${sun.el<15?' · <b>bas sur l\'horizon, éblouissement possible</b>':''}`:`☾ Soleil couché à ${mtH(T)} (côté ${esc(mtSunN(sun.az,key))})`}</div></div>`;
+  <div class="mtsunt">${sun.el>0?`☀︎ Soleil à ${mtH(T)} : <b>${esc(mtSunN(sun.az,key))}</b> · azimut ${String(sun.az).padStart(3,'0')}° · hauteur ${sun.el}°${sun.el<15?' · <b>bas sur l\'horizon, éblouissement possible</b>':''}${sun.veil?'<br>☁️ <b>Voile nuageux</b> : soleil peut-être masqué, miroitage incertain':''}`:`☾ Soleil couché à ${mtH(T)} (côté ${esc(mtSunN(sun.az,key))})`}</div></div>`;
  const brief=`<div class="card mtc"><div class="mtk">Briefing · ${esc(site.n)}</div><div class="mtbf"><div class="mtTw">${mtTSvg(BR.C,key,sun)}${below}</div><div class="mtbr">
   <table class="mtcart"><tr><td class="${{BT:'ok',INT:'int',MT:'mt',NOGO:'nogo'}[P.k]}">${P.k==='NOGO'?'PAS DE VOL':P.k}</td><td>${esc(corr)}</td></tr><tr><td>${qfe||'—'}</td><td>(${sm})</td></tr></table>
   <div class="small muted" style="margin-top:6px">Programme · corrections (R ruban, X croisements) · BRDD · fumée ${sm==='W'?'blanche (ciel clair)':'couleur (fond nuageux)'}</div>
