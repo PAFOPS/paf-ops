@@ -4833,7 +4833,7 @@ const rgClock=(R,i)=>new Date((R.T0+i)*1000).toLocaleTimeString('fr-FR',{hour:'2
 function rgPick(dir){const i=document.createElement('input');i.type='file';i.multiple=true;i.accept='.gpx,application/gpx+xml,application/xml,text/xml';if(dir)i.webkitdirectory=true;
  i.onchange=()=>rgFiles([...(i.files||[])]);i.click()}
 async function rgFiles(list){list=list.filter(f=>/\.gpx$/i.test(f.name));if(!list.length){toast('Aucun fichier GPX');return}S.rgBusy=1;render();
- try{const F=[];for(const f of list)F.push(rgParse(await f.text(),f.name));rgLoad(F)}catch(e){S.rgBusy=0;toast(e.message||String(e));render()}}
+ try{const F=[],T=[];for(const f of list){const t=await f.text();T.push({name:f.name,txt:t});F.push(rgParse(t,f.name))}rgLoad(F);if(RG)RG.src=T}catch(e){S.rgBusy=0;toast(e.message||String(e));render()}}
 function rgLoad(F,want){let PK;try{PK=rgPickFlight(F,want);RG=rgBuild(PK.F);RG.raw=F;RG.pk=PK}catch(e){S.rgBusy=0;toast(e.message||String(e));render();return}S.rgBusy=0;S.rgSeg='out';const w=rgSegWin(RG,'out');S.rgT=w[0];S.rgPlay=false;S.rgFol=true;S.rgSp=S.rgSp||4;
  const L=RG.A[RG.ordOut[0]],d=new Date((RG.T0+L.to)*1000);RG.date=iso(d);RG.time=d.toTimeString().slice(0,5);RG.fl=null;rgFindFl();render()}
 /* Le vol de l'agenda le plus proche de l'heure de décollage du leader */
@@ -4974,11 +4974,11 @@ function rgProf(){const cv=$('rg-pf');if(!cv||!RG)return;const R=RG,dpr=RG_CAPDP
 /* ---- Enregistrer le résumé ---- */
 function rgSum(){const R=RG,o={dwV:2};['out','dw','in'].forEach(k=>{o[k]=R.P[k].map(pr=>{const s=rgStatP(pr);return s?[rgNum(pr.a),rgNum(pr.b),s.min,s.avg,s.max].concat(pr.m>1?[pr.m]:[]):null}).filter(Boolean)});o.dwT=rgTdRows(R);return o}
 function rgSave(){if(!RG)return;const s=rgSum(),me=rgMe();DB.rg=DB.rg||[];
- DB.rg.push(Object.assign({id:uid(),date:RG.date,time:RG.time,fl:RG.fl?RG.fl.title:'',ev:RG.fl?RG.fl.id:'',ad:RG.ad||'',form:S.rgTx||'CE',formIn:S.rgTxI||'CE',plan:S.rgPl||'n',n:RG.ordOut.length,by:me?pcName(me):((RLm[ROLE]||{}).l||''),byMail:me?me.mail:'',t:Date.now()},s));save();const rid=DB.rg[DB.rg.length-1].id;RG.rid=rid;if(isOnline())rgGpxUp(rid);else{render();toast('Débriefing enregistré · GPX et PDF archivés sur le Drive dans la version en ligne');rgPdfUp(rid,1)}}
+ DB.rg.push(Object.assign({id:uid(),date:RG.date,time:RG.time,fl:RG.fl?RG.fl.title:'',ev:RG.fl?RG.fl.id:'',ad:RG.ad||'',form:S.rgTx||'CE',formIn:S.rgTxI||'CE',plan:S.rgPl||'n',n:RG.ordOut.length,pick:RG.pk&&RG.pk.multi?RG.pk.pick:0,nf:(RG.src||RG.raw||[]).length,by:me?pcName(me):((RLm[ROLE]||{}).l||''),byMail:me?me.mail:'',t:Date.now()},s));save();const rid=DB.rg[DB.rg.length-1].id;RG.rid=rid;if(isOnline())rgGpxUp(rid);else{render();toast('Débriefing enregistré · GPX et PDF archivés sur le Drive dans la version en ligne');rgPdfUp(rid,1)}}
 let RG_PEND=null,RG_CAPDPR=0;
 function rgArchH(e){const up=S.rgUp&&S.rgUp.rid===e.id?S.rgUp:null,P=[];
  if(up&&!up.err)return `<span id="rgup">${up.pdf?'Création et archivage du PDF de débriefing…':'Archivage des GPX sur le Drive…'}</span>`;
- if(e.gpx&&e.gpx.n)P.push(`📁 ${e.gpx.n} trace${e.gpx.n>1?'s':''} GPX archivée${e.gpx.n>1?'s':''} sur le Drive · <button class="btn sm" onclick="rgGpxPlay('${e.id}')">▶ Rejouer ce vol</button>`);
+ if(e.gpx&&e.gpx.n)P.push(`📁 ${e.gpx.n}${e.nf&&e.nf>e.gpx.n?' / '+e.nf:''} fichier${e.gpx.n>1?'s':''} GPX archivé${e.gpx.n>1?'s':''} sur le Drive${e.nf&&e.nf>e.gpx.n?' (incomplet : refaites l\'import)':''} · <button class="btn sm" onclick="rgGpxPlay('${e.id}')">▶ Rejouer ce vol</button>`);
  else if(RG_PEND&&RG_PEND.rid===e.id)P.push(`⚠️ GPX non archivés${up&&up.err&&!up.pdfErr?' ('+esc(up.err)+')':''} · <button class="btn sm" onclick="rgGpxUp('${e.id}')">↻ Réessayer</button>`);
  else P.push('<span class="muted">Pas de trace GPX archivée pour ce vol.</span>');
  if(e.gpx&&e.gpx.pdf)P.push('📄 PDF de débriefing archivé sur le Drive');
@@ -5059,16 +5059,18 @@ async function rgPdfUp(rid,mail){const e=(DB.rg||[]).find(x=>x.id===rid);if(!RG|
  catch(err){S.rgUp={rid,err:err.message||String(err),pdfErr:1};render();toast('PDF de débriefing non créé : '+(err.message||err))}}
 function rgGpxTxt(f){const p2=n=>String(n).padStart(2,'0'),iso=t=>new Date(t).toISOString().replace(/\.\d{3}Z$/,'Z');
  return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="PAF OPS" xmlns="http://www.topografix.com/GPX/1/1">\n<trk><name>'+esc(f.name)+'</name><trkseg>\n'+f.pts.map(p=>`<trkpt lat="${p.la.toFixed(6)}" lon="${p.lo.toFixed(6)}">${isFinite(p.z)?`<ele>${p.z.toFixed(1)}</ele>`:''}<time>${iso(p.t)}</time></trkpt>`).join('\n')+'\n</trkseg></trk>\n</gpx>\n'}
-async function rgGpxUp(rid){const e=(DB.rg||[]).find(x=>x.id===rid);const F=(RG_PEND&&RG_PEND.rid===rid?RG_PEND.F:((RG&&RG.pk&&RG.pk.F)||(RG&&RG.raw)||[])).filter(f=>f&&f.pts&&f.pts.length);
+function rgUpList(){if(!RG)return [];const raw=RG.raw||[];if(RG.src&&RG.src.length)return RG.src.map((f,i)=>{const ok=f.txt&&f.txt.length<19e6&&/<gpx[\s>]/i.test(f.txt.slice(0,2000)),p=raw[i];return ok?{name:f.name,txt:f.txt}:(p&&p.pts&&p.pts.length?{name:f.name,txt:rgGpxTxt(p)}:null)}).filter(Boolean);
+ return raw.filter(f=>f&&f.pts&&f.pts.length).map(f=>({name:f.name,txt:rgGpxTxt(f)}))}
+async function rgGpxUp(rid){const e=(DB.rg||[]).find(x=>x.id===rid);const F=RG_PEND&&RG_PEND.rid===rid?RG_PEND.F:rgUpList();
  if(!e||!F.length){render();toast('Débriefing enregistré');rgPdfUp(rid,1);return}RG_PEND={rid,F};S.rgUp={rid,i:0,n:F.length};render();
  try{for(let i=0;i<F.length;i++){S.rgUp.i=i;const ub=document.getElementById('rgup');if(ub)ub.textContent=`Archivage des GPX sur le Drive : ${i+1} / ${F.length}`;
-   const r=await api('rgGpx',{rid,date:e.date,time:e.time,fl:e.fl,name:F[i].name,gpx:rgGpxTxt(F[i])});if(!r||r.error)throw new Error((r&&r.error)||'Réponse vide');{const ee=(DB.rg||[]).find(x=>x.id===rid)||e;ee.gpx=Object.assign({},ee.gpx||{},{n:r.n})}}
+   const nm=String(i+1).padStart(2,'0')+' - '+String(F[i].name||'trace').replace(/\.gpx$/i,'').slice(-70)+'.gpx',r=await api('rgGpx',{rid,date:e.date,time:e.time,fl:e.fl,name:nm,gpx:F[i].txt});if(!r||r.error)throw new Error((r&&r.error)||'Réponse vide');{const ee=(DB.rg||[]).find(x=>x.id===rid)||e;ee.gpx=Object.assign({},ee.gpx||{},{n:r.n})}}
   RG_PEND=null;S.rgUp=null;render();toast(`Débriefing enregistré · ${F.length} GPX archivés sur le Drive`);await rgPdfUp(rid,1)}
  catch(x){S.rgUp={rid,err:x.message||String(x)};render();toast('Débriefing enregistré, mais GPX non archivés : '+(x.message||x))}}
 async function rgGpxPlay(rid){if(!isOnline()){toast('Rejeu disponible dans la version en ligne');return}S.rgBusy=1;RG=null;render();
- try{const r=await api('rgGpxGet',{rid});if(!r||r.error)throw new Error((r&&r.error)||'Réponse vide');S.rgDrv=r.url||'';const F=r.files.map(f=>rgParse(f.gpx,f.name));rgLoad(F);if(RG){const e=(DB.rg||[]).find(x=>x.id===rid);RG.arch=rid;RG.archFl=e?(fmtD(e.date)+' · '+String(e.time).replace(':','h')+(e.fl?' · '+e.fl:'')):''}window.scrollTo(0,0);render()}
+ try{const r=await api('rgGpxGet',{rid});if(!r||r.error)throw new Error((r&&r.error)||'Réponse vide');S.rgDrv=r.url||'';const ee=(DB.rg||[]).find(x=>x.id===rid),F=r.files.map(f=>rgParse(f.gpx,String(f.name).replace(/^\d{2} - /,'')));rgLoad(F,ee&&ee.pick?+ee.pick:undefined);if(RG){const e=(DB.rg||[]).find(x=>x.id===rid);RG.arch=rid;RG.archFl=e?(fmtD(e.date)+' · '+String(e.time).replace(':','h')+(e.fl?' · '+e.fl:'')):''}window.scrollTo(0,0);render()}
  catch(x){S.rgBusy=0;render();toast('Rejeu impossible : '+(x.message||x))}}
-function rgDel(id){const e=(DB.rg||[]).find(x=>x.id===id);if(!e||!confirm('Supprimer ce débriefing ?'))return;e.del=1;e.tm=Date.now();save();render()}
+function rgDel(id){const e=(DB.rg||[]).find(x=>x.id===id);if(!e||!confirm(e.gpx&&(e.gpx.n||e.gpx.pdf)?'Supprimer ce débriefing ? Son dossier du Drive (traces GPX et PDF) part aussi à la corbeille du Drive.':'Supprimer ce débriefing ?'))return;e.del=1;e.tm=Date.now();save();render()}
 /* Tableau de bilan d'un segment : [devant, derrière, min, moy, max] */
 function rgBrkTab(L){if(!L||!L.length)return '';return `<p class="exq">Écart au break</p><div class="rgtab">${L.map(r=>`<div class="rgtr rgbk"><span>${rgBadge(r[0])} → ${rgBadge(r[1])}</span><b style="--c:${rgGapCol(r[2])}">${String(r[2]).replace('.',',')} s</b></div>`).join('')}</div><p class="small muted" style="margin:4px 0 0">Objectif : environ 3 s entre deux breaks.</p>`}
 function rgTabMR(R){const ST=R.mrStat||{},segs=R.mrSegs||[];if(!segs.length)return '<p class="small muted" style="margin:0">Aucune phase en moyen relax détectée (au moins 6 avions groupés, plus proche voisin à 30-110 m, tenu 8 s).</p>';
