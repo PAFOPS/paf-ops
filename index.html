@@ -921,6 +921,7 @@ button.uacc{border:0;cursor:pointer;font:inherit}.ginv{margin-left:auto;font-siz
 .tmx th{font-size:11.5px;white-space:nowrap}.tmx td:first-child{min-width:150px}.tmn{display:block;padding:0;font-weight:800;text-align:left}
 .tk{min-width:34px;height:30px;border-radius:9px;border:1px solid var(--line);background:none;font:inherit;font-weight:900;color:var(--muted);cursor:pointer;display:inline-grid;place-items:center;padding:0 6px}.tk.on{background:color-mix(in srgb,var(--ok) 16%,transparent);border-color:color-mix(in srgb,var(--ok) 50%,transparent);color:var(--ok)}.tk.tko{box-shadow:0 0 0 2px #f59e0b}.tk.off.tko{color:#b45309}.tk:disabled{cursor:default}
 .psto{display:flex;flex-wrap:wrap;gap:6px}.pst{padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:none;font:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}.pst.on{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 50%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent)}.pst.tko{box-shadow:0 0 0 2px #f59e0b}.pst small{font-weight:600;color:#b45309}
+#updb{position:fixed;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top));z-index:200;display:flex;gap:12px;align-items:center;background:#0b1f45;color:#fff;padding:10px 12px 10px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);font-weight:700;max-width:calc(100% - 20px)}#updb button{background:#f5c24a;color:#0b1f45;border:0;border-radius:10px;padding:8px 12px;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1225,6 +1226,10 @@ async function boot(){
 const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
+/* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
+const APP_V='1793882465';
+function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
+setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
 const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';if(!role){const x=myRx();if(x&&x[area])return x[area]}return (DB.rights[r]||{})[area]||'n'};
 const canEdit=a=>right(a)==='e';
@@ -5572,7 +5577,7 @@ function plaq(p){const roles=[...new Set(p.L.map(a=>a.role))],M=p.L.filter(a=>a.
   <span class="plqr">${roles.map(r=>`<i style="--c:${(RLm[r]||{}).c1||'#64748b'}">${(RLm[r]||{}).l||r}</i>`).join('')}${M.map(x=>`<i class="mt">${ic('flag',11)} ${esc(mName(x.m))}${roles.length>1?' · '+((RLm[x.r]||{}).l||''):''}</i>`).join('')}${p.rx?`<i class="rxb">${ic('gear',11)} droits spécifiques</i>`:''}</span></span>
   <span class="plqs ${p.hold?'todo':''}">${p.hold?ic('clock',13)+' à envoyer':last?ic('check',13)+' '+new Date(last).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):''}</span></button>`}
 function vAcces(){const ed=canEdit('acces'),t=S.acT||'pers',P=people(),nh=DB.access.filter(a=>a.hold).length,f=S.acF||'all',q=(S.acQ||'').trim().toLowerCase();
- const head=`${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Un lien personnel par personne, sans mot de passe. Les droits viennent de son groupe ; touchez une personne pour lui donner des droits à part.</p></div>${ed&&nh?`<button class="btn pri" onclick="invQueue()">${ic('send',16)} ${nh} lien${nh>1?'s':''} à envoyer</button>`:''}</div>
+ const head=`${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Un lien personnel par personne, sans mot de passe. Les droits viennent de son groupe ; touchez une personne pour lui donner des droits à part.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap">${ed&&nh?`<button class="btn pri" onclick="invQueue()">${ic('send',16)} ${nh} lien${nh>1?'s':''} à envoyer</button>`:''}${isChef()?`<button class="btn" onclick="bcSheet()">${ic('bell',16)} Prévenir tout le monde</button>`:''}</div></div>
  <div class="seg acseg" role="tablist">${[['pers','users','Personnes',P.length],['grp','gear','Droits par groupe',''],['tool','grid','Outils',''],['inv','send','Inviter','']].map(([k,i,l,n])=>`<button role="tab" aria-pressed="${t===k}" onclick="S.acT='${k}';render()">${ic(i,16)} ${l}${n!==''?` <span class="n">${n}</span>`:''}</button>`).join('')}</div>`;
  if(t==='inv')return head+vAccesInv();
  if(t==='tool'){const L=P.filter(p=>!ACC_FAM(p.main.role)&&p.main.role!=='osab');
@@ -5621,6 +5626,13 @@ function psRx(area,v){const p=psP();if(!p)return;p.L.forEach(a=>{if(a.role==='ch
 function psTool(key,k){const p=people().find(q=>q.k===key);if(!p||p.L.some(a=>a.role==='chef'))return;const T=Object.assign({},...p.L.map(a=>a.tools||{})),o=T[k]===1||T[k]===0?T[k]:null,def=toolDef(p.main.role,p.mem,k);
  const nx=o==null?(def?0:1):o===(def?0:1)?(def?1:0):null;p.L.forEach(a=>{a.tools=a.tools||{};if(nx==null)delete a.tools[k];else a.tools[k]=nx;if(!Object.keys(a.tools).length)delete a.tools});save();if(!$('ov').hidden&&sheetFn===psHTML)$('sheet').innerHTML=psHTML();render()}
 function psDelAll(){const p=psP();if(!p)return;const ids=p.L.filter(a=>a.role!=='chef').map(a=>a.id);DB.access=DB.access.filter(a=>!ids.includes(a.id));save();closeSheet();render();toast('Accès retirés : son lien ne marche plus')}
+let BC=null;
+function bcSheet(){BC={t:'Mise à jour de PAF OPS',b:'Une nouvelle version de PAF OPS est en ligne. Rechargez la page, ou fermez puis rouvrez l\'application, pour en profiter.'};openSheet(bcHTML)}
+function bcHTML(){const n=new Set((DB.access||[]).filter(a=>!a.hold&&a.role!=='ro').map(a=>lc(a.mail)||a.id)).size;return `<div class="sh">${tile({i:'bell',c1:'#f59e0b',c2:'#c2410c'},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Prévenir tout le monde</div><div class="q" style="margin-top:2px">${n} personne${n>1?'s':''}</div><div class="small muted">Notification sur les téléphones abonnés, et dans la cloche 🔔 de chacun.</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Titre</label><input class="in" maxlength="80" value="${esc(BC.t)}" oninput="BC.t=this.value"><label class="l">Message</label><textarea class="in" rows="4" maxlength="400" oninput="BC.b=this.value">${esc(BC.b)}</textarea>
+ <div class="hint">Les personnes qui n'ont pas activé les notifications le verront dans la cloche à leur prochaine ouverture. De toute façon, PAF OPS affiche maintenant tout seul « Mise à jour disponible » quand une nouvelle version est en ligne.</div></div>
+ <div class="sf"><button class="btn" onclick="closeSheet()">Annuler</button><button class="btn pri big" onclick="bcSend()">${ic('send',18)} Envoyer</button></div>`}
+async function bcSend(){if(!BC.t.trim()){toast('Indiquez un titre');return}if(!isOnline()){closeSheet();toast('Annonce envoyée (maquette)');return}let r;try{r=await api('broadcast',{title:BC.t.trim(),body:BC.b.trim()})}catch(e){r={error:'Connexion impossible'}}closeSheet();toast(r.error||`Annonce envoyée à ${r.n} personne${r.n>1?'s':''} · ${r.push} notification${r.push>1?'s':''} sur téléphone`)}
 function cycleRight(role,area){const o=['n','r','e'],v=right(area,role);DB.rights[role][area]=o[(o.indexOf(v)+1)%3];save();render()}
 function delAccess(id){const a=DB.access.find(x=>x.id===id);DB.access=DB.access.filter(x=>x.id!==id);save();render();toast('Accès retiré : son lien ne marche plus'+(a?' ('+(a.name||a.mail)+')':''))}
 let IV=null;
