@@ -906,6 +906,18 @@ details.card.mtc>summary{cursor:pointer}
 .rgpdfv{position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.94);overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;align-items:center}.rgpdfv img{width:min(1000px,100%);border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.5)}.rgpdfb{display:flex;gap:12px;align-items:center;color:#fff;width:min(1000px,100%);justify-content:space-between}
 .rgview.rgcap.nop .rgprof{display:none!important}
 .lostbox{margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:6px}.lostb{display:flex;gap:8px;flex-wrap:wrap}
+.acseg{display:flex;gap:6px;margin:4px 0 14px;flex-wrap:wrap}.acseg button{flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:700;color:var(--fg);cursor:pointer}.acseg button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.acseg .n{font-size:12px;opacity:.8}
+.plqs-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.plq{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--fg);font:inherit;cursor:pointer;min-width:0}.plq:hover{border-color:var(--pri)}
+.plqt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.plqt b{font-size:15px}.plqt small{color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plqr{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}.plqr i{font-style:normal;font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--c,#64748b) 16%,transparent);color:color-mix(in srgb,var(--c,#64748b) 75%,var(--fg))}.plqr i.mt{--c:#0ea5e9}.plqr i.rxb{--c:#f59e0b}
+.plqs{flex:none;font-size:12px;font-weight:700;color:var(--ok);white-space:nowrap}.plqs.todo{color:var(--warn)}
+.grpc{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}.gcard{border:1px solid var(--line);border-radius:16px;padding:12px;background:var(--surface);display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:center}.gct{display:flex;flex-direction:column}.gct .more{align-self:flex-start;padding:0}
+.gca{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}.ga{display:flex;justify-content:space-between;gap:6px;padding:6px 9px;border-radius:10px;border:1px solid var(--line);background:none;font:inherit;font-size:12.5px;color:var(--fg);cursor:pointer}.ga b{font-size:12px}.ga.e{background:color-mix(in srgb,var(--ok) 14%,transparent);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}.ga.e b{color:var(--ok)}.ga.r{background:color-mix(in srgb,#3b82f6 12%,transparent);border-color:color-mix(in srgb,#3b82f6 40%,transparent)}.ga.r b{color:#2563eb}.ga.n{opacity:.6}.ga:disabled{cursor:default}
+.psm{display:flex;flex-direction:column;gap:6px}.psmr{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line);border-radius:12px}.psmr b{flex:1;min-width:140px}.psmr select{width:auto;padding:6px 8px}.psmr.add{border-style:dashed}.psmr.add select:first-of-type{flex:1;min-width:160px}
+.psr{display:flex;flex-direction:column;gap:6px}.psrr{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:4px 0;border-bottom:1px solid var(--line)}.psrr>span{font-weight:700;font-size:14px}
+.seg.sm{display:flex;gap:3px;flex-wrap:wrap}.seg.sm button{padding:5px 8px;font-size:12px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--fg);cursor:pointer;font:inherit;font-size:12px}.seg.sm button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.seg.sm button.ke[aria-pressed=true]{background:var(--ok);border-color:var(--ok)}.seg.sm button.kn[aria-pressed=true]{background:#64748b;border-color:#64748b}.seg.sm button:disabled{opacity:.45;cursor:default}
+button.uacc{border:0;cursor:pointer;font:inherit}.ginv{margin-left:auto;font-size:13px;padding:6px 10px}
 </style>
 </head>
 <body>
@@ -1209,13 +1221,15 @@ async function boot(){
 const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
-const right=(area,role)=>role==='chef'?'e':((DB.rights[role||ROLE]||{})[area]||'n');
+const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
+const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';if(!role){const x=myRx();if(x&&x[area])return x[area]}return (DB.rights[r]||{})[area]||'n'};
 const canEdit=a=>right(a)==='e';
 const canSee=a=>right(a)!=='n';
 const isMeetRole=()=>RLm[ROLE].side==='meet';
 // Un organisateur ou un DV ne voit que son meeting (ici : le premier de la liste, pour la démonstration)
+const meMids=()=>typeof ME!=='undefined'&&ME?(ME.mids&&ME.mids.length?ME.mids:(ME.mid?[ME.mid]:[])):[];
 const dmmaMid=()=>ROLE==='dmma'&&typeof ME!=='undefined'&&ME&&ME.role==='dmma'&&ME.mid||null;   // DMMA invité pour un meeting
-const myMeetings=()=>{const L=[...DB.meetings].sort((a,b)=>(firstDemo(a)||'9').localeCompare(firstDemo(b)||'9'));if(dmmaMid())return L.filter(m=>m.id===dmmaMid());if(!isMeetRole())return L;const mid=(typeof ME!=='undefined'&&ME&&ME.mid)||null;return mid?L.filter(m=>m.id===mid):L.slice(0,1)};
+const myMeetings=()=>{const L=[...DB.meetings].sort((a,b)=>(firstDemo(a)||'9').localeCompare(firstDemo(b)||'9'));if(dmmaMid()){const M=meMids();return L.filter(m=>M.includes(m.id))}if(!isMeetRole())return L;const M=meMids();return M.length?L.filter(m=>M.includes(m.id)):L.slice(0,1)};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fromISO=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
@@ -1244,6 +1258,7 @@ function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S
 const isOsab=()=>ROLE==='osab';
 const viewOk=v=>isOsab()?v==='perfos':v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||ROLE==='visit'||ROLE==='comm'):true;
 function render(){
+ if(typeof ME!=='undefined'&&ME&&ME.mr){const r=(S.view==='meeting'||S.view==='recap')&&S.mid&&ME.mr[S.mid];ROLE=r&&RLm[r]?r:ME.role}
  if(!viewOk(S.view))S.view=isOsab()?'perfos':'meetings';if(isOsab())S.pfTab='fea';
  {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}}
  const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Outils','gauge']};
@@ -2315,7 +2330,7 @@ function invOk(a){delete a.hold;a.at=Date.now();const lg=t=>{try{mcfg().log.unsh
 function invGo(id){const a=DB.access.find(x=>x.id===id);if(!a)return;invOk(a);save();const left=IQ?IQ.ids.map(i=>DB.access.find(x=>x.id===i)).filter(x=>x&&x.hold).length:0;
  if(left)$('sheet').innerHTML=iqHTML();else closeSheet();render();toast('Lien envoyé à '+(a.name||a.mail)+(left?' · encore '+left+' à envoyer':''))}
 function invGoAll(){const L=IQ.ids.map(id=>DB.access.find(a=>a.id===id)).filter(a=>a&&a.hold);L.forEach(invOk);save();closeSheet();render();toast(L.length+' lien'+(L.length>1?'s':'')+' envoyé'+(L.length>1?'s':''))}
-function addAccess(a){if(!a.msg)a.msg=invMsg(a.role,a.mid,a.name);if(a.hold===undefined&&isChef())a.hold=true;DB.access.push(a);const c=mcfg();c.log.unshift({id:uid(),t:Date.now(),d:todayKey(),type:'invit',to:a.name||a.mail,role:a.role,mid:a.mid||null,txt:'Invitation · '+(RLm[a.role]||{}).l})}
+function addAccess(a){if(!a.msg){const m=a.mid&&DB.meetings.find(x=>x.id===a.mid),known=m&&ACC_FAM(a.role)&&DB.access.some(x=>x.mid&&!x.hold&&ACC_FAM(x.role)===ACC_FAM(a.role)&&lc(x.mail)===lc(a.mail));a.msg=known?addMeetMsg(a,m,true):invMsg(a.role,a.mid,a.name)}if(a.hold===undefined&&isChef())a.hold=true;DB.access.push(a);const c=mcfg();c.log.unshift({id:uid(),t:Date.now(),d:todayKey(),type:'invit',to:a.name||a.mail,role:a.role,mid:a.mid||null,txt:'Invitation · '+(RLm[a.role]||{}).l})}
 const RUBL={tech:'Technique',lodg:'Logement',food:'Restauration',move:'Locomotion',room:'Salles',com:'Communication',aero:'Directeur des vols',team:'Équipe PAF'};
 function nextSlot(ext){const c=mcfg(),now=new Date(),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
  if(ext)return (c.extTime>hm?'Aujourd\'hui ':'Demain ')+c.extTime.replace(':','h');
@@ -5356,7 +5371,8 @@ function grpHTML(f,L,q){const ed=canEdit('annu'),ro=S.reorder===f.k&&ed,SC=subs(
  const rows=list=>list.length?`<div class="mlist">${list.map((x,i)=>mRow(x,ro?{up:i>0,down:i<list.length-1}:null)).join('')}</div>`:'';
  const lead=L.filter(x=>DFN_RANK[x.dfn]!=null).sort(mSort),inLead=x=>DFN_RANK[x.dfn]!=null;
  const free=L.filter(x=>!inLead(x)&&(!x.sub||!SC.some(c=>c.id===x.sub)));
- return `<section class="grp"><h3>${tile(f,'sm')} ${f.l} <span class="n">${f.d!==f.l?f.d+' · ':''}${L.length}</span>${ed&&!q&&!f.one?`<span class="gacts"><button class="btn ghost" onclick="subAdd('${f.k}')">${ic('plus',14)} Sous-catégorie</button><button class="btn ${ro?'pri':'ghost'}" onclick="S.reorder=${ro?'null':`'${f.k}'`};render()">${ic('grid',14)} ${ro?'Terminé':'Ordonner'}</button></span>`:''}</h3>
+ const nInv=isChef()?L.filter(x=>x.mail&&okMail(x.mail)&&!accOf(x.mail)).length:0;
+ return `<section class="grp"><h3>${tile(f,'sm')} ${f.l} <span class="n">${f.d!==f.l?f.d+' · ':''}${L.length}</span>${nInv?`<button class="btn ghost ginv" onclick="uInvGrp('${f.k}')">${ic('send',14)} Inviter ${nInv>1?'les '+nInv:'1 personne'}</button>`:''}${ed&&!q&&!f.one?`<span class="gacts"><button class="btn ghost" onclick="subAdd('${f.k}')">${ic('plus',14)} Sous-catégorie</button><button class="btn ${ro?'pri':'ghost'}" onclick="S.reorder=${ro?'null':`'${f.k}'`};render()">${ic('grid',14)} ${ro?'Terminé':'Ordonner'}</button></span>`:''}</h3>
   ${ro?`<p class="small muted" style="margin:-4px 0 8px">Montez ou descendez avec les flèches. <button class="more" onclick="memAuto('${f.k}')">Revenir à l'ordre automatique</button></p>`:''}
   ${rows(lead.concat(free.sort(mSort)))}
   ${SC.map((c,ci)=>{const M=L.filter(x=>x.sub===c.id&&!inLead(x)).sort(mSort);return `<div class="subh"><b>${esc(c.l)}</b><span class="n">${M.length}</span>${ro?`<span class="gacts"><button class="ib" ${ci?'':'disabled'} onclick="subMove('${f.k}','${c.id}',-1)" aria-label="Monter" style="transform:rotate(180deg)">${ic('chev',14)}</button><button class="ib" ${ci<SC.length-1?'':'disabled'} onclick="subMove('${f.k}','${c.id}',1)" aria-label="Descendre">${ic('chev',14)}</button><button class="ib" onclick="subRen('${f.k}','${c.id}')" aria-label="Renommer">${ic('edit',14)}</button><button class="ib" onclick="subDel('${f.k}','${c.id}')" aria-label="Supprimer">${ic('trash',14)}</button></span>`:''}</div>${rows(M)||(ro?`<p class="small muted" style="margin:0 0 8px 4px">Personne pour l'instant : choisissez cette sous-catégorie dans la fiche d'un membre.</p>`:'')}`}).join('')}
@@ -5382,8 +5398,17 @@ const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
 const memOf=mail=>mail?DB.members.find(x=>lc(x.mail)===lc(mail)):null;
 const memLabel=x=>x?[x.grade,x.last?String(x.last).toUpperCase():'',x.first].filter(Boolean).join(' '):'';
-function accChip(x){const a=accOf(x.mail);if(!a)return x.mail&&x.acc?`<span class="uacc todo">${ic('clock',12)} ${(RLm[x.acc]||{}).l} · à inviter</span>`:'';
+function accChip(x){const a=accOf(x.mail);if(!a)return x.mail&&okMail(x.mail)?`<button class="uacc todo" onclick="event.stopPropagation();uInvOne('${x.id}')">${ic('send',12)} ${x.acc?(RLm[x.acc]||{}).l+' · ':''}inviter</button>`:'';
+ return `<button class="uacc ${a.hold?'todo':'ok'}" onclick="event.stopPropagation();personSheet('${esc(lc(a.mail))}')">${ic(a.hold?'clock':'check',12)} ${(RLm[a.role]||{}).l||a.role}${a.hold?' · lien à envoyer':' · lien envoyé'}</button>`}
+function accChipOld(x){const a=accOf(x.mail);if(!a)return '';
  return `<span class="uacc ${a.hold?'todo':'ok'}">${ic(a.hold?'clock':'check',12)} ${(RLm[a.role]||{}).l||a.role}${a.hold?' · lien à envoyer':' · lien envoyé'}</span>`}
+/* Inviter un membre : choix du groupe (proposé d'après sa fonction), puis relecture du message */
+let UI1=null;
+function uInvOne(id){const x=DB.members.find(m=>m.id===id);if(!x)return;UI1={id,r:x.acc||U_DEF[x.fn]||'visit'};openSheet(uiHTML)}
+function uiHTML(){const x=DB.members.find(m=>m.id===UI1.id);if(!x)return '';return `<div class="sh">${tile({i:'send',c1:'#3b82f6',c2:'#1d4ed8'},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Inviter</div><div class="q" style="margin-top:2px">${esc(memLabel(x))}</div><div class="small muted">${esc(x.mail)}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Son groupe dans PAF OPS</label><div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(118px,1fr))">${U_ROLES.map(k=>RLm[k]).map(r=>`<button class="pk" aria-pressed="${UI1.r===r.k}" onclick="UI1.r='${r.k}';$('sheet').innerHTML=uiHTML()">${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div><div class="hint">Ses droits sont ceux du groupe (onglet Accès › Droits par groupe). Vous relisez le message avant l'envoi.</div></div>
+ <div class="sf"><button class="btn" onclick="closeSheet()">Annuler</button><button class="btn pri big" onclick="const x=DB.members.find(m=>m.id===UI1.id);x.acc=UI1.r;closeSheet();uInvite([x.id])">${ic('send',18)} Continuer</button></div>`}
+function uInvGrp(fk){const L=DB.members.filter(x=>(x.fn===fk||(FUm[x.fn]&&FUm[x.fn].grp===fk))&&x.mail&&okMail(x.mail)&&!accOf(x.mail));if(!L.length){toast('Tout le groupe a déjà son lien');return}L.forEach(x=>{if(!x.acc)x.acc=U_DEF[x.fn]||'visit'});uInvite(L.map(x=>x.id))}
 function uPending(){return DB.members.filter(x=>x.mail&&okMail(x.mail)&&x.acc&&!accOf(x.mail))}
 /* Crée (en attente de validation) les accès des membres qui en ont un de prévu, puis ouvre la relecture des messages */
 function uInvite(ids){const L=(ids||uPending().map(x=>x.id)).map(id=>DB.members.find(x=>x.id===id)).filter(x=>x&&x.mail&&x.acc&&!accOf(x.mail));
@@ -5465,7 +5490,7 @@ function uSave(){
 function uDel(){DB.members=DB.members.filter(x=>x.id!==MF.id);save();closeSheet();render();toast('Membre retiré')}
 
 /* ====================== Vue : accès ====================== */
-function vAcces(){
+function vAccesInv(){
  const ed=canEdit('acces'),ms=myMeetings();
  if(!S.am||!ms.some(m=>m.id===S.am))S.am=ms[0]&&ms[0].id;
  const pm=ms.find(m=>m.id===S.am);
@@ -5475,19 +5500,14 @@ function vAcces(){
   ${ed?`<button class="btn" onclick="inviteSheet('${r.k}','${mid||''}')">${ic('send',15)} Inviter</button>`:'<span></span>'}</div>`};
  const lk=location.origin+location.pathname+'?k=ro:'+DB.ro.code;
  const nh=DB.access.filter(a=>a.hold).length;
- return `${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Chacun reçoit par email un lien personnel, sans mot de passe. Ses droits dépendent de son rôle.</p></div>${ed&&nh?`<button class="btn pri" onclick="invQueue()">${ic('send',16)} ${nh} lien${nh>1?'s':''} à envoyer</button>`:''}</div>
- <section class="acard"><div class="ah"><h2>${ic('shield',20)} Patrouille de France</h2></div>${ROLES.filter(r=>r.side==='paf').map(r=>row(r)).join('')}</section>
+ return `<section class="acard"><div class="ah"><h2>${ic('shield',20)} Patrouille de France</h2></div>${ROLES.filter(r=>r.side==='paf').map(r=>row(r)).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF, DMMA et OSAB</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. L'OSAB (officier sécurité aérienne base) ne voit que les FEA que vous lui avez transmises. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('flag',20)} Côté meeting</h2>${ms.length>1?`<select class="in" style="width:auto;padding:9px 12px;font-size:14px" id="a-meet" onchange="S.am=this.value;render()">${ms.map(m=>`<option value="${m.id}" ${m.id===S.am?'selected':''}>${esc(mName(m))}</option>`).join('')}</select>`:pm?`<span class="small muted">${esc(mName(pm))}</span>`:''}</div>
   ${pm?ROLES.filter(r=>r.side==='meet').map(r=>row(r,pm.id)).join(''):'<p class="small muted" style="padding:0 16px 12px">Créez d\'abord un meeting.</p>'}</section>
  <section class="acard"><div class="ah"><h2>${ic('hand',20)} Lien public : volontaires</h2>${ed?`<button class="switch" role="switch" aria-checked="${DB.ro.on}" aria-label="Activer le lien en lecture seule" onclick="DB.ro.on=!DB.ro.on;save();render();toast(DB.ro.on?'Lien en lecture seule activé':'Lien en lecture seule désactivé')"></button>`:''}</div>
   <p class="small muted" style="margin:0 16px 10px">Avec ce lien, chacun voit la liste des meetings et peut <b>proposer sa participation</b> selon sa spécialité. La secrétaire ops accepte ou refuse. Rien d'autre n'est visible.</p>
   ${DB.ro.on?`<div class="linkbox"><code>${esc(lk)}</code><button class="btn" onclick="copy('${lk}',this)">${ic('copy',15)} Copier</button>${ed?`<button class="btn ghost" onclick="DB.ro.code=Math.random().toString(36).slice(2,10);save();render();toast('Nouveau lien créé : l\'ancien ne marche plus')">Changer le lien</button>`:''}</div>`:'<p class="small" style="margin:0 16px 14px;color:var(--warn);font-weight:700">Lien désactivé : personne ne peut consulter sans invitation.</p>'}</section>
- <section class="acard"><div class="ah"><h2>${ic('gear',20)} Droits par rôle</h2>${ed&&isChef()?`<button class="btn ghost" onclick="DB.rights=JSON.parse(JSON.stringify(DEF_RIGHTS));save();render();toast('Droits par défaut rétablis')">Rétablir les droits par défaut</button>`:''}</div>
-  <div class="legend"><span class="rt e">Modifier</span><span class="rt r">Lecture</span><span class="rt n">Aucun accès</span>${isChef()?'<span>Touchez une case pour la changer.</span>':''}</div>
-  <div class="matrix"><table><thead><tr><th>Rôle</th>${AREAS.map(a=>`<th>${a.l}${a.soon?'<span class="soon">à venir</span>':''}</th>`).join('')}</tr></thead><tbody>
-  ${[['paf','Patrouille de France'],['suivi','Pilotes PAF / DMMA'],['meet','Meeting'],['ro','Lien public']].map(([sd,lb])=>`<tr class="grp"><td colspan="${AREAS.length+1}">${lb}</td></tr>`+ROLES.filter(r=>r.side===sd).map(r=>`<tr><td><span class="rl">${tile(r,'xs')} ${r.l}</span></td>${AREAS.map(a=>{const v=right(a.k,r.k);const lock=!isChef()||r.k==='chef'||r.side==='ro'||(a.k==='acces'&&r.side!=='paf');return `<td><button class="rt ${v}" ${lock?'disabled':''} onclick="cycleRight('${r.k}','${a.k}')" aria-label="${r.l}, ${a.l} : ${v==='e'?'modifier':v==='r'?'lecture':'aucun accès'}">${v==='e'?'Modifier':v==='r'?'Lecture':'—'}</button></td>`}).join('')}</tr>`).join('')).join('')}
-  </tbody></table></div></section>${isChef()?drvBox():''}`;
+${isChef()?drvBox():''}`;
 }
 /* ---------------- Archives sur le Drive (chef ops) ---------------- */
 const DRV_TREE=`PAF OPS/
@@ -5522,6 +5542,61 @@ async function drvArchive(y){const L=DB.meetings.filter(m=>rxYear(m)===y);if(!L.
   try{const r1=await api('archive',{mid:m.id,kind:'recap',html:drvHtml(mName(m)+' – Fiche récap',drvClean(vRecap(m,true)))});if(r1.error)throw new Error(r1.error);
    let rx='';try{rx=drvClean(vRetexMeeting(m))}catch(e){}if(rx){const r2=await api('archive',{mid:m.id,kind:'retex',html:drvHtml(mName(m)+' – RETEX',rx)});if(r2.error)throw new Error(r2.error)}ok++}catch(e){ko++}}
  toast('Saison '+y+' archivée : '+ok+' meeting'+(ok>1?'s':'')+(ko?' · '+ko+' en échec, relancez':''))}
+/* Accès : une personne = une adresse email (ses accès PAF et ses meetings) */
+const ACC_FAM=r=>r==='org'||r==='dv'?'meet':r==='dmma'?'dmma':'';
+const AR_L={e:'Modifier',r:'Lecture',n:'—'};
+function people(){const P={};(DB.access||[]).filter(a=>a.role!=='ro').forEach(a=>{const k=lc(a.mail)||a.id;(P[k]=P[k]||{k,mail:a.mail||'',name:'',L:[]}).L.push(a);if(a.name&&!P[k].name)P[k].name=a.name});
+ return Object.values(P).map(p=>{const m=memOf(p.mail);p.mem=m;p.label=m?memLabel(m):(p.name||p.mail);p.fonc=m?((FUm[m.fn]||{}).d||m.fn)+(m.role?' · '+m.role:''):'';p.main=p.L.find(a=>a.role==='chef')||p.L.find(a=>!a.mid)||p.L[0];p.rx=p.L.some(a=>a.rx&&Object.keys(a.rx).length);p.hold=p.L.some(a=>a.hold);
+  const sd=p.main.role==='chef'?0:RLm[p.main.role]&&RLm[p.main.role].side==='paf'?1:p.main.role==='visit'?2:ACC_FAM(p.main.role)==='meet'?4:3;p.ord=sd;return p}).sort((a,b)=>a.ord-b.ord||a.label.localeCompare(b.label))}
+const ACC_F=[['all','Tous'],['paf','Patrouille'],['visit','Pilotes PAF'],['dmma','DMMA'],['osab','OSAB'],['org','Organisateurs'],['dv','DV'],['rx','Droits spécifiques'],['hold','À envoyer']];
+function accMatch(p,f){if(f==='all')return true;if(f==='rx')return p.rx;if(f==='hold')return p.hold;if(f==='paf')return p.L.some(a=>RLm[a.role]&&RLm[a.role].side==='paf');return p.L.some(a=>a.role===f)}
+function plaq(p){const roles=[...new Set(p.L.map(a=>a.role))],M=p.L.filter(a=>a.mid).map(a=>({m:DB.meetings.find(x=>x.id===a.mid),r:a.role})).filter(x=>x.m),last=Math.max(0,...p.L.map(a=>a.resend||a.at||a.sent||0));
+ return `<button class="plq" onclick="personSheet('${esc(p.k)}')">${tile(RLm[p.main.role]||{},'sm')}<span class="plqt"><b>${esc(p.label)}</b><small>${esc(p.mail)}</small>${p.fonc?`<small>${esc(p.fonc)}</small>`:''}
+  <span class="plqr">${roles.map(r=>`<i style="--c:${(RLm[r]||{}).c1||'#64748b'}">${(RLm[r]||{}).l||r}</i>`).join('')}${M.map(x=>`<i class="mt">${ic('flag',11)} ${esc(mName(x.m))}${roles.length>1?' · '+((RLm[x.r]||{}).l||''):''}</i>`).join('')}${p.rx?`<i class="rxb">${ic('gear',11)} droits spécifiques</i>`:''}</span></span>
+  <span class="plqs ${p.hold?'todo':''}">${p.hold?ic('clock',13)+' à envoyer':last?ic('check',13)+' '+new Date(last).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):''}</span></button>`}
+function vAcces(){const ed=canEdit('acces'),t=S.acT||'pers',P=people(),nh=DB.access.filter(a=>a.hold).length,f=S.acF||'all',q=(S.acQ||'').trim().toLowerCase();
+ const head=`${NOTE}<div class="head"><div><h1>Accès</h1><p class="muted">Un lien personnel par personne, sans mot de passe. Les droits viennent de son groupe ; touchez une personne pour lui donner des droits à part.</p></div>${ed&&nh?`<button class="btn pri" onclick="invQueue()">${ic('send',16)} ${nh} lien${nh>1?'s':''} à envoyer</button>`:''}</div>
+ <div class="seg acseg" role="tablist">${[['pers','users','Personnes',P.length],['grp','gear','Droits par groupe',''],['inv','send','Inviter','']].map(([k,i,l,n])=>`<button role="tab" aria-pressed="${t===k}" onclick="S.acT='${k}';render()">${ic(i,16)} ${l}${n!==''?` <span class="n">${n}</span>`:''}</button>`).join('')}</div>`;
+ if(t==='inv')return head+vAccesInv();
+ if(t==='grp'){const cnt=r=>P.filter(p=>p.L.some(a=>a.role===r)).length;
+  return head+`<div class="legend" style="margin:4px 0 12px"><span class="rt e">Modifier</span><span class="rt r">Lecture</span><span class="rt n">Aucun accès</span>${isChef()?'<span>Touchez une case pour la changer : tout le groupe suit, sauf les personnes qui ont des droits à part.</span>':''}</div>
+  <div class="grpc">${ROLES.filter(r=>r.k!=='ro').map(r=>{const lock=!isChef()||r.k==='chef';return `<section class="gcard">${tile(r,'sm')}<div class="gct"><b>${r.l}</b><button class="more" onclick="S.acT='pers';S.acF='${r.k}';render()">${cnt(r.k)} personne${cnt(r.k)>1?'s':''}</button></div>
+   <div class="gca">${AREAS.filter(a=>!a.soon).map(a=>{const v=right(a.k,r.k),lk=lock||(a.k==='acces'&&r.side!=='paf');return `<button class="ga ${v}" ${lk?'disabled':''} onclick="cycleRight('${r.k}','${a.k}')"><span>${a.l}</span><b>${AR_L[v]}</b></button>`}).join('')}</div></section>`}).join('')}</div>
+  ${isChef()?`<button class="btn ghost" style="margin-top:12px" onclick="DB.rights=JSON.parse(JSON.stringify(DEF_RIGHTS));save();render();toast('Droits par défaut rétablis')">Rétablir les droits par défaut</button>`:''}`}
+ const L=P.filter(p=>accMatch(p,f)&&(!q||[p.label,p.mail,p.fonc,...p.L.map(a=>(RLm[a.role]||{}).l)].join(' ').toLowerCase().includes(q)));
+ return head+`<div class="search">${ic('search',18)}<input class="in" id="ac-q" placeholder="Nom, email, fonction…" value="${esc(S.acQ||'')}" oninput="S.acQ=this.value;clearTimeout(window._aq);window._aq=setTimeout(()=>{render();const i=$('ac-q');i.focus();i.setSelectionRange(i.value.length,i.value.length)},200)"></div>
+ <div class="filters">${ACC_F.map(([k,l])=>{const n=P.filter(p=>accMatch(p,k)).length;return k!=='all'&&!n?'':`<button class="fchip" aria-pressed="${f===k}" onclick="S.acF='${k}';render()">${l} <span class="n">${n}</span></button>`}).join('')}</div>
+ <div class="plqs-l">${L.map(plaq).join('')||'<p class="muted">Personne.</p>'}</div>`}
+/* Fiche d'une personne : groupe, meetings, droits à part, lien */
+let PS=null;
+function personSheet(k){PS={k};openSheet(psHTML)}
+function psP(){return people().find(p=>p.k===PS.k)}
+function psHTML(){const p=psP();if(!p){setTimeout(closeSheet,10);return ''}const ed=canEdit('acces')&&isChef(),chef=p.L.some(a=>a.role==='chef'),G=p.L.filter(a=>!a.mid),M=p.L.filter(a=>a.mid),gr=p.main.role,rx=Object.assign({},...p.L.map(a=>a.rx||{}));
+ const meetOpts=DB.meetings.filter(m=>!M.some(a=>a.mid===m.id)).sort((a,b)=>(firstDemo(a)||'9').localeCompare(firstDemo(b)||'9'));
+ return `<div class="sh">${tile(RLm[gr]||{},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Accès de</div><div class="q" style="margin-top:2px">${esc(p.label)}</div><div class="small muted">${esc(p.mail)}${p.fonc?' · '+esc(p.fonc):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb">
+ ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab'].map(k=>RLm[k]).map(r=>`<button class="pk" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
+ ${M.length||(!G.length&&!chef)||ACC_FAM(gr)?`<label class="l">Meetings dont il a la charge · un seul lien pour tous</label><div class="psm">${M.map(a=>{const m=DB.meetings.find(x=>x.id===a.mid);return `<div class="psmr">${ic('flag',15)}<b>${m?esc(mName(m)):'Meeting supprimé'}</b><span class="small muted">${m&&firstDemo(m)?fmtD(firstDemo(m)):''}</span>
+   <select class="in" ${ed&&a.role!=='dmma'?'':'disabled'} onchange="psMRole('${a.id}',this.value)">${(a.role==='dmma'?['dmma']:['org','dv']).map(r=>`<option value="${r}" ${a.role===r?'selected':''}>${RLm[r].l}</option>`).join('')}</select>${ed?`<button class="ib" onclick="psMDel('${a.id}')" aria-label="Retirer ce meeting">${ic('x',15)}</button>`:''}</div>`}).join('')}
+   ${ed&&meetOpts.length&&p.mail?`<div class="psmr add">${ic('plus',15)}<select class="in" id="ps-m">${meetOpts.map(m=>`<option value="${m.id}">${esc(mName(m))}${firstDemo(m)?' · '+fmtD(firstDemo(m)):''}</option>`).join('')}</select><select class="in" id="ps-r">${(gr==='dmma'?['dmma']:['org','dv','dmma']).map(r=>`<option value="${r}" ${r===(ACC_FAM(gr)==='meet'?gr:'org')?'selected':''}>${RLm[r].l}</option>`).join('')}</select><button class="btn" onclick="psMAdd()">Ajouter</button></div>`:''}</div>
+   <div class="hint">Il garde le même lien : il voit tous ces meetings, et seulement eux. Pour un meeting ajouté, il reçoit un email (relu avant l'envoi).</div>`:''}
+ ${chef?'':`<label class="l">Ce qu'il peut faire</label><div class="hint" style="margin-top:0">Par défaut, les droits de son groupe. Choisissez autre chose pour lui seul.</div>
+ <div class="psr">${AREAS.filter(a=>!a.soon).map(a=>{const d=right(a.k,gr),v=rx[a.k]||'';return `<div class="psrr"><span>${a.l}</span><div class="seg sm">${[['','Groupe ('+AR_L[d]+')'],['e','Modifier'],['r','Lecture'],['n','Aucun']].map(([k,l])=>`<button aria-pressed="${v===k}" class="${k?'k'+k:''}" ${ed&&!(a.k==='acces'&&(RLm[gr]||{}).side!=='paf'&&k==='e')?`onclick="psRx('${a.k}','${k}')"`:'disabled'}>${l}</button>`).join('')}</div></div>`}).join('')}</div>
+ ${Object.keys(rx).length&&ed?`<button class="more" onclick="psRx('*','')">Revenir aux droits du groupe</button>`:''}`}
+ ${chef?'':`<div class="lostbox"><b>Son lien</b><span class="small muted">${p.hold?'Pas encore envoyé.':'Envoyé le '+new Date(Math.max(0,...p.L.map(a=>a.resend||a.at||a.sent||0))||Date.now()).toLocaleDateString('fr-FR')+'.'} Un seul lien pour tous ses accès de meeting.</span>
+  ${ed?`<div class="lostb">${p.hold?`<button class="btn pri" onclick="closeSheet();invQueue()">${ic('send',14)} Relire et envoyer</button>`:`<button class="btn" onclick="accResend('${p.main.id}')">${ic('send',14)} Renvoyer son lien</button><button class="btn" onclick="accResend('${p.main.id}',1)">${ic('lock',14)} Nouveau lien</button>`}<button class="btn" onclick="closeSheet();accSheet('${p.main.id}')">${ic('edit',14)} Nom, email</button></div>`:''}</div>`}
+ ${ed&&!chef?`<div class="confirm" style="margin-top:14px"><span class="small">Plus concerné ?</span><button class="btn" onclick="if(confirm('Retirer tous ses accès ? Son lien cessera de fonctionner.')){psDelAll()}">${ic('trash',14)} Retirer tous ses accès</button></div>`:''}
+ </div><div class="sf"><span></span><button class="btn pri big" onclick="closeSheet()">${ic('check',18)} Terminé</button></div>`}
+const psRe=()=>{save();$('sheet').innerHTML=psHTML();render()};
+function psRole(id,r){const a=DB.access.find(x=>x.id===id);if(!a||a.role==='chef')return;a.role=r;psRe();toast('Groupe : '+RLm[r].l)}
+function psMRole(id,r){const a=DB.access.find(x=>x.id===id);if(a){a.role=r;psRe()}}
+function psMDel(id){const a=DB.access.find(x=>x.id===id),m=a&&DB.meetings.find(x=>x.id===a.mid);if(!a||!confirm('Retirer ce meeting de son accès ?'))return;DB.access=DB.access.filter(x=>x.id!==id);if(!psP()){save();closeSheet();render();toast('Accès retiré');return}psRe();toast('Meeting retiré'+(m?' : '+mName(m):''))}
+function psMAdd(){const p=psP(),mid=$('ps-m').value,r=$('ps-r').value,m=DB.meetings.find(x=>x.id===mid);if(!p||!m)return;
+ const a={id:uid(),role:r,mid,name:p.L[0].name||p.label,mail:p.mail,hold:true,rx:(p.L.find(x=>x.rx)||{}).rx};if(!a.rx)delete a.rx;a.msg=addMeetMsg(a,m,p.L.some(x=>x.mid&&!x.hold&&ACC_FAM(x.role)===ACC_FAM(r)));addAccess(a);a.hold=true;psRe();toast('Meeting ajouté : relisez le message puis envoyez')}
+function addMeetMsg(a,m,known){const hello='Bonjour'+(a.name?' '+String(a.name).split(' ')[0]:'')+',';
+ return known?`${hello}\n\nVotre accès PAF OPS s'ouvre aussi au meeting « ${mName(m)} »${firstDemo(m)?' ('+fmtL(firstDemo(m))+')':''}, en tant ${/^[aeiouéè]/i.test(RLm[a.role].l)?'qu\'':'que '}${RLm[a.role].l.toLowerCase()}.\n\nC'est le même lien que d'habitude : vous y retrouvez tous vos meetings.\n\nCordialement\n${sigTxt()}`:invMsg(a.role,a.mid,a.name)}
+function psRx(area,v){const p=psP();if(!p)return;p.L.forEach(a=>{if(a.role==='chef')return;if(area==='*'){delete a.rx;return}a.rx=a.rx||{};if(v)a.rx[area]=v;else delete a.rx[area];if(!Object.keys(a.rx).length)delete a.rx});psRe()}
+function psDelAll(){const p=psP();if(!p)return;const ids=p.L.filter(a=>a.role!=='chef').map(a=>a.id);DB.access=DB.access.filter(a=>!ids.includes(a.id));save();closeSheet();render();toast('Accès retirés : son lien ne marche plus')}
 function cycleRight(role,area){const o=['n','r','e'],v=right(area,role);DB.rights[role][area]=o[(o.indexOf(v)+1)%3];save();render()}
 function delAccess(id){const a=DB.access.find(x=>x.id===id);DB.access=DB.access.filter(x=>x.id!==id);save();render();toast('Accès retiré : son lien ne marche plus'+(a?' ('+(a.name||a.mail)+')':''))}
 let IV=null;
