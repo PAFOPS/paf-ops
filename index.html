@@ -1267,7 +1267,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1793954300';
+const APP_V='1793954661';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5411,6 +5411,7 @@ function pfArt(k){
  if(k==='tcas')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#0f172a','#1e293b','g_tcas')}
   <circle cx="60" cy="62" r="40" fill="none" stroke="#2d4256" stroke-width="3"/><circle cx="60" cy="62" r="26" fill="none" stroke="#2d4256" stroke-width="2"/><circle cx="60" cy="62" r="12" fill="none" stroke="#2d4256" stroke-width="2"/>
   <path d="M60 50 V74 M50 62 H70 M55 71 H65" stroke="#49c6ff" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="40" r="7" fill="#ffb000"/><rect x="30" y="76" width="12" height="12" fill="#ff2a2a"/><path d="M60 22 L60 30" stroke="#49c6ff" stroke-width="3"/></svg>`;
+ if(k==='pbd')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#6366f1','#1e1b4b','g_pbd')}<rect x="22" y="20" width="76" height="84" rx="10" fill="#fff"/><rect x="44" y="14" width="32" height="14" rx="5" fill="#c7d2fe"/><path d="M34 46h52M34 62h52M34 78h34" stroke="#6366f1" stroke-width="6" stroke-linecap="round"/><path d="M74 86l8 8 14-18" fill="none" stroke="#16a34a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
  if(k==='pcf')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#0ea5e9','#1e3a8a','g_pcf')}
   <path d="M18 40h34l8 8h42v48H18z" fill="#fbbf24"/><path d="M18 52h84v44H18z" fill="#fcd34d"/><path d="M40 82l16-6 8-16 4 2-4 14 14-4 2 4-30 12z" fill="#1e3a8a"/><circle cx="84" cy="68" r="7" fill="#fff" stroke="#dc2626" stroke-width="3"/></svg>`;
  if(k==='sr')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#93c5fd','#1e3a8a','g_sr')}<path d="M10 96 L110 84 V112 H10z" fill="#cbd5e1" opacity=".6"/><path d="M18 86 C40 84 46 80 52 66 C58 46 50 26 66 24 C84 22 86 46 74 58 C64 68 70 82 104 74" fill="none" stroke="#1d4ed8" stroke-width="9" stroke-linecap="round"/><path d="M52 66 C58 46 50 26 66 24" fill="none" stroke="#dc2626" stroke-width="9" stroke-linecap="round"/><g fill="#fff"><path d="M66 18l3 5h6l-6 2 2 6-5-4-5 4 2-6-6-2h6z"/></g></svg>`;
@@ -5441,7 +5442,7 @@ function pfArt(k){
   <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
-const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pcf:['Point central','Points centraux · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','nav','meteo','coupe','cirrus']]};
+const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Série · Instruction · Météo · Zones · Espacement',['sr','ex','meteo','zr','rg']],pcf:['Point central','Points centraux · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','nav','meteo','coupe','cirrus']]};
 const TOOLS_A=[['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
@@ -5450,7 +5451,7 @@ function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=
 const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
 const pfVis=k=>isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan());
 const pfTile=k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k),n=D?D[2].filter(pfVis).length:0;return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfUp=S.pfTab||'home';S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${n} outils</small>`:''}</button>`};
-const PF_HOME=['meteo','zr','sr','alpha','pcf','fea','ex','rg','tcas','itw','cad'];
+const PF_HOME=['pbd','alpha','pcf','fea','tcas','itw','cad'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
 const PF_TOOLS=[['sr','Série','Le ruban en 3D : figures, formations, snapshots'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
 
