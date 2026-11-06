@@ -1249,7 +1249,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1793900241';
+const APP_V='1793943040';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -3652,10 +3652,10 @@ function pcAddFl(){const w=PCA.w,W=pcWk(w),t=PCA.time;if(!t){$('pca-err').textCo
 function pcDelFl(w,id){const W=pcWk(w);W.fl=W.fl.filter(f=>f.id!==id);if(W.prop)delete W.prop[id];save();render()}
 function pcAsk(w,id,need){const W=pcWk(w),f=W.fl.find(f=>f.id===id);f.ask=false;f.no=!need;if(f.no&&W.prop)delete W.prop[id];if(need&&W.prop&&!W.val)W.prop[id]=W.prop[id]||'';save();const pr=pcMaybePropose(w);render();toast(pr?'Tout le monde a répondu : voici la proposition':need?'PC nécessaire : vol ajouté':'Pas de PC pour ce vol')}
 function pcNoFl(w,id){const f=pcWk(w).fl.find(f=>f.id===id);f.no=!f.no;f.ask=false;const W=pcWk(w);if(f.no&&W.prop)delete W.prop[id];save();render()}
-function pcSetProp(w,fid,mid){const W=pcWk(w);W.prop=W.prop||{};W.prop[fid]=mid;save();render()}
+function pcSetProp(w,fid,mid){const W=pcWk(w);W.prop=W.prop||{};W.prop[fid]=mid;W.man=W.man||{};if(mid)W.man[fid]=1;else delete W.man[fid];save();render()}
 function pcRes(w,mid,d){const P=pcDB();const R=P.res[w]=P.res[w]||{};let L=R[mid]||[];if(d==='all')L=L.length===5?[]:[0,1,2,3,4];else L=L.includes(d)?L.filter(x=>x!==d):L.concat(d).sort();R[mid]=L;save();render()}
 const pcAskL=w=>pcW0(w).fl.filter(f=>f.ask);
-function pcDoPropose(w){const q=pcAskL(w).length;if(q){toast(q+' vol'+(q>1?'s':'')+' à confirmer d\'abord : PC nécessaire ou non ?');const e=document.querySelector('.pcfl.ask');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});return}pcPropose(w);save();render();const W=pcW0(w),n=W.fl.filter(f=>!f.no&&!W.prop[f.id]).length;toast(n?`Proposition prête · ${n} vol${n>1?'s':''} sans PC disponible`:'Proposition prête : relisez puis validez')}
+function pcDoPropose(w){const q=pcAskL(w).length;if(q){toast(q+' vol'+(q>1?'s':'')+' à confirmer d\'abord : PC nécessaire ou non ?');const e=document.querySelector('.pcfl.ask');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});return}pcWk(w).man={};pcPropose(w);save();render();const W=pcW0(w),n=W.fl.filter(f=>!f.no&&!W.prop[f.id]).length;toast(n?`Proposition prête · ${n} vol${n>1?'s':''} sans PC disponible`:'Proposition prête : relisez puis validez')}
 async function pcSync(){if(typeof flush!=='function')return;clearTimeout(saveT);try{if(SAVING)await SAVING}catch(e){}await flush();try{if(SAVING)await SAVING}catch(e){}}
 async function pcValidate(w){if(pcAskL(w).length){toast('Confirmez d\'abord les vols marqués « PC ? »');return}const W=pcWk(w),miss=W.fl.filter(f=>!f.no&&!(W.prop||{})[f.id]).length;
  if(miss&&!confirm(miss+' vol'+(miss>1?'s':'')+' sans PC. Valider quand même ?'))return;
@@ -3666,7 +3666,7 @@ async function pcValidate(w){if(pcAskL(w).length){toast('Confirmez d\'abord les 
  if(r&&r.wr){Object.keys(r.wr).forEach(id=>{const f=W.fl.find(x=>x.id===id);if(f){f.pcW=r.wr[id];f.pcExt=''}});save()}
  toast(r.error||('Planning validé · '+r.notified+' PC prévenu'+(r.notified>1?'s':'')+(r.cal!=null?' · '+r.cal+' plaquette'+(r.cal>1?'s':'')+' complétée'+(r.cal>1?'s':''):'')+(r.calErr?' · agenda : '+r.calErr:'')))}
 async function pcChange(w,fid,mid){const W=pcWk(w),f=W.fl.find(x=>x.id===fid),old=(W.prop||{})[fid]||'',x=DB.members.find(y=>y.id===mid);if(!f||old===mid)return;
- W.prop=W.prop||{};W.prop[fid]=mid;f.pcExt='';W.chg=(W.chg||0)+1;save();render();
+ W.prop=W.prop||{};W.prop[fid]=mid;W.man=W.man||{};if(mid)W.man[fid]=1;else delete W.man[fid];f.pcExt='';W.chg=(W.chg||0)+1;save();render();
  if(!isOnline()){toast('PC changé · '+PC_J[f.d].toLowerCase()+' '+f.time.replace(':','h')+' : '+(x?pcName(x):'à pourvoir')+' · plaquette mise à jour (maquette)');return}
  await pcSync();let r;try{r=await api('pcChange',{w,fid,old})}catch(e){r={error:'Connexion impossible : le changement est enregistré, la plaquette sera mise à jour à la prochaine validation'}}
  if(r&&!r.error&&!x)f.pcW=undefined;if(r&&r.wr){Object.keys(r.wr).forEach(id=>{const g=W.fl.find(y=>y.id===id);if(g){g.pcW=r.wr[id];g.pcExt=''}});save();render()}
@@ -3764,7 +3764,9 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
   const demo=!isOnline()?`<div class="pcdemo small">Maquette : vous êtes <select class="in" onchange="S.pcAs=this.value;PCD=null;render()">${M.map(x=>`<option value="${x.id}" ${S.pcAs===x.id?'selected':''}>${esc(pcName(x))}</option>`).join('')}</select></div>`:'';
   let mine=myCard;
   if(me&&me.res)mine=`<p class="small muted">Réserviste : le chef ops indique vos jours de présence, rien à remplir.</p>`;
-  return `${head}${demo}${nav}<div class="pccols">${mine}${planning(w,'Planning PC')}${w!==pcCurWk()?planning(pcCurWk(),'Cette semaine'):''}${!mine&&!W.val?`<p class="muted">Le planning de cette semaine n'est pas encore validé.</p>`:''}</div>`}
+  const cur=pcCurWk(),curS=planning(cur,'Cette semaine')||`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('cal',18)} Cette semaine</h3><p class="small muted" style="margin:0">Semaine du ${pcWkLabel(cur)} : le planning n'est pas encore validé.</p></div></section>`;
+  const fut=Object.keys((DB.pc&&DB.pc.weeks)||{}).filter(k=>k>cur&&k!==w&&pcW0(k).val).sort().map(k=>planning(k,pcWkRel(k)?pcWkRel(k).charAt(0).toUpperCase()+pcWkRel(k).slice(1):'À venir')).join('');
+  return `${head}${demo}<div class="pccols">${curS}</div>${nav}<div class="pccols">${mine}${w!==cur?planning(w,pcWkRel(w)?pcWkRel(w).charAt(0).toUpperCase()+pcWkRel(w).slice(1):'Planning PC')||(!mine?`<p class="muted">Le planning de la semaine du ${pcWkLabel(w)} n'est pas encore validé.</p>`:''):''}${fut}</div>`}
  /* --- Chef ops --- */
  const step=(n,l,st)=>`<div class="pcst ${st}"><i>${st==='done'?ic('check',14):n}</i><span>${l}</span></div>`;
  const allIn=!todo.length&&M.length;
@@ -3788,7 +3790,7 @@ function vPc(tabs){const chef=isChef(),me=pcMe(),M=pcMembers();
  const cntW={};M.forEach(x=>cntW[x.id]=0);if(W.prop)F.forEach(f=>{if(W.prop[f.id]&&cntW[W.prop[f.id]]!=null)cntW[W.prop[f.id]]++});
  const prop=`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('target',18)} Répartition ${W.val?`<span class="pill ok">Validée le ${new Date(W.val.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>`:W.prop?'<span class="pill sent">À valider</span>':''}</h3>
   ${!F.length?`<p class="small muted">Ajoutez d'abord les vols de la semaine.</p>`:!W.prop?`<p class="small muted" style="margin-top:0">${allIn?'Tout le monde a répondu.':`En attente de ${todo.map(pcShort).join(', ')}. Vous pouvez proposer quand même : sans réponse = pas disponible.`}</p><button class="btn pri big" onclick="pcDoPropose('${w}')">${ic('target',18)} Proposer la répartition</button>`:
-  `<div class="pcplan">${PC_J.map((j,d)=>{const L=F.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w,d)}</b>${L.length?L.map(f=>{const cur=W.prop[f.id]||'',x=DB.members.find(y=>y.id===cur),ok=x&&(x.pcOpt||pcAvail(x,f,w));
+  `<div class="pcplan">${PC_J.map((j,d)=>{const L=F.filter(f=>f.d===d);return `<div class="pcpd"><b>${PC_JS[d]} ${pcDay(w,d)}</b>${L.length?L.map(f=>{const cur=W.prop[f.id]||'',x=DB.members.find(y=>y.id===cur),ok=x&&(x.pcOpt||x.res||!!(W.man&&W.man[f.id])||pcAvail(x,f,w));
     return `<div class="pcpf ${cur?'':'miss'}"><span class="pct">${f.time.replace(':','h')}</span>${W.val&&!isChef()?pcChipF(f,x):`<select class="in pcsel" style="--c:${x?pcCol(x):'var(--bad)'}" onchange="${W.val?'pcChange':'pcSetProp'}('${w}','${f.id}',this.value)"><option value="">À pourvoir</option>${M.map(y=>`<option value="${y.id}" ${y.id===cur?'selected':''}>${esc(pcName(y))}${y.pcOpt?'  (option)':pcAvail(y,f,w)?(y.res?'  ✓ présent':'  ✓ dispo'):''}</option>`).join('')}</select>`}${x&&!ok?`<small class="bad">pas dispo</small>`:''}</div>`}).join(''):'<span class="small muted">—</span>'}</div>`}).join('')}</div>
    <div class="pccnt">${M.map(x=>`<span>${pcChip(x)} <b>${cntW[x.id]}</b>${(()=>{const o=pcWho(x);return o&&+o.min>0?`<small class="muted"> / ${o.min}${+o.max>+o.min?'–'+o.max:''}</small>`:''})()}</span>`).join('')}</div>
    ${W.val?`${isChef()?`<p class="hint" style="margin-top:4px">Semaine validée : changez un PC directement dans son menu. ${pcDB().cal&&pcDB().calW!==false?'La plaquette de l\'agenda est mise à jour aussitôt, ':''}l'ancien et le nouveau PC sont prévenus.</p>`:''}<div class="pcbtns"><button class="btn" onclick="pcUnval('${w}')">${ic('edit',15)} Rouvrir toute la semaine</button></div>`:`<div class="pcbtns"><button class="btn" onclick="pcDoPropose('${w}')">${ic('target',15)} Recalculer</button><button class="btn pri big" onclick="pcValidate('${w}')">${ic('check',18)} Valider et prévenir les PC</button></div>
