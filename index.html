@@ -935,6 +935,19 @@ html.fsl,html.fsl body{overflow:hidden;overscroll-behavior:none}
 .pdg li.ok{background:color-mix(in srgb,#22c55e 9%,transparent);border-color:color-mix(in srgb,#22c55e 35%,transparent)}.pdg li.ko{background:color-mix(in srgb,#ef4444 9%,transparent);border-color:color-mix(in srgb,#ef4444 40%,transparent)}.pdg li.in{background:color-mix(in srgb,#3b82f6 8%,transparent);border-color:color-mix(in srgb,#3b82f6 30%,transparent)}
 .offm header.top .tin>*:not(.brand){display:none!important}
 .offb{display:flex;gap:12px;align-items:center;border:2px solid #f59e0b;background:color-mix(in srgb,#f59e0b 12%,transparent);border-radius:16px;padding:10px 14px;margin:14px 0}.offb>div{flex:1}.offb b{display:block}.offb span{font-size:13.5px;color:var(--muted)}
+.zrg{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:8px 10px 4px;overflow:hidden}
+.zrh{display:grid;grid-template-columns:52px 1fr;gap:6px;position:sticky;top:0}.zrax{position:relative;height:16px}.zrax i{position:absolute;transform:translateX(-50%);font-style:normal;font-size:10.5px;color:var(--muted);font-weight:700}
+.zrd{border-top:1px solid var(--line);padding:6px 0 7px}.zrd.today{background:color-mix(in srgb,#3b82f6 5%,transparent);border-radius:10px}.zrdl{display:flex;align-items:center;gap:8px;margin:0 0 4px}.zrdl b{font-size:13.5px}.zrdl .more{padding:2px 6px}
+.zrl{display:grid;grid-template-columns:52px 1fr;gap:6px;align-items:center;margin:2px 0}.zrz{display:inline-block;font-size:11px;font-weight:800;color:#fff;background:var(--c);border-radius:6px;padding:2px 5px;text-align:center}
+.zrt{position:relative;height:24px;background:color-mix(in srgb,var(--line) 45%,transparent);border-radius:6px}.zrt>i{position:absolute;top:0;bottom:0;width:1px;background:color-mix(in srgb,var(--muted) 25%,transparent)}
+.zrb{position:absolute;top:2px;bottom:2px;border-radius:5px;border:0;padding:0 4px;background:var(--c);color:#fff;font-size:10.5px;font-weight:700;overflow:hidden;white-space:nowrap;cursor:pointer;display:flex;align-items:center;justify-content:center;min-width:6px}
+.zrb span{overflow:hidden;text-overflow:ellipsis}.zrb.bro{background:repeating-linear-gradient(135deg,#94a3b8 0 5px,#cbd5e1 5px 10px);color:#0f172a}.zrb.ko{background:repeating-linear-gradient(135deg,#dc2626 0 5px,#f87171 5px 10px)}.zrb.ann{background:#cbd5e1;color:#475569;text-decoration:line-through}.zrb.pl{background:color-mix(in srgb,#3b82f6 85%,#fff)}
+.zrleg{display:flex;flex-wrap:wrap;gap:12px;margin:8px 2px 0;font-size:12px;color:var(--muted)}.zrleg span{display:flex;align-items:center;gap:5px}.zrleg i.zrb{position:static;width:22px;height:12px;display:inline-block}
+.zrr{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 10px;margin:6px 0 0;cursor:pointer;color:inherit;font:inherit}.zrrd{flex:1;min-width:0}.zrrd b{display:block;font-size:14px}.zrrd small{display:block;color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.zrst{font-size:12px;font-weight:800;color:var(--c);border:1.5px solid var(--c);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.zrv{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.zrv .zrr{flex:1 1 320px}.zrvb{display:flex;gap:8px;margin-top:6px}
+.zrzc button{display:flex;flex-direction:column;align-items:flex-start;border-left:4px solid var(--c)}.zrzc button small{font-weight:500;color:var(--muted)}
+@media (max-width:600px){.zrh,.zrl{grid-template-columns:44px 1fr}.zrb{font-size:9.5px}}
 </style>
 </head>
 <body>
@@ -1056,6 +1069,7 @@ const FU=[
  {k:'DIR',l:'DIR',d:'Direction',i:'briefcase',c1:'#334e9e',c2:'#0c1f4a'},
  {k:'PILOTES',l:'PILOTES',d:'Pilotes',i:'plane',c1:'#3b82f6',c2:'#1d4ed8'},
  {k:'SEC',l:'SECRÉTAIRES',d:'Secrétaires',i:'headset',c1:'#14b8a6',c2:'#0f766e'},
+ {k:'MOPS',l:'MARQUEUSES OPS',d:'Marqueuses ops',i:'pen',c1:'#f472b6',c2:'#be185d'},
  {k:'DT',l:'DT',d:'DT · un seul titulaire',i:'shield',c1:'#64748b',c2:'#334155',grp:'MECAS',one:1},
  {k:'CST',l:'CST',d:'CST · un seul titulaire',i:'wrench',c1:'#0ea5e9',c2:'#0369a1',grp:'MECAS',one:1},
  {k:'DEP',l:'DEP',d:'DEP',i:'wrench',c1:'#f59e0b',c2:'#c2410c',grp:'MECAS'},
@@ -1081,6 +1095,7 @@ const ROLES=[
  {k:'visit',l:'Pilote PAF',side:'suivi',i:'eye',c1:'#64748b',c2:'#1e293b'},
  {k:'dmma',l:'DMMA',side:'suivi',i:'briefcase',c1:'#8b5cf6',c2:'#5b21b6'},
  {k:'osab',l:'OSAB',side:'suivi',i:'shield',c1:'#10b981',c2:'#047857'},
+ {k:'bob',l:'OPS BOB (BA 701)',side:'suivi',i:'tower',c1:'#2563eb',c2:'#1e3a8a'},
  {k:'org',l:'Organisateur',side:'meet',i:'flag',c1:'#0ea5e9',c2:'#0369a1'},
  {k:'dv',l:'Directeur des vols',side:'meet',i:'radio',c1:'#6366f1',c2:'#3730a3'},
  {k:'ro',l:'Volontaires (lien public)',side:'ro',i:'hand',c1:'#94a3b8',c2:'#475569'}
@@ -1107,11 +1122,12 @@ const DEF_RIGHTS={
  visit:{tech:'r',meet:'r',contacts:'r',annu:'r',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
  dmma:{tech:'r',meet:'r',contacts:'r',annu:'r',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
  osab:{tech:'n',meet:'n',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'},
+ bob:{tech:'n',meet:'n',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'},
  org:{tech:'e',meet:'r',contacts:'e',annu:'n',aero:'n',logi:'e',com:'e',pdocs:'n',acces:'n'},
  dv:{tech:'n',meet:'r',contacts:'r',annu:'n',aero:'e',logi:'n',com:'n',pdocs:'r',acces:'n'},
  ro:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'}
 };
-const FONC={DT:['DT'],CST:['CST'],DIR:['Commandant','Commandant en second','Chef des opérations','Officier sécurité des vols'],SEC:['Secrétaire opérations','Secrétaire'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
+const FONC={DT:['DT'],CST:['CST'],DIR:['Commandant','Commandant en second','Chef des opérations','Officier sécurité des vols'],SEC:['Secrétaire opérations','Secrétaire'],MOPS:['Marqueuse ops'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
 const GRADES=['Gal','Col','Lcl','Cdt','Cne','Lt','Slt','Asp','Maj','Adc','Adj','Sgc','Sgt','Cch','Cpl','Av1','Av'];
 const GRADEL={Gal:'Général',Col:'Colonel',Lcl:'Lieutenant-colonel',Cdt:'Commandant',Cne:'Capitaine',Lt:'Lieutenant',Slt:'Sous-lieutenant',Asp:'Aspirant',Maj:'Major',Adc:'Adjudant-chef',Adj:'Adjudant',Sgc:'Sergent-chef',Sgt:'Sergent',Cch:'Caporal-chef',Cpl:'Caporal',Av1:'Aviateur de 1re classe',Av:'Aviateur'};
 
@@ -1249,7 +1265,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1793946074';
+const APP_V='1793950672';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -1287,10 +1303,10 @@ const lineMail=m=>m?`<div class="line">${ic('mail',15)}<span>${esc(m)}</span><bu
 function go(v,mid){S.view=v;if(mid!==undefined)S.mid=mid;closeSheet();render();window.scrollTo(0,0)}
 function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S.view='meetings';render();toast('Vous voyez l\'application comme : '+RLm[r].l)}
 const isOsab=()=>ROLE==='osab';
-const viewOk=v=>isOsab()?v==='perfos':v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||((ROLE==='visit'||ROLE==='comm')&&!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.every(([k])=>ME.tools[k]===0)))||!!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.some(([k])=>ME.tools[k]===1))):true;
+const viewOk=v=>isOsab()||isBob()?v==='perfos':v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||((ROLE==='visit'||ROLE==='comm')&&!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.every(([k])=>ME.tools[k]===0)))||!!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.some(([k])=>ME.tools[k]===1))):true;
 function render(){
  if(typeof ME!=='undefined'&&ME&&ME.mr){const r=(S.view==='meeting'||S.view==='recap')&&S.mid&&ME.mr[S.mid];ROLE=r&&RLm[r]?r:ME.role}
- if(!viewOk(S.view))S.view=isOsab()?'perfos':'meetings';if(isOsab())S.pfTab='fea';
+ if(!viewOk(S.view))S.view=isOsab()||isBob()?'perfos':'meetings';if(isOsab())S.pfTab='fea';if(isBob())S.pfTab='zr';
  {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}}
  const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Outils','gauge']};
  ['meetings','unite','acces','mails','perfos'].forEach(k=>{
@@ -1306,7 +1322,7 @@ function render(){
 function roBar(){
  if(ROLE==='chef'||isMeetRole()||ROLE==='ro')return '';
  const ed=AREAS.filter(a=>!a.soon&&canEdit(a.k)).map(a=>a.l);
- return `<div class="ro">${tile(RLm[ROLE],'xs')}<span>Vue <b>${RLm[ROLE].l}</b> : ${ROLE==='ro'?'peut proposer sa participation aux meetings':dmmaMid()?'consulte son meeting, sans rien modifier':RLm[ROLE].side==='suivi'?isOsab()?'lit les FEA que le chef des opérations lui a transmises, sans rien modifier':'consulte tous les meetings, sans rien modifier · aucun email après l\'invitation':ed.length?'peut modifier '+ed.join(', ').toLowerCase()+(ROLE==='comm'?', les interviews et les cadres':''):ROLE==='comm'?'consultation des meetings · saisit les interviews et coche les cadres remis (Outils)':'consultation uniquement'}${isMeetRole()?' · ne voit que son meeting':''}.</span></div>`;
+ return `<div class="ro">${tile(RLm[ROLE],'xs')}<span>Vue <b>${RLm[ROLE].l}</b> : ${ROLE==='ro'?'peut proposer sa participation aux meetings':dmmaMid()?'consulte son meeting, sans rien modifier':RLm[ROLE].side==='suivi'?isOsab()?'lit les FEA que le chef des opérations lui a transmises, sans rien modifier':isBob()?'voit les besoins de zones de la Patrouille et valide la R276':'consulte tous les meetings, sans rien modifier · aucun email après l\'invitation':ed.length?'peut modifier '+ed.join(', ').toLowerCase()+(ROLE==='comm'?', les interviews et les cadres':''):ROLE==='comm'?'consultation des meetings · saisit les interviews et coche les cadres remis (Outils)':'consultation uniquement'}${isMeetRole()?' · ne voit que son meeting':''}.</span></div>`;
 }
 const NOTE='';
 
@@ -2316,6 +2332,7 @@ function invMsg(role,mid,name){const m=mid?DB.meetings.find(x=>x.id===mid):null,
  if(role==='org')return `${hello}\n\nNous nous réjouissons de venir chez vous pour ${artN(nm)}${m&&m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nPour préparer au mieux notre venue, voici votre accès personnel à PAF OPS : vous y trouverez, rubrique par rubrique, les informations pratiques dont nous avons besoin (technique, logement, restauration, locomotion, salles, communication). Quelques minutes suffisent, depuis un ordinateur ou un téléphone, et vos réponses sont enregistrées automatiquement.\n\nNous restons à votre disposition pour toute question.${sig}`;
  if(role==='dv')return `${hello}\n\nVous êtes directeur des vols pour ${artN(nm)}${m&&m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nVoici votre accès personnel à PAF OPS, où nous rassemblons les éléments aéronautiques de la présentation : plan du site et axe de présentation, pilot book, créneaux, zone réglementée temporaire. Vous y trouverez aussi les documents de la Patrouille utiles à la constitution de votre dossier.\n\nEn bas de la page qui vous est dédiée dans l'application, vous trouverez tous les contacts dont vous pourriez avoir besoin à la Patrouille de France.\n\nNous restons à votre disposition pour en parler de vive voix.${sig}`;
  if(role==='dmma'&&m)return `${hello}\n\nVous êtes DMMA pour ${artN(nm)}${m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nVoici votre accès personnel à PAF OPS, en consultation : vous y trouverez les éléments transmis par le directeur des vols (plan du site et axe, pilot book, zone réglementée temporaire, créneaux), le dossier des pilotes et la composition de l'équipe de la Patrouille. Aucun mot de passe : conservez ce message.\n\nPour toute question sur la présentation, je reste à votre disposition.${sig}`;
+ if(role==='bob')return `${hello}\n\nPour l'entraînement de la Patrouille de France, nous exprimons nos besoins de zones dans PAF OPS. Voici votre accès personnel : vous y voyez le planning de nos demandes en R276 (avec les plaquettes déjà prévues) et vous validez ou refusez chaque créneau d'un toucher ; nous sommes prévenus aussitôt. Vous recevez aussi un email à chaque nouvelle demande. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris.${sig}`;
  if(role==='osab')return `${hello}\n\nVoici votre accès personnel à PAF OPS, en consultation : vous y trouverez les fiches d'événement aéronautique (FEA, CRI, CRE) de la Patrouille de France, au fur et à mesure que je les traite et vous les transmets. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris.${sig}`;
  if(role==='visit'||role==='dmma')return `${hello}\n\nVoici votre accès personnel à PAF OPS pour suivre la préparation des meetings de la saison, en consultation. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`;
  return `${hello}\n\nVoici votre accès personnel à PAF OPS (${(RLm[role]||{}).l||role}). Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`}
@@ -2895,8 +2912,97 @@ function pfCalc(Lx){const C=pfCfg(),o=pfIn();
  if(dist>L)al.push({t:'bad',h:'Piste trop courte',p:`Distance de décollage ${dist} m pour ${L} m de piste.`});
  return {qfe,idx,acc,vr,vlof,dist,vc,vs,al,dT,dP,dL,dW,dWet,r};
 }
-function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
+/* ====================== Zones d'entraînement : R276 (Salon), R55 (Orange · Plan de Dieu), R31 (Istres) ======================
+   Planning partagé : le chef ops, les marqueuses ops et les Athos 5, 15 et 16 expriment les besoins ;
+   la R276 part vers l'OPS BOB de la BA 701 qui valide ; la R55 et la R31 sont notées « obtenues » par la Patrouille.
+   Les plaquettes de l'agenda qui citent une zone sont déjà accordées : elles s'affichent en bleu, rien à faire. */
+const ZR_Z=[['R276','Salon','#2563eb'],['R55','Orange · Plan de Dieu','#7c3aed'],['R31','Istres','#0d9488']];
+const ZR_ST={bro:['En préparation','#94a3b8'],dem:['Demandée','#f59e0b'],ok:['Validée','#16a34a'],ko:['Refusée','#dc2626'],ann:['Annulée','#94a3b8'],pl:['Plaquette','#3b82f6']};
+const ZR_H0=7,ZR_H1=19;
+const isBob=()=>ROLE==='bob';
+const zrMe=()=>isOnline()?(ME&&ME.role===ROLE?memOf(ME.mail):null):(ROLE==='visit'?DB.members.find(x=>x.id===S.ccAs)||null:null);
+const zrCan=()=>isBob()||(tov('zr')!=null?!!tov('zr'):isChef()||(()=>{const x=zrMe();return ROLE==='visit'&&!!x&&(x.fn==='MOPS'||(x.fn==='PILOTES'&&[5,15,16].includes(athN(x))))})()||(!isOnline()&&ROLE==='visit'));
+const zrEd=()=>!isBob()&&zrCan();
+const zrStL=x=>x.st==='ok'?(x.z==='R276'?'Validée':'Obtenue'):(ZR_ST[x.st]||['?'])[0];
+const zrMin=t=>{const [h,m]=String(t||'0:0').split(':').map(Number);return h*60+(m||0)};
+const zrPct=t=>Math.max(0,Math.min(100,(zrMin(t)-ZR_H0*60)/((ZR_H1-ZR_H0)*60)*100));
+const zrHh=t=>String(t||'').replace(':','h').replace(/h00$/,'h');
+const zrList=()=>(DB.zr||[]);
+const zrInT=t=>{const o=[];String(t||'').replace(/\bR\s?-?(276|55|31)[A-Z]?\b/gi,(m,n)=>{const z='R'+n;if(!o.includes(z))o.push(z);return m});return o};
+/* plaquettes de l'agenda (en ligne : lues par le serveur ; maquette : vols de l'outil PC) */
+function zrAg(w){S.zrAg=S.zrAg||{};if(S.zrAg[w])return S.zrAg[w];
+ if(!isOnline()){const W=(DB.pc&&DB.pc.weeks&&DB.pc.weeks[w])||{fl:[]};S.zrAg[w]={ev:(W.fl||[]).map(f=>({id:f.id,d:f.d,time:f.time,end:'',title:f.title,z:zrInT(f.title)})).filter(e=>e.z.length)};return S.zrAg[w]}
+ S.zrAg[w]={busy:1,ev:[]};api('zrAgenda',{w}).then(r=>{S.zrAg[w]=r&&r.ok?{ev:r.ev||[]}:{ev:[],err:r&&r.error||'Agenda illisible'};if(S.pfTab==='zr')render()}).catch(()=>{S.zrAg[w]={ev:[],err:'Connexion impossible'};if(S.pfTab==='zr')render()});return S.zrAg[w]}
+/* après une opération : les zones à jour, puis la base complète si rien n'est en cours d'enregistrement */
+async function zrAfter(r,msg){if(!r||r.error){toast(r&&r.error||'Connexion impossible');return false}DB.zr=r.zr||[];try{if(typeof BASE!=='undefined'&&BASE)BASE.zr=clone(DB.zr)}catch(e){}
+ if(msg)toast(msg);render();try{if(!SAVING&&!DIRTY){const L=await api('load');if(L&&L.db&&!SAVING&&!DIRTY){DB=L.db;REV=L.rev;BASE=clone(L.db);migrate();render()}}}catch(e){}return true}
+const zrWho=()=>{const x=zrMe()||(isChef()?DB.members.find(y=>y.kp==='chef'):null);return x?((x.grade?x.grade+' ':'')+(x.last||x.first||'')+(x.fn==='PILOTES'&&x.athos?' (Athos '+x.athos+')':x.fn==='MOPS'?' (marqueuse ops)':isChef()?' (chef ops)':'')):RLm[ROLE].l};
+async function zrPut(z,del){if(!isOnline()){const L=DB.zr=DB.zr||[],o=z.id?L.find(x=>x.id===z.id):null;
+  if(del){if(o&&o.z==='R276'&&['dem','ok'].includes(o.st)){o.st='ann';o.stT=Date.now()}else DB.zr=L.filter(x=>x!==o)}
+  else if(o){const ch=o.z!==z.z||o.d!==z.d||o.a!==z.a||o.b!==z.b;Object.assign(o,z);if(ch&&o.st!=='bro')o.st='dem'}
+  else L.push(Object.assign({id:uid(),st:z.z==='R276'?'bro':'dem',by:zrWho(),t:Date.now()},z));save();render();return true}
+ return zrAfter(await api('zrPut',{z,del:!!del}).catch(()=>null))}
+async function zrSend(){const n=zrList().filter(x=>x.z==='R276'&&x.st==='bro').length;if(!n)return;
+ if(!isOnline()){zrList().forEach(x=>{if(x.z==='R276'&&x.st==='bro'){x.st='dem';x.sentT=Date.now()}});save();render();toast(n+' demande'+(n>1?'s':'')+' R276 envoyée'+(n>1?'s':'')+' à l\'OPS BOB (maquette)');return}
+ S.zrBusy=1;render();const r=await api('zrSend').catch(()=>null);S.zrBusy=0;
+ zrAfter(r,r&&r.ok?`${r.n} demande${r.n>1?'s':''} R276 envoyée${r.n>1?'s':''} à l'OPS BOB${r.bob?'':' · ⚠ aucun OPS BOB invité : ajoutez-le dans Accès › Inviter'}`:'')}
+async function zrSet(id,st,note){if(!isOnline()){const x=zrList().find(y=>y.id===id);if(x){x.st=st;x.stNote=note||'';x.stT=Date.now();x.stBy=isBob()?'OPS BOB':zrWho()}save();closeSheet();render();return}
+ const ok=await zrAfter(await api('zrSet',{id,st,note:note||''}).catch(()=>null),st==='ok'?'Validé':st==='ko'?'Refusé : la Patrouille est prévenue':'Remis en attente');if(ok)closeSheet()}
+/* ---------- fiche d'une demande ---------- */
+let ZRF=null;
+function zrNew(d,z){const w=S.zrW;ZRF={z:z||'R276',d:d||w,a:'09:00',b:'10:00',why:'',note:''};openSheet(zrFormHTML)}
+function zrEdit(id){const x=zrList().find(y=>y.id===id);if(!x)return;if(zrEd()&&x.st!=='ann'){ZRF=Object.assign({},x);openSheet(zrFormHTML)}else{S.zrSel=id;openSheet(zrViewHTML)}}
+function zrFormHTML(){const f=ZRF,w=S.zrW,days=[0,1,2,3,4,5,6].map(i=>pcAdd(w,i)),ag=(zrAg(w).ev||[]);
+ return `<div class="sh">${tile({i:'target',c1:'#2563eb',c2:'#1e3a8a'},'lg')}<div class="t"><div class="q">${f.id?'Modifier la demande':'Nouvelle demande de zone'}</div><div class="small muted">${f.id?esc(zrStL(f))+(f.by?' · par '+esc(f.by):''):'Semaine du '+pcWkLabel(w)}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><label class="l">Zone</label><div class="chips zrzc">${ZR_Z.map(([k,l,c])=>`<button aria-pressed="${f.z===k}" style="--c:${c}" onclick="ZRF.z='${k}';$('sheet').innerHTML=zrFormHTML()"><b>${k}</b><small>${l}</small></button>`).join('')}</div>
+ <p class="small muted" style="margin:6px 0 0">${f.z==='R276'?'Part vers l\'OPS BOB de la BA 701, qui valide.':'Demande à faire comme d\'habitude ('+(f.z==='R55'?'Orange':'Istres')+') ; vous notez ici « obtenue ».'}</p>
+ <label class="l">Jour</label><select class="in" onchange="ZRF.d=this.value">${days.map(d=>`<option value="${d}" ${d===f.d?'selected':''}>${fmtD(d)}</option>`).join('')}</select>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="l">De</label><input class="in" type="time" step="300" value="${f.a}" onchange="ZRF.a=this.value"></div><div><label class="l">À</label><input class="in" type="time" step="300" value="${f.b}" onchange="ZRF.b=this.value"></div></div>
+ <label class="l">Vol <span style="font-weight:500">(facultatif)</span></label><input class="in" maxlength="80" value="${esc(f.why||'')}" placeholder="Ex. : 8 FUS + 100, 4 N1…" oninput="ZRF.why=this.value" list="zr-why"><datalist id="zr-why">${ag.map(e=>`<option value="${esc(e.title)}">`).join('')}</datalist>
+ <label class="l">Remarque <span style="font-weight:500">(facultatif)</span></label><input class="in" maxlength="300" value="${esc(f.note||'')}" placeholder="Ex. : partie basse seulement" oninput="ZRF.note=this.value">
+ ${f.stNote?`<p class="small" style="margin-top:10px"><b>${f.st==='ko'?'Motif du refus':'Remarque'} :</b> ${esc(f.stNote)}${f.stBy?' · '+esc(f.stBy):''}</p>`:''}
+ ${f.id&&f.st!=='bro'&&f.z==='R276'?'<p class="hint">Changer le jour, les heures ou la zone renvoie la demande à l\'OPS BOB pour revalidation.</p>':''}
+ ${f.id&&f.z!=='R276'&&f.st!=='bro'?`<label class="l">${f.z} obtenue ?</label><div class="chips">${[['dem','En attente'],['ok','Obtenue'],['ko','Refusée']].map(([k,l])=>`<button aria-pressed="${f.st===k}" onclick="zrSet('${f.id}','${k}')">${l}</button>`).join('')}</div>`:''}
+ ${f.id&&f.z==='R276'&&isChef()&&f.st!=='bro'?`<label class="l">Réponse de l'OPS BOB <span style="font-weight:500">(si reçue par téléphone)</span></label><div class="chips">${[['dem','En attente'],['ok','Validée'],['ko','Refusée']].map(([k,l])=>`<button aria-pressed="${f.st===k}" onclick="zrSet('${f.id}','${k}')">${l}</button>`).join('')}</div>`:''}
+ </div><div class="sf">${f.id?`<button class="btn" onclick="zrDel()">${ic('trash',15)} ${f.z==='R276'&&['dem','ok'].includes(f.st)?'Annuler la demande':'Supprimer'}</button>`:'<span></span>'}<button class="btn pri" onclick="zrSave()">${ic('check',16)} Enregistrer</button></div>`}
+async function zrSave(){const f=ZRF;if(!f.a||!f.b||f.a>=f.b){toast('L\'heure de fin doit être après l\'heure de début');return}
+ const ok=await zrPut({id:f.id,z:f.z,d:f.d,a:f.a,b:f.b,why:(f.why||'').trim(),note:(f.note||'').trim()});if(ok!==false){closeSheet();if(!f.id&&f.z==='R276')toast('Demande ajoutée : envoyez-la à l\'OPS BOB quand vos besoins de la semaine sont prêts')}}
+async function zrDel(){const f=ZRF;const ok=await zrPut({id:f.id},1);if(ok!==false){closeSheet();toast(f.z==='R276'&&['dem','ok'].includes(f.st)?'Demande annulée : l\'OPS BOB est prévenu':'Demande supprimée')}}
+/* lecture seule, et réponse de l'OPS BOB */
+function zrViewHTML(){const x=zrList().find(y=>y.id===S.zrSel);if(!x)return '<div class="sb">Demande introuvable.</div>';const bob=isBob()&&x.z==='R276'&&x.st!=='ann';
+ return `<div class="sh">${tile({i:'target',c1:ZR_Z.find(z=>z[0]===x.z)[2],c2:'#1e293b'},'lg')}<div class="t"><div class="q">${x.z} · ${fmtD(x.d)}</div><div class="small muted">${zrHh(x.a)} – ${zrHh(x.b)}${x.why?' · '+esc(x.why):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><p><span class="zrst" style="--c:${(ZR_ST[x.st]||ZR_ST.dem)[1]}">${zrStL(x)}</span>${x.stBy&&x.st!=='dem'?` <span class="small muted">par ${esc(x.stBy)}${x.stT?' le '+new Date(x.stT).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):''}</span>`:''}</p>
+ ${x.note?`<p><b>Remarque :</b> ${esc(x.note)}</p>`:''}${x.stNote?`<p><b>${x.st==='ko'?'Motif du refus':'Remarque'} :</b> ${esc(x.stNote)}</p>`:''}<p class="small muted">Demandée par ${esc(x.by||'la Patrouille')}${x.sentT?' · envoyée le '+new Date(x.sentT).toLocaleDateString('fr-FR',{day:'numeric',month:'short'}):''}</p>
+ ${bob?`<label class="l" for="zr-note">Remarque ou motif <span style="font-weight:500">(facultatif)</span></label><input class="in" id="zr-note" maxlength="300" value="${esc(x.stNote||'')}" placeholder="Ex. : possible jusqu'à 11h seulement">`:''}</div>
+ <div class="sf">${bob?`<button class="btn" style="color:var(--bad)" onclick="zrSet('${x.id}','ko',$('zr-note').value)">${ic('x',16)} Refuser</button><button class="btn pri" onclick="zrSet('${x.id}','ok',$('zr-note').value)">${ic('check',16)} Valider</button>`:`<span></span><button class="btn" onclick="closeSheet()">Fermer</button>`}</div>`}
+function zrPlHTML(){const e=S.zrPl;return `<div class="sh">${tile({i:'cal',c1:'#3b82f6',c2:'#1e3a8a'},'lg')}<div class="t"><div class="q">${esc(e.title)}</div><div class="small muted">${fmtD(pcAdd(S.zrW,e.d))} · ${zrHh(e.time)}${e.end?' – '+zrHh(e.end):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><p>Plaquette de l'agenda : ${e.z.join(', ')} ${e.z.length>1?'sont':'est'} déjà accordée${e.z.length>1?'s':''} pour ce vol. Rien à demander.</p></div><div class="sf"><span></span><button class="btn" onclick="closeSheet()">Fermer</button></div>`}
+/* ---------- écran ---------- */
+function zrGoWk(n){S.zrW=pcAdd(S.zrW,7*n);render()}
+function vZr(tabs){if(!S.zrW)S.zrW=pcCurWk();const w=S.zrW,ed=zrEd(),bob=isBob(),ag=zrAg(w),days=[0,1,2,3,4];
+ const inW=x=>x.d>=w&&x.d<=pcAdd(w,6);
+ const L=zrList().filter(x=>inW(x)&&(!bob||x.st!=='bro')).sort((a,b)=>(a.d+a.a).localeCompare(b.d+b.a));
+ const draft=zrList().filter(x=>x.z==='R276'&&x.st==='bro'),todo=zrList().filter(x=>x.z==='R276'&&x.st==='dem'&&x.d>=iso(new Date())).sort((a,b)=>(a.d+a.a).localeCompare(b.d+b.a));
+ const rel=pcWkRel(w);
+ const nav=`<div class="pcnav"><button class="ib" onclick="zrGoWk(-1)" aria-label="Semaine précédente" style="transform:rotate(90deg)">${ic('chev',18)}</button><div><b>Semaine du ${pcWkLabel(w)}</b>${rel?`<small>${rel}</small>`:''}</div><button class="ib" onclick="zrGoWk(1)" aria-label="Semaine suivante" style="transform:rotate(-90deg)">${ic('chev',18)}</button></div>`;
+ const hours=[];for(let h=ZR_H0;h<=ZR_H1;h+=2)hours.push(h);
+ const blk=(x,day)=>{const c=x.pl?ZR_ST.pl[1]:(ZR_ST[x.st]||ZR_ST.dem)[1],a=x.pl?x.time:x.a,b=x.pl?(x.end||(()=>{const m=zrMin(x.time)+60;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')})()):x.b,l=zrPct(a),r=zrPct(b);
+  return `<button class="zrb ${x.pl?'pl':x.st}" style="left:${l}%;width:${Math.max(2.5,r-l)}%;--c:${c}" title="${esc((x.pl?'Plaquette · '+x.title:x.z+' · '+zrStL(x)+(x.why?' · '+x.why:''))+' · '+zrHh(a)+'–'+zrHh(b))}" onclick="${x.pl?`S.zrPl=${esc(JSON.stringify(x))};openSheet(zrPlHTML)`:`zrEdit('${x.id}')`}"><span>${zrHh(a)}–${zrHh(b)}</span></button>`};
+ const grid=`<div class="zrg"><div class="zrh"><span></span><div class="zrax">${hours.map(h=>`<i style="left:${zrPct(String(h).padStart(2,'0')+':00')}%">${h}h</i>`).join('')}</div></div>
+  ${days.map(i=>{const d=pcAdd(w,i),P=(ag.ev||[]).filter(e=>e.d===i);return `<div class="zrd ${d===iso(new Date())?'today':''}"><div class="zrdl"><b>${PC_JS[i]} ${pcDay(w,i)}</b>${ed?`<button class="more" onclick="zrNew('${d}')" aria-label="Ajouter une demande le ${fmtD(d)}">${ic('plus',13)}</button>`:''}</div>
+   ${ZR_Z.map(([z,zl,zc])=>`<div class="zrl"><span class="zrz" style="--c:${zc}" title="${zl}">${z}</span><div class="zrt">${hours.map(h=>`<i style="left:${zrPct(String(h).padStart(2,'0')+':00')}%"></i>`).join('')}${P.filter(e=>e.z.includes(z)).map(e=>blk(Object.assign({pl:1},e),i)).join('')}${L.filter(x=>x.z===z&&x.d===d&&!(x.st==='ann'&&!bob)).map(x=>blk(x,i)).join('')}</div></div>`).join('')}</div>`}).join('')}</div>`;
+ const leg=`<div class="zrleg">${['pl','bro','dem','ok','ko'].filter(k=>!(bob&&k==='bro')).map(k=>`<span><i class="zrb ${k==='pl'?'pl':k}" style="--c:${ZR_ST[k][1]}"></i>${k==='ok'?'Validée / obtenue':ZR_ST[k][0]}</span>`).join('')}</div>`;
+ const row=x=>`<button class="zrr" onclick="zrEdit('${x.id}')"><span class="zrz" style="--c:${ZR_Z.find(z=>z[0]===x.z)[2]}">${x.z}</span><span class="zrrd"><b>${fmtD(x.d)} · ${zrHh(x.a)}–${zrHh(x.b)}</b><small>${esc(x.why||'')}${x.note?' · '+esc(x.note):''}${x.stNote?' · « '+esc(x.stNote)+' »':''}</small></span><span class="zrst" style="--c:${(ZR_ST[x.st]||ZR_ST.dem)[1]}">${zrStL(x)}</span></button>`;
+ const bobBox=bob?`<section class="dvbox pcbox"><div class="dvsec"><h3 class="pch">${ic('bell',18)} R276 à valider <span class="n">${todo.length}</span></h3>${todo.length?todo.map(x=>`<div class="zrv">${row(x)}<span class="zrvb"><button class="btn" onclick="S.zrSel='${x.id}';openSheet(zrViewHTML)">${ic('x',15)} Refuser</button><button class="btn pri" onclick="zrSet('${x.id}','ok')">${ic('check',15)} Valider</button></span></div>`).join(''):'<p class="small muted" style="margin:0">Aucune demande en attente.</p>'}</div></section>`:'';
+ const sendB=ed&&draft.length?`<div class="pfal" style="--c:#f59e0b">${tile({i:'send',c1:'#f59e0b',c2:'#c2410c'},'sm')}<div><b>${draft.length} demande${draft.length>1?'s':''} R276 en préparation</b><span>${draft.slice(0,4).map(x=>fmtD(x.d)+' '+zrHh(x.a)+'–'+zrHh(x.b)).join(' · ')}${draft.length>4?' …':''}</span></div><button class="btn pri" ${S.zrBusy?'disabled':''} onclick="zrSend()">${ic('send',15)} ${S.zrBusy?'Envoi…':'Envoyer à l\'OPS BOB'}</button></div>`:'';
+ const head=`${NOTE}<div class="head"><div><h1>Zones d'entraînement</h1><p class="muted">${bob?'Besoins de la Patrouille de France en R276. Validez ou refusez chaque créneau : la Patrouille est prévenue aussitôt.':'R276 Salon · R55 Orange (Plan de Dieu) · R31 Istres : besoins, validations de l\'OPS BOB et plaquettes de l\'agenda.'}</p></div>${ed?`<button class="btn pri" onclick="zrNew()">${ic('plus',16)} Demande</button>`:''}</div>${bob?'':tabs}`;
+ return `${head}${bobBox}${sendB}${nav}${ag.busy?'<p class="small muted">Lecture des plaquettes de l\'agenda…</p>':ag.err&&!bob?`<p class="small muted">Plaquettes non lues : ${esc(ag.err)}</p>`:''}${grid}${leg}
+  <section class="dvbox pcbox" style="margin-top:14px"><div class="dvsec"><h3 class="pch">${ic('file',18)} Demandes de la semaine <span class="n">${L.length}</span></h3>${L.length?L.map(row).join(''):`<p class="small muted" style="margin:0">Aucune demande cette semaine.${ed?' Touchez « + Demande » ou le + d\'un jour.':''}</p>`}</div></section>
+  ${bob?'':`<p class="hint">Plaquettes en bleu : vols de l'agenda qui citent la zone, déjà accordés. R276 : vos demandes partent ensemble vers l'OPS BOB avec « Envoyer à l'OPS BOB » ; il valide ou refuse, et vous êtes prévenus. R55 et R31 : demandez comme d'habitude, puis notez « obtenue » dans la demande.</p>`}`}
+
+function vPerfos(){const sub=isOsab()?'fea':isBob()?'zr':(S.pfTab||'home');
  if(isOsab())return vFea('');
+ if(isBob())return vZr('');
  if(sub==='home')return `${NOTE}<div class="head"><div><h1>Outils</h1><p class="muted">Des outils pour nous faciliter la vie. Touchez une icône.</p></div></div>
   <div class="pfhome">${PF_HOME.filter(k=>ROLE==='comm'?(k==='itw'||k==='cad'):pfVis(k)).map(pfTile).join('')}</div>`;
  if(PF_DIR[sub]){const D=PF_DIR[sub],up=pfParent(sub);return `${NOTE}<div class="head"><div><h1>${D[0]}</h1><p class="muted">${D[1]}</p></div></div><div class="pfbar"><button class="btn" onclick="S.pfTab='${up||'home'}';render();window.scrollTo(0,0)">${ic('back',16)} ${up?PF_DIR[up][0]:'Tous les outils'}</button></div>
@@ -2911,7 +3017,8 @@ function vPerfos(){const sub=isOsab()?'fea':(S.pfTab||'home');
  if(sub==='itw'){if(!itwCan()){S.pfTab='home';return vPerfos()}return vItw(tabs)}
  if(sub==='cad'){if(!cadCan()){S.pfTab='home';return vPerfos()}return vCad(tabs)}
  if(sub==='tcas'){if(!tcasCan()){S.pfTab='home';return vPerfos()}return vTcas(tabs)}
- if(sub==='coupe'){if(!coupeCan()){S.pfTab='home';return vPerfos()}return vCoupe(tabs)}
+ if(sub==='zr'){if(!zrCan()){S.pfTab='home';return vPerfos()}return vZr(tabs)}
+  if(sub==='coupe'){if(!coupeCan()){S.pfTab='home';return vPerfos()}return vCoupe(tabs)}
  if(sub==='meteo'){if(!mtCan()){S.pfTab='home';return vPerfos()}return vMeteo(tabs)}
  if(sub==='nav'){if(!navCan()){S.pfTab='home';return vPerfos()}return vNav(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
@@ -3402,7 +3509,7 @@ const pushOK=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notific
 const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
 const isOnline=()=>typeof api==='function'&&typeof K!=='undefined';
-const canBell=()=>isChef()||ROLE==='visit';
+const canBell=()=>isChef()||ROLE==='visit'||ROLE==='bob';
 function b64uToU8(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s);return Uint8Array.from(b,c=>c.charCodeAt(0))}
 let PST='off';
 async function pushState(){if(!pushOK())return 'nosupport';if(isIOS()&&!isStandalone())return 'install';if(Notification.permission==='denied')return 'denied';
@@ -3466,7 +3573,7 @@ async function pushDiag(){if(!isOnline()){toast('Disponible dans la version en l
  }catch(e){add(0,'Vérification interrompue',String(e&&e.message||e))}
  finally{S.pdg.busy=0;pdgR()}}
 /* Ouverture depuis une notification : ?go=fea, ?go=mails */
-function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='cad'||g==='itw'){S.pfTab=g;go('perfos')}else if(g==='retex'){const t=iso(new Date()),L=DB.meetings.filter(m=>{const d=rxLast(m);return d&&d<t&&daysTo(d)>=-14}).sort((a,b)=>String(rxLast(b)).localeCompare(rxLast(a)));if(L[0]){S.rub='retex';go('meeting',L[0].id)}else go('retex')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='mails'&&isChef())go('mails')}
+function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g)return;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='cad'||g==='itw'){S.pfTab=g;go('perfos')}else if(g==='retex'){const t=iso(new Date()),L=DB.meetings.filter(m=>{const d=rxLast(m);return d&&d<t&&daysTo(d)>=-14}).sort((a,b)=>String(rxLast(b)).localeCompare(rxLast(a)));if(L[0]){S.rub='retex';go('meeting',L[0].id)}else go('retex')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='zr'){S.pfTab='zr';go('perfos')}else if(g==='mails'&&isChef())go('mails')}
 if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.go)deepLink(e.data.go)});
 
 /* ====================== Centrage Cirrus SR20 / SR22 ====================== */
@@ -5274,6 +5381,7 @@ function pfArt(k){
   <path d="M60 50 V74 M50 62 H70 M55 71 H65" stroke="#49c6ff" stroke-width="4" stroke-linecap="round"/><circle cx="84" cy="40" r="7" fill="#ffb000"/><rect x="30" y="76" width="12" height="12" fill="#ff2a2a"/><path d="M60 22 L60 30" stroke="#49c6ff" stroke-width="3"/></svg>`;
  if(k==='pcf')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#0ea5e9','#1e3a8a','g_pcf')}
   <path d="M18 40h34l8 8h42v48H18z" fill="#fbbf24"/><path d="M18 52h84v44H18z" fill="#fcd34d"/><path d="M40 82l16-6 8-16 4 2-4 14 14-4 2 4-30 12z" fill="#1e3a8a"/><circle cx="84" cy="68" r="7" fill="#fff" stroke="#dc2626" stroke-width="3"/></svg>`;
+ if(k==='zr')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#60a5fa','#1e3a8a','g_zr')}<rect x="16" y="24" width="88" height="76" rx="10" fill="#fff" opacity=".95"/><path d="M16 42h88" stroke="#1e3a8a" stroke-width="4"/><rect x="26" y="52" width="34" height="12" rx="4" fill="#16a34a"/><rect x="52" y="70" width="40" height="12" rx="4" fill="#f59e0b"/><rect x="30" y="86" width="26" height="8" rx="3" fill="#3b82f6"/><path d="M36 18v12M84 18v12" stroke="#fff" stroke-width="6" stroke-linecap="round"/><text x="60" y="38" text-anchor="middle" font-size="13" font-weight="800" fill="#1e3a8a" font-family="system-ui">R276</text></svg>`;
  if(k==='coupe')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#7dd3fc','#0369a1','g_cp')}
   <path d="M14 98 L40 88 L66 92 L106 84 V106 H14z" fill="#a3a17a"/><g fill="#fff"><circle cx="44" cy="46" r="12"/><circle cx="58" cy="40" r="15"/><circle cx="72" cy="48" r="11"/><rect x="34" y="46" width="48" height="12" rx="6"/></g><path d="M44 62l-4 14M56 62l-4 14M68 62l-4 14" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/><path d="M18 30 L32 26 M88 74 h12" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M18 72 L100 64" stroke="#ff3fd2" stroke-width="4" stroke-dasharray="7 5"/></svg>`;
  if(k==='meteo')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#38bdf8','#1e3a8a','g_mt')}
@@ -5301,16 +5409,17 @@ function pfArt(k){
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
 const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pcf:['Point central','Points centraux · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','nav','meteo','coupe','cirrus']]};
-const TOOLS_A=[['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
+const TOOLS_A=[['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
-function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;
- switch(k){case 'pc':case 'nav':return pc;case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;default:return true}}
-const pfVis=k=>!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan());
+function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
+ switch(k){case 'pc':case 'nav':return pc;case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
+const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
+const pfVis=k=>isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan());
 const pfTile=k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k),n=D?D[2].filter(pfVis).length:0;return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfUp=S.pfTab||'home';S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${n} outils</small>`:''}</button>`};
-const PF_HOME=['meteo','alpha','pcf','fea','ex','rg','tcas','itw','cad'];
+const PF_HOME=['meteo','zr','alpha','pcf','fea','ex','rg','tcas','itw','cad'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
+const PF_TOOLS=[['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -5475,7 +5584,7 @@ function vUnite(){
 }
 /* Accès PAF OPS des membres de l'unité : reliés par l'adresse email (un accès déjà envoyé est reconnu, rien n'est renvoyé) */
 const U_ROLES=['visit','sec','cst','dt','comm'];   // le DMMA s'invite depuis la page de son meeting
-const U_DEF={PILOTES:'visit',DIR:'visit',SEC:'sec',DT:'dt',CST:'cst'};
+const U_DEF={PILOTES:'visit',DIR:'visit',SEC:'sec',MOPS:'visit',DT:'dt',CST:'cst'};
 const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
 const memOf=mail=>mail?DB.members.find(x=>lc(x.mail)===lc(mail)):null;
@@ -5583,7 +5692,7 @@ function vAccesInv(){
  const lk=location.origin+location.pathname+'?k=ro:'+DB.ro.code;
  const nh=DB.access.filter(a=>a.hold).length;
  return `<section class="acard"><div class="ah"><h2>${ic('shield',20)} Patrouille de France</h2></div>${ROLES.filter(r=>r.side==='paf').map(r=>row(r)).join('')}</section>
- <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF, DMMA et OSAB</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. L'OSAB (officier sécurité aérienne base) ne voit que les FEA que vous lui avez transmises. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
+ <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF, DMMA, OSAB et OPS BOB</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. L'OSAB (officier sécurité aérienne base) ne voit que les FEA que vous lui avez transmises. L'OPS BOB (BA 701) ne voit que le planning des zones et valide la R276. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('flag',20)} Côté meeting</h2>${ms.length>1?`<select class="in" style="width:auto;padding:9px 12px;font-size:14px" id="a-meet" onchange="S.am=this.value;render()">${ms.map(m=>`<option value="${m.id}" ${m.id===S.am?'selected':''}>${esc(mName(m))}</option>`).join('')}</select>`:pm?`<span class="small muted">${esc(mName(pm))}</span>`:''}</div>
   ${pm?ROLES.filter(r=>r.side==='meet').map(r=>row(r,pm.id)).join(''):'<p class="small muted" style="padding:0 16px 12px">Créez d\'abord un meeting.</p>'}</section>
  <section class="acard"><div class="ah"><h2>${ic('hand',20)} Lien public : volontaires</h2>${ed?`<button class="switch" role="switch" aria-checked="${DB.ro.on}" aria-label="Activer le lien en lecture seule" onclick="DB.ro.on=!DB.ro.on;save();render();toast(DB.ro.on?'Lien en lecture seule activé':'Lien en lecture seule désactivé')"></button>`:''}</div>
@@ -5630,7 +5739,7 @@ const AR_L={e:'Modifier',r:'Lecture',n:'—'};
 function people(){const P={};(DB.access||[]).filter(a=>a.role!=='ro').forEach(a=>{const k=lc(a.mail)||a.id;(P[k]=P[k]||{k,mail:a.mail||'',name:'',L:[]}).L.push(a);if(a.name&&!P[k].name)P[k].name=a.name});
  return Object.values(P).map(p=>{const m=memOf(p.mail);p.mem=m;p.label=m?memLabel(m):(p.name||p.mail);p.fonc=m?((FUm[m.fn]||{}).d||m.fn)+(m.role?' · '+m.role:''):'';p.main=p.L.find(a=>a.role==='chef')||p.L.find(a=>!a.mid)||p.L[0];p.rx=p.L.some(a=>(a.rx&&Object.keys(a.rx).length)||(a.tools&&Object.keys(a.tools).length));p.hold=p.L.some(a=>a.hold);
   const sd=p.main.role==='chef'?0:RLm[p.main.role]&&RLm[p.main.role].side==='paf'?1:p.main.role==='visit'?2:ACC_FAM(p.main.role)==='meet'?4:3;p.ord=sd;return p}).sort((a,b)=>a.ord-b.ord||a.label.localeCompare(b.label))}
-const ACC_F=[['all','Tous'],['paf','Patrouille'],['visit','Pilotes PAF'],['dmma','DMMA'],['osab','OSAB'],['org','Organisateurs'],['dv','DV'],['rx','Droits spécifiques'],['hold','À envoyer']];
+const ACC_F=[['all','Tous'],['paf','Patrouille'],['visit','Pilotes PAF'],['dmma','DMMA'],['osab','OSAB'],['bob','OPS BOB'],['org','Organisateurs'],['dv','DV'],['rx','Droits spécifiques'],['hold','À envoyer']];
 function accMatch(p,f){if(f==='all')return true;if(f==='rx')return p.rx;if(f==='hold')return p.hold;if(f==='paf')return p.L.some(a=>RLm[a.role]&&RLm[a.role].side==='paf');return p.L.some(a=>a.role===f)}
 function plaq(p){const roles=[...new Set(p.L.map(a=>a.role))],M=p.L.filter(a=>a.mid).map(a=>({m:DB.meetings.find(x=>x.id===a.mid),r:a.role})).filter(x=>x.m),last=Math.max(0,...p.L.map(a=>a.resend||a.at||a.sent||0));
  return `<button class="plq" onclick="personSheet('${esc(p.k)}')">${tile(RLm[p.main.role]||{},'sm')}<span class="plqt"><b>${esc(p.label)}</b><small>${esc(p.mail)}</small>${p.fonc?`<small>${esc(p.fonc)}</small>`:''}
@@ -5653,10 +5762,11 @@ const ROLE_D={chef:'Vous : tous les droits, toujours. Seul à régler les droits
  comm:'Communication : voit les meetings et leur partie communication ; tient les Interviews, les Cadres et le dossier de presse.',
  visit:'Pilotes et direction de la Patrouille : consultent les meetings, déclarent leurs FEA, donnent leurs dispos PC, écrivent le RETEX. Leurs outils dépendent de leur poste (voir Outils et Règles particulières).',
  dmma:'DMMA : consultation seule, aucun outil. Invitée pour un meeting, elle ne voit que ce meeting.',
+ bob:'OPS BOB de la BA 701 : ne voit que l\'outil Zones (besoins de la Patrouille en R276, R55, R31 et plaquettes qui citent une zone) ; valide ou refuse la R276. Rien d\'autre.',
  osab:'OSAB : ne voit que les FEA que vous avez cochées « Transmise à l\'OSAB » (avec leurs photos), en lecture. Rien d\'autre : ni meetings, ni Annuaire, ni outils.',
  org:'Organisateur d\'un meeting : ne voit que son ou ses meetings. Jamais l\'Annuaire complet, le RETEX, les FEA, les PC ni les outils.',
  dv:'Directeur des vols d\'un meeting : ne voit que son ou ses meetings et remplit la partie aéronautique. Jamais le RETEX, les FEA, les PC ni les outils.'};
-const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
+const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',zr:'les marqueuses ops et les Athos 5, 15 et 16 (l\'OPS BOB voit et valide la R276)',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
 const toolTip=k=>{const t=PF_TOOLS.find(x=>x[0]===k);return (t?t[1]+' : '+t[2]:k)+'. Par défaut : '+TOOL_W(k)+' (et vous).'};
 const athW=n=>{const x=(DB.members||[]).find(y=>y.fn==='PILOTES'&&athN(y)===n);return x?memLabel(x):'personne dans l\'Unité pour l\'instant'};
 const ridesc=(r,d)=>'· '+r.l+' : '+(LV_D[d]||'');
@@ -5672,6 +5782,7 @@ function accRules(){const L=x=>x.length?x.join(', '):'personne',M=DB.members||[]
  {i:'mic',t:'Interviews',d:()=>`La comm et les Athos 7 et 8 saisissent les interviews ; seule la comm joint les pièces. Pilotes et direction les lisent.`,who:'Athos 7 : '+athW(7)+' · Athos 8 : '+athW(8)},
  {i:'file',t:'Dossier de presse',d:()=>`Seule la comm (et vous) le dépose.`,who:'Comm : '+L(comm)},
  {i:'users',t:'Points centraux',d:()=>`Les membres cochés « PC » dans l'Unité donnent leurs dispos. Vous seul proposez, validez et changez la répartition ; la plaquette de l'agenda suit. En option, jamais proposés ni relancés, ajoutés à la main par vous et considérés comme disponibles : ${L(opt)}.`,who:pcs+' PC cochés dans l\'Unité'},
+ {i:'target',t:'Zones d\'entraînement',d:()=>`Vous, les marqueuses ops et les Athos 5, 15 et 16 exprimez les besoins. La R276 part vers l'OPS BOB (BA 701), qui valide ou refuse ; la R55 et la R31 se demandent comme d'habitude et se notent « obtenues ». Les plaquettes qui citent une zone sont déjà accordées.`,who:'Marqueuses ops : '+L(M.filter(x=>x.fn==='MOPS').map(memLabel))+' · OPS BOB : '+L((DB.access||[]).filter(a=>a.role==='bob').map(a=>a.name||a.mail))},
  {i:'alert',t:'FEA',d:()=>`Une FEA part au chef ops (email et notification). Vous seul la transmettez à l'OSAB, qui ne voit que celles-là.`},
  {i:'lock',t:'Réservé au chef ops',d:()=>`Droits par groupe, droits à part, outils, règles particulières, « Prévenir tout le monde », nouveau lien. Personne ne peut devenir chef ops ni se donner des droits, même en bricolant l'application : le serveur le refuse.`}]}
 function vAccRules(){const ed=isChef();
@@ -5680,6 +5791,7 @@ function vAccRules(){const ed=isChef();
 /* Ce qu'une personne voit vraiment : groupe + droits à part + outils + règles de son poste */
 function accSum(p){const gr=p.main.role,x=p.mem,n=x&&x.fn==='PILOTES'?athN(x):0,rx=Object.assign({},...p.L.map(a=>a.rx||{})),T=Object.assign({},...p.L.map(a=>a.tools||{}));
  if(gr==='chef')return ['Tout, toujours.'];
+ if(gr==='bob')return ['Uniquement l\'outil Zones : les besoins de la Patrouille (R276, R55, R31) et les plaquettes qui citent une zone.','Il valide ou refuse les demandes R276 ; il reçoit un email à chaque envoi.','Rien d\'autre : ni meetings, ni Annuaire, ni RETEX, ni autres outils.'];
  if(gr==='osab')return ['Uniquement les FEA que vous avez cochées « Transmise à l\'OSAB », avec leurs photos, en lecture.','Rien d\'autre : ni meetings, ni Annuaire, ni outils, ni RETEX.'];
  const out=[],M=p.L.filter(a=>a.mid).map(a=>DB.meetings.find(m=>m.id===a.mid)).filter(Boolean);
  out.push(ACC_FAM(gr)&&M.length?'Meetings : seulement '+M.map(mName).join(', ')+'.':'Meetings : tous.');
@@ -5698,7 +5810,7 @@ function vAcces(){const ed=canEdit('acces'),t=S.acT||'pers',P=people(),nh=DB.acc
  <div class="seg acseg" role="tablist">${[['pers','users','Personnes',P.length],['grp','gear','Droits par groupe',''],['tool','grid','Outils',''],['rule','book','Règles particulières',''],['inv','send','Inviter','']].map(([k,i,l,n])=>`<button role="tab" aria-pressed="${t===k}" onclick="S.acT='${k}';render()">${ic(i,16)} ${l}${n!==''?` <span class="n">${n}</span>`:''}</button>`).join('')}</div>`;
  if(t==='inv')return head+vAccesInv();
  if(t==='rule')return head+vAccRules();
- if(t==='tool'){const L=P.filter(p=>!ACC_FAM(p.main.role)&&p.main.role!=='osab');
+ if(t==='tool'){const L=P.filter(p=>!ACC_FAM(p.main.role)&&p.main.role!=='osab'&&p.main.role!=='bob');
   return head+`<div class="legend" style="margin:4px 0 10px"><span class="tk on">✓</span> a l'outil <span class="tk off">—</span> ne l'a pas <span class="tk on tko">✓</span><span class="tk off tko">✕</span> réglé pour lui ${isChef()?'<span>· Touchez une case : donner → retirer → revenir à la règle habituelle.</span>':''}</div>
   <div class="matrix tmx"><table><thead><tr><th>Personne</th>${TOOLS_A.map(([k,l])=>`<th title="${esc(toolTip(k))}">${l}</th>`).join('')}</tr></thead><tbody>${L.map(p=>{const T=Object.assign({},...p.L.map(a=>a.tools||{}));return `<tr><td><button class="more tmn" onclick="personSheet('${esc(p.k)}')">${esc(p.label)}</button><small class="muted">${esc((RLm[p.main.role]||{}).l||'')}</small></td>${TOOLS_A.map(([k,l])=>{const o=T[k]===1||T[k]===0?T[k]:null,v=o!=null?!!o:toolDef(p.main.role,p.mem,k),lk=!isChef()||p.main.role==='chef';return `<td><button class="tk ${v?'on':'off'} ${o!=null?'tko':''}" title="${esc(p.label)} · ${l} : ${v?'oui':'non'}${o!=null?' (réglé pour lui)':' (règle habituelle)'}" ${lk?'disabled':''} onclick="psTool('${esc(p.k)}','${k}')" aria-label="${esc(p.label)} · ${l} : ${v?'oui':'non'}">${v?'✓':o===0?'✕':'—'}</button></td>`}).join('')}</tr>`}).join('')}</tbody></table></div>
   <p class="hint">Règle habituelle : les pilotes et la direction ont Météo, TCAS, Coupe et les perfos ; les points centraux ont PC et NAV ; l'Athos ${exN()} l'Instruction ; les Athos ${rgN()}, 1 et 5 l'Espacement ; la comm les Interviews et les Cadres. Un outil donné à quelqu'un d'autre qu'un pilote s'ouvre en lecture.</p>
@@ -5722,15 +5834,15 @@ function psHTML(){const p=psP();if(!p){setTimeout(closeSheet,10);return ''}const
  return `<div class="sh">${tile(RLm[gr]||{},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Accès de</div><div class="q" style="margin-top:2px">${esc(p.label)}</div><div class="small muted">${esc(p.mail)}${p.fonc?' · '+esc(p.fonc):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb">
  <div class="accsum"><b>${ic('eye',16)} Ce qu'il voit aujourd'hui</b><ul>${accSum(p).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>${ROLE_D[gr]&&gr!=='osab'?`<small class="muted">${esc(ROLE_D[gr])}</small>`:''}</div>
- ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab'].map(k=>RLm[k]).map(r=>`<button class="pk" title="${esc(ROLE_D[r.k]||'')}" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
+ ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab','bob'].map(k=>RLm[k]).map(r=>`<button class="pk" title="${esc(ROLE_D[r.k]||'')}" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
  ${M.length||(!G.length&&!chef)||ACC_FAM(gr)?`<label class="l">Meetings dont il a la charge · un seul lien pour tous</label><div class="psm">${M.map(a=>{const m=DB.meetings.find(x=>x.id===a.mid);return `<div class="psmr">${ic('flag',15)}<b>${m?esc(mName(m)):'Meeting supprimé'}</b><span class="small muted">${m&&firstDemo(m)?fmtD(firstDemo(m)):''}</span>
    <select class="in" ${ed&&a.role!=='dmma'?'':'disabled'} onchange="psMRole('${a.id}',this.value)">${(a.role==='dmma'?['dmma']:['org','dv']).map(r=>`<option value="${r}" ${a.role===r?'selected':''}>${RLm[r].l}</option>`).join('')}</select>${ed?`<button class="ib" onclick="psMDel('${a.id}')" aria-label="Retirer ce meeting">${ic('x',15)}</button>`:''}</div>`}).join('')}
    ${ed&&meetOpts.length&&p.mail?`<div class="psmr add">${ic('plus',15)}<select class="in" id="ps-m">${meetOpts.map(m=>`<option value="${m.id}">${esc(mName(m))}${firstDemo(m)?' · '+fmtD(firstDemo(m)):''}</option>`).join('')}</select><select class="in" id="ps-r">${(gr==='dmma'?['dmma']:['org','dv','dmma']).map(r=>`<option value="${r}" ${r===(ACC_FAM(gr)==='meet'?gr:'org')?'selected':''}>${RLm[r].l}</option>`).join('')}</select><button class="btn" onclick="psMAdd()">Ajouter</button></div>`:''}</div>
    <div class="hint">Il garde le même lien : il voit tous ces meetings, et seulement eux. Pour un meeting ajouté, il reçoit un email (relu avant l'envoi).</div>`:''}
- ${chef||gr==='osab'?'':`<label class="l">Ce qu'il peut faire</label><div class="hint" style="margin-top:0">Par défaut, les droits de son groupe. Choisissez autre chose pour lui seul.</div>
+ ${chef||gr==='osab'||gr==='bob'?'':`<label class="l">Ce qu'il peut faire</label><div class="hint" style="margin-top:0">Par défaut, les droits de son groupe. Choisissez autre chose pour lui seul.</div>
  <div class="psr">${AREAS.filter(a=>!a.soon).map(a=>{const d=right(a.k,gr),v=rx[a.k]||'';return `<div class="psrr"><span title="${esc(AREA_D[a.k]||'')}">${a.l}</span><div class="seg sm">${[['','Groupe ('+AR_L[d]+')'],['e','Modifier'],['r','Lecture'],['n','Aucun']].map(([k,l])=>`<button aria-pressed="${v===k}" class="${k?'k'+k:''}" ${ed&&!(a.k==='acces'&&(RLm[gr]||{}).side!=='paf'&&k==='e')?`onclick="psRx('${a.k}','${k}')"`:'disabled'}>${l}</button>`).join('')}</div></div>`}).join('')}</div>
  ${Object.keys(rx).length&&ed?`<button class="more" onclick="psRx('*','')">Revenir aux droits du groupe</button>`:''}`}
- ${chef||ACC_FAM(gr)||gr==='osab'?'':`<label class="l">Ses outils</label><div class="psto">${(()=>{const T=Object.assign({},...p.L.map(a=>a.tools||{}));return TOOLS_A.map(([k,l])=>{const o=T[k]===1||T[k]===0?T[k]:null,v=o!=null?!!o:toolDef(gr,p.mem,k);return `<button class="pst ${v?'on':''} ${o!=null?'tko':''}" title="${esc(toolTip(k))}" ${ed?`onclick="psTool('${esc(p.k)}','${k}')"`:'disabled'}>${v?'✓':'—'} ${l}${o!=null?' <small>(pour lui)</small>':''}</button>`}).join('')})()}</div><div class="hint">Touchez un outil : donner → retirer → revenir à la règle habituelle.</div>`}
+ ${chef||ACC_FAM(gr)||gr==='osab'||gr==='bob'?'':`<label class="l">Ses outils</label><div class="psto">${(()=>{const T=Object.assign({},...p.L.map(a=>a.tools||{}));return TOOLS_A.map(([k,l])=>{const o=T[k]===1||T[k]===0?T[k]:null,v=o!=null?!!o:toolDef(gr,p.mem,k);return `<button class="pst ${v?'on':''} ${o!=null?'tko':''}" title="${esc(toolTip(k))}" ${ed?`onclick="psTool('${esc(p.k)}','${k}')"`:'disabled'}>${v?'✓':'—'} ${l}${o!=null?' <small>(pour lui)</small>':''}</button>`}).join('')})()}</div><div class="hint">Touchez un outil : donner → retirer → revenir à la règle habituelle.</div>`}
  ${chef?'':`<div class="lostbox"><b>Son lien</b><span class="small muted">${p.hold?'Pas encore envoyé.':'Envoyé le '+new Date(Math.max(0,...p.L.map(a=>a.resend||a.at||a.sent||0))||Date.now()).toLocaleDateString('fr-FR')+'.'} Un seul lien pour tous ses accès de meeting.</span>
   ${ed?`<div class="lostb">${p.hold?`<button class="btn pri" onclick="closeSheet();invQueue()">${ic('send',14)} Relire et envoyer</button>`:`<button class="btn" onclick="accResend('${p.main.id}')">${ic('send',14)} Renvoyer son lien</button><button class="btn" onclick="accResend('${p.main.id}',1)">${ic('lock',14)} Nouveau lien</button>`}<button class="btn" onclick="closeSheet();accSheet('${p.main.id}')">${ic('edit',14)} Nom, email</button></div>`:''}</div>`}
  ${ed&&!chef?`<div class="confirm" style="margin-top:14px"><span class="small">Plus concerné ?</span><button class="btn" onclick="if(confirm('Retirer tous ses accès ? Son lien cessera de fonctionner.')){psDelAll()}">${ic('trash',14)} Retirer tous ses accès</button></div>`:''}
