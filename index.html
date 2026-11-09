@@ -1288,7 +1288,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794242326';
+const APP_V='1794242542';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -2911,7 +2911,8 @@ const lerp=(xs,ys,x)=>{if(x<=xs[0])return ys[0];if(x>=xs[xs.length-1])return ys[
 function pfIndex(C,P,T){const rows=C.idxP.map((p,i)=>[p,lerp(C.idxT,C.idx[i],T)]);const ps=rows.map(r=>r[0]).slice().reverse(),vs=rows.map(r=>r[1]).slice().reverse();return Math.min(12,Math.max(1,Math.round(lerp(ps,vs,P))))}
 const PFK=localStorage?KEY+':perf':null;
 function pfIn(){if(!S.pf){let o=null;try{o=JSON.parse(localStorage.getItem(PFK)||'null')}catch(e){}S.pf=Object.assign({cfg:'N1',L:2400,wind:0,T:15,mode:'qfe',qfe:1013,qnh:1013,alt:0,wet:'seche',ab:false,wm:false,wd:0,wsp:0,wg:0,cap:0},o||{})}return S.pf}
-function pfSetW(k,v){const o=pfIn();o[k]=v;try{localStorage.setItem(PFK,JSON.stringify(o))}catch(e){}pfApply(1)}
+function pfSetW(k,v){const o=pfIn();if(k==='wd'||k==='cap')v=((Math.round(+v||0)%360)+360)%360;   // 0° (nord) à 359°, 350 + 10 = 0, 0 − 10 = 350
+ o[k]=v;try{localStorage.setItem(PFK,JSON.stringify(o))}catch(e){}pfApply(1)}
 function pfSet(k,v){const o=pfIn();o[k]=v;try{localStorage.setItem(PFK,JSON.stringify(o))}catch(e){}render()}
 function pfCalc(Lx){const C=pfCfg(),o=pfIn();
  const qfe=o.mode==='qnh'?Math.round((+o.qnh||1013)-(+o.alt||0)/27.3):(+o.qfe||1013);
@@ -3231,8 +3232,8 @@ function vPerfTO(tabs){const C=pfCfg(),o=pfIn(),x=pfCalc();
    ${num('L','Longueur de piste','m',100,500,5000)}
    ${(()=>{const X=pfXw(),nw=(k,lab,unit,step,min,max)=>num(k,lab,unit,step,min,max).replace(/pfSet\(/g,'pfSetW(');
     return `<label class="l">Vent</label><div class="chips" style="margin-bottom:6px"><button aria-pressed="${!o.wm}" onclick="pfSetW('wm',false)">Prévision (modèle)</button><button aria-pressed="${!!o.wm}" onclick="pfSetW('wm',true)">Saisi à la main</button></div>
-    ${o.wm?nw('wd','Direction du vent','°',10,0,360)+nw('wsp','Force','kt',1,0,80)+nw('wg','Rafales (0 si aucune)','kt',1,0,90):''}
-    ${X&&X.cap==null||(!X&&o.wm)?nw('cap','QFU de la piste (pas de terrain choisi)','°',10,0,360):''}
+    ${o.wm?nw('wd','Direction du vent (0 à 359°)','°',10,0,359)+nw('wsp','Force','kt',1,0,80)+nw('wg','Rafales (0 si aucune)','kt',1,0,90):''}
+    ${X&&X.cap==null||(!X&&o.wm)?nw('cap','QFU de la piste (pas de terrain choisi)','°',10,0,359):''}
     ${X&&X.cap!=null?`<div class="pfxw ${X.lv?'hw'+X.lv:''}"><div><b>${X.hw>=0?'Face '+pfKt(X.hw):'Arrière '+pfKt(-X.hw)} kt</b><span>dans l'axe${X.rw?' de la '+esc(X.rw):''} (vent moyen)</span></div><div><b>Travers ${pfKt(X.xw)} kt</b><span>de ${X.side}${X.w.g&&X.w.g>X.w.ws?` · demi-rafale ${pfKt(X.e)} kt`:''}</span></div>${X.lv?`<div class="pfhw">HW${X.lv}${X.lv==='D'?' · PAS DE VOL':''}</div>`:''}</div><div class="small muted" style="margin:2px 0 8px">Vent ${String(Math.round(X.w.dir)).padStart(3,'0')}° / ${Math.round(X.w.ws)} kt${X.w.g&&X.w.g>X.w.ws?' G'+Math.round(X.w.g):''} · ${esc(X.w.src)}</div>`:o.wm?'':`<div class="small muted" style="margin:-2px 0 8px">Choisissez le terrain et l'heure du vol (en haut) pour la prévision, ou saisissez le vent à la main.</div>`}`})()}
    ${num('wind','Vent dans l\'axe (+ face / − arrière)','kt',5,-30,60)}
    ${num('T','Température','°C',1,-30,50)}
