@@ -618,6 +618,10 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .nick{font-weight:600;color:var(--muted)}
 .tgls{display:grid;gap:6px;margin-top:10px}.sgwait{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;background:color-mix(in srgb,var(--surface) 92%,transparent);border-radius:inherit}.sgwait .hg{font-size:46px;animation:sghg 1.4s ease-in-out infinite}@keyframes sghg{0%{transform:rotate(0)}40%,50%{transform:rotate(180deg)}90%,100%{transform:rotate(360deg)}}#sheet .sb{position:relative}
 #nver{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:80;border:0;border-radius:999px;padding:11px 18px;font:600 14px Figtree,system-ui,sans-serif;background:var(--navy);color:#fff;box-shadow:0 10px 30px rgba(12,31,74,.35);max-width:calc(100vw - 24px)}#nver b{color:#fcd34d}
+.bpcard{padding:0;overflow:hidden}.bph{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-bottom:2px solid var(--ink)}
+.bpt{width:100%;border-collapse:collapse}.bpt th,.bpt td{border-bottom:1.5px solid var(--line);vertical-align:middle;padding:8px 10px}.bpt th{width:38%;text-align:left;font-weight:800;font-size:14px;letter-spacing:.02em;border-right:2px solid var(--ink)}.bpt th small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0}
+.bpt td{position:relative}.bpin{width:100%;border:0;background:transparent;font:600 16px/1.35 'Segoe Print','Bradley Hand','Comic Sans MS',cursive,var(--font,system-ui);color:#1d4ed8;resize:vertical;padding:2px 26px 2px 0;min-height:28px}.bpin.own{color:#0f766e}.bpin:focus{outline:2px solid var(--blue,#2563eb);border-radius:6px;background:var(--surface2)}
+.bpro{font:600 16px/1.35 'Segoe Print','Bradley Hand','Comic Sans MS',cursive,system-ui;color:#1d4ed8}.bprs{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:16px;color:var(--muted);cursor:pointer}
 .sugb{color:#d97706}.sugb svg{filter:drop-shadow(0 0 6px rgba(250,204,21,.45))}
 .sgk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.sgk button{border:2px solid var(--line);background:var(--surface2);border-radius:16px;padding:12px 6px;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px}.sgk button span{font-size:26px;line-height:1}.sgk button.on{border-color:#f59e0b;background:rgba(250,204,21,.16)}
 .sgt{min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
@@ -1290,7 +1294,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794253104';
+const APP_V='1794299298';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -3081,6 +3085,7 @@ function vPerfos(){const sub=isOsab()?'fea':isBob()?'zr':(S.pfTab||'home');
   if(sub==='sr'){if(!srCan()){S.pfTab='home';return vPerfos()}return vSr(tabs)}
   if(sub==='coupe'){if(!coupeCan()){S.pfTab='home';return vPerfos()}return vCoupe(tabs)}
  if(sub==='meteo'){if(!mtCan()){S.pfTab='home';return vPerfos()}return vMeteo(tabs)}
+ if(sub==='bpc'){if(!bpcCan()){S.pfTab='home';return vPerfos()}return vBpc(tabs)}
  if(sub==='nav'){if(!navCan()){S.pfTab='home';return vPerfos()}return vNav(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
  if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
@@ -3203,10 +3208,10 @@ const pfFlT=f=>new Date(pcAdd(f.w,f.d)+'T'+f.time+':00').getTime();
 /* Vols à venir : semaine en cours et suivante (agenda en ligne ; vols d'exemple dans la maquette) */
 function pfFlights(){const w0=pcCurWk();let L;
  if(isOnline())L=(S.pfFl||{})[w0]||[];
- else L=[w0,pcAdd(w0,7)].flatMap(w=>exFlights(w).map(f=>({id:f.id,w,d:f.d,time:f.time,title:f.title,perf:!!(S.pfDone||{})[f.id]})));
+ else L=[w0,pcAdd(w0,7)].flatMap(w=>exFlights(w).map(f=>({id:f.id,w,d:f.d,time:f.time,title:f.title,perf:!!(S.pfDone||{})[f.id],px:/^8 FUS/.test(f.title||'')?'7 PAXS : Ø Lead · 9=3':''})));
  const now=Date.now()-45*60000;return L.filter(f=>pfFlT(f)>=now).sort((a,b)=>pfFlT(a)-pfFlT(b))}
 async function pfLoad(force){const w0=pcCurWk();if(!isOnline()||S.pfBusy||(!force&&(S.pfFl||{})[w0]))return;S.pfBusy=1;let r;try{r=await api('perfAgenda',{w:w0})}catch(e){r={error:'Connexion impossible'}}S.pfBusy=0;
- if(r&&r.ev){S.pfFl={[w0]:r.ev};if(pfIn().autoNow&&r.ev.length)setTimeout(pfAutoInit,0)}else{S.pfErr=(r&&r.error)||'Lecture impossible';S.pfFl={[w0]:[]}}if(S.pfTab==='to'||S.pfTab==='cto'||S.pfTab==='meteo'||S.pfTab==='coupe')render()}
+ if(r&&r.ev){S.pfFl={[w0]:r.ev};if(pfIn().autoNow&&r.ev.length)setTimeout(pfAutoInit,0)}else{S.pfErr=(r&&r.error)||'Lecture impossible';S.pfFl={[w0]:[]}}if(S.pfTab==='to'||S.pfTab==='cto'||S.pfTab==='meteo'||S.pfTab==='coupe'||S.pfTab==='bpc')render()}
 const pfFlL=f=>`${PC_JS[f.d]} ${pcDay(f.w,f.d)} ${PC_MO[fromISO(pcAdd(f.w,f.d)).getMonth()]} · ${f.time.replace(':','h')} · ${f.title||'Vol'}`;
 async function pfPut(){const x=pfCalc(),v=pfVals(x),L=pfFlights(),f=L.find(y=>y.id===S.pfSel)||L[0];if(!f)return;
  if(f.perf&&!confirm('Cette plaquette contient déjà des perfos : les remplacer ?'))return;
@@ -4667,7 +4672,7 @@ async function mtLoad(force){if(S.mtBusy)return;if(S.mt&&!force&&Date.now()-S.mt
  if(!D){const g=async(u,j)=>{try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return j?await r.json():await r.text()}catch(e){return null}};
   const [m,t,o]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+MT_IDS+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+MT_IDS+'&format=raw'),g(MT_OM_URL(),1)]);
   D={t:Date.now(),mtxt:m||'',ttxt:t||'',om:o};if(!m||!Object.keys(mtMetars(m)).length){Object.assign(D,mtDemo(),{demo:1});if(!o)D.om=mtDemoOM()}}
- D.M=mtMetars(D.mtxt);D.T=mtTafs(D.ttxt);S.mt=D;S.mtBusy=0;if(S.pfTab==='meteo')render()}
+ D.M=mtMetars(D.mtxt);D.T=mtTafs(D.ttxt);S.mt=D;S.mtBusy=0;if(S.pfTab==='meteo'||S.pfTab==='bpc')render()}
 function mtDemo(){const n=new Date(),p=x=>String(x).padStart(2,'0'),dd=p(n.getUTCDate()),hh=n.getUTCHours(),z=dd+p(hh)+(n.getUTCMinutes()<30?'00':'30')+'Z',h=k=>{const d=new Date(n.getTime()+k*36e5);return p(d.getUTCDate())+p(d.getUTCHours())};
  const M={LFMY:'33014G24KT 9999 FEW035 SCT060 14/05 Q1018 NOSIG',LFMI:'31016KT 9999 SCT040 15/06 Q1018',LFMO:'35018G28KT 9999 BKN028 12/04 Q1017',LFML:'32015KT CAVOK 16/05 Q1018',LFMV:'34017KT 9999 FEW030 13/04 Q1017',LFME:'33013KT 9999 SCT045 14/05 Q1018'};
  return{mtxt:Object.keys(M).map(k=>k+' '+z+' '+M[k]).join('\n'),ttxt:['LFMY','LFMI','LFMO','LFML'].map(k=>`TAF ${k} ${z} ${h(0)}/${h(24)} 33015G25KT 9999 SCT040 BECMG ${h(6)}/${h(8)} 32008KT TEMPO ${h(3)}/${h(6)} 6000 SHRA BKN018 PROB30 TEMPO ${h(14)}/${h(18)} 3000 BR BKN008`).join('\n')}}
@@ -5558,6 +5563,7 @@ function pfArt(k){
   <rect x="20" y="22" width="80" height="66" rx="6" fill="#fff"/><rect x="30" y="32" width="60" height="46" rx="3" fill="#fde68a"/>
   <path d="M34 72l16-18 12 12 8-8 16 14" stroke="#b45309" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="74" cy="44" r="5" fill="#b45309"/>
   <circle cx="92" cy="92" r="16" fill="#22c55e" stroke="#fff" stroke-width="4"/><path d="M84 92l6 6 10-11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+ if(k==='bpc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_bpc')}<rect x="30" y="20" width="60" height="82" rx="8" fill="#fff" opacity=".95"/><rect x="46" y="14" width="28" height="14" rx="5" fill="#0f766e"/><path d="M40 42h40M40 54h40M40 66h40M40 78h26" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/><path d="M58 34v54" stroke="#0f766e" stroke-width="3" opacity=".5"/></svg>`;
  if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
   <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/><circle cx="60" cy="60" r="18" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/>
   <path d="M60 18 V34 M60 86 V102 M18 60 H34 M86 60 H102" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="60" r="7" fill="#fde68a"/></svg>`;
@@ -5571,18 +5577,18 @@ function pfArt(k){
   <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
-const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Météo · Alphajet · Instruction · Zones · Espacement · Série',['meteo','alpha','ex','zr','rg','sr']],com:['Rayonnement / Comm','Interviews · Cadres',['itw','cad']],pcf:['Point central','Points centraux · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','nav','meteo','coupe','cirrus']]};
-const TOOLS_A=[['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
+const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Météo · Alphajet · Instruction · Zones · Espacement · Série',['meteo','alpha','ex','zr','rg','sr']],com:['Rayonnement / Comm','Interviews · Cadres',['itw','cad']],pcf:['Point central','Points centraux · Bfg PC · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','bpc','nav','meteo','coupe','cirrus']]};
+const TOOLS_A=[['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
 function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
- switch(k){case 'pc':case 'nav':return pc;case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
+ switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
 const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
-const pfVis=k=>isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan());
+const pfVis=k=>isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan());
 const pfTile=k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k),n=D?D[2].filter(pfVis).length:0;return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfUp=S.pfTab||'home';S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${n} outils</small>`:''}</button>`};
 const PF_HOME=['pbd','pcf','com','fea','tcas'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
+const PF_TOOLS=[['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -5929,7 +5935,7 @@ const ROLE_D={chef:'Vous : tous les droits, toujours. Seul à régler les droits
  osab:'OSAB : ne voit que les FEA que vous avez cochées « Transmise à l\'OSAB » (avec leurs photos), en lecture. Rien d\'autre : ni meetings, ni Annuaire, ni outils.',
  org:'Organisateur d\'un meeting : ne voit que son ou ses meetings. Jamais l\'Annuaire complet, le RETEX, les FEA, les PC ni les outils.',
  dv:'Directeur des vols d\'un meeting : ne voit que son ou ses meetings et remplit la partie aéronautique. Jamais le RETEX, les FEA, les PC ni les outils.'};
-const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',sr:'tous les pilotes (chacun son espace ; le leader et le chef ops voient tout en lecture)',zr:'les marqueuses ops et les Athos 5, 15 et 16 (l\'OPS BOB voit et valide la R276)',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
+const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',sr:'tous les pilotes (chacun son espace ; le leader et le chef ops voient tout en lecture)',bpc:'les points centraux (écriture) ; tous les Athos et la direction (lecture)',zr:'les marqueuses ops et les Athos 5, 15 et 16 (l\'OPS BOB voit et valide la R276)',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
 const toolTip=k=>{const t=PF_TOOLS.find(x=>x[0]===k);return (t?t[1]+' : '+t[2]:k)+'. Par défaut : '+TOOL_W(k)+' (et vous).'};
 const athW=n=>{const x=(DB.members||[]).find(y=>y.fn==='PILOTES'&&athN(y)===n);return x?memLabel(x):'personne dans l\'Unité pour l\'instant'};
 const ridesc=(r,d)=>'· '+r.l+' : '+(LV_D[d]||'');
@@ -6096,6 +6102,44 @@ let ZT0=null;setInterval(()=>{const z=ZTOOL();if(z!==ZT0){ZT0=z;zoomReset()}},70
 window.addEventListener('message',e=>{if(e.data&&e.data.zoomReset)zoomReset()});
 /* bandeau discret : la nouvelle version est déjà sur l'appareil, un toucher l'affiche */
 function newVer(){if($('nver'))return;const d=document.createElement('button');d.id='nver';d.innerHTML='✨ Nouvelle version de PAF OPS · <b>toucher pour l\'afficher</b>';d.onclick=()=>location.reload();document.body.appendChild(d)}
+/* ---- Bfg PC ---- */
+const bpcCan=()=>tov('bpc')!=null?!!tov('bpc'):isChef()||!!pcMe()||ccPilDir()||(!isOnline()&&ROLE==='visit');   // lecture : tous les Athos et les PC
+const bpcEd=()=>isChef()||!!pcMe();   // écriture : points centraux et chef ops
+const BPC_F=[['ter','TERRAIN','à remplir par le PC (mer, marée, bouées, sable…)'],['pax','PAX','d\'après la plaquette'],['per','PÉRIL AVIAIRE','à remplir par le PC'],['neb','NÉBU / MIROIR','plafonds sous 8000 ft · secteur du miroir'],['th','T°C / HUMIDITÉ',''],['v0','VENT SOL',''],['v250','VENT 250 m',''],['v500','VENT 500 m',''],['v1000','VENT 1000 m',''],['cor','CORRECTION','R ruban · X croisements'],['vqr','VENT QUI RAPPROCHE ?',''],['fum','OPTIONS FUMÉE',''],['brdd','BRDD','QFE']];
+const bpcName=(az,B)=>MT_W[Math.round((((az-B)%360)+360)%360/45)%8];
+function bpcW(w,key){if(!w)return '';if(w.s<3)return 'Calme';const sp=Math.round(w.s)+' kt'+(w.g?' G'+Math.round(w.g):'');if(w.d==null)return 'Variable '+sp;return mtWN(w,key).replace(/^Vent /,'')+' · '+sp+' ('+String(Math.round(w.d)).padStart(3,'0')+'°)'}
+/* préremplissage : mêmes calculs que l'outil Météo (cartouche) pour le terrain et l'heure du vol */
+function bpcAuto(SEL){const A={pax:SEL.fl&&SEL.fl.px||''},D=S.mt;if(!D)return A;const key=SEL.fl?mtSiteOf(SEL.fl):'salon',site=MT_SITE[key],T=SEL.T,now=Date.now(),M=mtMetar(D.M[site.st]),F=mtTaf(D.T[site.st]),om=mtOM(key,T),ta=mtTafAt(F,T);
+ let cond;if(T-now<36e5&&M&&now-M.t<3*36e5)cond=M;else if(ta)cond=ta.pre;else if(om)cond=om.f;else cond=M||{};
+ const qM=mtMetar(D.M[site.st]),qfe=qM&&mtQFE(qM.q,site.el),BR=mtBrief(cond,om,key),sm=mtSmoke(cond,om),hi=mtHigh(cond,om);
+ const L8=(cond.cl||[]).filter(c=>c.h<8000),cl=c=>c.c+' '+mtFt(c.h)+' ft'+(c.cb?' '+c.cb:''),pl=L8.filter(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV'),ot=L8.filter(c=>!pl.includes(c));
+ const low=pl.length?'Plafond '+pl.map(cl).join(' · ')+(ot.length?' ('+ot.map(cl).join(' · ')+')':''):cond.cavok?'CAVOK':ot.length?'Pas de plafond sous 8000 ft ('+ot.map(cl).join(' · ')+')':'Rien sous 8000 ft';
+ const sun=mtSun(T,site.la,site.lo),veil=hi.voile||(cond.cl||[]).some(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV')||!!(om&&om.cc&&om.cc.t>=70);
+ const mir=sun.el<=0?'pas de miroir (soleil couché)':veil?'miroir incertain (couverture / voile)':`miroir ${bpcName(sun.az-90,site.b)} → ${bpcName(sun.az+90,site.b)} (soleil ${mtSunN(sun.az,key)}, ${sun.el}°)`;
+ A.neb=low+' / '+mir;
+ const tT=cond.tt!=null?cond.tt:om&&om.f.tt,rhT=cond.tt!=null&&cond.td!=null?mtRH(cond.tt,cond.td):om&&om.f.rh;if(tT!=null||rhT!=null)A.th=(tT!=null?Math.round(tT)+'°':'—')+' / '+(rhT!=null?rhT+' %':'—');
+ A.v0=bpcW(cond.w,key);if(om){A.v250=bpcW(om.a250,key);A.v500=bpcW(om.a500,key);A.v1000=bpcW(om.a1000,key)}
+ A.cor=BR.R===BR.X?BR.R:'R '+BR.R+' · X '+BR.X;
+ const a=Math.round(Math.abs(BR.pub));A.vqr=BR.pub<=-1?`Oui · ≈ ${a} kt (sol à 250 m)`:BR.pub>=1?`Non · vent public ${a} kt`:'Ø';
+ A.fum=sm==='W'?'W · blanc (ciel clair)':'C · couleur (fond nuageux)';if(qfe)A.brdd=String(qfe);
+ A.src=`${site.n} · ${mtH(T)}`;return A}
+function bpcId(SEL){return SEL.fl?SEL.fl.id:'t'+Math.round(SEL.T/9e5)}
+function bpcPick(id){S.bpF=id;render()}
+function vBpc(tabs){mtLoad();const SEL=mtSel('bp'),id=bpcId(SEL),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{},ed=bpcEd();
+ const head=`${NOTE}<div class="head"><div><h1>Bfg PC</h1><p class="muted">Fiche de briefing du point central, préremplie avec la plaquette et la météo du vol. ${ed?'Chaque case se corrige à la main ; ↺ remet la valeur automatique.':'Lecture seule : les points centraux la remplissent.'}</p></div></div>${tabs}`;
+ const rows=BPC_F.map(([k,l,h])=>{const own=V[k]!=null,v=own?V[k]:(A[k]||''),ph=k==='ter'||k==='per'?'Rempli par le PC':h||'';
+  return `<tr><th>${l}${h&&!own&&!A[k]?`<small>${esc(h)}</small>`:''}</th><td>${ed?`<textarea class="bpin ${own?'own':''}" rows="${Math.max(1,Math.ceil(v.length/20))}" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" placeholder="${esc(ph)}" onchange="bpcSet('${esc(id)}','${k}',this.value)">${esc(v)}</textarea>${own&&A[k]!=null&&A[k]!==V[k]?`<button class="bprs" title="Revenir à la valeur automatique : ${esc(A[k]||'vide')}" onclick="bpcSet('${esc(id)}','${k}','')">↺</button>`:''}`:`<div class="bpro">${esc(v)||'<span class="muted">—</span>'}</div>`}</td></tr>`}).join('');
+ const meta=V.t?`<div class="small muted" style="margin-top:8px">Modifiée par ${esc(V.by||'?')} le ${new Date(V.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>`:'';
+ return `${head}<div class="card mtc"><div class="mtk">Vol</div>${mtChipsH('bp','bpcPick')}</div>
+ <div class="card bpcard"><div class="bph"><b>${esc(SEL.lab)}</b>${A.src?`<span class="small muted">Météo : ${esc(A.src)}${S.mt&&S.mt.demo?' (exemple)':''}</span>`:S.mtBusy||!S.mt?`<span class="small muted">${waitH('Lecture de la météo',1)}</span>`:''}</div>
+ <table class="bpt">${rows}</table>${meta}<div class="pcbtns" style="margin-top:10px"><button class="btn sm" onclick="bpcCopy('${esc(id)}')">📋 Copier la fiche</button></div></div>`}
+function bpcVals(id){const SEL=mtSel('bp'),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{};return BPC_F.map(([k,l])=>[l,V[k]!=null?V[k]:(A[k]||'')])}
+function bpcCopy(id){const t=mtSel('bp').lab+'\n'+bpcVals(id).map(([l,v])=>l+' : '+(v||'—')).join('\n');try{navigator.clipboard.writeText(t).then(()=>toast('Fiche copiée'),()=>toast('Copie impossible'))}catch(e){toast('Copie impossible')}}
+async function bpcSet(id,k,v){v=String(v||'').trim();const SEL=mtSel('bp'),A=bpcAuto(SEL);if(v===(A[k]||''))v='';   // identique à l'automatique : on ne garde rien
+ DB.bpc=DB.bpc||{};const o=DB.bpc[id]=DB.bpc[id]||{},old=o[k];if(v)o[k]=v;else delete o[k];o.t=Date.now();o.by=ROLE==='chef'?'Chef des opérations':'Moi';render();
+ if(!isOnline()){save();return}
+ let r;try{r=await api('bpcPut',{id,f:k,v,lab:SEL.lab})}catch(e){r={error:'Connexion impossible : non enregistré'}}
+ if(r&&r.error){if(old!=null)o[k]=old;else delete o[k];toast(r.error);render();return}DB.bpc[id]=r.bpc;try{if(typeof BASE!=='undefined'&&BASE){BASE.bpc=BASE.bpc||{};BASE.bpc[id]=JSON.parse(JSON.stringify(r.bpc))}}catch(_){}}
 function closeSheet(){$('ov').hidden=true;sheetFn=null;SHD=false}
 /* Fermeture en touchant à côté : seulement si le doigt s'est posé ET levé à côté (pas en fin de sélection de texte ou de défilement),
    et jamais quand une saisie est en cours (on ferme alors avec la croix ou « Annuler ») */
