@@ -626,12 +626,21 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .bprose{position:absolute;left:38%;width:62%;top:50%;transform:translateY(-50%);opacity:.22;pointer-events:none;font:700 7.5px Arial,Helvetica,sans-serif;fill:#334155}
 .bpr{display:contents}.bpl,.bpv{border-bottom:2px solid #0b0b0b;min-height:50px;display:flex;align-items:center}.bpr:last-of-type .bpl,.bpr:last-of-type .bpv{border-bottom:0}
 .bpl{padding:6px 10px;border-right:2.5px solid #0b0b0b;font:700 15.5px/1.1 'Arial Narrow',Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#0b0b0b}.bpl.sm{font-size:12.5px}
-.bpv{position:relative;padding:4px 8px}.bpin,.bpro{width:100%;border:0;background:transparent;font:700 23px/1.12 Caveat,'Bradley Hand','Segoe Print',cursive;color:#1e3a8a;resize:none;padding:2px 24px 2px 2px;min-height:30px;overflow:hidden}.bpin.own{color:#0f766e}.bpin::placeholder{color:#94a3b8;font-weight:600}.bpin:focus{outline:2px solid #2563eb;border-radius:6px;background:rgba(219,234,254,.55)}
+.bpv{position:relative;padding:4px 8px}.bpin,.bpro{width:100%;word-break:normal;overflow-wrap:break-word;border:0;background:transparent;font:700 23px/1.12 Caveat,'Bradley Hand','Segoe Print',cursive;color:#1e3a8a;resize:none;padding:2px 24px 2px 2px;min-height:30px;overflow:hidden}.bpin.own{color:#0f766e}.bpin::placeholder{color:#94a3b8;font-weight:600}.bpin:focus{outline:2px solid #2563eb;border-radius:6px;background:rgba(219,234,254,.55)}
 .bprs{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.8);border-radius:50%;width:24px;height:24px;font-size:15px;color:#64748b;cursor:pointer}
+.bpboard{position:relative}.bpedit{position:absolute;right:10px;top:-6px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:#2563eb;color:#fff;font-size:22px;box-shadow:0 4px 12px rgba(37,99,235,.45);cursor:pointer}
+.bpro{white-space:pre-wrap}.bpro.own{color:#0f766e}.bpph{color:#94a3b8;font-weight:600}
+.bpe{margin-bottom:6px}.bpe .l{display:flex;align-items:center;justify-content:space-between;font-weight:800;letter-spacing:.02em}.bprs2{border:0;background:none;color:#2563eb;font-weight:600;font-size:13px;cursor:pointer}
+.bpbig{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font:700 26px/1.15 Caveat,'Bradley Hand','Segoe Print',cursive;color:#1e3a8a;background:#fdfdfb;resize:none;overflow:hidden;min-height:48px}.bpbig:focus{outline:2px solid #2563eb}
 .bpmeta{margin-top:8px;font:500 11px Arial,Helvetica,sans-serif;color:#64748b}
 .hgsum{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}.hgp{display:flex;align-items:baseline;gap:6px;padding:8px 14px;border-radius:999px;font-weight:600;font-size:14px;background:var(--surface);border:1px solid var(--line)}.hgp b{font-size:20px}.hgp.ok b{color:#2563eb}.hgp.res b{color:#64748b}.hgp.rmo b{color:#ca8a04}.hgp.dep b{color:#dc2626}
-.hgwrap{border-radius:22px;overflow:hidden;box-shadow:0 10px 40px rgba(15,23,42,.18);max-width:560px;margin:0 auto 14px;background:#c9cdd2}.hgsvg{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.hgwrap{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 10px 40px rgba(15,23,42,.18);max-width:560px;margin:0 auto 14px;background:#c9cdd2}.hgsvg{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
 .hgac{cursor:pointer;transition:transform .25s cubic-bezier(.2,.8,.2,1)}.hgac.drag{cursor:grab}.hgac.lift{transition:none;cursor:grabbing;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))}.hgtarget{fill:rgba(255,255,255,.35);stroke:#fff;stroke-width:2.5;stroke-dasharray:5 4}
+.hgzm{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}.hgzm button{width:38px;height:38px;border-radius:12px;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.2);font:700 20px/1 system-ui;color:#0f172a}
+.hgset{max-width:560px;margin:0 auto 12px;padding:0}.hgset summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-direction:column;gap:2px}.hgset summary::-webkit-details-marker{display:none}.hgset summary b:after{content:' ›';color:var(--muted)}.hgset[open] summary b:after{content:' ⌄'}
+.hgsr{padding:10px 14px;border-top:1px solid var(--line);display:grid;gap:8px}.hgsl{display:flex;gap:10px;align-items:center}.hgsl>span{font-size:18px}.hgsl b{display:block;font-size:14px}.hgsl small{color:var(--muted);font-size:12px}
+.hgsa{display:flex;gap:8px;align-items:center;justify-content:space-between}.hgsa .in{max-width:220px}.hgseg2 button.pend{outline:2px solid #f59e0b;outline-offset:1px}
+.hgfoot{position:sticky;bottom:0;display:flex;justify-content:flex-end;gap:8px;padding:12px 0 4px;margin-top:12px;background:var(--surface);border-top:1px solid var(--line)}
 .hgals{display:grid;gap:8px;max-width:560px;margin:0 auto 12px}.hgal{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:16px;background:#fff7ed;border:1.5px solid #fdba74;color:#7c2d12}.hgal b{display:block;font-size:14px}.hgal span{font-size:13px}.hgali{font-size:22px;width:38px;height:38px;border-radius:12px;background:#fed7aa;display:grid;place-items:center;flex:none}.hgbad{animation:hgpulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes hgpulse{50%{opacity:.55}}
 .hgbg{font:800 11.5px -apple-system,'SF Pro Display',Figtree,system-ui,sans-serif;fill:#0f172a}.hgsn{font:600 8.5px -apple-system,Figtree,system-ui,sans-serif;fill:#64748b}.hgsub{font:500 8.5px -apple-system,Figtree,system-ui,sans-serif;fill:#1e293b}.hgwho{fill:#1d4ed8}.hgdep{fill:#991b1b;font-weight:700}
 .hgtx{font:800 15px -apple-system,Figtree,system-ui,sans-serif;fill:#f8fafc;opacity:.85}.hgtx2{font:800 10px -apple-system,Figtree,system-ui,sans-serif;fill:#a69f6a;letter-spacing:.12em}.hgtx3{font:700 10px -apple-system,Figtree,system-ui,sans-serif;fill:#b5ae7a}
@@ -1312,7 +1321,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794306737';
+const APP_V='1794316198';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -4670,7 +4679,7 @@ const mtSunN=(az,key)=>mtWN({d:az,s:10},key).replace(/^Vent /,'');
 const mtRH=(T,Td)=>T==null||Td==null?null:Math.round(100*Math.exp(17.625*Td/(243.04+Td))/Math.exp(17.625*T/(243.04+T)));
 const mtQFE=(q,el)=>q?Math.round(q*Math.pow(1-0.0065*el*0.3048/288.15,5.2559)):null;
 const mtVis=v=>v==null?'—':v>=10000?'≥ 10 km':v>=5000?(Math.round(v/1000))+' km':String(v).replace(/\B(?=(\d{3})+$)/g,' ')+' m';
-const mtFt=h=>String(h).replace(/\B(?=(\d{3})+$)/g,' ');
+const mtFt=h=>String(h).replace(/\B(?=(\d{3})+$)/g,'\u00a0');
 const mtCeilT=f=>{const c=mtLim(f);return c?`${c.c==='VV'?'VV':c.c} ${mtFt(c.h)} ft`:f.cavok?'CAVOK':'Rien sous 8 000 ft'};
 function mtHigh(f,om){const L=(f.cl||[]).filter(c=>c.h>8000),cc=om&&om.cc,T=[];
  L.forEach(c=>T.push(`${c.c}${String(c.h/100).padStart(3,'0')} · ${c.h>=20000?'nuages hauts (cirrus, cirrostratus)':'nuages moyens (altocumulus, altostratus)'}`));
@@ -4804,7 +4813,7 @@ const WAIT_MT=['Le météorologue finit son café, il arrive avec la prévision�
 function waitH(txt,inl){const p=/m[ée]t[ée]o|METAR/i.test(txt||'')?WAIT_MT[WAIT_MTI]:'Je vais chercher l\'info, un instant…';return `<span class="wait${inl?' inl':''}"><span class="spin" aria-hidden="true"></span><span><b>${esc(p)}</b></span></span>`}
 function mtFlights(){if(isOnline()&&!(S.pfFl||{})[pcCurWk()]&&!S.pfBusy)pfLoad();return pfFlights().filter(f=>pfFlT(f)<Date.now()+48*36e5)}
 const mtFlL=f=>pfFlL(f).replace(/ (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/,'');
-const mtSiteOf=f=>/PDD|PLAN ?DE ?DIEU|ORANGE/i.test(f&&f.title||'')?'pdd':/ISTRES|LFMI/i.test(f&&f.title||'')?'istres':'salon';
+const mtSiteOf=f=>f&&MT_SITE[f.site]?f.site:/\bR ?55\b|PDD|PLAN ?DE ?DIEU|ORANGE/i.test(f&&f.title||'')?'pdd':/ISTRES|LFMI/i.test(f&&f.title||'')?'istres':'salon';
 function mtPick(id){S.mtF=id;if(id==='now'||id==='cust'){render();return}const f=mtFlights().find(x=>x.id===id);if(f)S.mtS=mtSiteOf(f);render()}
 function mtSite(k){S.mtS=k;render()}
 const mtCls=P=>P.k==='NOGO'?'nogo':P.k==='BT'?'bt':P.k==='INT'?'int':P.sync?'mt':'mto',MT_NOSY='<span class="mtns" title="Pas de synchro">⊘ Synchro</span>';
@@ -6127,18 +6136,19 @@ const bpcCan=()=>tov('bpc')!=null?!!tov('bpc'):isChef()||!!pcMe()||ccPilDir()||(
 const bpcEd=()=>isChef()||!!pcMe();   // écriture : points centraux et chef ops
 const BPC_F=[['ter','TERRAIN','à remplir par le PC (mer, marée, bouées, sable…)'],['pax','PAX','d\'après la plaquette'],['per','PÉRIL AVIAIRE','à remplir par le PC'],['neb','NÉBU / MIROIR','plafonds sous 8000 ft · secteur du miroir'],['th','T°C / HUMIDITÉ',''],['v0','VENT SOL',''],['v250','VENT 250 m',''],['v500','VENT 500 m',''],['v1000','VENT 1000 m',''],['cor','CORRECTION','R ruban · X croisements'],['vqr','VENT QUI RAPPROCHE ?',''],['fum','OPTIONS FUMÉE',''],['brdd','BRDD','QFE']];
 const bpcName=(az,B)=>MT_W[Math.round((((az-B)%360)+360)%360/45)%8];
-function bpcW(w,key){if(!w)return '';if(w.s<3)return 'Calme';const sp=Math.round(w.s)+' kt'+(w.g?' G'+Math.round(w.g):'');if(w.d==null)return 'Variable '+sp;return mtWN(w,key).replace(/^Vent /,'')+' · '+sp+' ('+String(Math.round(w.d)).padStart(3,'0')+'°)'}
+function bpcW(w,key){if(!w)return '';if(w.s<3)return 'Calme';const sp=Math.round(w.s)+'\u00a0kt'+(w.g?'\u00a0G'+Math.round(w.g):'');if(w.d==null)return 'Variable '+sp;return mtWN(w,key).replace(/^Vent /,'')+' · '+sp+' ('+String(Math.round(w.d)).padStart(3,'0')+'°)'}
 /* préremplissage : mêmes calculs que l'outil Météo (cartouche) pour le terrain et l'heure du vol */
-function bpcPax(px){px=String(px||'').trim();if(!px)return 'Pas de pax · pas de remplacement';const p=/pax/i.test(px),r=/\b9\s*=|remplac/i.test(px);return (p?'':'Pas de pax · ')+px+(r?'':' · pas de remplacement')}
+const bpcDig=t=>String(t||'').replace(/([0-9#*])\uFE0F?\u20E3/g,'$1').replace(/\uD83D\uDD1F/g,'10').replace(/\uD83D\uDFF0/g,'=').replace(/\uD835[\uDFCE-\uDFFF]/g,c=>String((c.charCodeAt(1)-0xDFCE)%10)).replace(/\uFE0F/g,'');
+function bpcPax(px){px=bpcDig(px).trim();if(!px)return 'Pas de pax · pas de remplacement';const p=/pax/i.test(px),r=/\b9\s*=|remplac/i.test(px);return (p?'':'Pas de pax · ')+px+(r?'':' · pas de remplacement')}
 function bpcAuto(SEL){const A={pax:SEL.fl?bpcPax(SEL.fl.px):''},D=S.mt;if(!D)return A;const key=SEL.fl?mtSiteOf(SEL.fl):'salon',site=MT_SITE[key],T=SEL.T,now=Date.now(),M=mtMetar(D.M[site.st]),F=mtTaf(D.T[site.st]),om=mtOM(key,T),ta=mtTafAt(F,T);
  let cond;if(T-now<36e5&&M&&now-M.t<3*36e5)cond=M;else if(ta)cond=ta.pre;else if(om)cond=om.f;else cond=M||{};
  const qM=mtMetar(D.M[site.st]),qfe=qM&&mtQFE(qM.q,site.el),BR=mtBrief(cond,om,key),sm=mtSmoke(cond,om),hi=mtHigh(cond,om);
- const L8=(cond.cl||[]).filter(c=>c.h<8000),cl=c=>c.c+' '+mtFt(c.h)+' ft'+(c.cb?' '+c.cb:''),pl=L8.filter(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV'),ot=L8.filter(c=>!pl.includes(c));
- const low=pl.length?'Plafond '+pl.map(cl).join(' · ')+(ot.length?' ('+ot.map(cl).join(' · ')+')':''):cond.cavok?'CAVOK':ot.length?'Pas de plafond sous 8000 ft ('+ot.map(cl).join(' · ')+')':'Rien sous 8000 ft';
+ const L8=(cond.cl||[]).filter(c=>c.h<8000),cl=c=>c.c+'\u00a0'+mtFt(c.h)+'\u00a0ft'+(c.cb?'\u00a0'+c.cb:''),pl=L8.filter(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV'),ot=L8.filter(c=>!pl.includes(c));
+ const low=pl.length?'Plafond '+pl.map(cl).join(' · ')+(ot.length?' ('+ot.map(cl).join(' · ')+')':''):cond.cavok?'CAVOK':ot.length?'Pas de plafond sous 8\u00a0000\u00a0ft ('+ot.map(cl).join(' · ')+')':'Rien sous 8\u00a0000\u00a0ft';
  const sun=mtSun(T,site.la,site.lo),veil=hi.voile||(cond.cl||[]).some(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV')||!!(om&&om.cc&&om.cc.t>=70);
  const mir=sun.el<=0?'pas de miroir (soleil couché)':veil?'miroir incertain (couverture / voile)':`miroir ${bpcName(sun.az-90,site.b)} → ${bpcName(sun.az+90,site.b)} (soleil ${mtSunN(sun.az,key)}, ${sun.el}°)`;
  A.neb=low+' / '+mir;
- const tT=cond.tt!=null?cond.tt:om&&om.f.tt,rhT=cond.tt!=null&&cond.td!=null?mtRH(cond.tt,cond.td):om&&om.f.rh;if(tT!=null||rhT!=null)A.th=(tT!=null?Math.round(tT)+'°':'—')+' / '+(rhT!=null?rhT+' %':'—');
+ const tT=cond.tt!=null?cond.tt:om&&om.f.tt,rhT=cond.tt!=null&&cond.td!=null?mtRH(cond.tt,cond.td):om&&om.f.rh;if(tT!=null||rhT!=null)A.th=(tT!=null?Math.round(tT)+'°':'—')+' / '+(rhT!=null?rhT+'\u00a0%':'—');
  A.v0=bpcW(cond.w,key);if(om){A.v250=bpcW(om.a250,key);A.v500=bpcW(om.a500,key);A.v1000=bpcW(om.a1000,key)}
  A.cor=BR.R===BR.X?BR.R:'R '+BR.R+' · X '+BR.X;
  const a=Math.round(Math.abs(BR.pub));A.vqr=BR.pub<=-1?`Oui · ≈ ${a} kt (sol à 250 m)`:BR.pub>=1?`Non · vent public ${a} kt`:'Ø';
@@ -6151,15 +6161,22 @@ function bpcRose(key){const B=(MT_SITE[key]||MT_SITE.salon).b,r=Math.PI/180;let 
   const deg=String(((B+off)%360+360)%360).padStart(3,'0');g+=`<text x="${(x*70).toFixed(1)}" y="${(y*70+3).toFixed(1)}" text-anchor="middle" transform="rotate(${off>90||off<-90?off+180:off} ${(x*70).toFixed(1)} ${(y*70+3).toFixed(1)})">${off?(off>0?'+':'')+off+' ':''}${MT_W[i].toUpperCase()} ${deg}°</text>`}
  return `<svg class="bprose" viewBox="-100 -100 200 200" aria-hidden="true"><path d="M0 -96V96" stroke="#e11d48" stroke-width="7" opacity=".5"/>${g}</svg>`}
 function vBpc(tabs){mtLoad();const SEL=mtSel('bp'),id=bpcId(SEL),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{},ed=bpcEd(),key=SEL.fl?mtSiteOf(SEL.fl):'salon';
- const head=`${NOTE}<div class="head"><div><h1>Bfg PC</h1><p class="muted">Fiche de briefing du point central, préremplie avec la plaquette et la météo du vol. ${ed?'Touchez une case pour la corriger ; ↺ remet la valeur automatique.':'Lecture seule : les points centraux la remplissent.'}</p></div></div>${tabs}`;
- const rows=BPC_F.map(([k,l,h])=>{const own=V[k]!=null,v=own?V[k]:(A[k]||''),ph=k==='ter'||k==='per'?'à remplir':'';
-  return `<div class="bpr"><div class="bpl${l.length>14?' sm':''}">${l}</div><div class="bpv">${ed?`<textarea class="bpin ${own?'own':''}" rows="1" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" placeholder="${esc(ph)}" onchange="bpcSet('${esc(id)}','${k}',this.value)">${esc(v)}</textarea>${own&&A[k]!=null&&A[k]!==V[k]?`<button class="bprs" title="Revenir à la valeur automatique : ${esc(A[k]||'vide')}" onclick="bpcSet('${esc(id)}','${k}','')">↺</button>`:''}`:`<div class="bpro">${esc(v)||'—'}</div>`}</div></div>`}).join('');
+ const head=`${NOTE}<div class="head"><div><h1>Bfg PC</h1><p class="muted">Fiche de briefing du point central, préremplie avec la plaquette et la météo du vol. ${ed?'Le stylo ✎ ouvre la fiche en grand pour la réécrire, puis « Valider ».':'Lecture seule : les points centraux la remplissent.'}</p></div></div>${tabs}`;
+ const rows=BPC_F.map(([k,l])=>{const own=V[k]!=null,v=own?V[k]:(A[k]||'');
+  return `<div class="bpr"><div class="bpl${l.length>14?' sm':''}">${l}</div><div class="bpv"><div class="bpro ${own?'own':''}">${esc(v)||'<span class="bpph">'+(k==='ter'||k==='per'?'à remplir':'—')+'</span>'}</div></div></div>`}).join('');
  const meta=V.t?`<div class="bpmeta">Modifiée par ${esc(V.by||'?')} le ${new Date(V.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>`:'';
- setTimeout(()=>document.querySelectorAll('.bpin').forEach(t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'}),0);
  return `${head}<div class="card mtc"><div class="mtk">Vol</div>${mtChipsH('bp','bpcPick')}</div>
- <div class="bpboard"><div class="bpclip"></div><div class="bppaper"><div class="bptop"><b>${esc(SEL.lab)}</b><span>${A.src?`Météo ${esc(A.src)}${S.mt&&S.mt.demo?' (exemple)':''}`:S.mtBusy||!S.mt?waitH('Lecture de la météo',1):''}</span></div>
- <div class="bpgrid">${bpcRose(key)}${rows}</div>${meta}</div></div>
- <div class="pcbtns" style="margin:12px auto 0;max-width:560px"><button class="btn sm" onclick="bpcCopy('${esc(id)}')">📋 Copier la fiche</button></div>`}
+ <div class="bpboard"><div class="bpclip"></div>${ed?`<button class="bpedit" onclick="bpcEdit('${esc(id)}')" aria-label="Réécrire la fiche" title="Réécrire la fiche">✎</button>`:''}<div class="bppaper"><div class="bptop"><b>${esc(SEL.lab)}</b><span>${A.src?`Météo ${esc(A.src)}${S.mt&&S.mt.demo?' (exemple)':''}`:S.mtBusy||!S.mt?waitH('Lecture de la météo',1):''}</span></div>
+ <div class="bpgrid" ${ed?`onclick="bpcEdit('${esc(id)}')" style="cursor:pointer"`:''}>${bpcRose(key)}${rows}</div>${meta}</div></div>
+ <div class="pcbtns" style="margin:12px auto 0;max-width:560px">${ed?`<button class="btn pri sm" onclick="bpcEdit('${esc(id)}')">✎ Réécrire la fiche</button>`:''}<button class="btn sm" onclick="bpcCopy('${esc(id)}')">📋 Copier la fiche</button></div>`}
+function bpcEdit(id){const SEL=mtSel('bp'),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{};S.bpE={id,v:Object.fromEntries(BPC_F.map(([k])=>[k,V[k]!=null?V[k]:(A[k]||'')]))};openSheet(bpcEditH);setTimeout(()=>document.querySelectorAll('.bpbig').forEach(t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'}),30)}
+function bpcEditH(){const E=S.bpE;if(!E)return '';const A=bpcAuto(mtSel('bp'));
+ return `<div class="sh"><div class="t"><div class="q">✎ Fiche Bfg PC</div><div class="small muted">${esc(mtSel('bp').lab)} · ↺ remet la valeur automatique</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">
+ ${BPC_F.map(([k,l])=>`<div class="bpe"><label class="l">${l}${E.v[k]!==(A[k]||'')&&A[k]!=null?` <button class="bprs2" onclick="S.bpE.v['${k}']=bpcAuto(mtSel('bp'))['${k}']||'';$('sheet').innerHTML=bpcEditH()">↺ automatique</button>`:''}</label><textarea class="bpbig" rows="1" placeholder="${k==='ter'||k==='per'?'à remplir':''}" oninput="S.bpE.v['${k}']=this.value;this.style.height='auto';this.style.height=this.scrollHeight+'px'">${esc(E.v[k]||'')}</textarea></div>`).join('')}
+ <div class="hgfoot"><button class="btn" onclick="closeSheet()">Annuler</button><button class="btn pri" onclick="bpcSave()">✓ Valider</button></div></div>`}
+async function bpcSave(){const E=S.bpE;if(!E)return;const SEL=mtSel('bp'),A=bpcAuto(SEL),V=(DB.bpc||{})[E.id]||{};closeSheet();let n=0;
+ for(const [k] of BPC_F){const v=String(E.v[k]||'').trim(),cur=V[k]!=null?V[k]:(A[k]||'');if(v===String(cur).trim())continue;n++;await bpcSet(E.id,k,v)}
+ S.bpE=null;render();toast(n?'✓ Fiche enregistrée':'Aucune modification')}
 function bpcVals(id){const SEL=mtSel('bp'),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{};return BPC_F.map(([k,l])=>[l,V[k]!=null?V[k]:(A[k]||'')])}
 function bpcCopy(id){const t=mtSel('bp').lab+'\n'+bpcVals(id).map(([l,v])=>l+' : '+(v||'—')).join('\n');try{navigator.clipboard.writeText(t).then(()=>toast('Fiche copiée'),()=>toast('Copie impossible'))}catch(e){toast('Copie impossible')}}
 async function bpcSet(id,k,v){v=String(v||'').trim();const SEL=mtSel('bp'),A=bpcAuto(SEL);if(v===(A[k]||''))v='';   // identique à l'automatique : on ne garde rien
@@ -6179,32 +6196,32 @@ const HG_FUEL=['FUS','FUS + 100','N1','N1 + 100','N1 + 200','N1 + 300','N2','D']
 const hgRes=a=>!!(a&&HG_POS[a.pos]&&HG_POS[a.pos].h&&a.s!=='dep');   // bon de vol ou en remise en œuvre mais rangé au hangar : en réserve (gris), comme un spare
 const hgWhere=a=>{const p=HG_POS[a.pos];return p.h?'Réserve '+p.l:'Spare '+p.l};
 /* emplacements (coordonnées du dessin, nord en haut, hangar à l'ouest) */
-const HG_W=400,HG_H=730;
-const HG_POS=(()=>{const P={};for(let n=1;n<=8;n++)P['L'+n]={x:236,y:568-(n-1)*62,l:String(n)};P.S1={x:206,y:636,l:'S1',sp:1};P.S2={x:206,y:698,l:'S2',sp:1};
+const HG_W=400,HG_H=820;
+const HG_POS=(()=>{const P={};for(let n=1;n<=8;n++)P['L'+n]={x:236,y:568-(n-1)*62,l:String(n)};[['S1',634,'9'],['S2',696,'10'],['S3',758,'11']].forEach(([k,y,l])=>P[k]={x:214,y,l,sp:1,r:30});
  [286,363,440,517,594,671].forEach((y,i)=>P['H'+(i+1)]={x:79,y,l:'H'+(i+1),h:1});return P})();
 function hgDemo(){const sn=[41,58,72,96,103,118,124,137,152,160,171,98];return{ac:sn.map((n,i)=>i===10?{id:'hg'+n,sn:String(n),fin:'',s:'ok',pos:'S1',fuel:'N1',smk:'Blanc / Vide',pil:'',pist:'',meca:'',pax:''}:({id:'hg'+n,sn:String(n),fin:i<8?String(i+1):'',s:i<8?(i===5?'rmo':'ok'):i<10?'dep':'',pos:i<8?'L'+(i+1):i<10?'H'+(i-7):'',fuel:i<8?'N2':'',smk:i<8?HG_SMK[i%3]:'',panne:i===8?'Changement roue train principal':i===9?'Fuite hydraulique':'',eta:i===8?'2 h':i===9?'2 jours':'',pil:'',pist:'',meca:'',pax:i===2?'M. Dupont (journaliste)':''}))}}
 const hgDB=()=>{if(!DB.hg){if(isOnline())DB.hg={ac:[]};else{DB.hg=hgDemo();save()}}DB.hg.ac=DB.hg.ac||[];return DB.hg};
 const hgMem=f=>DB.members.filter(f).sort((a,b)=>String(a.last).localeCompare(String(b.last)));
-const hgMecas=()=>hgMem(x=>FUm[x.fn]&&FUm[x.fn].grp==='MECAS'),hgPil=()=>hgMem(x=>x.fn==='PILOTES').sort((a,b)=>athN(a)-athN(b)),hgPist=()=>hgMem(x=>x.fn==='PISTE'||x.fn==='CHPISTE');
+const hgMecas=()=>hgMem(x=>['DEP','PISTE','CHDEP','CHPISTE'].includes(x.fn)),hgPil=()=>hgMem(x=>x.fn==='PILOTES').sort((a,b)=>athN(a)-athN(b)),hgPist=()=>hgMem(x=>x.fn==='PISTE'||x.fn==='CHPISTE');
 const hgNm=id=>{const x=DB.members.find(y=>y.id===id);if(!x)return id||'';return x.fn==='PILOTES'?pcName(x):((x.grade?x.grade+' ':'')+(x.last||x.first||'')).trim()};
 const hgLab=a=>a.fin?a.fin:'#'+a.sn;
 const HG_SC={Blanc:'#ffffff',Bleu:'#2563eb',Rouge:'#dc2626',Vide:'none'};
 /* Alphajet vu de dessus, nez vers l'ouest (vers le hangar) : nez pointu, aile en flèche haute, empennage en flèche */
 /* Alphajet vu de dessus, nez vers l'ouest (vers le hangar) : silhouette (pour les petites icônes) et version détaillée */
-const HG_FUS='M-33 0C-31.5-1.6-28.5-2.6-25-3.1L-20-3.7L-9-4L-8-6.6C-4-7.1 8-7.1 14-6.4L16.5-5.6L16.5-3.2L28-2L32-1.2L32 1.2L28 2L16.5 3.2L16.5 5.6L14 6.4C8 7.1-4 7.1-8 6.6L-9 4L-20 3.7L-25 3.1C-28.5 2.6-31.5 1.6-33 0Z',
+const HG_FUS='M-34 0C-33-1.3-30.5-2.4-27-2.9L-22-3.3L-12.5-3.5L-11.5-5C-6-5.4 6-5.4 13-4.8L15.5-4.2L15.5-2.7L28-1.9L32-1.1L32 1.1L28 1.9L15.5 2.7L15.5 4.2L13 4.8C6 5.4-6 5.4-11.5 5L-12.5 3.5L-22 3.3L-27 2.9C-30.5 2.4-33 1.3-34 0Z',
  HG_WING='M-0.5-6.6L10.5-22L16.5-22.3L13.2-6.6L13.2 6.6L16.5 22.3L10.5 22L-0.5 6.6Z',HG_TAIL='M21.5-2L27.5-10L30.6-10.2L30.2-1.6ZM21.5 2L27.5 10L30.6 10.2L30.2 1.6Z',
  HG_AC=HG_TAIL+HG_FUS+HG_WING;
-/* aile haute : l'aile passe par-dessus le fuselage et les nacelles moteur dépassent devant et derrière */
+/* aile haute : l'aile passe par-dessus le fuselage ; fuselage fin, cockpit près du nez */
 const hgPlane=(c,sc)=>`<g transform="scale(${sc||1})" filter="url(#hgsh)">
 <path d="${HG_FUS}" fill="${c}" stroke="#fff" stroke-width=".8" stroke-linejoin="round"/><path d="${HG_FUS}" fill="url(#hgfsh)"/>
-<ellipse cx="16.9" cy="-4.6" rx="1" ry="1.5" fill="#1e293b"/><ellipse cx="16.9" cy="4.6" rx="1" ry="1.5" fill="#1e293b"/>
-<path d="M-8.2-6.3C-7-6.9-5.6-6.9-5-6.5L-5.6-4.4L-8.2-4.4ZM-8.2 6.3C-7 6.9-5.6 6.9-5 6.5L-5.6 4.4L-8.2 4.4Z" fill="#0f172a" opacity=".7"/>
+<ellipse cx="16" cy="-3.5" rx=".9" ry="1.1" fill="#1e293b"/><ellipse cx="16" cy="3.5" rx=".9" ry="1.1" fill="#1e293b"/>
+<path d="M-11.6-4.9C-10.6-5.4-9.2-5.4-8.6-5.1L-9-3.6L-11.6-3.6ZM-11.6 4.9C-10.6 5.4-9.2 5.4-8.6 5.1L-9 3.6L-11.6 3.6Z" fill="#0f172a" opacity=".7"/>
 <path d="${HG_TAIL}" fill="${c}" stroke="#fff" stroke-width=".8" stroke-linejoin="round"/><path d="${HG_TAIL}" fill="url(#hgwsh)"/>
 <path d="M20-.8L32.5-.5L32.5 .5L20 .8Z" fill="#0f172a" opacity=".4"/>
 <path d="${HG_WING}" transform="translate(1.2 1.6)" fill="#000" opacity=".22"/>
 <path d="${HG_WING}" fill="${c}" stroke="#fff" stroke-width=".9" stroke-linejoin="round"/><path d="${HG_WING}" fill="url(#hgwsh)"/>
 <path d="M10.5-22L16.5-22.3M10.5 22L16.5 22.3" stroke="#fff" stroke-width="1.3" opacity=".8"/>
-<path d="M-23 0C-22-2.5-16-3-8-2.8C-6.6-2.6-6.6 2.6-8 2.8C-16 3-22 2.5-23 0Z" fill="url(#hgcan)" stroke="#e2e8f0" stroke-width=".5"/><path d="M-15-2.9V2.9" stroke="#e2e8f0" stroke-width=".7"/><path d="M-20.5-1.1C-17-2-12-2.1-9-1.9" stroke="#fff" stroke-width=".7" opacity=".7" fill="none"/></g>`;
+<path d="M-28 0C-27-2.2-21-2.6-14-2.5C-12.8-2.3-12.8 2.3-14 2.5C-21 2.6-27 2.2-28 0Z" fill="url(#hgcan)" stroke="#e2e8f0" stroke-width=".5"/><path d="M-20.5-2.6V2.6" stroke="#e2e8f0" stroke-width=".7"/><path d="M-26-1C-23-1.8-18-2-15-1.8" stroke="#fff" stroke-width=".7" opacity=".7" fill="none"/></g>`;
 const hgSmk=(v,x,y)=>{if(!v)return '';const [l,r]=v.split(' / ');const d=(c,dx)=>HG_SC[c]==='none'?`<g transform="translate(${x+dx} ${y})"><circle r="3.4" fill="#fff" stroke="#64748b" stroke-width="1.1"/><path d="M-2.6 2.6L2.6-2.6" stroke="#64748b" stroke-width="1.1"/></g>`:`<circle cx="${x+dx}" cy="${y}" r="3.6" fill="${HG_SC[c]}" stroke="#94a3b8" stroke-width="1"/>`;return d(l,0)+d(r,9)};
 /* alertes : citerne si un spare n'a pas le même plein que les titulaires (places 1 à 8) ; banc fumigène si un spare est en Blanc / Vide ou Vide / Vide */
 function hgAlerts(){const H=hgDB(),T=H.ac.filter(a=>/^L[1-8]$/.test(a.pos)&&a.fuel&&a.s!=='dep'),sp=H.ac.filter(a=>(/^S\d$/.test(a.pos)&&a.s!=='dep')||hgRes(a)),C={};T.forEach(a=>C[a.fuel]=(C[a.fuel]||0)+1);
@@ -6215,7 +6232,7 @@ function hgScene(){const H=hgDB(),ed=hgEd();
  g+=`<rect x="6" y="250" width="146" height="474" rx="18" fill="url(#hgroof)" stroke="#d3cb98" stroke-width="1.5"/>`;for(let i=1;i<6;i++)g+=`<path d="M16 ${337+77*(i-1)}h126" stroke="#d8d1a3" stroke-width="1" stroke-dasharray="3 4"/>`;g+=`<text x="16" y="266" class="hgtx2" style="font-size:12px">HM1</text>`;
  g+=`<g opacity=".55"><rect x="6" y="8" width="146" height="226" rx="16" fill="#8b9199"/><rect x="16" y="20" width="126" height="202" rx="10" fill="url(#hggr)"/></g>`;
  g+=`<path d="M168 0V${HG_H}" stroke="#f8fafc" stroke-width="2" opacity=".5"/><path d="M372 0V${HG_H}" stroke="#facc15" stroke-width="2" opacity=".6"/>`;
- Object.values(HG_POS).forEach(p=>{if(p.h){g+=`<text x="${p.x+64}" y="${p.y-20}" text-anchor="end" class="hgtx3">${p.l}</text>`;return}g+=`<circle cx="${p.x}" cy="${p.y}" r="28" fill="none" stroke="#f8fafc" stroke-width="1.6" opacity=".7"/><path d="M${p.x+30} ${p.y}h${p.sp?40:22}" stroke="#f8fafc" stroke-width="1.4" opacity=".55"/><text x="${p.x-44}" y="${p.y+5}" text-anchor="middle" class="hgtx">${p.l}</text>`});
+ Object.values(HG_POS).forEach(p=>{if(p.h){g+=`<text x="${p.x+64}" y="${p.y-20}" text-anchor="end" class="hgtx3">${p.l}</text>`;return}g+=`<circle cx="${p.x}" cy="${p.y}" r="28" fill="none" stroke="#f8fafc" stroke-width="1.6" opacity=".7"/>${p.sp?'':`<path d="M${p.x+30} ${p.y}h22" stroke="#f8fafc" stroke-width="1.4" opacity=".55"/>`}<text x="${p.x-(p.sp?38:44)}" y="${p.y+5}" text-anchor="middle" class="hgtx"${p.sp?' style="font-size:12px"':''}>${p.l}</text>`});
  H.ac.filter(a=>a.pos&&HG_POS[a.pos]).forEach(a=>{const p=HG_POS[a.pos],st=hgRes(a)?['Réserve','#94a3b8']:HG_ST[a.s]||['Sans état','#64748b','#e2e8f0'];
   const big=esc(a.fin||'#'+a.sn),small=a.fin?'#'+esc(a.sn):'sans n°';
   let lab;
@@ -6225,51 +6242,80 @@ function hgScene(){const H=hgDB(),ed=hgEd();
   else{const who=[a.pil?hgNm(a.pil).replace(/^Athos (\d+)\s*·\s*/,'A$1 '):'',a.pax?'Pax '+a.pax:''].filter(Boolean).join(' · ');const who2=who.length>22?who.slice(0,21)+'…':who,fu=a.fuel||(a.s==='rmo'?'Remise en œuvre':'');
    const w=112,hh=who?40:29;
    lab=`<g transform="translate(41 ${-hh/2})"><rect width="${w}" height="${hh}" rx="10" fill="#fff" opacity=".95" filter="url(#hgsh2)"/><rect x="0" y="0" width="3.5" height="${hh}" rx="1.75" fill="${st[1]}"/><text x="10" y="12.5" class="hgbg">${big} <tspan class="hgsn">${small}</tspan></text>${hgSmk(a.smk,w-21,9)}<text x="10" y="24" class="hgsub" ${a.s==='rmo'&&!a.fuel?'style="fill:#a16207;font-weight:700"':''}>${esc(fu)}</text>${who?`<text x="10" y="35" class="hgsub hgwho">${esc(who2)}</text>`:''}</g>`}
-  g+=`<g class="hgac ${ed?'drag':''}" data-id="${esc(a.id)}" transform="translate(${p.x} ${p.y})"><circle r="30" fill="transparent"/>${hgPlane(st[1],p.h?1:1.2)}${lab}</g>`});
+  g+=`<g class="hgac ${ed?'drag':''}" data-id="${esc(a.id)}" transform="translate(${p.x} ${p.y})"><circle r="30" fill="transparent"/>${p.r?`<g transform="rotate(${p.r})">${hgPlane(st[1],1.1)}</g>`:hgPlane(st[1],p.h?1:1.2)}${lab}</g>`});
  const AL=hgAlerts();
  [...new Set([...AL.cit,...AL.banc])].forEach(a=>{const p=HG_POS[a.pos];let x=p.x-30;[[AL.cit.includes(a),'⛽'],[AL.banc.includes(a),'💨']].filter(z=>z[0]).forEach(([_,e])=>{g+=`<g class="hgbad" transform="translate(${x} ${p.y-22})"><circle r="9" fill="#f59e0b" stroke="#fff" stroke-width="1.6"/><text y="3.6" text-anchor="middle" font-size="10">${e}</text></g>`;x+=20})});
- return `<svg viewBox="0 0 ${HG_W} ${HG_H}" class="hgsvg" id="hgsvg">${g}</svg>`}
+ const Z=hgZ();return `<svg viewBox="${Z.x} ${Z.y} ${Z.w} ${Z.w*HG_H/HG_W}" class="hgsvg" id="hgsvg">${g}</svg>`}
 function vHg(tabs){const H=hgDB(),ed=hgEd(),n=k=>H.ac.filter(a=>a.s===k&&!hgRes(a)).length,nr=H.ac.filter(hgRes).length,off=H.ac.filter(a=>!a.pos||!HG_POS[a.pos]);
  setTimeout(hgBind,0);
  return `${NOTE}<div class="head"><div><h1>Hangar</h1><p class="muted">${ed?'Glissez un avion pour le déplacer, touchez-le pour sa fiche.':'État des Alphajet, mis à jour par les mécanos.'}</p></div></div>${tabs}
  <div class="hgsum"><span class="hgp ok"><b>${n('ok')}</b> prêts au vol</span><span class="hgp rmo"><b>${n('rmo')}</b> en remise en œuvre</span><span class="hgp dep"><b>${n('dep')}</b> en dépannage</span>${nr?`<span class="hgp res"><b>${nr}</b> en réserve au hangar</span>`:''}</div>${(()=>{const AL=hgAlerts(),L=[];
  AL.cit.forEach(a=>L.push(`<div class="hgal"><span class="hgali">⛽</span><div><b>Citerne d'alerte</b><span>${esc(hgWhere(a))} (${esc(hgLab(a))}) ${a.fuel?'en '+esc(a.fuel):'sans plein renseigné'} · titulaires en ${esc(AL.ref)}</span></div></div>`));
  AL.banc.forEach(a=>L.push(`<div class="hgal"><span class="hgali">💨</span><div><b>Banc fumigène en alerte</b><span>${esc(hgWhere(a))} (${esc(hgLab(a))}) en ${esc(a.smk)}</span></div></div>`));return L.length?`<div class="hgals">${L.join('')}</div>`:''})()}
- <div class="hgwrap">${hgScene()}</div>
+ ${ed?hgSetH():''}<div class="hgwrap">${hgScene()}<div class="hgzm"><button onclick="hgZb(1.6)" aria-label="Zoomer">+</button><button onclick="hgZb(1/1.6)" aria-label="Dézoomer">−</button><button id="hgz0" ${hgZ().w>=HG_W?'hidden':''} onclick="hgZset({x:0,y:0,w:HG_W})" aria-label="Vue entière">⤢</button></div></div>
  ${off.length||ed?`<div class="card hgoff"><div class="mtk">Hors ligne ${off.length?'· '+off.length:''}</div><div class="hgchips">${off.map(a=>`<button class="hgchip" onclick="hgOpen('${esc(a.id)}')"><svg viewBox="-32 -22 64 44" width="34" height="24"><path d="${HG_AC}" fill="${(HG_ST[a.s]||[0,'#64748b'])[1]}"/></svg><b>${esc(hgLab(a))}</b><small>#${esc(a.sn)}</small></button>`).join('')||'<span class="small muted">Tous les avions sont placés.</span>'}</div>${ed?`<div class="pcbtns" style="margin-top:10px"><button class="btn sm" onclick="hgFleet()">✈︎ Gérer la flotte (${H.ac.length})</button></div>`:''}</div>`:''}`}
+const HG_COUL={2:'Bleu',6:'Bleu',8:'Bleu',3:'Rouge',5:'Rouge',7:'Rouge'};   // couleurs de l'outil Série (tricolore Ouragan : 2-8-6 bleu, 3-7-5 rouge ; 1 et 4 blanc)
+const hgGrp=w=>hgDB().ac.filter(a=>a.s!=='dep'&&(w==='t'?/^L[1-8]$/.test(a.pos):(/^S\d$/.test(a.pos)||hgRes(a))));
+const hgCur=(w,k)=>{const L=hgGrp(w);if(!L.length)return '';const v=L.map(a=>a[k]||'');if(k==='smk'&&w==='t'&&L.every(a=>(a.smk||'')===hgSmkOf(a,'Blanc / Couleur')))return 'Blanc / Couleur';return v.every(x=>x===v[0])?v[0]:'mixte'};
+const hgSmkOf=(a,v)=>{if(v!=='Blanc / Couleur')return v;const n=+String(a.pos).slice(1),c=HG_COUL[n];return c?'Blanc / '+c:'Blanc / Blanc'};
+function hgGSel(k,v){S.hgG=S.hgG||{};S.hgG[k]=v;render()}
+async function hgGApply(k){const w=k[0],f=k[1]==='f'?'fuel':'smk',v=(S.hgG||{})[k];if(!v){toast('Choisissez d\'abord une valeur');return}const L=hgGrp(w);if(!L.length){toast(w==='t'?'Aucun titulaire sur la ligne':'Aucun spare');return}
+ L.forEach(a=>a[f]=f==='smk'?hgSmkOf(a,v):v);delete S.hgG[k];const ok=await hgSave(L);if(ok!==false)toast(`✓ ${f==='fuel'?'Plein':'Fumigènes'} des ${w==='t'?'titulaires':'spares'} : ${v} (${L.length} avion${L.length>1?'s':''})`)}
+function hgSetH(){const G=S.hgG||{},row=(k,ic,lab,sub,opts,man)=>{const w=k[0],f=k[1]==='f'?'fuel':'smk',cur=hgCur(w,f),pend=G[k]!=null?G[k]:'',n=hgGrp(w).length;
+  return `<div class="hgsr"><div class="hgsl"><span>${ic}</span><div><b>${lab}</b><small>${sub} · ${n} avion${n>1?'s':''} · actuel : ${esc(cur||'—')}</small></div></div>
+  <div class="hgseg2">${opts.map(v=>`<button class="${(pend||cur)===v?'on':''}${pend===v?' pend':''}" onclick="hgGSel('${k}','${v}')">${v}</button>`).join('')}</div>
+  <div class="hgsa">${man?`<input class="in" placeholder="À la main (ex. 1 600 L)" value="${esc(pend&&!opts.includes(pend)?pend:'')}" onchange="hgGSel('${k}',this.value.trim())">`:'<span></span>'}<button class="btn ${pend&&pend!==cur?'pri':''} sm" onclick="hgGApply('${k}')">✓ Valider</button></div></div>`};
+ return `<details class="card hgset" ${S.hgSetO?'open':''} ontoggle="S.hgSetO=this.open"><summary><b>Pleins et fumigènes de la ligne</b><span class="small muted">titulaires 1 à 8 · spares 9 à 11</span></summary>
+ ${row('tf','⛽','Plein des titulaires','Places 1 à 8',HG_FUEL,1)}${row('sf','⛽','Plein des spares','Spares et réserve au hangar',HG_FUEL,1)}
+ ${row('ts','💨','Fumigènes des titulaires','Couleur : 2-6-8 bleu, 3-5-7 rouge, 1 et 4 blanc',['Blanc / Blanc','Blanc / Couleur','Blanc / Vide','Vide / Vide'],0)}${row('ss','💨','Fumigènes des spares','De base en Blanc / Vide',HG_SMK,0)}</details>`}
+/* zoom : boutons, pincement à deux doigts ; on se déplace en glissant le fond */
+const hgZ=()=>S.hgZ||{x:0,y:0,w:HG_W};
+function hgZset(Z){const w=Math.max(110,Math.min(HG_W,Z.w)),h=w*HG_H/HG_W;Z={w,x:Math.max(0,Math.min(HG_W-w,Z.x)),y:Math.max(0,Math.min(HG_H-h,Z.y))};S.hgZ=Z;const sv=$('hgsvg');if(sv)sv.setAttribute('viewBox',`${Z.x} ${Z.y} ${Z.w} ${h}`);const b=$('hgz0');if(b)b.hidden=w>=HG_W}
+function hgZb(f,cx,cy){const Z=hgZ(),h=Z.w*HG_H/HG_W;cx=cx==null?Z.x+Z.w/2:cx;cy=cy==null?Z.y+h/2:cy;const w=Math.max(110,Math.min(HG_W,Z.w/f)),k=w/Z.w;hgZset({w,x:cx-(cx-Z.x)*k,y:cy-(cy-Z.y)*k})}
 /* glisser-déposer : on lâche près d'une place libre (ou occupée : les deux avions échangent) */
 let HGD=null;
-function hgBind(){const sv=$('hgsvg');if(!sv)return;const pt=e=>{const r=sv.getBoundingClientRect();return{x:(e.clientX-r.left)*HG_W/r.width,y:(e.clientY-r.top)*HG_H/r.height}};
+function hgBind(){const sv=$('hgsvg');if(!sv)return;const pt=e=>{const r=sv.getBoundingClientRect(),Z=hgZ();return{x:Z.x+(e.clientX-r.left)*Z.w/r.width,y:Z.y+(e.clientY-r.top)*Z.w*HG_H/HG_W/r.height}};
+ const PP=new Map();let G0=null;
+ sv.addEventListener('pointerdown',e=>{if(e.target.closest('.hgac'))return;PP.set(e.pointerId,{x:e.clientX,y:e.clientY});sv.setPointerCapture(e.pointerId);const L=[...PP.values()];G0=L.length===2?{d:Math.hypot(L[0].x-L[1].x,L[0].y-L[1].y),Z:{...hgZ()},c:pt({clientX:(L[0].x+L[1].x)/2,clientY:(L[0].y+L[1].y)/2})}:{p:{x:e.clientX,y:e.clientY},Z:{...hgZ()}}});
+ sv.addEventListener('pointermove',e=>{if(!PP.has(e.pointerId)||!G0)return;PP.set(e.pointerId,{x:e.clientX,y:e.clientY});const L=[...PP.values()],r=sv.getBoundingClientRect();
+  if(L.length===2&&G0.d){const d=Math.hypot(L[0].x-L[1].x,L[0].y-L[1].y),w=Math.max(110,Math.min(HG_W,G0.Z.w*G0.d/d)),k=w/G0.Z.w;hgZset({w,x:G0.c.x-(G0.c.x-G0.Z.x)*k,y:G0.c.y-(G0.c.y-G0.Z.y)*k});return}
+  if(L.length===1&&G0.p){const dx=e.clientX-G0.p.x,dy=e.clientY-G0.p.y;if(G0.Z.w>=HG_W){window.scrollBy(0,-(dy-(G0.sy||0)));G0.sy=dy;return}const s=G0.Z.w/r.width;hgZset({w:G0.Z.w,x:G0.Z.x-dx*s,y:G0.Z.y-dy*s})}});
+ const up=e=>{PP.delete(e.pointerId);G0=PP.size===1?{p:[...PP.values()][0],Z:{...hgZ()}}:null};sv.addEventListener('pointerup',up);sv.addEventListener('pointercancel',up);
+ sv.addEventListener('wheel',e=>{if(!e.ctrlKey)return;e.preventDefault();hgZb(e.deltaY<0?1.15:1/1.15,pt(e).x,pt(e).y)},{passive:false});
  sv.querySelectorAll('.hgac').forEach(el=>{el.addEventListener('pointerdown',e=>{const id=el.dataset.id,a=hgDB().ac.find(x=>x.id===id);if(!a)return;HGD={id,el,p0:pt(e),moved:false,pos:a.pos};if(hgEd()){el.setPointerCapture(e.pointerId);e.preventDefault()}});
-  el.addEventListener('pointermove',e=>{if(!HGD||HGD.el!==el||!hgEd())return;const q=pt(e),dx=q.x-HGD.p0.x,dy=q.y-HGD.p0.y;if(!HGD.moved&&Math.hypot(dx,dy)<6)return;HGD.moved=true;const P=HG_POS[HGD.pos];el.setAttribute('transform',`translate(${P.x+dx} ${P.y+dy}) scale(1.12)`);el.classList.add('lift');
+  el.addEventListener('pointermove',e=>{if(!HGD||HGD.el!==el||!hgEd())return;const q=pt(e),dx=q.x-HGD.p0.x,dy=q.y-HGD.p0.y;if(!HGD.moved&&Math.hypot(dx,dy)<6)return;HGD.moved=true;const P=HG_POS[HGD.pos];el.setAttribute('transform',`translate(${P.x+dx} ${P.y+dy}) scale(1.06)`);el.classList.add('lift');
    const k=hgNear(q);sv.querySelectorAll('.hgtarget').forEach(t=>t.remove());if(k){const T=HG_POS[k];sv.insertAdjacentHTML('afterbegin','');const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('class','hgtarget');c.setAttribute('cx',T.x);c.setAttribute('cy',T.y);c.setAttribute('r',31);sv.insertBefore(c,sv.querySelector('.hgac'))}});
   el.addEventListener('pointerup',e=>{if(!HGD||HGD.el!==el)return;const d=HGD;HGD=null;if(!d.moved){hgOpen(d.id);return}const k=hgNear(pt(e));if(!k||k===d.pos){render();return}hgMove(d.id,k)});
   el.addEventListener('pointercancel',()=>{HGD=null;render()})})}
 function hgNear(q){let b=null,bd=48;Object.entries(HG_POS).forEach(([k,p])=>{const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;b=k}});return b}
 function hgMove(id,k){const H=hgDB(),a=H.ac.find(x=>x.id===id),b=H.ac.find(x=>x.pos===k&&x.id!==id),L=[];if(!a)return;
- if(b){b.pos=a.pos||'';L.push(b)}a.pos=k;if(!HG_POS[k].h&&a.s==='dep'){a.s='rmo'}if(!a.s)a.s=HG_POS[k].h?'dep':'rmo';L.unshift(a);hgSave(L)}
-async function hgSave(L){render();if($('ov')&&!$('ov').hidden&&S.hgSel)$('sheet').innerHTML=hgSheet(S.hgSel);if(!isOnline()){save();return}
- let r;try{r=await api('hgSet',{L:JSON.parse(JSON.stringify(L))})}catch(e){r={error:'Connexion impossible : non enregistré'}}if(r&&r.error){toast(r.error);return}DB.hg=r.hg;try{if(typeof BASE!=='undefined'&&BASE)BASE.hg=JSON.parse(JSON.stringify(r.hg))}catch(_){}render()}
+ if(b){b.pos=a.pos||'';L.push(b)}a.pos=k;if(HG_POS[k].sp&&!a.smk)a.smk='Blanc / Vide';if(!HG_POS[k].h&&a.s==='dep'){a.s='rmo'}if(!a.s)a.s=HG_POS[k].h?'dep':'rmo';L.unshift(a);return hgSave(L)}
+async function hgSave(L){render();if($('ov')&&!$('ov').hidden&&S.hgSel)$('sheet').innerHTML=hgSheet(S.hgSel);if(!isOnline()){save();return true}
+ let r;try{r=await api('hgSet',{L:JSON.parse(JSON.stringify(L))})}catch(e){r={error:'Connexion impossible : non enregistré'}}if(r&&r.error){toast(r.error);return false}DB.hg=r.hg;try{if(typeof BASE!=='undefined'&&BASE)BASE.hg=JSON.parse(JSON.stringify(r.hg))}catch(_){}render();return true}
 function hgFreePos(h){const H=hgDB(),occ=new Set(H.ac.map(a=>a.pos));return Object.keys(HG_POS).filter(k=>!!HG_POS[k].h===h&&!occ.has(k))[0]||''}
 /* fiche d'un avion */
-function hgOpen(id){S.hgSel=id;openSheet(()=>hgSheet(id))}
+function hgOpen(id){const a=hgDB().ac.find(x=>x.id===id);if(!a)return;S.hgSel=id;S.hgDr=JSON.parse(JSON.stringify(a));openSheet(()=>hgSheet(id))}
+function hgDf(k,v){const d=S.hgDr;if(!d)return;d[k]=v;if(k==='s'){if(v==='dep'&&!(HG_POS[d.pos]||{}).h)d.pos=hgFreePos(true)||d.pos;else if(v!=='dep'&&!d.pos)d.pos=hgFreePos(false)||d.pos}$('sheet').innerHTML=hgSheet(S.hgSel)}
+const HG_DK=['s','pos','meca','pil','pax','fuel','smk','panne','eta'],hgDirty=()=>{const d=S.hgDr,a=d&&hgDB().ac.find(x=>x.id===d.id);return !!a&&HG_DK.some(k=>(d[k]||'')!==(a[k]||''))};
+async function hgValid(){const d=S.hgDr,a=d&&hgDB().ac.find(x=>x.id===d.id);if(!a)return;if(!hgDirty()){S.hgSel=null;closeSheet();return}const pos=d.pos||'';HG_DK.forEach(k=>{if(k!=='pos')a[k]=d[k]||''});S.hgSel=null;closeSheet();
+ let ok;if(pos&&pos!==a.pos)ok=await hgMove(a.id,pos);else{a.pos=pos;ok=await hgSave([a])}if(ok!==false)toast('✓ Enregistré · '+(a.fin?'dérive '+a.fin+' · ':'')+'#'+a.sn)}
 function hgSet(id,k,v){const a=hgDB().ac.find(x=>x.id===id);if(!a)return;a[k]=v;
  if(k==='s'){if(v==='dep'&&!(HG_POS[a.pos]||{}).h)a.pos=hgFreePos(true)||a.pos;else if(v!=='dep'&&!a.pos)a.pos=hgFreePos(false)||a.pos}
  hgSave([a])}
-function hgSheet(id){const a=hgDB().ac.find(x=>x.id===id);if(!a)return `<div class="sb"><p>Avion introuvable.</p></div>`;const ed=hgEd(),st=HG_ST[a.s]||['Sans état','#64748b','#e2e8f0'],ro=!ed?'disabled':'';
- const sel=(k,L,ph)=>`<select class="in" ${ro} onchange="hgSet('${esc(id)}','${k}',this.value)"><option value="">${ph}</option>${L.map(x=>`<option value="${x.id}" ${a[k]===x.id?'selected':''}>${esc(hgNm(x.id))}</option>`).join('')}</select>`;
- const chips=(k,L)=>`<div class="hgseg2">${L.map(v=>`<button class="${a[k]===v?'on':''}" ${ro} onclick="hgSet('${esc(id)}','${k}',${a[k]===v?"''":`'${v}'`})">${v}</button>`).join('')}</div>`;
- const txt=(k,ph,ta)=>ta?`<textarea class="in" rows="2" ${ro} placeholder="${ph}" onchange="hgSet('${esc(id)}','${k}',this.value.trim())">${esc(a[k]||'')}</textarea>`:`<input class="in" ${ro} placeholder="${ph}" value="${esc(a[k]||'')}" onchange="hgSet('${esc(id)}','${k}',this.value.trim())">`;
+function hgSheet(id){const a0=hgDB().ac.find(x=>x.id===id),a=S.hgDr&&S.hgDr.id===id?S.hgDr:a0;if(!a)return `<div class="sb"><p>Avion introuvable.</p></div>`;const ed=hgEd(),st=HG_ST[a.s]||['Sans état','#64748b','#e2e8f0'],ro=!ed?'disabled':'';
+ const sel=(k,L,ph)=>`<select class="in" ${ro} onchange="hgDf('${k}',this.value)"><option value="">${ph}</option>${L.map(x=>`<option value="${x.id}" ${a[k]===x.id?'selected':''}>${esc(hgNm(x.id))}</option>`).join('')}</select>`;
+ const chips=(k,L)=>`<div class="hgseg2">${L.map(v=>`<button class="${a[k]===v?'on':''}" ${ro} onclick="hgDf('${k}',${a[k]===v?"''":`'${v}'`})">${v}</button>`).join('')}</div>`;
+ const txt=(k,ph,ta)=>ta?`<textarea class="in" rows="2" ${ro} placeholder="${ph}" onchange="hgDf('${k}',this.value.trim())">${esc(a[k]||'')}</textarea>`:`<input class="in" ${ro} placeholder="${ph}" value="${esc(a[k]||'')}" onchange="hgDf('${k}',this.value.trim())">`;
  const fly=a.s==='ok'||a.s==='rmo';
  return `<div class="sh"><div class="hgbig" style="background:${st[2]}"><svg viewBox="-32 -22 64 44" width="64" height="46"><path d="${HG_AC}" fill="${st[1]}"/></svg></div><div class="t"><div class="q">${a.fin?'Dérive '+esc(a.fin):'Sans n° de dérive'} · <span class="muted">#${esc(a.sn)}</span></div><div class="small" style="color:${st[3]||st[1]};font-weight:700">${st[0]}${a.pos&&HG_POS[a.pos]?' · '+(HG_POS[a.pos].h?'HM1 '+HG_POS[a.pos].l+(hgRes(a)?' (réserve)':''):a.pos[0]==='S'?'spare '+HG_POS[a.pos].l:'place '+HG_POS[a.pos].l):' · hors ligne'}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
- <div class="sb"><div class="hgseg">${Object.entries(HG_ST).map(([k,v])=>`<button class="${a.s===k?'on':''}" style="--c:${v[3]||v[1]};--b:${v[2]}" ${ro} onclick="hgSet('${esc(id)}','s','${k}')">${v[0]}</button>`).join('')}</div>
- ${fly?`<label class="l">Mécano affecté</label>${sel('meca',hgMecas(),'—')}
-  <div class="hgg2"><div><label class="l">Pilote</label>${sel('pil',hgPil(),'—')}</div><div><label class="l">Pistard</label>${sel('pist',hgPist(),'—')}</div></div>
-  <label class="l">Carburant</label>${chips('fuel',HG_FUEL)}<input class="in" style="margin-top:6px" ${ro} placeholder="Autre plein, à la main (ex. 1 600 L)" value="${esc(a.fuel&&!HG_FUEL.includes(a.fuel)?a.fuel:'')}" onchange="hgSet('${esc(id)}','fuel',this.value.trim())"><label class="l">Fumigène (gauche / droite)</label>${chips('smk',HG_SMK)}
+ <div class="sb"><div class="hgseg">${Object.entries(HG_ST).map(([k,v])=>`<button class="${a.s===k?'on':''}" style="--c:${v[3]||v[1]};--b:${v[2]}" ${ro} onclick="hgDf('s','${k}')">${v[0]}</button>`).join('')}</div>
+ ${fly?`<div class="hgg2"><div><label class="l">Mécano</label>${sel('meca',hgMecas(),'—')}</div><div><label class="l">Pilote</label>${sel('pil',hgPil(),'—')}</div></div>
+  <label class="l">Carburant</label>${chips('fuel',HG_FUEL)}<input class="in" style="margin-top:6px" ${ro} placeholder="Autre plein, à la main (ex. 1 600 L)" value="${esc(a.fuel&&!HG_FUEL.includes(a.fuel)?a.fuel:'')}" onchange="hgDf('fuel',this.value.trim())"><label class="l">Fumigène (gauche / droite)</label>${chips('smk',HG_SMK)}
   <label class="l">Pax prévu</label>${txt('pax','Nom, même extérieur à l\'unité')}`:''}
  ${a.s==='dep'?`<label class="l">Ce qu'il a</label>${txt('panne','Panne, travaux en cours…',1)}<label class="l">Durée estimée</label>${txt('eta','ex. 2 h, demain midi, 3 jours')}`:''}
- <label class="l">Emplacement</label><select class="in" ${ro} onchange="hgMove('${esc(id)}',this.value)"><option value="" ${!a.pos?'selected':''}>Hors ligne</option><optgroup label="Ligne de vol (sud → nord)">${[1,2,3,4,5,6,7,8].map(n=>`<option value="L${n}" ${a.pos==='L'+n?'selected':''}>Place ${n}</option>`).join('')}<option value="S1" ${a.pos==='S1'?'selected':''}>Spare S1</option><option value="S2" ${a.pos==='S2'?'selected':''}>Spare S2</option></optgroup><optgroup label="Hangar HM1">${[1,2,3,4,5,6].map(n=>`<option value="H${n}" ${a.pos==='H'+n?'selected':''}>HM1 H${n}</option>`).join('')}</optgroup></select>
- ${a.t?`<p class="small muted" style="margin-top:10px">Mis à jour par ${esc(a.by||'?')} · ${new Date(+a.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</p>`:''}</div>`}
+ <label class="l">Emplacement</label><select class="in" ${ro} onchange="hgDf('pos',this.value)"><option value="" ${!a.pos?'selected':''}>Hors ligne</option><optgroup label="Ligne de vol (sud → nord)">${[1,2,3,4,5,6,7,8].map(n=>`<option value="L${n}" ${a.pos==='L'+n?'selected':''}>Place ${n}</option>`).join('')}<option value="S1" ${a.pos==='S1'?'selected':''}>Spare 9</option><option value="S2" ${a.pos==='S2'?'selected':''}>Spare 10</option><option value="S3" ${a.pos==='S3'?'selected':''}>Spare 11</option></optgroup><optgroup label="Hangar HM1">${[1,2,3,4,5,6].map(n=>`<option value="H${n}" ${a.pos==='H'+n?'selected':''}>HM1 H${n}</option>`).join('')}</optgroup></select>
+ ${a.t?`<p class="small muted" style="margin-top:10px">Mis à jour par ${esc(a.by||'?')} · ${new Date(+a.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</p>`:''}
+ ${ed?`<div class="hgfoot"><button class="btn" onclick="S.hgSel=null;closeSheet()">Annuler</button><button class="btn pri" onclick="hgValid()">${hgDirty()?'✓ Valider':'Fermer'}</button></div>`:''}</div>`}
 /* flotte : la liste de nos avions (n° de série 2 ou 3 chiffres, n° de dérive facultatif) */
 function hgFleet(){openSheet(hgFleetH)}
 function hgFleetH(){const H=hgDB();return `<div class="sh"><div class="t"><div class="q">La flotte</div><div class="small muted">${H.ac.length} Alphajet</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">
