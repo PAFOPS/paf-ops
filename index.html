@@ -640,6 +640,8 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .hgset{max-width:560px;margin:0 auto 12px;padding:0}.hgset summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-direction:column;gap:2px}.hgset summary::-webkit-details-marker{display:none}.hgset summary b:after{content:' ›';color:var(--muted)}.hgset[open] summary b:after{content:' ⌄'}
 .hgsr{padding:10px 14px;border-top:1px solid var(--line);display:grid;gap:8px}.hgsl{display:flex;gap:10px;align-items:center}.hgsl>span{font-size:18px}.hgsl b{display:block;font-size:14px}.hgsl small{color:var(--muted);font-size:12px}
 .hgsa{display:flex;gap:8px;align-items:center;justify-content:space-between}.hgsa .in{max-width:220px}.hgseg2 button.pend{outline:2px solid #f59e0b;outline-offset:1px}
+.hgtools{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:560px;margin:0 auto 12px}.hgtool{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);box-shadow:0 1px 3px rgba(15,23,42,.06);cursor:pointer}.hgtool .hgti{grid-row:span 2;font-size:22px;width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center}.hgtool b{font-size:13.5px;line-height:1.15}.hgtool small{color:var(--muted);font-size:12px}
+.hgbigc{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}.hgbigc button{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px;border-radius:14px;border:2px solid var(--line);background:var(--surface2);font-weight:700;font-size:15px;color:var(--ink)}.hgbigc button.on{border-color:var(--navy);background:var(--navy);color:#fff}
 .hgfoot{position:sticky;bottom:0;display:flex;justify-content:flex-end;gap:8px;padding:12px 0 4px;margin-top:12px;background:var(--surface);border-top:1px solid var(--line)}
 .hgals{display:grid;gap:8px;max-width:560px;margin:0 auto 12px}.hgal{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:16px;background:#fff7ed;border:1.5px solid #fdba74;color:#7c2d12}.hgal b{display:block;font-size:14px}.hgal span{font-size:13px}.hgali{font-size:22px;width:38px;height:38px;border-radius:12px;background:#fed7aa;display:grid;place-items:center;flex:none}.hgbad{animation:hgpulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes hgpulse{50%{opacity:.55}}
 .hgbg{font:800 11.5px -apple-system,'SF Pro Display',Figtree,system-ui,sans-serif;fill:#0f172a}.hgsn{font:600 8.5px -apple-system,Figtree,system-ui,sans-serif;fill:#64748b}.hgsub{font:500 8.5px -apple-system,Figtree,system-ui,sans-serif;fill:#1e293b}.hgwho{fill:#1d4ed8}.hgdep{fill:#991b1b;font-weight:700}
@@ -649,6 +651,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .hgseg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px}.hgseg button{border:2px solid var(--line);background:var(--surface2);border-radius:14px;padding:12px 4px;font-weight:700;font-size:13px;color:var(--ink)}.hgseg button.on{border-color:var(--c);background:var(--b);color:var(--c)}
 .hgseg2{display:flex;flex-wrap:wrap;gap:6px}.hgseg2 button{border:1.5px solid var(--line);background:var(--surface2);border-radius:999px;padding:7px 12px;font-weight:600;font-size:13px;color:var(--ink)}.hgseg2 button.on{background:var(--navy);border-color:var(--navy);color:#fff}
 .hgg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hgfl{display:flex;align-items:flex-end;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}.hgfl label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);flex:1}.hgfl .in{margin-top:2px}.hgdot{width:12px;height:12px;border-radius:50%;flex:none;margin-bottom:14px}.hgfl.add{border:0;margin-top:6px}
+.rgali{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--ink);font-size:15px;display:flex;flex-direction:column;gap:2px}.rgali b{font-size:22px;color:#475569}.rgali small{color:var(--muted);font-size:12px}
 .sugb{color:#d97706}.sugb svg{filter:drop-shadow(0 0 6px rgba(250,204,21,.45))}
 .sgk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.sgk button{border:2px solid var(--line);background:var(--surface2);border-radius:16px;padding:12px 6px;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px}.sgk button span{font-size:26px;line-height:1}.sgk button.on{border-color:#f59e0b;background:rgba(250,204,21,.16)}
 .sgt{min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
@@ -1149,6 +1152,14 @@ const ROLES=[
  {k:'cst',l:'CST',side:'paf',i:'gear',c1:'#ef7f3a',c2:'#b4441a'},
  {k:'comm',l:'Comm',side:'paf',i:'mega',c1:'#ec4899',c2:'#be185d'},
  {k:'visit',l:'Pilote PAF',side:'suivi',i:'eye',c1:'#64748b',c2:'#1e293b'},
+ {k:'dep',l:'DEP',side:'suivi',grp:1,i:'wrench',c1:'#f59e0b',c2:'#c2410c'},
+ {k:'piste',l:'Piste',side:'suivi',grp:1,i:'cone',c1:'#22c55e',c2:'#15803d'},
+ {k:'bt',l:'BT',side:'suivi',grp:1,i:'wrench',c1:'#8b5cf6',c2:'#5b21b6'},
+ {k:'secr',l:'Secrétaires',side:'suivi',grp:1,i:'headset',c1:'#14b8a6',c2:'#0f766e'},
+ {k:'mops',l:'Marqueuses',side:'suivi',grp:1,i:'pen',c1:'#f472b6',c2:'#be185d'},
+ {k:'photo',l:'Photo',side:'suivi',grp:1,i:'camera',c1:'#a855f7',c2:'#7e22ce'},
+ {k:'arta',l:'ARTA',side:'suivi',grp:1,i:'gear',c1:'#ef7f3a',c2:'#b4441a'},
+ {k:'chauf',l:'Chauffeurs',side:'suivi',grp:1,i:'car',c1:'#06b6d4',c2:'#0e7490'},
  {k:'dmma',l:'DMMA',side:'suivi',i:'briefcase',c1:'#8b5cf6',c2:'#5b21b6'},
  {k:'osab',l:'OSAB',side:'suivi',i:'shield',c1:'#10b981',c2:'#047857'},
  {k:'bob',l:'OPS BOB (BA 701)',side:'suivi',i:'tower',c1:'#2563eb',c2:'#1e3a8a'},
@@ -1156,7 +1167,8 @@ const ROLES=[
  {k:'dv',l:'Directeur des vols',side:'meet',i:'radio',c1:'#6366f1',c2:'#3730a3'},
  {k:'ro',l:'Volontaires (lien public)',side:'ro',i:'hand',c1:'#94a3b8',c2:'#475569'}
 ];
-const RLm=Object.fromEntries(ROLES.map(r=>[r.k,r]));RLm.n5={k:'n5',l:'#5',num:'5',c1:'#6366f1',c2:'#4338ca'};
+const RLm=Object.fromEntries(ROLES.map(r=>[r.k,r]));
+const GRP_R=ROLES.filter(r=>r.grp).map(r=>r.k),vrole=r=>GRP_R.includes(r)?'visit':r;   // un groupe se comporte comme « Pilote PAF », avec ses propres droitsRLm.n5={k:'n5',l:'#5',num:'5',c1:'#6366f1',c2:'#4338ca'};
 // Contacts PAF affichés au directeur des vols (choisis dans l'annuaire)
 const KPX=[{k:'dt',l:'DT',d:'Partie technique'},{k:'cst',l:'CST',d:'Partie technique'},{k:'comm',l:'Comm',d:'Communication, relations publiques, médias'}];
 const OWN={team:['sec'],room:['sec'],tech:['cst','dt'],lodg:['sec'],food:['sec'],move:['sec'],room:['sec'],com:['comm']};
@@ -1183,6 +1195,7 @@ const DEF_RIGHTS={
  dv:{tech:'n',meet:'r',contacts:'r',annu:'n',aero:'e',logi:'n',com:'n',pdocs:'r',acces:'n'},
  ro:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'}
 };
+GRP_R.forEach(k=>DEF_RIGHTS[k]={...DEF_RIGHTS.visit});
 const FONC={DT:['DT'],CST:['CST'],DIR:['Commandant','Commandant en second','Chef des opérations','Officier sécurité des vols'],SEC:['Secrétaire opérations','Secrétaire'],MOPS:['Marqueuse ops'],PILOTES:['Athos 1 — leader','Athos 2','Athos 3','Athos 4','Athos 5','Athos 6','Athos 7','Athos 8','Athos 9','Chef des opérations','Remplaçant'],DEP:['DT — directeur technique','CST — chef des services techniques','Chef DEP','Mécanicien cellule','Mécanicien moteur','Mécanicien avionique','Magasinier'],PISTE:['Chef de piste','Mécanicien de piste','Chef d\'équipe'],COMM:['Officier communication','Adjoint communication','Community manager'],PHOTO:['Photographe','Vidéaste'],CHAUFFEUR:['Chauffeur camion','Chauffeur'],ARTA:['ARTA']};
 const GRADES=['Gal','Col','Lcl','Cdt','Cne','Lt','Slt','Asp','Maj','Adc','Adj','Sgc','Sgt','Cch','Cpl','Av1','Av'];
 const GRADEL={Gal:'Général',Col:'Colonel',Lcl:'Lieutenant-colonel',Cdt:'Commandant',Cne:'Capitaine',Lt:'Lieutenant',Slt:'Sous-lieutenant',Asp:'Aspirant',Maj:'Major',Adc:'Adjudant-chef',Adj:'Adjudant',Sgc:'Sergent-chef',Sgt:'Sergent',Cch:'Caporal-chef',Cpl:'Caporal',Av1:'Aviateur de 1re classe',Av:'Aviateur'};
@@ -1321,11 +1334,12 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794316198';
+const APP_V='1794323661';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
-const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';if(!role){const x=myRx();if(x&&x[area])return x[area]}return (DB.rights[r]||{})[area]||'n'};
+const myGrp=()=>(typeof ME!=='undefined'&&ME&&ME.grp)||S.asGrp||null;
+const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';if(!role){const x=myRx();if(x&&x[area])return x[area];const g=myGrp();if(g&&DB.rights[g])return DB.rights[g][area]||'n'}return (DB.rights[r]||{})[area]||'n'};
 const canEdit=a=>right(a)==='e';
 const canSee=a=>right(a)!=='n';
 const isMeetRole=()=>RLm[ROLE].side==='meet';
@@ -1371,7 +1385,7 @@ function render(){navMem();
   [$('nav-'+k),$('bnav-'+k)].forEach(b=>{b.hidden=!viewOk(k);b.innerHTML=ic(nm[k][1],18)+'<span>'+nm[k][0]+'</span>';if(cur)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
  });
  $('role').innerHTML=`<optgroup label="Patrouille de France">${ROLES.filter(r=>r.side==='paf').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Meeting">${ROLES.filter(r=>r.side==='meet').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Visiteurs">${ROLES.filter(r=>r.side==='suivi').map(r=>`<option value="${r.k}">${r.l}</option>`).join('')}</optgroup><optgroup label="Lien public"><option value="ro">Volontaires (lien public)</option></optgroup>`;
- $('role').value=ROLE;$('rolebox').hidden=!(ME&&ME.role==='chef');
+ $('role').value=ROLE;$('rolebox').hidden=!(ME&&ME.role==='chef');if(S.asGrp)$('role').value=S.asGrp;
  if(S.view==='meetings')setTimeout(duePopup,400);
  $('view').innerHTML=roBar()+({meetings:vMeetings,meeting:vMeeting,unite:vUnite,acces:vAcces,mails:vMails,perfos:vPerfos,retex:vRetex,recap:()=>{const m=DB.meetings.find(x=>x.id===S.mid);return m?vRecap(m):vMeetings()}}[S.view]||vMeetings)();
  relive();
@@ -3064,7 +3078,7 @@ function vZr(tabs){if(!S.zrW)S.zrW=pcCurWk();const w=S.zrW,ed=zrEd(),bob=isBob()
 
 
 /* ====================== Série : dessin 3D du ruban (tous les pilotes, chacun son espace ; leader et chef ops voient tout) ====================== */
-const SR_V='8379d0ecb8';
+const SR_V='de8c9dfe0f';
 const SR_HTML=null;
 const srMe=()=>isOnline()?(ME&&ME.role===ROLE?memOf(ME.mail):null):(ROLE==='visit'?DB.members.find(x=>x.id===S.ccAs)||null:null);
 const srCan=()=>tov('sr')!=null?!!tov('sr'):isChef()||(()=>{const x=srMe();return ROLE==='visit'&&!!x&&x.fn==='PILOTES'})()||(!isOnline()&&ROLE==='visit');
@@ -4919,9 +4933,9 @@ function vCad(tabs){const all=cadL(),f=S.cadF||'todo',ask=cadAsk(),give=cadGive(
 /* Les 8 ou 9 GPX d'un vol sont lus sur l'appareil (jamais envoyés) : roulage aller (1 à 25 kt) → qui est qui (ordre des numéros),
    vent arrière (du break, vers 300 kt, jusqu'au posé) et roulage retour dans l'ordre réel. Distance du N sur le N-1 à chaque instant.
    Le résumé (distances min / moyenne / max) est enregistré, les traces du vol archivées sur le Drive (op rgGpx, rejeu par rgGpxGet) : DB.rg = [{id, date, time, fl, ev, form, plan, n, out, dw, in, by, byMail, t}] */
-const RG_TX=[['CE','Colonne espacée',50],['QE','Quinconce espacée',50],['TE','Très espacé',100]];
-const RG_PL=[['n','Plan normal',500],['cc','Centre centre',700],['ce','Centre espacé',1000]];
-const RG_SEG=[['out','Roulage aller','#3b82f6'],['dw','Vent arrière / Finale','#a855f7'],['in','Roulage retour','#14b8a6']];
+const RG_TX=[['CE','Colonne espacée',50],['QE','Quinconce espacée',50],['TE','Très espacé',100],['DB','Données brutes',50]];   // DB : mêmes extractions et moyennes, aucune analyse de distance (tout en gris)
+const RG_PL=[['n','Plan normal',500],['cc','Centre centre',700],['ce','Centre espacé',1000],['db','Données brutes',500]];
+const RG_SEG=[['out','Roulage aller','#3b82f6'],['al','Alignement','#f59e0b'],['dw','Vent arrière / Finale','#a855f7'],['in','Roulage retour','#14b8a6']];
 /* Moyen relax : diamant à 8 espacé d'environ 50 m. Lignes à vérifier : diagonales 1·2·8 et 1·3·7 (alignées), rangées 2·3, 7·4·8 et 5·6 (perpendiculaires à la route) */
 const MR_D=50,MR_LINES=[['diag',[1,2,8]],['diag',[1,3,7]],['diag',[2,4,5]],['diag',[3,4,6]],['row',[2,3]],['row',[7,4,8]],['row',[5,6]],['axis',[1,4]],['edge',[2,6]],['edge',[3,5]]];
 /* paires symétriques (gauche / droite) : un écart entre les deux montre de quel côté vient le défaut */
@@ -5067,7 +5081,7 @@ function rgBreaks(R){R.A.forEach(a=>{if(a.bad)return;const hd=i=>Math.atan2(a.x[
 function rgPhases(a){const N=a.v.length,v=a.v,up=i=>v[i]>60;let to=-1;
  for(let i=0;i<N-10&&to<0;i++){let ok=true;for(let j=0;j<10;j++)if(!up(i+j)){ok=false;break}if(ok)to=i}
  if(to<0){a.bad='décollage introuvable';return}
- let roll=to;while(roll>0&&v[roll-1]>=25)roll--;let s=0;while(s<roll&&!(v[s]>=1))s++;a.out=[s,roll];a.to=to;
+ let roll=to;while(roll>0&&v[roll-1]>=25)roll--;let s=0;while(s<roll&&!(v[s]>=1))s++;a.out=[s,roll];a.roll=roll;a.to=to;
  let land=-1;for(let i=N-1;i>to;i--)if(up(i)){land=i;break}
  let re=land;while(re<N-1&&!(v[re]<25))re++;let e=N-1;while(e>re&&!(v[e]>=1))e--;a.in=[re,e];
  const zs=[];for(let i=s;i<roll;i++)if(!isNaN(a.z[i]))zs.push(a.z[i]);zs.sort((p,q)=>p-q);a.gz=zs.length?zs[zs.length>>1]:NaN;
@@ -5127,7 +5141,11 @@ function rgMask(R,key,tgt){const ord=key==='out'?R.ordOut:key==='dw'?R.ordDw:R.o
   R.win=R.win||{};R.win[key]=first<1e9?[first,t1]:null;return}
  if(t0<0){R.win=R.win||{};R.win[key]=null;return}for(let t=t0+1;t<=w[1];t++){if(lead.v[t]<6){t1=t;break}}if(t1<0)t1=w[1];R.win=R.win||{};R.win[key]=[t0,t1];
  P.forEach(pr=>{const L=R.A[pr.a],F=R.A[pr.b];for(let t=t0;t<=t1;t++){const i=t-pr.lo;if(i<0||i>=pr.d.length)continue;pr.ok[i]=L.v[t]>=3&&F.v[t]>=3&&pr.d[i]>5?1:0}})}
-function rgPairsAll(R){R.P={out:rgPairs(R,R.ordOut,'out',35,600),dw:rgPairs(R,R.ordDw,'dw',350,240),in:rgPairs(R,R.ordIn,'in',35,600),mr:[]};rgGhostPairs(R);rgMasks(R);R.mrSegs=[]}
+function rgAli(R){const ok=R.A.filter(a=>!a.bad),a1=ok.find(a=>rgNum(a.k)===1)||R.A[R.ordOut[0]],a5=ok.find(a=>rgNum(a.k)===5);if(!a1||a1.roll==null)return null;
+ const st=(a,t)=>!isNaN(a.x[t])&&(isNaN(a.v[t])||a.v[t]<3);let t=-1;if(a5)for(let q=a1.roll-1;q>=Math.max(0,a1.roll-240);q--)if(st(a1,q)&&st(a5,q)){t=q;break}
+ if(t<0)t=Math.max(0,a1.roll-2);const d=a5&&!isNaN(a5.x[t])&&!isNaN(a1.x[t])?Math.round(Math.hypot(a1.x[t]-a5.x[t],a1.y[t]-a5.y[t])):null;return {t,d,k1:a1.k,k5:a5?a5.k:null}}
+function rgPairsAll(R){{const L=R.A.find(a=>!a.bad&&rgNum(a.k)===1)||R.A[R.ordOut[0]];if(L&&L.roll!=null){const w=[Math.max(0,L.roll-150),Math.min(R.N-1,L.to+12)];R.A.forEach(a=>{if(!a.bad)a.al=w})}}
+ R.P={al:[],out:rgPairs(R,R.ordOut,'out',35,600),dw:rgPairs(R,R.ordDw,'dw',350,240),in:rgPairs(R,R.ordIn,'in',35,600),mr:[]};rgGhostPairs(R);rgMasks(R);R.mrSegs=[]}
 /* Phases « moyen relax » : au moins 6 avions en vol, groupés (tous à moins de 250 m du centre), le plus proche voisin de chacun à 30-110 m
    (en formation serrée on est à 10-20 m). Tenu au moins 8 s. Puis, à chaque seconde de ces phases : distances des paires des lignes et
    écart d'alignement (diagonale : écart à 180° au sommet du milieu ; rangée : écart à 90° par rapport à la route du leader). */
@@ -5171,7 +5189,8 @@ const RG_SAT=['LFMY','LFMI','LFKS'];   // fond satellite : Salon, Istres, Solenz
 const rgGapCol=g=>g>=2.5&&g<=3.5?'#22c55e':g<2||g>4.5?'#ef4444':'#f59e0b';
 const RG_DW=700,rgPlanD=()=>(RG_PL.find(p=>p[0]===(S.rgPl||'n'))||RG_PL[0])[2];
 const rgTgt=seg=>seg==='mr'?MR_D:seg==='dw'?RG_DW:(RG_TX.find(p=>p[0]===((seg==='in'?S.rgTxI:S.rgTx)||'CE'))||RG_TX[0])[2];
-const rgCol=(d,tg,seg)=>{seg=seg||S.rgSeg||'out';if(d==null||isNaN(d))return '#94a3b8';if(seg==='dw'||seg==='dwh'){if(seg==='dw'&&RG&&RG.auto)return '#475569';const e=Math.abs(d-tg);return e<=100?'#22c55e':e>=300?'#ef4444':'#f59e0b'}return d<tg*0.8?'#ef4444':d>tg*1.3?'#f59e0b':'#22c55e'};
+const rgRaw=seg=>seg==='out'?S.rgTx==='DB':seg==='in'?S.rgTxI==='DB':seg==='dw'||seg==='dwh'?S.rgPl==='db':false;
+const rgCol=(d,tg,seg)=>{seg=seg||S.rgSeg||'out';if(d==null||isNaN(d))return '#94a3b8';if(rgRaw(seg))return '#94a3b8';if(!tg)return seg==='dw'&&RG&&RG.auto?'#475569':'#94a3b8';if(seg==='dw'||seg==='dwh'){if(seg==='dw'&&RG&&RG.auto)return '#475569';const e=Math.abs(d-tg);return e<=100?'#22c55e':e>=300?'#ef4444':'#f59e0b'}return d<tg*0.8?'#ef4444':d>tg*1.3?'#f59e0b':'#22c55e'};
 /* Atterrissage : distance du N+1 sur le N au moment où le N touche la piste */
 function rgTdD(R,pr){const L=R.A[pr.a],F=R.A[pr.b];if(!L||!F||L.td==null)return null;for(const o of [0,1,-1,2,-2,3,-3]){const j=L.td+o;if(j>=0&&!isNaN(F.x[j])&&!isNaN(L.x[j]))return Math.round(Math.hypot(L.x[j]-F.x[j],L.y[j]-F.y[j]))}return null}
 const rgTdRows=R=>(R.P.dw||[]).map(pr=>{const d=rgTdD(R,pr);return d==null?null:[rgNum(pr.a),rgNum(pr.b),d].concat(pr.m>1?[pr.m]:[])}).filter(Boolean);
@@ -5198,7 +5217,7 @@ async function rgFindFl(){if(!RG)return;const w=iso(pcMon(fromISO(RG.date))),W=[
  RG.fl=RG.fls[0]&&Math.abs(ms(RG.fls[0])-tk)<6*36e5?RG.fls[0]:null;RG.flAsk=true;if(RG.fl&&pcCount(RG.fl.title)>RG.A.filter(a=>!a.bad).length)rgApplyN(pcCount(RG.fl.title));else if(S.pfTab==='rg')render()}
 /* ---- Lecture ---- */
 let RGV=null,RGraf=0,RGlast=0,RGTOP=0,RGCY=0;   // RGTOP : hauteur réservée en haut de la vue (coupe en vent arrière) ; RGCY : centre vertical utile (hors coupe et barre de commande)
-function rgSeg(k){S.rgZ=1;if(!RG_SEG.some(x=>x[0]===k))k='out';S.rgSeg=k;const w=rgSegWin(RG,k);S.rgT=w[0];S.rgPlay=false;S.rgMan=false;RGV=null;render()}
+function rgSeg(k){S.rgZ=1;if(!RG_SEG.some(x=>x[0]===k))k='out';S.rgSeg=k;const w=rgSegWin(RG,k);S.rgT=w[0];if(k==='al'){const I=rgAli(RG);if(I)S.rgT=I.t;S.rgSat=true}S.rgPlay=false;S.rgMan=false;RGV=null;render()}
 function rgPlayT(){S.rgPlay=!S.rgPlay;const w=rgSegWin(RG,S.rgSeg);if(S.rgPlay&&S.rgT>=w[1])S.rgT=w[0];RGlast=0;rgCtl();if(S.rgPlay)RGraf=requestAnimationFrame(rgTick)}
 function rgTick(ts){if(!S.rgPlay||S.pfTab!=='rg'||!$('rg-cv')){S.rgPlay=false;return}if(RGlast){const w=rgSegWin(RG,S.rgSeg);S.rgT=Math.min(w[1],S.rgT+(ts-RGlast)/1000*(S.rgSp||1));if(S.rgT>=w[1])S.rgPlay=false}
  RGlast=ts;rgDraw();rgCtl();if(S.rgPlay)RGraf=requestAnimationFrame(rgTick)}
@@ -5256,6 +5275,7 @@ function rgDraw(){if((S.rgSeg||'out')==='dw')rgProf();const cv=$('rg-cv');if(!cv
  R.P[key].forEach((pr,q)=>{const i=Math.round(t)-pr.lo;if(i<0||i>=pr.d.length||isNaN(pr.d[i]))return;const A=rgAt(R.A[pr.a],t),B=rgAt(R.A[pr.b],t);if(!A||!B)return;
   const ax=X(A.x),ay=Y(A.y),bx2=X(B.x),by2=Y(B.y),valid=pr.ok[i],c=valid?rgCol(pr.d[i],tgt*(pr.m||1)):'#64748b';g.strokeStyle=c;g.setLineDash([5,5]);g.lineWidth=2;g.beginPath();g.moveTo(ax,ay);g.lineTo(bx2,by2);g.stroke();g.setLineDash([]);
   LBL.push([(ax+bx2)/2,(ay+by2)/2,Math.round(pr.d[i])+(Math.hypot(bx2-ax,by2-ay)<70?'':' m'),c,Math.hypot(bx2-ax,by2-ay)<70])});
+ if(key==='al'){const I=rgAli(R);if(I&&I.k5!=null){const A=rgAt(R.A[I.k1],t),B=rgAt(R.A[I.k5],t);if(A&&B){const ax=X(A.x),ay=Y(A.y),bx2=X(B.x),by2=Y(B.y);g.strokeStyle='#94a3b8';g.setLineDash([6,5]);g.lineWidth=2.5;g.beginPath();g.moveTo(ax,ay);g.lineTo(bx2,by2);g.stroke();g.setLineDash([]);LBL.push([(ax+bx2)/2,(ay+by2)/2,'1→5 '+Math.round(Math.hypot(A.x-B.x,A.y-B.y))+' m','#64748b',false])}}}
  /* fantômes : les avions non suivis, à mi-chemin entre leurs deux voisins sur le chemin de celui de devant ; en tête ou en queue de patrouille, à l'objectif */
  const GH=[];const onPath=(L,i,c)=>{let q=i;if(c<L.c[i]){while(q>0&&(L.c[q]>c||isNaN(L.x[q])))q--}else{while(q<L.x.length-1&&(L.c[q]<c||isNaN(L.x[q])))q++}if(isNaN(L.x[q])||Math.abs(L.c[q]-c)>60)return null;const j=Math.max(1,q);return {x:L.x[q],y:L.y[q],h:Math.atan2(L.x[j]-L.x[j-1],L.y[j]-L.y[j-1])}};
  if((R.ghost||[]).length){const ti=Math.round(t);R.P[key].forEach(pr=>{if(!(pr.m>1))return;const i=ti-pr.lo;if(i<0||i>=pr.d.length||isNaN(pr.d[i]))return;const L=R.A[pr.a];if(isNaN(L.x[ti]))return;pr.gh.forEach((n,j)=>{const p=onPath(L,ti,L.c[ti]-pr.d[i]*(j+1)/pr.m);if(p)GH.push([n,p])})});
@@ -5324,7 +5344,7 @@ function rgProf(){const cv=$('rg-pf');if(!cv||!RG)return;const R=RG,dpr=RG_CAPDP
   g.beginPath();g.arc(x,y-15,8,0,Math.PI*2);g.fillStyle=c==='#ffffff'?'#0f172a':'#fff';g.fill();g.lineWidth=2;g.strokeStyle=c==='#ffffff'?'#fff':c;g.stroke();g.fillStyle=c==='#ffffff'?'#fff':c;g.font='800 10px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText(o.n,x,y-14.6);
   const lab=Math.round(o.h)+(e>120?' !':'');g.font='800 9px system-ui';const tw=g.measureText(lab).width+6,ly=Math.min(H-pad.b-6,y+13);g.fillStyle=ec;g.fillRect(x-tw/2,ly-6,tw,12);g.fillStyle='#fff';g.fillText(lab,x,ly+0.5)})}
 /* ---- Enregistrer le résumé ---- */
-function rgSum(){const R=RG,o={dwV:2};['out','dw','in'].forEach(k=>{o[k]=R.P[k].map(pr=>{const s=rgStatP(pr);return s?[rgNum(pr.a),rgNum(pr.b),s.min,s.avg,s.max].concat(pr.m>1?[pr.m]:[]):null}).filter(Boolean)});o.dwT=rgTdRows(R);return o}
+function rgSum(){const R=RG,o={dwV:2};['out','dw','in'].forEach(k=>{o[k]=R.P[k].map(pr=>{const s=rgStatP(pr);return s?[rgNum(pr.a),rgNum(pr.b),s.min,s.avg,s.max].concat(pr.m>1?[pr.m]:[]):null}).filter(Boolean)});o.dwT=rgTdRows(R);const I=rgAli(R);if(I&&I.d!=null)o.al=[I.d,I.t];return o}
 function rgSave(){if(!RG)return;S.rgDone=null;const s=rgSum(),me=rgMe();DB.rg=DB.rg||[];
  DB.rg.push(Object.assign({id:uid(),date:RG.date,time:RG.time,fl:RG.fl?RG.fl.title:'',ev:RG.fl?RG.fl.id:'',ad:RG.ad||'',form:S.rgTx||'CE',formIn:S.rgTxI||'CE',plan:S.rgPl||'n',n:RG.ordOut.length,pick:RG.pk&&RG.pk.multi?RG.pk.pick:0,nf:(RG.src||RG.raw||[]).length,by:me?pcName(me):((RLm[ROLE]||{}).l||''),byMail:me?me.mail:'',t:Date.now()},s));save();const rid=DB.rg[DB.rg.length-1].id;RG.rid=rid;if(isOnline()){(async()=>{S.rgUp={rid,prep:1};render();rgOv();await rgPdfPrep(rid);rgGpxUp(rid)})()}else{render();toast('Débriefing enregistré · GPX et PDF archivés sur le Drive dans la version en ligne');rgPdfUp(rid,1)}}
 let RG_PEND=null,RG_CAPDPR=0;
@@ -5349,11 +5369,11 @@ function rgCapT(R){const ok=R.A.filter(a=>!a.bad),byN=n=>ok.find(a=>rgNum(a.k)==
  const wi=(R.win&&R.win.in)||rgSegWin(R,'in'),i1=Math.round((wi[0]+wi[1])/2),a1=byN(1)||R.A[R.ordIn[0]],px=a8.x[g8],py=a8.y[g8];let i2=i1,b=1e18;
  if(!isNaN(px))for(let t=a1.in[0];t<=a1.in[1];t++){if(isNaN(a1.x[t]))continue;const d=(a1.x[t]-px)**2+(a1.y[t]-py)**2;if(d<b){b=d;i2=t}}
  const aN=R.A[R.ordDw[0]],dwW=rgSegWin(R,'dw'),d1=aN&&aN.dwE&&aN.dwE[1]>aN.dwE[0]?Math.max(aN.dwE[0],aN.dwE[1]-4):aN&&aN.td!=null?aN.td:Math.round((dwW[0]+dwW[1])/2);
- return [{k:'out',t:o1,l:'Sortie des cales (tous roulent, le 8 a pris son premier virage)'},{k:'out',t:o2,l:'Milieu du roulage aller'},{k:'in',t:i1,l:'Milieu du roulage retour'},{k:'in',t:i2,l:'Arrivée du leader aux cales (derrière la place du 8)'},{k:'dw',t:d1,l:'Juste avant que le leader quitte la vent arrière · hauteur et vitesse'}]}
+ return [{k:'out',t:o1,l:'Sortie des cales (tous roulent, le 8 a pris son premier virage)'},{k:'out',t:o2,l:'Milieu du roulage aller'},{k:'in',t:i1,l:'Milieu du roulage retour'},{k:'in',t:i2,l:'Arrivée du leader aux cales (derrière la place du 8)'},{k:'dw',t:d1,l:'Juste avant que le leader quitte la vent arrière · hauteur et vitesse'}].concat((()=>{const I=rgAli(R);return I?[{k:'al',t:I.t,l:I.d!=null?'Leader → n°5 : '+I.d+' m':'Alignement',al:1}]:[]})())}
 /* une capture : la vue de l'Espacement à l'instant t, au format paysage, coupe comprise en vent arrière */
 async function rgShot(k,t,np){if((S.rgSeg||'out')!==k){S.rgSeg=k;S.rgZ=1;RGV=null;render();await rgSleep(120)}
  const v=document.querySelector('.rgview');if(!v||!$('rg-cv'))throw new Error('ouvrez l\'outil Espacement pendant la création du PDF');
- v.classList.add('rgcap');v.classList.toggle('sq',k!=='dw');v.classList.toggle('nop',!!np);S.rgT=t;S.rgPlay=false;S.rgFol=true;S.rgMan=false;S.rgZ=1;RGV=null;RG_CAPDPR=2;await rgSleep(80);rgDraw();
+ if(k==='al')S.rgSat=true;v.classList.add('rgcap');v.classList.toggle('sq',k!=='dw');v.classList.toggle('nop',!!np);S.rgT=t;S.rgPlay=false;S.rgFol=true;S.rgMan=false;S.rgZ=1;RGV=null;RG_CAPDPR=2;await rgSleep(80);rgDraw();
  const busy=()=>Object.values(RG_TILES).some(x=>!x.ok&&!x.err);let w=0;await rgSleep(250);while(busy()&&w<6000){await rgSleep(250);w+=250}RGV=null;rgDraw();if(k==='dw')rgProf();
  const cv=$('rg-cv'),o=document.createElement('canvas');o.width=cv.width;o.height=cv.height;const g=o.getContext('2d');g.drawImage(cv,0,0);
  try{g.getImageData(0,0,1,1)}catch(x){S.rgSat=false;RGV=null;rgDraw();g.clearRect(0,0,o.width,o.height);g.drawImage(cv,0,0);S.rgSat=true}
@@ -5375,10 +5395,10 @@ function rgPTab(g,x,y,w,h,title,sub,rows,cols,colF){g.fillStyle='#f1f5f9';g.begi
   r.v.forEach((v,i)=>{const cx=x+240+cw*(i+.5),col=colF(v,r.m||1),tw=Math.min(cw-14,120);g.fillStyle=col;g.beginPath();g.roundRect?g.roundRect(cx-tw/2,yy-16,tw,32,16):g.rect(cx-tw/2,yy-16,tw,32);g.fill();g.fillStyle='#fff';g.font='800 20px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(v+' m',cx,yy+1)})})}
 function rgPdfP1(R){const {c,g}=rgPage(R,'Débriefing espacement'),s=rgSum(),tx=(RG_TX.find(p=>p[0]===(S.rgTx||'CE'))||RG_TX[0]),txI=(RG_TX.find(p=>p[0]===(S.rgTxI||'CE'))||RG_TX[0]),pl=(RG_PL.find(p=>p[0]===(S.rgPl||'n'))||RG_PL[0]);
  const st=L=>(L||[]).map(r=>({a:r[0],b:r[1],v:[r[2],r[3],r[4]],m:r[5]||1})),td=(s.dwT||[]).map(r=>({a:r[0],b:r[1],v:[r[2]],m:r[3]||1})),W=(RGPW-48*3)/2,H=(RGPH-112-40-48-80)/2,y0=136,y1=y0+H+24;
- rgPTab(g,48,y0,W,H,'Roulage aller',`Objectif ${tx[2]} m (${tx[1]}) · min, moyenne, max`,st(s.out),['Min','Moy.','Max'],(v,m)=>rgCol(v,tx[2]*m,'out'));
- rgPTab(g,48*2+W,y0,W,H,'Roulage retour',`Objectif ${txI[2]} m (${txI[1]}) · min, moyenne, max`,st(s.in),['Min','Moy.','Max'],(v,m)=>rgCol(v,txI[2]*m,'in'));
- rgPTab(g,48,y1,W,H,'Moyenne vent arrière',R.auto?'Réduction autonome : pas d\'objectif':`Objectif ${RG_DW} m · jusqu'au dernier virage de l'avion de devant`,st(s.dw),['Min','Moy.','Max'],(v,m)=>R.auto?'#64748b':rgCol(v,RG_DW*m,'dwh'));
- rgPTab(g,48*2+W,y1,W,H,'Au toucher des roues du N',R.auto?'Distance du N+1 sur le N · pas d\'objectif':`Distance du N+1 sur le N · objectif ${pl[2]} m (${pl[1]})`,td,['Distance'],(v,m)=>R.auto?'#64748b':rgCol(v,pl[2]*m,'dwh'));
+ rgPTab(g,48,y0,W,H,'Roulage aller',tx[0]==='DB'?'Données brutes · min, moyenne, max':`Objectif ${tx[2]} m (${tx[1]}) · min, moyenne, max`,st(s.out),['Min','Moy.','Max'],(v,m)=>rgCol(v,tx[2]*m,'out'));
+ rgPTab(g,48*2+W,y0,W,H,'Roulage retour',txI[0]==='DB'?'Données brutes · min, moyenne, max':`Objectif ${txI[2]} m (${txI[1]}) · min, moyenne, max`,st(s.in),['Min','Moy.','Max'],(v,m)=>rgCol(v,txI[2]*m,'in'));
+ rgPTab(g,48,y1,W,H,'Moyenne vent arrière',R.auto?'Réduction autonome : pas d\'objectif':pl[0]==='db'?'Données brutes · jusqu\'au dernier virage de l\'avion de devant':`Objectif ${RG_DW} m · jusqu'au dernier virage de l'avion de devant`,st(s.dw),['Min','Moy.','Max'],(v,m)=>R.auto?'#64748b':rgCol(v,RG_DW*m,'dwh'));
+ rgPTab(g,48*2+W,y1,W,H,'Au toucher des roues du N',R.auto?'Distance du N+1 sur le N · pas d\'objectif':pl[0]==='db'?'Distance du N+1 sur le N · données brutes':`Distance du N+1 sur le N · objectif ${pl[2]} m (${pl[1]})`,td,['Distance'],(v,m)=>R.auto?'#64748b':rgCol(v,pl[2]*m,'dwh'));
  g.textAlign='left';g.textBaseline='alphabetic';g.font='500 19px system-ui,sans-serif';g.fillStyle='#475569';
  g.fillText(`Roulages : vert entre 80 % et 130 % de l'objectif, rouge trop près, orange trop loin.`,48,RGPH-50);g.fillText(`Vent arrière et toucher : vert à ±100 m de l'objectif, orange jusqu'à ±300 m, rouge au-delà.   ${R.nAv||R.A.filter(a=>!a.bad).length} avions.`,48,RGPH-22);return c}
 function rgPdfShots(R,title,L){const {c,g}=rgPage(R,title),one=L.length===1,mw=one?RGPW-96:(RGPW-48*3)/2,mh=RGPH-112-48-90;
@@ -5396,7 +5416,7 @@ function rgPdfBytes(pages){const enc=new TextEncoder(),parts=[],off=[];let len=0
 const rgB64=u=>{let s='';for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
 async function rgPdfMake(){const R=RG,st={seg:S.rgSeg,t:S.rgT,fol:S.rgFol,man:S.rgMan,z:S.rgZ,sat:S.rgSat};S.rgSat=true;const ov=document.createElement('div');ov.className='rgcapov';ov.innerHTML='<div><span class="spin" aria-hidden="true"></span><b id="rgcapt">Création du PDF de débriefing…</b></div>';document.body.appendChild(ov);
  try{const T=rgCapT(R),shots=[];for(let j=0;j<T.length;j++){const e=document.getElementById('rgcapt');if(e)e.textContent=`Création du PDF de débriefing : capture ${j+1} / ${T.length}`;shots.push(Object.assign({cv:await rgShot(T[j].k,T[j].t,T[j].np)},T[j]))}
-  const pages=[rgPdfP1(R),rgPdfShots(R,'Roulage aller',shots.slice(0,2)),rgPdfShots(R,'Roulage retour',shots.slice(2,4)),rgPdfShots(R,'Vent arrière · avant le dernier virage du leader',shots.slice(4))];
+  const pages=[rgPdfP1(R),rgPdfShots(R,'Roulage aller',shots.slice(0,2)),rgPdfShots(R,'Roulage retour',shots.slice(2,4)),rgPdfShots(R,'Vent arrière · avant le dernier virage du leader',shots.slice(4,5))].concat(shots[5]?[rgPdfShots(R,'Alignement · vue de dessus',shots.slice(5))]:[]);
   const enc=(f,q)=>pages.map(c0=>{let c=c0;if(f<1){c=document.createElement('canvas');c.width=Math.round(c0.width*f);c.height=Math.round(c0.height*f);const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(c0,0,0,c.width,c.height)}
    const d=c.toDataURL('image/jpeg',q),b=atob(d.slice(d.indexOf(',')+1)),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return{b:u,w:c.width,h:c.height,url:d}});
   let J,pdf;for(const [f,q] of [[1,.8],[1,.7],[1,.6],[.85,.6],[.75,.55],[.65,.5]]){J=enc(f,q);pdf=rgPdfBytes(J);if(pdf.length<980000)break}
@@ -5466,8 +5486,8 @@ function rgTabMR(R){const ST=R.mrStat||{},segs=R.mrSegs||[];if(!segs.length)retu
  <p class="exq" style="margin-top:12px">Symétrie gauche / droite <span class="small muted" style="font-weight:500">(distances moyennes des paires miroir et écart moyen)</span></p>
  <div class="rgtab"><div class="rgtr rgth mr5"><span>Paires miroir</span><span>Gauche</span><span>Droite</span><span>Écart</span><span></span></div>${sym}</div>`}
 function rgTab(L,seg,tgt,td){if(!L||!L.length)return '<p class="small muted" style="margin:0">Pas de données.</p>';
- if(td)return `<div class="rgtab rgtd"><div class="rgtr rgth"><span>Avions</span><span>N+1 au toucher du N</span></div>${L.map(r=>`<div class="rgtr"><span>${rgBadge(r[0])} → ${rgBadge(r[1])}${r[3]>1?`<small class="muted" style="font-size:11px">${r[3]-1} absent${r[3]>2?'s':''} entre · objectif ${tgt*r[3]} m</small>`:''}</span><b style="--c:${rgCol(r[2],tgt*(r[3]||1),td===2?'dwh':'dw')}">${r[2]} m</b></div>`).join('')}</div>`;
- return `<div class="rgtab"><div class="rgtr rgth"><span>Avions</span><span>Min</span><span>Moy.</span><span>Max</span></div>${L.map(r=>`<div class="rgtr"><span>${rgBadge(r[0])} → ${rgBadge(r[1])}${r[5]>1?`<small class="muted" style="font-size:11px">${r[5]-1} absent${r[5]>2?'s':''} entre · objectif ${tgt*r[5]} m</small>`:''}</span>${[r[2],r[3],r[4]].map(v=>`<b style="--c:${rgCol(v,tgt*(r[5]||1),seg)}">${v} m</b>`).join('')}</div>`).join('')}</div>`}
+ if(td)return `<div class="rgtab rgtd"><div class="rgtr rgth"><span>Avions</span><span>N+1 au toucher du N</span></div>${L.map(r=>`<div class="rgtr"><span>${rgBadge(r[0])} → ${rgBadge(r[1])}${r[3]>1?`<small class="muted" style="font-size:11px">${r[3]-1} absent${r[3]>2?'s':''} entre${tgt?' · objectif '+tgt*r[3]+' m':''}</small>`:''}</span><b style="--c:${rgCol(r[2],tgt*(r[3]||1),td===2?'dwh':'dw')}">${r[2]} m</b></div>`).join('')}</div>`;
+ return `<div class="rgtab"><div class="rgtr rgth"><span>Avions</span><span>Min</span><span>Moy.</span><span>Max</span></div>${L.map(r=>`<div class="rgtr"><span>${rgBadge(r[0])} → ${rgBadge(r[1])}${r[5]>1?`<small class="muted" style="font-size:11px">${r[5]-1} absent${r[5]>2?'s':''} entre${tgt?' · objectif '+tgt*r[5]+' m':''}</small>`:''}</span>${[r[2],r[3],r[4]].map(v=>`<b style="--c:${rgCol(v,tgt*(r[5]||1),seg)}">${v} m</b>`).join('')}</div>`).join('')}</div>`}
 /* ---- Maquette : un vol d'exemple (8 avions) fabriqué à la volée ---- */
 function rgDemoGpx(){const P=(pts,sk,ak)=>{const c=[0];for(let i=1;i<pts.length;i++)c.push(c[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
   const tag=k=>typeof k==='string'?c[pts.mark[k]]:k,itp=(K,s,sq)=>{K=K.map(([k,v])=>[tag(k),v]);for(let i=1;i<K.length;i++)if(s<=K[i][0]){const f=(s-K[i-1][0])/Math.max(1,K[i][0]-K[i-1][0]);return sq?Math.sqrt(K[i-1][1]**2+(K[i][1]**2-K[i-1][1]**2)*f):K[i-1][1]+(K[i][1]-K[i-1][1])*f}return K[K.length-1][1]};
@@ -5494,13 +5514,13 @@ function rgDemo(){const F=rgDemoGpx().map(f=>rgParse(f.txt,f.name));F[3].pts.for
 /* ---- Vue ---- */
 function vRg(tabs){if(S.rgSeg==='mr')S.rgSeg='out';const head=`${NOTE}<div class="head"><div><h1>Espacement</h1><p class="muted">Roulage et atterrissage : la distance du N sur le N-1 à chaque instant, l'écart au break, le tout sur le terrain.</p></div></div>${tabs}`;
  const hist=(DB.rg||[]).filter(e=>!e.del).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
- const histB=hist.length?`<section class="dvbox rgbox"><div class="dvsec"><h3 class="pch">${ic('clock',18)} Débriefings enregistrés <span class="n">${hist.length}</span></h3>${hist.map(e=>`<details class="rgh"><summary><b>${fmtD(e.date)} · ${String(e.time).replace(':','h')}</b><span>${esc(e.fl||'Vol')} · ${e.n} avions · aller ${e.form||'—'}${e.formIn?' · retour '+e.formIn:''} · ${(RG_PL.find(x=>x[0]===e.plan)||[])[1]||''}</span></summary>
-   ${RG_SEG.map(([k,l])=>k==='dw'&&+e.dwV===2?`<p class="exq">${l} · moyenne (objectif ${RG_DW} m)</p>${rgTab(e.dw,'dwh',RG_DW)}<p class="exq">Distance du N+1 au toucher du N (objectif ${(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2]} m)</p>${rgTab(e.dwT,'dw',(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2],2)}`:`<p class="exq">${l}</p>${rgTab(e[k],k,k==='dw'?(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2]:(RG_TX.find(x=>x[0]===(k==='in'?e.formIn||e.form:e.form))||RG_TX[0])[2],k==='dw'&&e.dwTd?2:0)}`).join('')}
+ const histB=hist.length?`<section class="dvbox rgbox"><div class="dvsec"><h3 class="pch">${ic('clock',18)} Débriefings enregistrés <span class="n">${hist.length}</span></h3>${hist.map(e=>`<details class="rgh"><summary><b>${fmtD(e.date)} · ${String(e.time).replace(':','h')}</b><span>${esc(e.fl||'Vol')} · ${e.n} avions · aller ${e.form==='DB'?'données brutes':e.form||'—'}${e.formIn?' · retour '+(e.formIn==='DB'?'données brutes':e.formIn):''} · ${(RG_PL.find(x=>x[0]===e.plan)||[])[1]||''}</span></summary>
+   ${RG_SEG.map(([k,l])=>{const raw=k==='dw'?e.plan==='db':k==='in'?(e.formIn||e.form)==='DB':e.form==='DB';return k==='al'?(e.al?`<p class="exq">${l}</p><div class="rgali">Leader → n°5 à l'alignement : <b>${e.al[0]} m</b></div>`:''):k==='dw'&&+e.dwV===2?`<p class="exq">${l} · moyenne (${raw?'données brutes':'objectif '+RG_DW+' m'})</p>${rgTab(e.dw,'dwh',raw?0:RG_DW)}<p class="exq">Distance du N+1 au toucher du N (${raw?'données brutes':'objectif '+(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2]+' m'})</p>${rgTab(e.dwT,'dw',raw?0:(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2],2)}`:`<p class="exq">${l}${raw?' · données brutes':''}</p>${rgTab(e[k],k,raw?0:k==='dw'?(RG_PL.find(x=>x[0]===e.plan)||RG_PL[0])[2]:(RG_TX.find(x=>x[0]===(k==='in'?e.formIn||e.form:e.form))||RG_TX[0])[2],k==='dw'&&e.dwTd?2:0)}`}).join('')}
    <p class="small rgarch">${rgArchH(e)}</p>
    <p class="small muted">Par ${esc(e.by||'—')}${isChef()||(rgMe()&&e.byMail===rgMe().mail)?` · <button class="more" onclick="rgDel('${e.id}')">Supprimer</button>`:''}</p></details>`).join('')}</div></section>`:'';
- const sets=`<div class="rgset"><div><span class="l">Roulage aller</span><div class="chips">${RG_TX.map(([k,l,m])=>`<button aria-pressed="${(S.rgTx||'CE')===k}" title="${l}" onclick="S.rgTx='${k}';rgMasks(RG);render()">${k} · ${m} m</button>`).join('')}</div></div>
-  <div><span class="l">Roulage retour</span><div class="chips">${RG_TX.map(([k,l,m])=>`<button aria-pressed="${(S.rgTxI||'CE')===k}" title="${l}" onclick="S.rgTxI='${k}';rgMasks(RG);render()">${k} · ${m} m</button>`).join('')}</div></div>
-  <div><span class="l">Vent arrière et atterrissage</span><div class="chips">${RG_PL.map(([k,l,m])=>`<button aria-pressed="${(S.rgPl||'n')===k}" onclick="S.rgPl='${k}';rgMasks(RG);render()">${l} · ${m} m</button>`).join('')}</div></div>
+ const sets=`<div class="rgset"><div><span class="l">Roulage aller</span><div class="chips">${RG_TX.map(([k,l,m])=>`<button aria-pressed="${(S.rgTx||'CE')===k}" title="${l}" onclick="S.rgTx='${k}';rgMasks(RG);render()">${k==='DB'?l:k+' · '+m+' m'}</button>`).join('')}</div></div>
+  <div><span class="l">Roulage retour</span><div class="chips">${RG_TX.map(([k,l,m])=>`<button aria-pressed="${(S.rgTxI||'CE')===k}" title="${l}" onclick="S.rgTxI='${k}';rgMasks(RG);render()">${k==='DB'?l:k+' · '+m+' m'}</button>`).join('')}</div></div>
+  <div><span class="l">Vent arrière et atterrissage</span><div class="chips">${RG_PL.map(([k,l,m])=>`<button aria-pressed="${(S.rgPl||'n')===k}" onclick="S.rgPl='${k}';rgMasks(RG);render()">${k==='db'?l:l+' · '+m+' m'}</button>`).join('')}</div></div>
   <div><span class="l">Retour</span><div class="chips">${[['','Détection auto ('+(RG&&RG.autoDet?'réduction autonome':'break')+')'],['brk','Break'],['auto','Réduction autonome']].map(([k,l])=>`<button aria-pressed="${(S.rgRet||'')===k}" onclick="S.rgRet='${k}';rgBreaks(RG);rgPairsAll(RG);RGV=null;render()">${l}</button>`).join('')}</div></div></div>`;
  if(!RG)return `${head}<section class="dvbox rgbox"><div class="dvsec rgdrop" ondragover="event.preventDefault();this.classList.add('on')" ondragleave="this.classList.remove('on')" ondrop="event.preventDefault();this.classList.remove('on');rgFiles([...event.dataTransfer.files])">
   ${tile({i:'upload',c1:'#3b82f6',c2:'#1e3a8a'},'lg')}<h3 style="margin:10px 0 4px">Déposez les GPX du vol</h3><p class="small muted" style="margin:0 0 12px">Les fichiers GPX du vol, sans les renommer. Ils sont lus sur cet appareil ; à l'enregistrement du débriefing, les traces du vol sont archivées sur le Drive PAF OPS pour pouvoir le rejouer.</p>
@@ -5528,8 +5548,8 @@ function vRg(tabs){if(S.rgSeg==='mr')S.rgSeg='out';const head=`${NOTE}<div class
   <div class="rgctl"><div class="rgrow"><button id="rg-pl" class="btn pri" onclick="rgPlayT()">▶</button><input id="rg-sl" type="range" min="${win[0]}" max="${win[1]}" step="1" value="${Math.round(S.rgT)}" oninput="S.rgT=+this.value;rgDraw();rgCtl()">
   <div class="chips rgsp">${[1,2,4,10].map(v=>`<button aria-pressed="${(S.rgSp||4)===v}" onclick="S.rgSp=${v};document.querySelectorAll('.rgctl .rgsp button').forEach(b=>b.setAttribute('aria-pressed',b.textContent==='x${v}'))">x${v}</button>`).join('')}</div></div>
   <div class="chips rgsg" role="tablist">${RG_SEG.map(([k,l,c])=>`<button role="tab" aria-pressed="${key===k}" style="--c:${c}" onclick="rgSeg('${k}')">${k==='dw'&&R.auto?'Réduction auto.':l.replace(' / Finale','')}</button>`).join('')}</div></div></section>
- <section class="dvbox rgbox"><div class="dvsec"><h3 class="pch">${ic('grid',18)} ${key==='dw'&&R.auto?'Réduction autonome · distances entre avions':RG_SEG.find(s=>s[0]===key)[1]+' · objectif '+tgt+' m'}</h3>${key==='mr'?rgTabMR(R):key==='dw'?`<p class="exq">Moyenne en vent arrière${R.auto?'':' · objectif '+RG_DW+' m'}</p>${rgTab(L,'dw',R.auto?0:RG_DW)}<p class="exq">Distance du N+1 sur le N au toucher du N${R.auto?'':' · objectif '+rgPlanD()+' m'}</p>${rgTab(LT,'dw',R.auto?0:rgPlanD(),1)}`:rgTab(L,key,tgt)}<p class="small muted" style="margin:6px 0 0">${key==='dw'&&R.auto?'Retour en réduction autonome : les avions se suivent en file jusqu\'au posé, dans l\'ordre d\'atterrissage. Pas d\'objectif de vent arrière : distance entre chaque avion et celui de devant au moment où il touche la piste.':key==='mr'?'Diamant à 8 espacé d\'environ 50 m. Distances mesurées dans le plan de la formation (altitude GPS comprise), pas vues de dessus : en virage, l\'aile extérieure monte et l\'aile intérieure descend sans que les écarts changent. Traits pleins : diagonales 1·2·8, 1·3·7, 2·4·5, 3·4·6 ; pointillés : rangées 2·3, 7·4·8, 5·6 ; points : axe 1·4 ; tirets gris : côtés 2·6 et 3·5. Couleur d\'une ligne : tenue à 5° près (vert), 12° (orange), au-delà (rouge). « Synthèse » affiche en haut les écarts du moment, du plus grave au moins grave, et seulement les distances fautives (chaque étiquette nomme sa paire) ; touchez une ligne pour voir toutes ses distances.':key==='dw'?'Deux mesures. 1) Moyenne en vent arrière, objectif 700 m quel que soit le plan : de la mise en vent arrière des deux avions (120 à 220 kt) jusqu\'au début du dernier virage de celui de devant. 2) Au toucher du N, la distance du N+1 sur lui : objectif 500 m en plan normal, 700 m en centre centre, 1000 m en centre espacé. Couleurs : vert à ±100 m de l\'objectif, orange jusqu\'à ±300 m, rouge au-delà (même code que les étiquettes).':R.win&&R.win[key]?`Calcul de ${rgClock(R,R.win[key][0])} à ${rgClock(R,R.win[key][1])} : tous les avions roulent (≥ 6 kt)${key==='in'?', vitesses et écarts cohérents':''}, jusqu'à l'arrêt du leader. Moyenne par point, un point par seconde.`:'Pas de moment où tous les avions roulent ensemble : pas de bilan pour cette phase.'}</p>
-  <p class="small muted" style="margin:8px 0 0">${key==='mr'?'<i class="rgdot" style="background:#22c55e"></i> 50 m ± 10 · <i class="rgdot" style="background:#f59e0b"></i> ± 20 · <i class="rgdot" style="background:#ef4444"></i> au-delà</p><p hidden>':''}<i class="rgdot" style="background:#22c55e"></i> dans la tolérance · <i class="rgdot" style="background:#ef4444"></i> trop près (moins de ${Math.round(tgt*.8)} m) · <i class="rgdot" style="background:#f59e0b"></i> trop loin (plus de ${Math.round(tgt*1.3)} m)</p>
+ <section class="dvbox rgbox"><div class="dvsec"><h3 class="pch">${ic('grid',18)} ${key==='al'?'Alignement · leader et n°5':key==='dw'&&R.auto?'Réduction autonome · distances entre avions':RG_SEG.find(s=>s[0]===key)[1]+(rgRaw(key)?' · données brutes':' · objectif '+tgt+' m')}</h3>${key==='al'?(()=>{const I=rgAli(R);return I&&I.d!=null?`<div class="rgali">Distance leader → n°5 à l'alignement : <b>${I.d} m</b><small>${rgClock(R,I.t)} · leader et n°5 arrêtés sur la piste, juste avant la mise en puissance du leader</small></div>`:`<div class="rgali">${I?'Pas de trace du n°5 : distance impossible à mesurer.':'Alignement introuvable dans les traces.'}</div>`})():key==='mr'?rgTabMR(R):key==='dw'?`<p class="exq">Moyenne en vent arrière${R.auto?'':rgRaw('dw')?' · données brutes':' · objectif '+RG_DW+' m'}</p>${rgTab(L,'dw',R.auto||rgRaw('dw')?0:RG_DW)}<p class="exq">Distance du N+1 sur le N au toucher du N${R.auto?'':rgRaw('dw')?' · données brutes':' · objectif '+rgPlanD()+' m'}</p>${rgTab(LT,'dw',R.auto||rgRaw('dw')?0:rgPlanD(),1)}`:rgTab(L,key,rgRaw(key)?0:tgt)}<p class="small muted" style="margin:6px 0 0">${key==='al'?'Information, sans objectif : la distance au sol entre le leader et le n°5, au dernier instant où ils sont tous les deux arrêtés sur la piste avant que le leader mette en puissance. Le PDF de débriefing en garde une vue de dessus sur le satellite.':rgRaw(key)?'Données brutes : extractions et moyennes calculées comme d\'habitude, sans analyse de distance (toutes les distances en gris).':key==='dw'&&R.auto?'Retour en réduction autonome : les avions se suivent en file jusqu\'au posé, dans l\'ordre d\'atterrissage. Pas d\'objectif de vent arrière : distance entre chaque avion et celui de devant au moment où il touche la piste.':key==='mr'?'Diamant à 8 espacé d\'environ 50 m. Distances mesurées dans le plan de la formation (altitude GPS comprise), pas vues de dessus : en virage, l\'aile extérieure monte et l\'aile intérieure descend sans que les écarts changent. Traits pleins : diagonales 1·2·8, 1·3·7, 2·4·5, 3·4·6 ; pointillés : rangées 2·3, 7·4·8, 5·6 ; points : axe 1·4 ; tirets gris : côtés 2·6 et 3·5. Couleur d\'une ligne : tenue à 5° près (vert), 12° (orange), au-delà (rouge). « Synthèse » affiche en haut les écarts du moment, du plus grave au moins grave, et seulement les distances fautives (chaque étiquette nomme sa paire) ; touchez une ligne pour voir toutes ses distances.':key==='dw'?'Deux mesures. 1) Moyenne en vent arrière, objectif 700 m quel que soit le plan : de la mise en vent arrière des deux avions (120 à 220 kt) jusqu\'au début du dernier virage de celui de devant. 2) Au toucher du N, la distance du N+1 sur lui : objectif 500 m en plan normal, 700 m en centre centre, 1000 m en centre espacé. Couleurs : vert à ±100 m de l\'objectif, orange jusqu\'à ±300 m, rouge au-delà (même code que les étiquettes).':R.win&&R.win[key]?`Calcul de ${rgClock(R,R.win[key][0])} à ${rgClock(R,R.win[key][1])} : tous les avions roulent (≥ 6 kt)${key==='in'?', vitesses et écarts cohérents':''}, jusqu'à l'arrêt du leader. Moyenne par point, un point par seconde.`:'Pas de moment où tous les avions roulent ensemble : pas de bilan pour cette phase.'}</p>
+  <p class="small muted" style="margin:8px 0 0" ${key==='al'||rgRaw(key)?'hidden':''}>${key==='mr'?'<i class="rgdot" style="background:#22c55e"></i> 50 m ± 10 · <i class="rgdot" style="background:#f59e0b"></i> ± 20 · <i class="rgdot" style="background:#ef4444"></i> au-delà</p><p hidden>':''}<i class="rgdot" style="background:#22c55e"></i> dans la tolérance · <i class="rgdot" style="background:#ef4444"></i> trop près (moins de ${Math.round(tgt*.8)} m) · <i class="rgdot" style="background:#f59e0b"></i> trop loin (plus de ${Math.round(tgt*1.3)} m)</p>
   <div class="pcbtns" style="margin-top:10px">${R.arch?`<span class="small muted">📁 Vol rejoué depuis les traces archivées sur le Drive (débriefing déjà enregistré). <button class="btn sm" onclick="rgPdfUp(RG.arch,0)">📄 Refaire le PDF de débriefing</button>${isChef()&&S.rgDrv?` <a href="${esc(S.rgDrv)}" target="_blank" rel="noopener">Ouvrir le dossier Drive</a>`:''}</span>`:`<button class="btn pri" onclick="rgSave()">${ic('check',16)} Enregistrer le débriefing</button><span class="small muted">Le résumé est enregistré et les traces GPX du vol sont archivées sur le Drive.</span>`}</div></div></section>${histB}`}
 function rgSetNum(k,n){const R=RG,old=R.num[k];if(old===n)return;const o=Object.keys(R.num).find(x=>R.num[x]===n),G=new Set(R.ghost||[]);
  if(o!=null)R.num[o]=old;else{G.delete(n);if(G.size||n>(R.nAv||0))G.add(old)}   // n était libre : l'ancien numéro devient fantôme (ou, hors liste, l'avion s'ajoute)
@@ -5610,7 +5630,7 @@ const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','p
 const TOOLS_A=[['hg','Hangar'],['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
-function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
+function toolDef(role,x,k){role=vrole(role);if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
  switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'hg':return role==='visit'&&!!x&&(pd||pc||!!(FUm[x.fn]&&FUm[x.fn].grp==='MECAS'));case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
 const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
 const pfVis=k=>isMeca()&&!PF_DIR[k]&&tov(k)==null?k==='hg':isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan())&&(k!=='hg'||hgCan());
@@ -5781,8 +5801,8 @@ function vUnite(){
  ${groups.map(({f,L},i)=>(f.grp&&(i===0||groups[i-1].f.grp!==f.grp)?`<div class="supgrp">${tile(MECAS,'sm')} <b>${MECAS.l}</b><span class="n">${MECAS.d} · ${groups.filter(g=>g.f.grp===f.grp).reduce((a,g)=>a+g.L.length,0)}</span></div>`:'')+`<div class="${f.grp?'ingrp':''}">${grpHTML(f,L,q)}</div>`).join('')}`;
 }
 /* Accès PAF OPS des membres de l'unité : reliés par l'adresse email (un accès déjà envoyé est reconnu, rien n'est renvoyé) */
-const U_ROLES=['visit','sec','cst','dt','comm'];   // le DMMA s'invite depuis la page de son meeting
-const U_DEF={PILOTES:'visit',DIR:'visit',SEC:'sec',MOPS:'visit',DT:'dt',CST:'cst'};
+const U_ROLES=['visit','sec','cst','dt','comm',...GRP_R];   // le DMMA s'invite depuis la page de son meeting
+const U_DEF={PILOTES:'visit',DIR:'visit',SEC:'secr',MOPS:'mops',DT:'dt',CST:'cst',DEP:'dep',CHDEP:'dep',CHHANGAR:'dep',PISTE:'piste',CHPISTE:'piste',BT:'bt',PHOTO:'photo',ARTA:'arta',CHAUFFEUR:'chauf'};
 const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
 const memOf=mail=>mail?DB.members.find(x=>lc(x.mail)===lc(mail)):null;
@@ -6258,16 +6278,19 @@ const HG_COUL={2:'Bleu',6:'Bleu',8:'Bleu',3:'Rouge',5:'Rouge',7:'Rouge'};   // c
 const hgGrp=w=>hgDB().ac.filter(a=>a.s!=='dep'&&(w==='t'?/^L[1-8]$/.test(a.pos):(/^S\d$/.test(a.pos)||hgRes(a))));
 const hgCur=(w,k)=>{const L=hgGrp(w);if(!L.length)return '';const v=L.map(a=>a[k]||'');if(k==='smk'&&w==='t'&&L.every(a=>(a.smk||'')===hgSmkOf(a,'Blanc / Couleur')))return 'Blanc / Couleur';return v.every(x=>x===v[0])?v[0]:'mixte'};
 const hgSmkOf=(a,v)=>{if(v!=='Blanc / Couleur')return v;const n=+String(a.pos).slice(1),c=HG_COUL[n];return c?'Blanc / '+c:'Blanc / Blanc'};
-function hgGSel(k,v){S.hgG=S.hgG||{};S.hgG[k]=v;render()}
-async function hgGApply(k){const w=k[0],f=k[1]==='f'?'fuel':'smk',v=(S.hgG||{})[k];if(!v){toast('Choisissez d\'abord une valeur');return}const L=hgGrp(w);if(!L.length){toast(w==='t'?'Aucun titulaire sur la ligne':'Aucun spare');return}
- L.forEach(a=>a[f]=f==='smk'?hgSmkOf(a,v):v);delete S.hgG[k];const ok=await hgSave(L);if(ok!==false)toast(`✓ ${f==='fuel'?'Plein':'Fumigènes'} des ${w==='t'?'titulaires':'spares'} : ${v} (${L.length} avion${L.length>1?'s':''})`)}
-function hgSetH(){const G=S.hgG||{},row=(k,ic,lab,sub,opts,man)=>{const w=k[0],f=k[1]==='f'?'fuel':'smk',cur=hgCur(w,f),pend=G[k]!=null?G[k]:'',n=hgGrp(w).length;
-  return `<div class="hgsr"><div class="hgsl"><span>${ic}</span><div><b>${lab}</b><small>${sub} · ${n} avion${n>1?'s':''} · actuel : ${esc(cur||'—')}</small></div></div>
-  <div class="hgseg2">${opts.map(v=>`<button class="${(pend||cur)===v?'on':''}${pend===v?' pend':''}" onclick="hgGSel('${k}','${v}')">${v}</button>`).join('')}</div>
-  <div class="hgsa">${man?`<input class="in" placeholder="À la main (ex. 1 600 L)" value="${esc(pend&&!opts.includes(pend)?pend:'')}" onchange="hgGSel('${k}',this.value.trim())">`:'<span></span>'}<button class="btn ${pend&&pend!==cur?'pri':''} sm" onclick="hgGApply('${k}')">✓ Valider</button></div></div>`};
- return `<details class="card hgset" ${S.hgSetO?'open':''} ontoggle="S.hgSetO=this.open"><summary><b>Pleins et fumigènes de la ligne</b><span class="small muted">titulaires 1 à 8 · spares 9 à 11</span></summary>
- ${row('tf','⛽','Plein des titulaires','Places 1 à 8',HG_FUEL,1)}${row('sf','⛽','Plein des spares','Spares et réserve au hangar',HG_FUEL,1)}
- ${row('ts','💨','Fumigènes des titulaires','Couleur : 2-6-8 bleu, 3-5-7 rouge, 1 et 4 blanc',['Blanc / Blanc','Blanc / Couleur','Blanc / Vide','Vide / Vide'],0)}${row('ss','💨','Fumigènes des spares','De base en Blanc / Vide',HG_SMK,0)}</details>`}
+function hgGSel(k,v){S.hgG=S.hgG||{};S.hgG[k]=v;$('sheet').innerHTML=hgGH(k)}
+const HG_GD={tf:['⛽','Plein des titulaires','Places 1 à 8'],sf:['⛽','Plein des spares','Spares 9 à 11 et réserve au hangar'],ts:['💨','Fumigènes des titulaires','Couleur : 2-6-8 bleu, 3-5-7 rouge, 1 et 4 blanc'],ss:['💨','Fumigènes des spares','De base en Blanc / Vide']};
+const hgGOpts=k=>k[1]==='f'?HG_FUEL:k==='ts'?['Blanc / Blanc','Blanc / Couleur','Blanc / Vide','Vide / Vide']:HG_SMK;
+async function hgGApply(k){const w=k[0],f=k[1]==='f'?'fuel':'smk',v=(S.hgG||{})[k]||hgCur(w,f);if(!v||v==='mixte'){toast('Choisissez d\'abord une valeur');return}const L=hgGrp(w);if(!L.length){toast(w==='t'?'Aucun titulaire sur la ligne':'Aucun spare');return}
+ L.forEach(a=>a[f]=f==='smk'?hgSmkOf(a,v):v);delete S.hgG[k];closeSheet();const ok=await hgSave(L);if(ok!==false)toast(`✓ ${HG_GD[k][1]} : ${v} (${L.length} avion${L.length>1?'s':''})`)}
+function hgGOpen(k){S.hgG=S.hgG||{};delete S.hgG[k];openSheet(()=>hgGH(k))}
+function hgGH(k){const [ic0,lab,sub]=HG_GD[k],w=k[0],f=k[1]==='f'?'fuel':'smk',cur=hgCur(w,f),G=S.hgG||{},pend=G[k]!=null?G[k]:'',sel=pend||cur,opts=hgGOpts(k),n=hgGrp(w).length;
+ return `<div class="sh"><div class="t"><div class="q">${ic0} ${lab}</div><div class="small muted">${sub} · ${n} avion${n>1?'s':''} · actuel : ${esc(cur||'—')}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">
+ <div class="hgbigc">${opts.map(v=>`<button class="${sel===v?'on':''}" onclick="hgGSel('${k}','${v}')">${f==='smk'?`<svg width="26" height="12" viewBox="-5 -6 24 12">${hgSmk(v==='Blanc / Couleur'?'Blanc / Bleu':v,0,0)}</svg>`:''}${v}</button>`).join('')}</div>
+ ${f==='fuel'?`<label class="l">Ou à la main</label><input class="in" placeholder="ex. 1 600 L" value="${esc(pend&&!opts.includes(pend)?pend:'')}" onchange="hgGSel('${k}',this.value.trim())">`:''}
+ <p class="small muted" style="margin-top:10px">Ensuite, un avion se corrige seul dans sa fiche : seul celui-là change.</p>
+ <div class="hgfoot"><button class="btn" onclick="closeSheet()">Annuler</button><button class="btn pri" onclick="hgGApply('${k}')">✓ Valider${sel&&sel!=='mixte'?' · '+esc(sel):''}</button></div></div>`}
+function hgSetH(){return `<div class="hgtools">${Object.entries(HG_GD).map(([k,[i,l]])=>{const w=k[0],f=k[1]==='f'?'fuel':'smk',cur=hgCur(w,f);return `<button class="hgtool" onclick="hgGOpen('${k}')"><span class="hgti">${i}</span><b>${l}</b><small>${esc(cur||'—')}</small></button>`}).join('')}</div>`}
 /* zoom : boutons, pincement à deux doigts ; on se déplace en glissant le fond */
 const hgZ=()=>S.hgZ||{x:0,y:0,w:HG_W};
 function hgZset(Z){const w=Math.max(110,Math.min(HG_W,Z.w)),h=w*HG_H/HG_W;Z={w,x:Math.max(0,Math.min(HG_W-w,Z.x)),y:Math.max(0,Math.min(HG_H-h,Z.y))};S.hgZ=Z;const sv=$('hgsvg');if(sv)sv.setAttribute('viewBox',`${Z.x} ${Z.y} ${Z.w} ${h}`);const b=$('hgz0');if(b)b.hidden=w>=HG_W}
@@ -6325,6 +6348,8 @@ function hgFl(id,k,v){v=String(v||'').trim();if(k==='sn'&&!/^\d{2,3}$/.test(v)){
 function hgAdd(){const sn=($('hg-sn').value||'').trim(),fin=($('hg-fin').value||'').trim();if(!/^\d{2,3}$/.test(sn)){toast('N° de série : 2 ou 3 chiffres');return}if(hgDB().ac.some(a=>a.sn===sn)){toast('Cet avion est déjà dans la flotte');return}
  const a={id:'hg'+uid(),sn,fin,s:'',pos:''};hgDB().ac.push(a);hgSave([a]);$('sheet').innerHTML=hgFleetH()}
 async function hgDel(id){const H=hgDB();H.ac=H.ac.filter(a=>a.id!==id);render();$('sheet').innerHTML=hgFleetH();if(!isOnline()){save();return}let r;try{r=await api('hgDel',{id})}catch(e){r={error:'Connexion impossible'}}if(r&&r.error){toast(r.error);return}DB.hg=r.hg}
+(function(){const f0=setRole;setRole=function(r){const g=GRP_R.includes(r)?r:null;S.asGrp=g;try{localStorage.setItem(KEY+':grp',g||'')}catch(e){}f0(g?'visit':r);if(g)toast('Vous voyez l\'application comme : '+RLm[g].l)}})();
+try{if(typeof API_URL==='undefined'){const g=localStorage.getItem(KEY+':grp');if(g&&GRP_R.includes(g)&&ROLE==='visit')S.asGrp=g}}catch(e){}
 function closeSheet(){$('ov').hidden=true;sheetFn=null;SHD=false}
 /* Fermeture en touchant à côté : seulement si le doigt s'est posé ET levé à côté (pas en fin de sélection de texte ou de défilement),
    et jamais quand une saisie est en cours (on ferme alors avec la croix ou « Annuler ») */

@@ -31,7 +31,25 @@ input[type=range]{width:100%;accent-color:#3b82f6}
 .lib.lbb{grid-template-columns:1fr}.lib.lbb button{text-align:left;padding:8px 10px;display:flex;flex-direction:column;gap:2px}.lib.lbb b{font-size:13px}.lib.lbb small{font-size:11.5px;color:var(--mu);line-height:1.3}
 .lbf button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px}.lbf span{font-size:11.5px}
 .sn{display:grid;grid-template-columns:1fr 112px 26px;gap:6px;align-items:center;margin:4px 0}
-.mu{color:var(--mu);font-size:12.5px}#asm{position:fixed;left:50%;transform:translateX(-50%);bottom:52px;z-index:6;display:flex;gap:6px;align-items:center;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:8px 10px;max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.35)}#asm .grip{cursor:grab;font-size:20px;line-height:1;padding:4px 6px;color:var(--mu);touch-action:none;user-select:none}#asm.drag{opacity:.85}#asm.drag .grip{cursor:grabbing}#asm input[type=range]{width:min(320px,40vw)}#asm select{width:auto;max-width:190px}#asm .g2{display:inline-flex;gap:4px;align-items:center;padding-left:6px;border-left:1px solid var(--line)}#asm .rec{color:#ef4444;font-weight:800;animation:rcb 1s infinite}@keyframes rcb{50%{opacity:.3}}.rcbox{margin-top:10px;padding:10px;border:1px solid #f97316;border-radius:12px;background:rgba(249,115,22,.08)}.rcdir{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}.rcb{display:flex;flex-direction:column;align-items:center;font-size:22px;padding:8px 4px;line-height:1.1}.rcb small{font-size:11.5px;margin-top:3px}.rci{font-size:26px;line-height:1}.rcchips{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.rcchips .b{padding:5px 9px}.rcpl .b{display:flex;flex-direction:column;align-items:center;padding:4px 6px;color:#bfdbfe}.rcpl .b small{font-size:10.5px}.rcgo{flex:1;font-size:16px;padding:10px}.savebox{margin-top:8px;padding:9px 10px;border:1px solid #22c55e;border-radius:11px;background:rgba(34,197,94,.1);display:flex;flex-direction:column;gap:2px}.smk{min-width:34px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.35);font-weight:800;cursor:pointer;font-size:12.5px}.hint{color:var(--mu);font-size:12px;line-height:1.4;margin:6px 0}
+.mu{color:var(--mu);font-size:12.5px}#asm{position:fixed;left:50%;transform:translateX(-50%);bottom:52px;z-index:6;display:flex;gap:6px;align-items:center;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:8px 10px;max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.35)}#asm .grip{cursor:grab;font-size:20px;line-height:1;padding:4px 6px;color:var(--mu);touch-action:none;user-select:none}#asm.drag{opacity:.85}#asm.drag .grip{cursor:grabbing}#asm input[type=range]{width:min(320px,40vw)}#asm select{width:auto;max-width:190px}#asm .g2{display:inline-flex;gap:4px;align-items:center;padding-left:6px;border-left:1px solid var(--line)}#asm .rec{color:#ef4444;font-weight:800;animation:rcb 1s infinite}@keyframes rcb{50%{opacity:.3}}.rcbox{margin-top:10px;padding:10px;border:1px solid #f97316;border-radius:12px;background:rgba(249,115,22,.08)}.rcdir{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}.rcb{display:flex;flex-direction:column;align-items:center;font-size:22px;padding:8px 4px;line-height:1.1}.rcb small{font-size:11.5px;margin-top:3px}.rci{font-size:26px;line-height:1}.rcchips{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.rcchips .b{padding:5px 9px}.rcpl .b{display:flex;flex-direction:column;align-items:center;padding:4px 6px;color:#bfdbfe}.rcpl .b small{font-size:10.5px}.rcgo{flex:1;font-size:16px;padding:10px}
+.rcnow{display:flex;align-items:center;gap:10px;margin:4px 0 6px}.rcnow span{font-size:30px}.rcnow b{font-size:17px}.rcnow small{color:#fdba74}
+details.serd{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:6px 10px}details.serd summary{cursor:pointer;font-weight:700;padding:4px 0}
+#dock{position:fixed;left:340px;right:0;bottom:0;z-index:5;background:linear-gradient(to top,rgba(8,13,26,.96),rgba(8,13,26,.86));border-top:1px solid var(--line);padding:6px 10px calc(8px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:6px}
+#pan.hid~#dock{left:0}#dock[hidden]{display:none}
+#dock .tl{display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:thin;padding:2px 0}
+#dock .tc{flex:none;display:flex;align-items:center;gap:5px;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:10px;padding:4px 8px;cursor:pointer;font-size:12.5px;white-space:nowrap}
+#dock .tc i{font-style:normal;font-size:15px}#dock .tc b{font-weight:700;color:var(--mu);font-size:11px}
+#dock .tc.sel{border-color:#fde047;background:rgba(253,224,71,.16)}#dock .tc.gh{border-style:dashed;border-color:#f97316;color:#fdba74}#dock .tc.gh.on{background:rgba(249,115,22,.22)}
+#dock .ti{flex:none;width:18px;height:22px;border-radius:6px;border:1px dashed transparent;background:none;color:var(--mu);cursor:pointer;font-size:13px;padding:0;opacity:.45}
+#dock .ti:hover,#dock .ti.on{opacity:1;border-color:#f97316;color:#fdba74}
+#dock .bb{display:flex;gap:6px;align-items:stretch;overflow-x:auto;scrollbar-width:thin}
+#dock .bk{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:60px;padding:6px 5px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);cursor:pointer;color:inherit}
+#dock .bk span{font-size:22px;line-height:1}#dock .bk small{font-size:11px;color:#cbd5e1}
+#dock .bk.on{background:#1d4ed8;border-color:#60a5fa}#dock .bk:hover{background:rgba(59,130,246,.25)}
+#dock .sep{flex:none;width:1px;background:var(--line);margin:2px 2px}
+#dock .go{background:#16a34a;border-color:#22c55e;min-width:84px}#dock .go small{color:#fff;font-weight:700}#dock .go span{color:#fff}
+#info{bottom:calc(var(--dockh,0px) + 12px)}
+@media (max-width:760px){#dock{left:0}body.pano #dock{bottom:52%}#dock .bk{min-width:56px}}.savebox{margin-top:8px;padding:9px 10px;border:1px solid #22c55e;border-radius:11px;background:rgba(34,197,94,.1);display:flex;flex-direction:column;gap:2px}.smk{min-width:34px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.35);font-weight:800;cursor:pointer;font-size:12.5px}.hint{color:var(--mu);font-size:12px;line-height:1.4;margin:6px 0}
 #tog{position:fixed;left:350px;top:10px;z-index:4;background:rgba(10,16,30,.9);color:#fff}#pan.hid+#tog{left:10px}
 #vbar{position:fixed;right:10px;top:10px;z-index:4;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
 #vbar .g{display:flex;gap:4px;background:var(--pan);padding:4px;border-radius:11px;border:1px solid var(--line)}
@@ -51,6 +69,7 @@ input[type=range]{width:100%;accent-color:#3b82f6}
 <button id="tog" class="b" onclick="togPan()">☰ Panneau</button>
 <div id="vbar"></div>
 <div id="info"></div>
+<div id="dock" hidden></div>
 <div id="fe" hidden><div class="box"><div class="row" style="justify-content:space-between"><b id="fet">Formation</b><button class="b" onclick="feClose()">Fermer</button></div>
  <p class="hint">Vue de dessus, nez vers le haut. Faites glisser les avions ; touchez-en un pour le choisir (numéro, retrait). Le quadrillage est la place (« slot »).</p>
  <div id="fename"></div>
@@ -136,6 +155,7 @@ const FIG={
  ACT_F:{l:'Changement de formation',ps:[P('tr','Durée du passage',0,2000,50,400,'m')],gen:()=>{},h:[]},
  ACT_S:{l:'Action fumée',ps:[],gen:()=>{},h:[]},
  RC_VRH:{l:'VRH',ps:[P('R','Rayon de la mise en palier',150,1500,10,500,'m'),P('L','Ligne après',0,5000,50,300,'m')],gen:(T,p)=>T.vrh(p.R,p.L),h:[['end','F','L',1]]},
+ RC_P:{l:'Pente',ps:[P('g','Pente visée (par rapport à l\'horizon)',-90,90,5,45,'°'),P('R','Rayon',150,1500,10,500,'m'),P('L','Ligne après',0,5000,50,600,'m')],gen:(T,p)=>{T.slope(+p.g,p.R);if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
  RC_LVL:{l:'Ailes à plat',ps:[P('L','Longueur de la remise à plat',50,2000,10,300,'m')],gen:(T,p)=>{T.level(p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO ENV':{l:'Tonneau envoyé (barrique)',side:1,ps:[P('a','Rotation',30,720,10,180,'°'),P('R','Rayon de la barrique',30,600,5,120,'m'),P('L','Longueur',150,2500,10,700,'m')],gen:(T,p,s)=>{T.cask(s,p.a,p.R,p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO SIMU':{base:'TNO ENV',l:'Tonneau simu'},
@@ -149,7 +169,7 @@ const FIG={
  BOMBE:{l:'Bombe',ps:[P('R','Rayon',200,700,10,380,'m'),P('L','Montée verticale',100,1500,10,500,'m')],gen:(T,p)=>{T.pitch(90,p.R);T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
  MONTEE:{l:'Ressource / piqué',ps:[P('a','Angle',-80,80,1,30,'°'),P('R','Rayon',200,1200,10,600,'m'),P('L','Ligne',0,2000,10,400,'m')],gen:(T,p)=>{T.pitch(p.a,p.R);T.line(p.L);T.mark('end');T.pitch(-p.a,p.R)},h:[['end','F','L',1]]}};
 /* Briques de base : toute trajectoire de voltige s'obtient en les enchaînant (les anciennes figures restent lisibles). */
-const FIG_ORDER=['RC_S','RC_V','RC_LVL','RC_VRH','TNO ENV'];
+const FIG_ORDER=['RC_S','RC_P','RC_V','RC_LVL','RC_VRH','TNO ENV'];
 /* propositions du menu « Ajouter » : brique + réglages de départ */
 const PRESETS=[['LIGNE'],['DEMI',{a:45,L:500},'1/8 de boucle','Montée à 45°'],['DEMI',{a:90,L:400},'1/4 de boucle','Montée à la verticale'],['DEMI'],['VIRAGE'],['BOUCLE OBL'],['TNO ENV']];
 function demiName(a){a=+a;const k=Math.abs(a),m={45:'1/8 de boucle',90:'1/4 de boucle',135:'3/8 de boucle',180:'Demi-boucle',225:'5/8 de boucle',270:'3/4 de boucle',315:'7/8 de boucle',360:'Boucle'}[k]||'Arrondi '+k+'°';return a<0?m+' poussé'+(k>=360?'e':''):m}
@@ -157,8 +177,8 @@ function rcName(f){const p=figParams(f);if(f.t==='RC_S')return +p.v?(+p.v>0?'Cou
  const b=+p.bank;return 'Virage '+(f.side==='D'?'D':'G')+' '+p.ang+'° · incl. '+b+'° '+(b<85?'(monte)':b>95?'(descend)':'(à plat)')}
 const isAct=f=>f&&(f.t==='ACT_F'||f.t==='ACT_S');
 function smSum(m){const v=Object.values(m||{}).filter(Boolean);if(!v.length)return 'coupée';const c=new Set(v);return c.size===1?(SMN[[...c][0]]||'').toLowerCase()+' ('+v.length+')':'tricolore ('+v.length+')'}
-const fName=f=>(f.ref?'↩ ':'')+fName0(f),fName0=f=>f.t==='ACT_F'?'⇢ Passage en '+formL(f.form):f.t==='ACT_S'?'💨 Fumée '+(f.smkName||smSum(f.smk)):f.t==='DEMI'?demiName(figParams(f).a):f.t==='RC_S'||f.t==='RC_V'?rcName(f):figName(f.t);
-const FIG_TIP={RC_VRH:'Vol rectiligne horizontal : ailes à plat et trajectoire remise à plat (Vz = 0)',RC_LVL:'Remet la patrouille ailes à plat par rapport à l\'horizon, sans changer de direction',RC_S:'Tout droit : à plat (ligne), ou courbe vers le haut (boucle) ou vers le bas',RC_V:'Virage : l\'avion s\'incline puis tire. 90° = virage à plat, moins = la trajectoire monte (boucle oblique), plus = elle descend',LIGNE:'Tout droit dans le plan des avions',DEMI:'Arrondi vers le haut (ou poussé) : 45° = 1/8 de boucle, 90° = 1/4, 180° = demi-boucle, 360° = boucle',VIRAGE:'Virage à plat : angle, rayon et inclinaison de 10 à 180° (au-delà de 90°, sur le dos)',
+const fName=f=>(f.ref?'↩ ':'')+fName0(f),fName0=f=>f.t==='ACT_F'?'⇢ Passage en '+formL(f.form):f.t==='ACT_S'?'💨 Fumée '+(f.smkName||smSum(f.smk)):f.t==='DEMI'?demiName(figParams(f).a):f.t==='RC_S'||f.t==='RC_V'?rcName(f):f.t==='RC_P'?(+figParams(f).g>0?'Montée '+figParams(f).g+'°':+figParams(f).g<0?'Descente '+(-figParams(f).g)+'°':'Remise en palier'):figName(f.t);
+const FIG_TIP={RC_P:'Pente visée par rapport à l\'horizon : la patrouille se remet ailes à plat puis arrondit jusqu\'à cette pente (+ = montée, − = descente), quelle que soit la pente d\'avant',RC_VRH:'Vol rectiligne horizontal : ailes à plat et trajectoire remise à plat (Vz = 0)',RC_LVL:'Remet la patrouille ailes à plat par rapport à l\'horizon, sans changer de direction',RC_S:'Tout droit : à plat (ligne), ou courbe vers le haut (boucle) ou vers le bas',RC_V:'Virage : l\'avion s\'incline puis tire. 90° = virage à plat, moins = la trajectoire monte (boucle oblique), plus = elle descend',LIGNE:'Tout droit dans le plan des avions',DEMI:'Arrondi vers le haut (ou poussé) : 45° = 1/8 de boucle, 90° = 1/4, 180° = demi-boucle, 360° = boucle',VIRAGE:'Virage à plat : angle, rayon et inclinaison de 10 à 180° (au-delà de 90°, sur le dos)',
  'BOUCLE OBL':'Boucle dans un plan incliné (0° = boucle verticale)','TNO ENV':'Barrique : l\'avion cabre et tourne en même temps, la trajectoire fait le tour d\'un tonneau (rayon et longueur réglables)'};
 const FIG_NAME={'BOUCLE OBL':'Boucle oblique','TNO ENV':'TNO envoyé','TNO SIMU':'TNO simu','TR G':'Trèfle G','TR D':'Trèfle D','CACAHUETE':'Cacahuète','P ANG':'P ANG'};
 function fdef(t){const d=FIG[t]||FIG.LIGNE;if(!d.base)return d;const b=fdef(d.base);return Object.assign({},b,d,{ps:d.ps||b.ps,h:d.h||b.h,gen:d.gen||b.gen,l:d.l||b.l,side:d.side!=null?d.side:b.side})}
@@ -189,6 +209,8 @@ class Tur{
    this.p.copy(P0).addScaledVector(A,k*t).addScaledVector(U0,R*(1-c)).addScaledVector(Rt,-R*sn);
    const v=A.clone().multiplyScalar(k).addScaledVector(U0,R*sn).addScaledVector(Rt,-R*c).normalize(),u=U0.clone().multiplyScalar(c).addScaledVector(Rt,sn).normalize(),z=v.clone().cross(u).normalize();
    u.copy(z).cross(v).normalize();m.makeBasis(v,u,z);this.q.setFromRotationMatrix(m);this.push();if(i===Math.round(n/2))this.mark('top')}}
+ slope(g,R){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()>.05){Ut.normalize();const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)>2)this.roll(a,Math.max(80,Math.abs(a)*1.5))}
+  const g0=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R,d=g-g0;if(Math.abs(d)>.5)this.pitch(d,R,'top')}
  level(L){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()<.05){this.line(L);return}Ut.normalize();
   const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)<.5){this.line(L);return}this.roll(a,L)}
  /* VRH : ailes à plat puis ressource (ou rendue) jusqu'à Vz = 0 */
@@ -231,6 +253,7 @@ function resize(){const cv=$('cv'),hid=$('pan').classList.contains('hid'),IW=Mat
  Object.assign(cv.style,{left:l+'px',top:t+'px',width:w+'px',height:h+'px'});R3.setSize(w,h,false);CAM.aspect=w/h;CAM.updateProjectionMatrix();dirty=1}
 let dirty=1;function loop(){requestAnimationFrame(loop);
  if(RP.on&&RP.play){const now=performance.now(),dt=Math.min(.1,(now-RP.t)/1000);RP.t=now;RP.d+=dt*RP.v*RP.spd;if(RP.d>=RP.A.len){RP.d=RP.A.len;RP.play=false;asmUpd(1);if(RP.rec)setTimeout(recStop,400);asmBar()}asmUpd()}
+ if(CAMT&&!RP.on&&!PUBV){VIEW.t.lerp(CAMT,.12);if(VIEW.t.distanceTo(CAMT)<3){VIEW.t.copy(CAMT);CAMT=null}dirty=1}
  if(!dirty)return;dirty=0;
  const cm=RP.on&&RP.cam!=='ext'&&RP.camP?RP.cam:PUBV?'pv':'ext',nr=cm==='cock'?.4:cm==='pub'||cm==='pv'?1:20,fv=cm==='cock'?72:cm==='pub'?(RP.rec?28:32):cm==='pv'?PUBV.fov:42;if(CAM.near!==nr||CAM.fov!==fv){CAM.near=nr;CAM.fov=fv;CAM.updateProjectionMatrix()}
  if(SKY)SKY.position.copy(cm==='pv'?PUBV.E:cm!=='ext'?RP.camP:CAM.position);
@@ -318,7 +341,8 @@ function freeG(g){g.traverse(o=>{if(o.userData&&o.userData.keep)return;if(o.geom
 let SNAPG=[];
 function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(G)}G=new THREE.Group();ROOT.add(G);HANDLES=[];
  if(MODE==='sync'){drawSync();return}
- const GH=ED&&SEL<0&&!CLEAN&&!TOPV&&BLD.on&&!RP.on,B0=build(GH?Object.assign({},CUR,{figs:CUR.figs.concat([bldPiece()])}):CUR),GF=GH?B0.figs[B0.figs.length-1]:null,B=BUILT={pts:B0.pts,figs:GH?B0.figs.slice(0,-1):B0.figs},pts=B.pts,W=OPT.W;
+ if(INS!=null&&INS>=CUR.figs.length)INS=null;if(HIST.id!==CUR.id&&ED)hRec();
+ const GH=ED&&SEL<0&&!CLEAN&&!TOPV&&BLD.on&&!RP.on,gi0=INS==null?CUR.figs.length:INS+1,B0=build(GH?Object.assign({},CUR,{figs:CUR.figs.slice(0,gi0).concat([bldPiece()],CUR.figs.slice(gi0))}):CUR),GF=GH?B0.figs[gi0]:null,B=BUILT={pts:B0.pts,figs:GH?B0.figs.filter((_,k)=>k!==gi0):B0.figs,ghost:GF},pts=B.pts,W=OPT.W;
  /* axe de présentation, lignes à 45°, public */
  const ax=CUR.axis,hd=ax.hdg*D2R,Fh=V(Math.sin(hd),0,-Math.cos(hd)),Rh=V(Math.cos(hd),0,Math.sin(hd)).multiplyScalar(ax.side),c=V(ax.x,3,ax.z);
  const IMM=(RP.on&&RP.cam!=='ext')||!!PUBV,lm=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:.9}),ln=(a,b)=>IMM?0:G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),lm));
@@ -333,17 +357,17 @@ function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(
   for(let i=0;i<n;i++){const q=disp(pts[i]),r=AZ.clone().applyQuaternion(q).multiplyScalar(W/2),p=pts[i].p;
    pos.set([p.x-r.x,p.y-r.y,p.z-r.z,p.x+r.x,p.y+r.y,p.z+r.z],i*6);
    const rf=V(r.x,0,r.z),k=Math.max(.15,rf.length()/(W/2));rf.setLength(W/2*k);sh.set([p.x-rf.x,2,p.z-rf.z,p.x+rf.x,2,p.z+rf.z],i*6);
-   if(i<n-1&&!hseg[i]&&!(GF&&i>=GF.i0)){const a=i*2;idx.push(a,a+1,a+2,a+1,a+3,a+2)}}
+   if(i<n-1&&!hseg[i]&&!(GF&&i>=GF.i0&&i<GF.i2)){const a=i*2;idx.push(a,a+1,a+2,a+1,a+3,a+2)}}
   const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(pos,3));geo.setIndex(idx);geo.computeVertexNormals();
   if(!RP.on||RP.rib){const tr=RP.on?{transparent:true,opacity:.3,depthWrite:false}:{};G.add(new THREE.Mesh(geo,new THREE.MeshLambertMaterial(Object.assign({color:0x2563eb,emissive:0x0b2a7a,side:THREE.FrontSide},tr))));G.add(new THREE.Mesh(geo,new THREE.MeshLambertMaterial(Object.assign({color:0xe11d2a,emissive:0x5a0a10,side:THREE.BackSide},tr))));}
-  if(GF){const gi=[];for(let i=GF.i0;i<n-1;i++){const a=i*2;gi.push(a,a+1,a+2,a+1,a+3,a+2)}const gg=new THREE.BufferGeometry();gg.setAttribute('position',new THREE.BufferAttribute(pos,3));gg.setIndex(gi);
+  if(GF){const gi=[];for(let i=GF.i0;i<Math.min(n-1,GF.i2);i++){const a=i*2;gi.push(a,a+1,a+2,a+1,a+3,a+2)}const gg=new THREE.BufferGeometry();gg.setAttribute('position',new THREE.BufferAttribute(pos,3));gg.setIndex(gi);
    G.add(new THREE.Mesh(gg,new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:.4,side:THREE.FrontSide,depthWrite:false})));G.add(new THREE.Mesh(gg,new THREE.MeshBasicMaterial({color:0xef4444,transparent:true,opacity:.4,side:THREE.BackSide,depthWrite:false})));
-   G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.slice(GF.i0).map(x=>x.p)),new THREE.LineDashedMaterial({color:0xf97316,dashSize:60,gapSize:40})).computeLineDistances());
+   G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts.slice(GF.i0,GF.i2+1).map(x=>x.p)),new THREE.LineDashedMaterial({color:0xf97316,dashSize:60,gapSize:40})).computeLineDistances());
    figHandles(GF,'G',pts);
    /* la formation en transparence au milieu et au bout de la prochaine brique : on voit dans quelle position elle finit */
    {const fm=fNorm(FORMS()[GF.f.form]||FORMS().DIAMANT),sc=OPT.sc,gm=GHM();[.5,1].forEach(u=>{const i=Math.min(n-1,Math.round(GF.i1+(GF.i2-GF.i1)*u)),pt=pts[i],grp=new THREE.Group();grp.position.copy(pt.p);grp.quaternion.copy(disp(pt));
     fm.forEach(({x:la,y:bk,n:k})=>{const j=jet();j.traverse(o=>{if(o.isMesh)o.material=k===1?GHL():gm});j.scale.setScalar(sc);j.position.set(-bk*15*sc,(k===1?0:-.15)*sc,la*15*sc);grp.add(j)});G.add(grp)})}
-   const ep=pts[n-1].p,l=label('Prochaine brique','rgba(234,88,12,.92)',.8);l.position.copy(ep);l.position.y+=180;G.add(l)}
+   const ep=pts[GF.i2].p,l=label(INS!=null?'Insertion':'Prochaine brique','rgba(234,88,12,.92)',.8);l.position.copy(ep);l.position.y+=180;G.add(l)}
   if(OPT.shadow){const g2=new THREE.BufferGeometry();g2.setAttribute('position',new THREE.BufferAttribute(sh,3));g2.setIndex(idx);G.add(new THREE.Mesh(g2,new THREE.MeshBasicMaterial({color:0x334155,transparent:true,opacity:.35,side:THREE.DoubleSide,depthWrite:false})))}}
  /* figures : étiquettes, snapshots, sélection */
  const FM=FORMS(),sc=OPT.sc;
@@ -364,7 +388,7 @@ function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(
   if(!CLEAN){const l=label('DÉPART','rgba(225,29,72,.9)',.8);l.position.copy(p);l.position.y+=420;G.add(l)}
   if(!axLock()){const ac=V(CUR.axis.x,10,CUR.axis.z);addHandle(ac,0xf59e0b,{axis:'xz'},1.1);addHandle(ac.clone().addScaledVector(Fh,1500),0xf59e0b,{axis:'hdg'})}}
  dirty=1;if(!NOPAN)panel()}
-let CLEAN=false;
+let CLEAN=false,S_OPEN=false;
 function figHandles(F,fi,pts){if(!ED||CLEAN)return;const d=F.d;(d.h||[]).forEach(([mk,dir,par,k])=>{const m=F.marks[mk];if(!m)return;let dv;const q=m.q;
   if(dir==='F')dv=AX.clone().applyQuaternion(q);else if(dir==='U')dv=AY.clone().applyQuaternion(q);else{const cen=pts[F.i1].p;dv=m.p.clone().sub(cen).setY(0).normalize()}
   const hp=m.p.clone().addScaledVector(dv,300);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([m.p,hp]),new THREE.LineBasicMaterial({color:0x22c55e})));addHandle(hp,0x22c55e,{fi,par,dir:dv,k})});
@@ -374,13 +398,15 @@ function figHandles(F,fi,pts){if(!ED||CLEAN)return;const d=F.d;(d.h||[]).forEach
   G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(arc),new THREE.LineBasicMaterial({color:0xa855f7,transparent:true,opacity:.7})));
   const hp=c.clone().addScaledVector(U0,Math.cos(b)*Lh).addScaledVector(R0,-s*Math.sin(b)*Lh);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([c,hp]),new THREE.LineBasicMaterial({color:0xa855f7})));
   addHandle(hp,0xa855f7,{fi,bank:1,c:c.clone(),Fw,U0,R0},1.1)}
+ if(F.f.t==='RC_S'||F.f.t==='RC_P'){const p=F.p,me=F.marks.end;if(me){const U=AY.clone().applyQuaternion(me.q),hp=me.p.clone().addScaledVector(U,460);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([me.p,hp]),new THREE.LineBasicMaterial({color:0x06b6d4})));addHandle(hp,0x06b6d4,{fi,slope:1,dir:U},1.05)}
+  const mt=F.marks.top,sv=F.f.t==='RC_P'?Math.sign(F.marks.top?(+p.g-0.0001):1):+p.v;if(sv&&mt&&F.f.t==='RC_S'){const o=AY.clone().applyQuaternion(mt.q).multiplyScalar(-Math.sign(sv)),hp=mt.p.clone().addScaledVector(o,320);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([mt.p,hp]),new THREE.LineBasicMaterial({color:0x84cc16})));addHandle(hp,0x84cc16,{fi,par:'R',dir:o,k:1},.95)}}
  if(fi!=='G'){const st=pts[F.i1];addHandle(st.p,0xf59e0b,{fi,par:'L0',dir:AX.clone().applyQuaternion(pts[F.i0].q),k:1})}}
 function addHandle(p,col,data,s){if(CLEAN)return;const m=new THREE.Mesh(new THREE.SphereGeometry(55*(s||1),18,12),new THREE.MeshBasicMaterial({color:col,depthTest:false,transparent:true,opacity:.92}));m.position.copy(p);m.renderOrder=20;m.userData=data;G.add(m);HANDLES.push(m)}
 /* =========================== Commandes : caméra et poignées =========================== */
 const RC=new THREE.Raycaster(),NDC=new THREE.Vector2();let PT={},DRAG=null,GEST=null;
 function ndc(e){const r=$('cv').getBoundingClientRect();NDC.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);RC.setFromCamera(NDC,CAM)}
 function ctl(){const cv=$('cv');
- cv.addEventListener('pointerdown',e=>{try{cv.setPointerCapture(e.pointerId)}catch(_){}PT[e.pointerId]={x:e.clientX,y:e.clientY,b:e.button};const ids=Object.keys(PT);
+ cv.addEventListener('pointerdown',e=>{CAMT=null;try{cv.setPointerCapture(e.pointerId)}catch(_){}PT[e.pointerId]={x:e.clientX,y:e.clientY,b:e.button};const ids=Object.keys(PT);
   if(ids.length===1&&ED){ndc(e);const hit=RC.intersectObjects(HANDLES)[0];if(hit){startDrag(hit.object,e);return}if(MODE==='ruban'&&!TOPV){const sh=RC.intersectObjects(SNAPG,true)[0];if(sh){let o=sh.object;while(o&&!o.userData.snap)o=o.parent;if(o){DRAG={d:{snap:o.userData.snap}};info('Glissez la formation le long de la trajectoire');return}}}if(TOPV&&MODE==='ruban'&&pickFig()!=null){startMove();return}}
   if(ids.length===1&&!DRAG){ndc(e);const pk=pickFig();GEST={tap:{x:e.clientX,y:e.clientY,t:Date.now(),fi:pk}}}else GEST={}});
  cv.addEventListener('pointermove',e=>{const o=PT[e.pointerId];if(!o)return;const dx=e.clientX-o.x,dy=e.clientY-o.y;
@@ -393,7 +419,7 @@ function ctl(){const cv=$('cv');
  const up=e=>{const g=GEST&&GEST.tap;if(g&&!DRAG&&Math.hypot(e.clientX-g.x,e.clientY-g.y)<6&&Date.now()-g.t<500&&g.fi!=null){if(MODE==='sync')selPl(g.fi);else selFig(g.fi)}
   delete PT[e.pointerId];if(DRAG){endDrag()}GEST=null};
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);cv.addEventListener('contextmenu',e=>e.preventDefault());cv.addEventListener('mousedown',e=>{if(e.button===1)e.preventDefault()});cv.addEventListener('auxclick',e=>{if(e.button===1)e.preventDefault()});
- cv.addEventListener('wheel',e=>{e.preventDefault();if(PUBV){PUBV.fov=Math.max(10,Math.min(80,PUBV.fov*Math.exp(e.deltaY*.0012)));dirty=1;return}VIEW.d=Math.max(400,Math.min(40000,VIEW.d*Math.exp(e.deltaY*.0012)));dirty=1},{passive:false})}
+ cv.addEventListener('wheel',e=>{e.preventDefault();CAMT=null;if(PUBV){PUBV.fov=Math.max(10,Math.min(80,PUBV.fov*Math.exp(e.deltaY*.0012)));dirty=1;return}VIEW.d=Math.max(400,Math.min(40000,VIEW.d*Math.exp(e.deltaY*.0012)));dirty=1},{passive:false})}
 let TOPV=null,PUBV=null;   // PUBV : vue du public, œil au point central au sol (on regarde autour en glissant, molette / pincer = zoom)
 /* G : vue de dessus façon carte (nord en haut) ; on y attrape le ruban pour le poser où l'on veut au-dessus de la base. G encore : retour à la vue d'avant */
 function godView(){if(PUBV){PUBV=null;if(!(RP.on&&RP.cam==='pub'))crowdOn(false);draw()}if(TOPV){Object.assign(VIEW,TOPV.v);VIEW.t=TOPV.t;TOPV=null;info('')}else{TOPV={v:{d:VIEW.d,az:VIEW.az,el:VIEW.el},t:VIEW.t.clone()};
@@ -403,6 +429,8 @@ function godView(){if(PUBV){PUBV=null;if(!(RP.on&&RP.cam==='pub'))crowdOn(false)
 function startMove(){const pl=new THREE.Plane(V(0,1,0),-CUR.start.alt),p0=V(0,0,0);if(!RC.ray.intersectPlane(pl,p0))return;DRAG={d:{mv:1},plane:pl,p0,v0:{x:CUR.start.x,z:CUR.start.z}};info('Glissez pour déplacer tout le ruban')}
 function move(f,r,u){const fw=V(-Math.sin(VIEW.az),0,-Math.cos(VIEW.az)),rt=V(Math.cos(VIEW.az),0,-Math.sin(VIEW.az)),k=VIEW.d*.06;VIEW.t.addScaledVector(fw,f*k).addScaledVector(rt,r*k);VIEW.t.y=Math.max(0,VIEW.t.y+u*k);dirty=1}
 addEventListener('keydown',e=>{const t=e.target;if(RP.on&&!RP.rec&&e.key===' '&&!(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName))){e.preventDefault();asmPlay();return}if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName))return;const k=e.key,s=e.shiftKey?3:1;let h=1;
+ if(MODE==='ruban'&&ED&&!RP.on){if((e.ctrlKey||e.metaKey)&&(k==='z'||k==='Z')){e.preventDefault();hGo(e.shiftKey?1:-1);return}if((e.ctrlKey||e.metaKey)&&(k==='y'||k==='Y')){e.preventDefault();hGo(1);return}
+  if(k==='Enter'&&SEL<0){e.preventDefault();bldPose();return}if((k==='Delete'||k==='Backspace')&&SEL>=0){e.preventDefault();delFig(SEL);return}if(k==='Escape'){toEnd();return}}
  if(PUBV&&/^(Arrow|\+|=|-)/.test(k)){if(k==='ArrowLeft')PUBV.yaw+=.06*s;else if(k==='ArrowRight')PUBV.yaw-=.06*s;else if(k==='ArrowUp')PUBV.pit=Math.min(1.45,PUBV.pit+.05*s);else if(k==='ArrowDown')PUBV.pit=Math.max(-.35,PUBV.pit-.05*s);else if(k==='-')PUBV.fov=Math.min(80,PUBV.fov*1.15);else PUBV.fov=Math.max(10,PUBV.fov/1.15);e.preventDefault();dirty=1;return}
  if(k==='ArrowUp')move(s,0,0);else if(k==='ArrowDown')move(-s,0,0);else if(k==='ArrowLeft')move(0,-s,0);else if(k==='ArrowRight')move(0,s,0);
  else if(k==='PageUp')move(0,0,s);else if(k==='PageDown')move(0,0,-s);else if(k==='+'||k==='=')VIEW.d=Math.max(400,VIEW.d/1.15);else if(k==='-')VIEW.d=Math.min(40000,VIEW.d*1.15);else if(k==='g'||k==='G'){godView();h=0;e.preventDefault()}else h=0;
@@ -413,7 +441,9 @@ function pickFig(){if(MODE==='sync')return pickPl();if(!BUILT)return null;let be
 function startDrag(h,e){const d=h.userData;const n=V(0,0,0).copy(CAM.position).sub(h.position).normalize();
  const plane=d.bank?new THREE.Plane().setFromNormalAndCoplanarPoint(d.Fw,d.c):d.k==='xz'||d.start==='xz'||d.axis==='xz'||d.start==='hdg'||d.axis==='hdg'?new THREE.Plane(V(0,1,0),-h.position.y):new THREE.Plane().setFromNormalAndCoplanarPoint(n,h.position);
  const p0=V(0,0,0);RC.ray.intersectPlane(plane,p0);DRAG={h,d,plane,p0,v0:snap(d)};info(dragTxt(d))}
-function snap(d){if(d.sp)return JSON.parse(JSON.stringify(plOf(d.sp)));if(d.bank)return 0;if(d.fi==='G')return +BLD[bldKey(d.par)];const s=CUR;if(d.start)return JSON.parse(JSON.stringify(s.start));if(d.axis)return JSON.parse(JSON.stringify(s.axis));const f=s.figs[d.fi];return figParams(f)[d.par]}
+function snap(d){if(d.sp)return JSON.parse(JSON.stringify(plOf(d.sp)));if(d.bank)return 0;if(d.slope){const t=d.fi==='G'?bldPiece().t:CUR.figs[d.fi].t,q=d.fi==='G'?BLD:figParams(CUR.figs[d.fi]);d.abs=t==='RC_P';
+  if(d.fi==='G'&&t==='RC_S'&&!+q.v&&BUILT&&BUILT.ghost){const f=AX.clone().applyQuaternion(BUILT.pts[BUILT.ghost.i1].q);d.abs=d.toP=true;return Math.round(Math.asin(Math.max(-1,Math.min(1,f.y)))/D2R)}   // tout droit : la poignée cyan en fait une montée ou une descente
+  return d.abs?+q.g:(+q.v||0)*(+q.ang||0)}if(d.fi==='G')return +BLD[bldKey(d.par)];const s=CUR;if(d.start)return JSON.parse(JSON.stringify(s.start));if(d.axis)return JSON.parse(JSON.stringify(s.axis));const f=s.figs[d.fi];return figParams(f)[d.par]}
 function moveDrag(e){ndc(e);if(DRAG.d.snap){const {fi,si}=DRAG.d.snap,F=BUILT&&BUILT.figs[fi];if(!F)return;const v=V(0,0,0);let best=-1,bd=1e9;
   for(let k=F.i1;k<=F.i2;k++){v.copy(BUILT.pts[k].p).project(CAM);if(v.z>1)continue;const dd=Math.hypot(v.x-NDC.x,(v.y-NDC.y)*CAM.aspect);if(dd<bd){bd=dd;best=k}}
   if(best>=0){const f=CUR.figs[fi];f.snaps[si].u=+((best-F.i1)/Math.max(1,F.i2-F.i1)).toFixed(3);info('Formation à '+Math.round(f.snaps[si].u*100)+' % de la figure');NOPAN=true;try{draw()}finally{NOPAN=false}}return}
@@ -427,11 +457,17 @@ function moveDrag(e){ndc(e);if(DRAG.d.snap){const {fi,si}=DRAG.d.snap,F=BUILT&&B
  else if(d.axis==='hdg'){const v=p.clone().sub(V(s.axis.x,p.y,s.axis.z));s.axis.hdg=Math.round(((Math.atan2(v.x,-v.z)/D2R)+360)%360)}
  else if(d.bank){const v=p.clone().sub(d.c),a=Math.atan2(-v.dot(d.R0),v.dot(d.U0))/D2R,bk=Math.min(180,Math.round(Math.abs(a)/5)*5),sd=a>=0?'G':'D';
   if(d.fi==='G'){BLD.bank=bk;BLD.dir=sd}else{const f=s.figs[d.fi];f.p=f.p||{};f.p.bank=bk;f.side=sd}info('Inclinaison '+bk+'° '+(sd==='G'?'à gauche':'à droite')+' · '+(bk<85?'ça monte':bk>95?'ça descend':'à plat'));NOPAN=true;try{draw()}finally{NOPAN=false}return}
+ else if(d.slope&&d.abs){let g=Math.round((DRAG.v0+dl.dot(d.dir)*.12)/5)*5;g=Math.max(-90,Math.min(90,g));if(d.toP&&Math.abs(g-DRAG.v0)>=5){d.toP=false;BLD.Lv=BLD.L||600;BLD.R=500;BLD.dir='P'}if(d.fi==='G'&&BLD.dir==='P')BLD.g=g;else{const f=s.figs[d.fi];f.p=f.p||{};f.p.g=g}
+  info(!g?'Remise en palier':(g>0?'⤴ Montée ':'⤵ Descente ')+Math.abs(g)+'° par rapport à l\'horizon');NOPAN=true;try{draw()}finally{NOPAN=false}return}
+ else if(d.slope){let a=Math.round((DRAG.v0+dl.dot(d.dir)*.12)/5)*5;a=Math.max(-360,Math.min(360,a));const v=Math.sign(a),g=Math.abs(a);
+  if(d.fi==='G'){if(v&&!+BLD.v&&!BLD.Lv)BLD.Lv=Math.min(800,BLD.L||600);BLD.v=v;if(g)BLD.ang=g}else{const f=s.figs[d.fi];f.p=f.p||{};if(v&&!+(f.p.v||0)&&!f.p.L){}f.p.v=v;if(g)f.p.ang=g}
+  info(slopeTxt(a));NOPAN=true;try{draw()}finally{NOPAN=false}return}
  else if(d.fi==='G'){const gp=bldPiece(),pd=fdef(gp.t).ps.find(x=>x.k===d.par),key=bldKey(d.par);if(!pd||!key)return;let v=DRAG.v0+dl.dot(d.dir)*d.k;v=Math.round(v/pd.st)*pd.st;BLD[key]=Math.max(pd.min,Math.min(pd.max,v));info(pd.l+' : '+BLD[key]+' '+pd.u);NOPAN=true;try{draw()}finally{NOPAN=false}return}
  else{const f=s.figs[d.fi],pd=(fdef(f.t).ps.concat([LEAD])).find(x=>x.k===d.par);if(!pd)return;let v=DRAG.v0+dl.dot(d.dir)*d.k;v=Math.round(v/pd.st)*pd.st;v=Math.max(pd.min,Math.min(pd.max,v));f.p=f.p||{};f.p[d.par]=v}
  info(dragTxt(d));draw()}
-function endDrag(){const mv=DRAG&&(DRAG.d.mv||DRAG.d.snap||DRAG.d.bank||DRAG.d.fi==='G');DRAG=null;if(mv)panel();if(MODE==='sync')touchS();else touch();setTimeout(()=>info(''),1200)}
-function dragTxt(d){if(d.bank)return 'Tournez la boule violette pour pencher les avions';if(d.fi==='G')return 'Étirez la prochaine brique';if(d.sp){const P=plOf(d.sp)||{};return 'Avion '+d.sp+' : axe '+P.a+' m · public '+P.c+' m · hauteur '+ftOf(P.h)+' ft'}const s=CUR;if(d.start==='xz')return 'Départ déplacé';if(d.start==='alt')return 'Altitude de départ : '+ftOf(s.start.alt)+' ft';if(d.start==='hdg')return 'Cap de départ : '+String(s.start.hdg).padStart(3,'0')+'°';
+function endDrag(){const mv=DRAG&&(DRAG.d.mv||DRAG.d.snap||DRAG.d.bank||DRAG.d.slope||DRAG.d.fi==='G');DRAG=null;if(mv)panel();if(MODE==='sync')touchS();else touch();setTimeout(()=>info(''),1200)}
+const slopeTxt=a=>!a?'Pente : à plat (tout droit)':Math.abs(a)>=360?(a>0?'Boucle complète':'Boucle poussée complète'):(a>0?'⤴ Ça monte : ':'⤵ Ça descend : ')+Math.abs(a)+'°'+(Math.abs(a)===90?' (verticale)':Math.abs(a)===180?' (demi-boucle)':'');
+function dragTxt(d){if(d.bank)return 'Tournez la boule violette pour pencher les avions';if(d.slope)return 'Montez ou descendez la boule cyan pour changer la pente';if(d.fi==='G')return 'Étirez la prochaine brique';if(d.sp){const P=plOf(d.sp)||{};return 'Avion '+d.sp+' : axe '+P.a+' m · public '+P.c+' m · hauteur '+ftOf(P.h)+' ft'}const s=CUR;if(d.start==='xz')return 'Départ déplacé';if(d.start==='alt')return 'Altitude de départ : '+ftOf(s.start.alt)+' ft';if(d.start==='hdg')return 'Cap de départ : '+String(s.start.hdg).padStart(3,'0')+'°';
  if(d.axis==='xz')return 'Centre de l\'axe déplacé';if(d.axis==='hdg')return 'Axe de présentation : '+String(s.axis.hdg).padStart(3,'0')+'°';const f=s.figs[d.fi],pd=(fdef(f.t).ps.concat([LEAD])).find(x=>x.k===d.par);return pd?pd.l+' : '+figParams(f)[d.par]+' '+pd.u:''}
 function info(t){$('info').textContent=t}
 /* vues */
@@ -449,9 +485,9 @@ function shot(){const was=CLEAN;CLEAN=true;NOPAN=true;try{draw()}finally{NOPAN=f
  if(parent!==window)parent.postMessage({srShot:{url,name:n+'.jpg'}},'*');else{const a=document.createElement('a');a.href=url;a.download=n+'.jpg';a.click()}
  CLEAN=was;NOPAN=true;try{draw()}finally{NOPAN=false}}
 /* =========================== Panneau =========================== */
-function togPan(){$('pan').classList.toggle('hid');if(R3)resize()}
+function togPan(){$('pan').classList.toggle('hid');document.body.classList.toggle('pano',!$('pan').classList.contains('hid'));if(R3)resize()}
 function selFig(i){SEL=SEL===i?-1:i;draw()}
-let saveT=null;function touch(){CUR.t=Date.now();clearTimeout(saveT);saveT=setTimeout(()=>post({srSave:CUR}),900)}
+let saveT=null;function touch(){hRec();CUR.t=Date.now();clearTimeout(saveT);saveT=setTimeout(()=>post({srSave:CUR}),900)}
 function post(m){if(parent!==window)parent.postMessage(m,'*');else{try{const i=SR.list.findIndex(x=>x.id===(m.srSave||{}).id);if(m.srSave){if(i>=0)SR.list[i]=m.srSave;else SR.list.push(m.srSave)}if(m.srDel)SR.list=SR.list.filter(x=>x.id!==m.srDel);if(m.srForms){SR.formsBy=SR.formsBy||{};SR.formsBy[ME.k]=m.srForms}localStorage.setItem('pafSerieLocal',JSON.stringify(SR))}catch(e){}}}
 /* curseurs : appliqués en direct (une fois par image) pendant qu'on glisse ; la case numérique accepte une saisie */
 let RQ=null,NOPAN=false;function rngIn(el,m){const row=el.closest('.pr'),f=row.dataset.f,r=row.querySelector('input[type=range]'),n=row.querySelector('input[type=number]');let v=+el.value;
@@ -656,7 +692,7 @@ function crowdOn(on){skyOn(on||(RP.on&&RP.cam==='cock'));if(on&&!RP.crowd){RP.cr
 function asmCam(v){if(v.startsWith('a')){RP.cam='cock';RP.ath=+v.slice(1)}else RP.cam=v;if(RP.cam!=='ext')RP.rib=false;RP.camL=null;crowdOn(RP.cam==='pub'||!!PUBV);skyOn(RP.cam!=='ext'||!!PUBV);RP.ts=0;draw();asmBar()}
 function asmStart(src){const {L,cur}=asmSrcL();if(!L.length&&!CUR.figs.length){info('Construisez d\'abord le ruban');return}
  RP.src=src||(cur?'cur':L.length>1?'all':L.length?L[L.length-1].id:'cur');RP.on=true;RP.A=asmBuild(RP.src);if(RP.A.len<1){RP.on=false;info('Rien à rejouer');return}RP.d=0;RP.J={};RP.grp=new THREE.Group();SC.add(RP.grp);SEL=-1;TOPV=null;
- draw();VIEW.d=Math.max(2500,VIEW.d*.6);RP.play=true;RP.t=performance.now();asmBar();asmUpd(1)}
+ draw();dock();VIEW.d=Math.max(2500,VIEW.d*.6);RP.play=true;RP.t=performance.now();asmBar();asmUpd(1)}
 function asmStop(){if(RP.rec)recStop(1);crowdOn(!!PUBV);RP.on=false;RP.cam='ext';skyOn(!!PUBV);RP.play=false;if(RP.grp){SC.remove(RP.grp);RP.grp=null}if(RP.smG){SC.remove(RP.smG);RP.smG.traverse(o=>{if(o.geometry)o.geometry.dispose()});RP.smG=null}const b=document.getElementById('asm');if(b)b.remove();draw()}
 /* le bandeau de lecture se déplace en l'attrapant par la poignée ⠿ (position retenue sur cet appareil) */
 function asmPos(b,x,y){if(x==null){try{const o=JSON.parse(localStorage.getItem('asmPos')||'null');if(o){x=o.x;y=o.y}}catch(e){}}if(x==null)return;
@@ -685,43 +721,76 @@ function recStart(spd){const cv=$('cv');if(!window.MediaRecorder||!cv.captureStr
  RP.vs=spd;RP.spd0=RP.spd;RP.spd=spd;RP.d=0;RP.rec=mr;RP.rec0={spd};CLEAN=true;draw();mr.start(500);RP.play=true;RP.t=performance.now();asmBar()}
 function recStop(cancel){const mr=RP.rec;if(!mr)return;RP.rec=null;if(cancel&&RP.rec0)RP.rec0.cancel=1;try{mr.stop()}catch(e){}RP.play=false;RP.spd=RP.spd0||1;CLEAN=false;if(RP.on){draw();asmBar()}}
 /* ---------- constructeur façon RollerCoaster Tycoon : on choisit la prochaine brique, elle apparaît en fantôme au bout du ruban, on la pose ---------- */
-const BLD0={dir:'S',v:0,bank:90,ang:90,R:500,L:800,Lv:0,lvl:300,vrhR:500,vrhL:300,tr:400,nf:null,nsmk:null,nsmkName:''};
+const BLD0={g:45,dir:'S',v:0,bank:90,ang:90,R:500,L:800,Lv:0,lvl:300,vrhR:500,vrhL:300,tr:400,nf:null,nsmk:null,nsmkName:''};
 const BLD=Object.assign({form:null,smk:null,on:true,hov:null},BLD0);
+/* Barre de construction : chaque bouton règle la prochaine brique d'un coup (comme une pièce de rail) */
+const BRK=[['L','➡️','Tout droit',{dir:'S',v:0}],['UP','↗️','Montée',{dir:'P',g:45,R:500,Lv:600}],['DN','↘️','Descente',{dir:'P',g:-45,R:500,Lv:600}],
+ ['G','↩️','Virage G',{dir:'G',bank:90,ang:90,R:700,Lv:0}],['D','↪️','Virage D',{dir:'D',bank:90,ang:90,R:700,Lv:0}],['LOOP','🔄','Boucle',{dir:'S',v:1,ang:360,R:500,Lv:0}],
+ ['TNO','🌀','Tonneau',{dir:'TNO'}],['LVL','✈️','À plat',{dir:'LVL'}],['VRH','═','Palier',{dir:'VRH'}],['AF','🔀','Formation',{dir:'AF'}],['AS','💨','Fumée',{dir:'AS'}]];
+const BRKm=Object.fromEntries(BRK.map(b=>[b[0],b]));
+function brkOf(b){if(b.dir==='P')return +b.g<0?'DN':'UP';if(b.dir==='S')return !+b.v?'L':+b.v>0?(+b.ang>=360?'LOOP':'UP'):'DN';return b.dir}
+function bldPick(k){const b=BRKm[k];if(!b)return;SEL=-1;Object.assign(BLD,b[3],{hov:null});if(k==='G'||k==='D'){if(BLD.ang<15)BLD.ang=90}draw()}
+function bldPrevK(k){BLD.hov=k&&BRKm[k]?Object.assign({},BRKm[k][3]):null;NOPAN=true;try{draw()}finally{NOPAN=false}}
+/* INS : on insère la prochaine brique après la brique n° INS (null = au bout du ruban) */
+let INS=null,CAMT=null,HIST={id:null,a:[],i:-1},HNO=false;
 /* formation et fumée en vigueur au bout du ruban (dernière brique ou dernière action) */
 function actForm(upto){const L=CUR.figs.slice(0,upto==null?CUR.figs.length:upto);for(let i=L.length-1;i>=0;i--)if(L[i].form)return L[i].form;return 'DIAMANT'}
-function actSmk(){for(let i=CUR.figs.length-1;i>=0;i--){const f=CUR.figs[i];if(f.smk)return JSON.parse(JSON.stringify(f.smk))}return {}}
-function bldPiece(){const b=Object.assign({},BLD,BLD.hov||{}),form=b.form||actForm();
+function actSmk(upto){for(let i=(upto==null?CUR.figs.length:upto)-1;i>=0;i--){const f=CUR.figs[i];if(f.smk)return JSON.parse(JSON.stringify(f.smk))}return {}}
+function bldPiece(){const b=Object.assign({},BLD,BLD.hov||{}),at=INS==null?undefined:INS+1,form=b.form||actForm(at);
  if(b.dir==='AF')return {id:'ghost',t:'ACT_F',form:b.nf||form,p:{L0:0,tr:b.tr},snaps:[]};
- if(b.dir==='AS')return {id:'ghost',t:'ACT_S',form,smk:b.nsmk||{},smkName:b.nsmkName||'',p:{L0:0},snaps:[]};
+ if(b.dir==='AS')return {id:'ghost',t:'ACT_S',form,smk:b.nsmk||actSmk(at),smkName:b.nsmkName||'',p:{L0:0},snaps:[]};
  if(b.dir==='TNO')return {id:'ghost',t:'TNO ENV',side:'G',form,p:{L0:0},snaps:[]};
  if(b.dir==='LVL')return {id:'ghost',t:'RC_LVL',form,p:{L0:0,L:b.lvl},snaps:[]};
  if(b.dir==='VRH')return {id:'ghost',t:'RC_VRH',form,p:{L0:0,R:b.vrhR,L:b.vrhL},snaps:[]};
+ if(b.dir==='P')return {id:'ghost',t:'RC_P',form,p:{L0:0,g:b.g,R:b.R,L:b.Lv},snaps:[]};
  if(b.dir==='S')return {id:'ghost',t:'RC_S',form,p:{L0:0,v:b.v,ang:b.ang,R:b.R,L:+b.v?b.Lv:b.L},snaps:[]};
  return {id:'ghost',t:'RC_V',side:b.dir,form,p:{L0:0,bank:b.bank,ang:b.ang,R:b.R,L:b.Lv},snaps:[]}}
 /* poignée du fantôme → réglage du constructeur */
-function bldKey(par){if(BLD.dir==='VRH')return par==='R'?'vrhR':par==='L'?'vrhL':null;if(par==='R'||par==='bank'||par==='ang')return par;if(par==='L')return BLD.dir==='LVL'?'lvl':BLD.dir==='S'&&!+BLD.v?'L':'Lv';return null}
+function bldKey(par){if(BLD.dir==='P')return par==='R'?'R':par==='L'?'Lv':par==='g'?'g':null;if(BLD.dir==='VRH')return par==='R'?'vrhR':par==='L'?'vrhL':null;if(par==='R'||par==='bank'||par==='ang')return par;if(par==='L')return BLD.dir==='LVL'?'lvl':BLD.dir==='S'&&!+BLD.v?'L':'Lv';return null}
 function bldSet(k,v){BLD[k]=v;BLD.hov=null;if(k==='dir'&&(v==='G'||v==='D')&&BLD.ang<15)BLD.ang=90;draw()}
 /* aperçu au survol (souris) : on voit la brique avant de cliquer */
 function bldPrev(k,v){BLD.hov=k?{[k]:v}:null;NOPAN=true;try{draw()}finally{NOPAN=false}}
-function bldPose(){BLD.hov=null;const f=bldPiece();f.id=uid();if(isAct(f)){f.snaps=[];if(f.t==='ACT_F')BLD.form=f.form}else{f.snaps=[{u:.5,form:f.form}];f.smk=BLD.smk?JSON.parse(JSON.stringify(BLD.smk)):actSmk()}
- if(f.t==='ACT_S')BLD.smk=JSON.parse(JSON.stringify(f.smk));CUR.figs.push(f);SEL=-1;
+function bldPose(){BLD.hov=null;const f=bldPiece();f.id=uid();if(isAct(f)){f.snaps=[];if(f.t==='ACT_F')BLD.form=f.form}else{f.snaps=[{u:.5,form:f.form}];f.smk=BLD.smk?JSON.parse(JSON.stringify(BLD.smk)):actSmk(INS==null?undefined:INS+1)}
+ if(f.t==='ACT_S')BLD.smk=JSON.parse(JSON.stringify(f.smk));if(INS==null)CUR.figs.push(f);else{CUR.figs.splice(INS+1,0,f);INS++}SEL=-1;
  /* remise à zéro : la prochaine brique repart des réglages de base (formation et fumée en vigueur conservées) */
- const keep={form:BLD.form,smk:BLD.smk,on:BLD.on};Object.assign(BLD,BLD0,keep);draw();touch();info('Brique posée : '+fName(f));setTimeout(()=>info(''),1400)}
+ const keep={form:BLD.form,smk:BLD.smk,on:BLD.on};Object.assign(BLD,BLD0,keep);draw();touch();camEnd();info('Brique posée : '+fName(f)+(INS!=null?' (insérée)':''));setTimeout(()=>info(''),1400)}
 function bldSm(m){BLD.nsmk=smCalc(m,BLD.form||actForm());BLD.nsmkName=SMPN[m];draw()}
 function bldSmC(n){const m=BLD.nsmk||actSmk(),ok=smOK(n);m[n]=ok[(ok.indexOf(m[n]||'')+1)%ok.length];BLD.nsmk=m;BLD.nsmkName='';draw()}
-function bldUndo(){if(!CUR.figs.length)return;CUR.figs.pop();BLD.form=null;BLD.smk=null;SEL=-1;draw();touch()}
+function bldUndo(){if(!CUR.figs.length)return;CUR.figs.pop();BLD.form=null;BLD.smk=null;SEL=-1;if(INS!=null&&INS>=CUR.figs.length)INS=null;draw();touch()}
+/* ---------- annuler / rétablir : une photo du ruban à chaque modification ---------- */
+const hSt=()=>JSON.stringify({figs:CUR.figs,start:CUR.start});
+function hRec(){if(!CUR||HNO)return;if(HIST.id!==CUR.id){HIST={id:CUR.id,a:[hSt()],i:0};return}const j=hSt();if(j===HIST.a[HIST.i])return;HIST.a=HIST.a.slice(0,HIST.i+1);HIST.a.push(j);if(HIST.a.length>120)HIST.a.shift();HIST.i=HIST.a.length-1}
+function hGo(d){if(!ED||HIST.id!==CUR.id)return;const i=HIST.i+d;if(i<0||i>=HIST.a.length){info(d<0?'Rien à annuler':'Rien à rétablir');setTimeout(()=>info(''),1200);return}HIST.i=i;const o=JSON.parse(HIST.a[i]);CUR.figs=o.figs;CUR.start=o.start;SEL=-1;if(INS!=null&&INS>=CUR.figs.length)INS=null;
+ HNO=true;try{draw();touch()}finally{HNO=false}info(d<0?'↶ Annulé':'↷ Rétabli');setTimeout(()=>info(''),1000)}
+/* ---------- une brique déjà posée : dupliquer, insérer après, revenir au bout ---------- */
+function dupFig(i){const f=JSON.parse(JSON.stringify(CUR.figs[i]));f.id=uid();(f.snaps||[]).forEach(x=>x.id&&(x.id=uid()));CUR.figs.splice(i+1,0,f);SEL=i+1;draw();touch();info('Brique dupliquée');setTimeout(()=>info(''),1200)}
+function insAt(i){INS=i<0?-1:i;SEL=-1;draw();info(i<0?'La prochaine brique se place au début du ruban':'La prochaine brique s\'insère après la n° '+(i+1)+' : la suite se recale toute seule');setTimeout(()=>info(''),2200)}
+function toEnd(){INS=null;SEL=-1;draw();camEnd(true)}
+/* la caméra suit le point de construction, en douceur */
+function camEnd(force){if(!force&&!OPT.follow)return;setTimeout(()=>{if(!BUILT||!BUILT.pts.length)return;const g=BUILT.ghost;const p=g?BUILT.pts[g.i1].p:BUILT.pts[BUILT.pts.length-1].p;CAMT=p.clone();if(force)VIEW.d=Math.min(VIEW.d,4500)},0)}
+/* frise chronologique + barre de briques */
+const figIco=f=>{const t=f.t,p=figParams(f);if(t==='RC_P')return +p.g>0?'↗️':+p.g<0?'↘️':'➡️';if(t==='RC_S')return !+p.v?'➡️':+p.ang>=360?'🔄':+p.v>0?'↗️':'↘️';if(t==='RC_V')return f.side==='D'?'↪️':'↩️';if(t==='LIGNE')return '➡️';if(/^TNO/.test(t))return '🌀';if(t==='RC_LVL')return '✈️';if(t==='RC_VRH')return '═';if(t==='ACT_F')return '🔀';if(t==='ACT_S')return '💨';if(t==='DEMI')return '◠';if(t==='VIRAGE')return '↪️';if(t==='BOUCLE'||t==='BOUCLE OBL')return '🔄';return '★'};
+function dock(){const d=$('dock');if(!d)return;if(!CUR||MODE!=='ruban'||RP.on){d.hidden=true;document.documentElement.style.setProperty('--dockh','0px');return}d.hidden=false;
+ const F=CUR.figs,ghostOn=ED&&SEL<0&&BLD.on,cur=brkOf(BLD),ti=i=>ED?`<button class="ti ${ghostOn&&INS===i?'on':''}" onclick="insAt(${i})" title="Insérer une brique ici">＋</button>`:'';
+ let h=`<div class="tl" id="tl">${ti(-1)}${F.map((f,i)=>`<button class="tc ${i===SEL?'sel':''}" onclick="selFig(${i})" title="${esc(fName(f))}"><b>${i+1}</b><i>${figIco(f)}</i>${esc(fName(f)).slice(0,22)}</button>${INS===i&&ghostOn?`<span class="tc gh on"><i>${(BRKm[cur]||[0,'＋'])[1]}</i>insertion</span>`:''}${i<F.length-1?ti(i):''}`).join('')}
+  ${ED?`<button class="tc gh ${ghostOn&&INS==null?'on':''}" onclick="toEnd()" title="Revenir au bout du ruban"><i>${ghostOn&&INS==null?(BRKm[cur]||[0,'＋'])[1]:'⤓'}</i>${ghostOn&&INS==null?'prochaine brique':'bout du ruban'}</button>`:''}</div>`;
+ if(ED){h+=`<div class="bb">${BRK.map(([k,i,l])=>`${k==='AF'?'<span class="sep"></span>':''}<button class="bk ${ghostOn&&cur===k?'on':''}" onclick="bldPick('${k}')" onmouseenter="bldPrevK('${k}')" onmouseleave="bldPrevK()"><span>${i}</span><small>${l}</small></button>`).join('')}
+  <span class="sep"></span><button class="bk go" onclick="${ghostOn?'bldPose()':'toEnd()'}" title="Entrée"><span>✓</span><small>${ghostOn?'Poser':'Construire'}</small></button>
+  <button class="bk" onclick="hGo(-1)" title="Annuler (Ctrl+Z)" ${HIST.i>0&&HIST.id===CUR.id?'':'disabled'}><span>↶</span><small>Annuler</small></button><button class="bk" onclick="hGo(1)" title="Rétablir (Ctrl+Y)" ${HIST.id===CUR.id&&HIST.i<HIST.a.length-1?'':'disabled'}><span>↷</span><small>Rétablir</small></button>
+  <button class="bk" onclick="toEnd()" title="Revenir au bout du ruban"><span>⤓</span><small>Au bout</small></button><button class="bk ${OPT.follow?'on':''}" onclick="setOpt('follow',${!OPT.follow})" title="La caméra suit le point de construction"><span>🎥</span><small>Suivre</small></button>
+  <button class="bk" onclick="asmStart()" title="Rejouer la série"><span>▶</span><small>Rejouer</small></button></div>`}
+ d.innerHTML=h;document.documentElement.style.setProperty('--dockh',d.offsetHeight+'px');
+ const tl=$('tl'),el=tl&&tl.querySelector('.sel,.gh.on');if(el)el.scrollIntoView({block:'nearest',inline:'nearest'})}
 function bldPanel(sel,rng,fo){const b=BLD,hv=(k,v)=>` onmouseenter="bldPrev('${k}',${typeof v==='string'?`'${v}'`:v})" onmouseleave="bldPrev()"`;
  const B=(on,ico,lab,k,v)=>`<button class="b rcb ${on?'on':''}" onclick="bldSet('${k}',${typeof v==='string'?`'${v}'`:v})"${hv(k,v)}><span class="rci">${ico}</span><small>${lab}</small></button>`;
  const chips=(k,vals)=>`<div class="rcchips">${vals.map(([v,l])=>`<button class="b ${+b[k]===v?'on':''}" onclick="bldSet('${k}',${v})"${hv(k,v)}>${l}</button>`).join('')}</div>`;
  const cur=b.form||actForm(),bk=+b.bank,trend=bk<85?'⤴ ça monte'+(bk===0?' (boucle)':' (boucle oblique)'):bk>95?'⤵ ça descend':'→ ça tourne à plat';
  const pl=(r)=>`<svg viewBox="-20 -20 40 40" width="34" height="34" aria-hidden="true"><g transform="rotate(${r})"><rect x="-17" y="-2" width="34" height="4" rx="2" fill="currentColor"/><circle r="5" fill="currentColor"/><rect x="-1.5" y="-11" width="3" height="9" fill="currentColor"/></g></svg>`;
- let h=`<div class="rcbox"><h2 style="margin-top:0">🎢 Construire la suite</h2><p class="hint" style="margin-top:0">1 · choisis la prochaine brique, elle apparaît en transparence au bout du ruban (survole un bouton pour la voir avant de cliquer) · 2 · étire-la ou penche-la avec les poignées · 3 · pose-la !</p>
-  <div class="rcdir">${B(b.dir==='G','↰','Virage à gauche','dir','G')}${B(b.dir==='S','↑','Tout droit','dir','S')}${B(b.dir==='D','↱','Virage à droite','dir','D')}</div>
-  <div class="rcdir">${B(b.dir==='LVL','✈︎','Ailes à plat','dir','LVL')}${B(b.dir==='VRH','═','VRH (palier)','dir','VRH')}${B(b.dir==='TNO','🌀','Tonneau envoyé','dir','TNO')}</div>
-  <div class="rcdir" style="grid-template-columns:1fr 1fr">${B(b.dir==='AF','🔀','Changer de formation','dir','AF')}${B(b.dir==='AS','💨','Action fumée','dir','AS')}</div>`;
+ let h=`<div class="rcbox"><h2 style="margin-top:0">🎢 ${INS!=null?'Insérer une brique':'Construire la suite'}</h2><div class="rcnow"><span>${(BRKm[brkOf(b)]||[0,'＋'])[1]}</span><b>${esc((BRKm[brkOf(b)]||[0,0,'Brique'])[2])}</b>${INS!=null?`<small>insérée après la n° ${INS+1}</small>`:''}</div><p class="hint" style="margin-top:0">Choisis la brique dans la barre du bas : elle apparaît en transparence ${INS!=null?'à l\'endroit choisi':'au bout du ruban'}. Étire-la avec les poignées (verte : longueur et rayon · cyan : pente · violette : inclinaison), puis <b>Poser</b> (ou Entrée).</p>`;
  if(b.dir==='S'){h+=`<div class="rcdir">${B(+b.v===0,'⟶','À plat','v',0)}${B(+b.v===1,'⤴','Ça monte','v',1)}${B(+b.v===-1,'⤵','Ça descend','v',-1)}</div>`;
   if(+b.v){h+=`<div class="mu">Jusqu'où ça tourne ?</div>${chips('ang',[[45,'↗ ⅛'],[90,'↑ ¼'],[135,'⅜'],[180,'↩ ½ boucle'],[270,'¾'],[360,'⟳ boucle']])}`+rng('Rayon',b.R,150,1200,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
   else h+=rng('Longueur',b.L,50,5000,50,'m',"bldSet('L',+this.value)")}
+ else if(b.dir==='P'){h+=`<div class="mu">Pente visée par rapport à l'horizon (la patrouille arrondit jusqu'à cette pente, quelle que soit la pente d'avant) :</div>${chips('g',[[90,'↑ 90°'],[60,'60°'],[45,'↗ 45°'],[30,'30°'],[15,'15°'],[0,'→ palier'],[-15,'−15°'],[-30,'−30°'],[-45,'↘ −45°'],[-60,'−60°'],[-90,'↓ −90°']])}`+rng('Pente',+b.g,-90,90,5,'°',"bldSet('g',+this.value)")+rng('Rayon',b.R,150,1500,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
  else if(b.dir==='G'||b.dir==='D'){h+=`<div class="mu">Penche les avions : <b>${bk}°</b> · ${trend}</div><div class="rcchips rcpl">${[[0,'droit'],[45,'un peu'],[90,'couché'],[135,'beaucoup'],[180,'sur le dos']].map(([v,l])=>`<button class="b ${bk===v?'on':''}" onclick="bldSet('bank',${v})"${hv('bank',v)}>${pl((b.dir==='G'?-1:1)*v)}<small>${v}° ${l}</small></button>`).join('')}</div>`+rng('Inclinaison',bk,0,180,5,'°',"bldSet('bank',+this.value)")
   +`<div class="mu">Combien ça tourne ?</div>${chips('ang',[[45,'⅛ tour'],[90,'¼ tour'],[180,'½ tour'],[270,'¾ tour'],[360,'1 tour']])}`+rng('Rayon',b.R,150,3000,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
  else if(b.dir==='LVL')h+=`<p class="hint">Remet la patrouille ailes à plat par rapport à l'horizon, sans changer de direction.</p>`+rng('Longueur',b.lvl,50,2000,10,'m',"bldSet('lvl',+this.value)");
@@ -753,16 +822,16 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
  const rng=(lab,v,min,max,st,u,on)=>{const f=esc(on.replace(/this\.value/g,'V'));return `<div class="pr" data-f="${f}"><label>${lab}</label><input type="range" min="${min}" max="${max}" step="${st}" value="${v}" ${ro?'disabled':''} oninput="rngIn(this,0)" onchange="rngIn(this,1)"><span class="nu"><input type="number" inputmode="decimal" min="${min}" max="${max}" step="${st}" value="${v}" ${ro?'disabled':''} onchange="rngIn(this,2)" onkeydown="if(event.key==='Enter')this.blur()" aria-label="${esc(lab)}"><i>${u}</i></span></div>`};
  const L=RL().sort((a,b)=>(b.year-a.year)||String(a.name).localeCompare(b.name));
  let h=TABS()+ownBar()+`<h2>${ME.all?(CUR&&!mine(CUR)?'Séries de '+esc(CUR.ownN||'leader'):'Mes séries'):'Mes séries'}</h2><div class="row"><div style="flex:1">${serSel(L,CUR,'pickSer(this.value)',x=>x.year+' · '+x.name,BED?'+ Nouvelle série':'')}</div></div>`+roBox(CUR,'cpMine()');
- h+=`<button class="b pri" style="width:100%;margin-top:8px" onclick="asmStart()">▶ Assembler : rejeu 3D de la série</button>`+shareRow(CUR);
- if(ED)h+=`<div class="row" style="margin-top:6px"><input class="in" style="flex:1" value="${esc(CUR.name)}" onchange="setSer('name',this.value)" aria-label="Nom"><input class="in" style="width:80px" type="number" value="${CUR.year}" onchange="setSer('year',this.value)" aria-label="Année"></div>
+ let sd=`<button class="b pri" style="width:100%;margin-top:8px" onclick="asmStart()">▶ Assembler : rejeu 3D de la série</button>`+shareRow(CUR);
+ if(ED)sd+=`<div class="row" style="margin-top:6px"><input class="in" style="flex:1" value="${esc(CUR.name)}" onchange="setSer('name',this.value)" aria-label="Nom"><input class="in" style="width:80px" type="number" value="${CUR.year}" onchange="setSer('year',this.value)" aria-label="Année"></div>
   <div class="row" style="margin-top:6px"><button class="b" onclick="dupSer()">⧉ Copier pour l'année suivante</button><button class="b dng" onclick="delSer()">${DELC?'Confirmer ?':'🗑'}</button></div>`;
- if(ED&&axLock())h+=`<div class="axb"><span>🔒 Axe <b>${String(CUR.axis.hdg).padStart(3,'0')}°</b> · public ${CUR.axis.side>0?'à droite':'à gauche'}</span><button class="b" onclick="axSet(false)" title="Déverrouille l'axe et le public pour les déplacer (poignées orange)">✎ Régler l'axe et le public</button></div>`;
+ if(ED&&axLock())sd+=`<div class="axb"><span>🔒 Axe <b>${String(CUR.axis.hdg).padStart(3,'0')}°</b> · public ${CUR.axis.side>0?'à droite':'à gauche'}</span><button class="b" onclick="axSet(false)" title="Déverrouille l'axe et le public pour les déplacer (poignées orange)">✎ Régler l'axe et le public</button></div>`;
  if(ED&&!axLock())h+=`<div class="savebox" style="border-color:#f59e0b;background:rgba(245,158,11,.1)"><h2>1 · Axe et public</h2><p class="hint" style="margin-top:0">Commencez par placer l'axe de présentation et le public (poignées orange dans la vue 3D, ou ci-dessous), puis validez : ils ne bougeront plus par erreur.</p>${rng('Axe',CUR.axis.hdg,0,359,1,'°','setAxis(\'hdg\',this.value)')}
   <div class="pr" style="grid-template-columns:96px 1fr"><label>Public</label>${sel(String(CUR.axis.side),[['1','à droite de l\'axe'],['-1','à gauche de l\'axe']],"setAxis('side',this.value)")}</div>
   <button class="b pri" style="width:100%;margin-top:6px" onclick="axSet(true)">✓ Valider l'axe et le public</button></div>`;
- h+=`<h2>Figures du ruban</h2><ul class="fl">${CUR.figs.map((g,i)=>`<li class="${i===SEL?'sel':''}" onclick="selFig(${i})"><span class="n">${i+1}</span><span class="t"><b>${isAct(g)?'':esc(formL(g.form))+' · '}${esc(fName(g))}${(()=>{const q=figParams(g);return g.t!=='DEMI'&&q.a!=null&&fdef(g.t).ps.some(x=>x.k==='a')?' '+q.a+'°':''})()}${fdef(g.t).side&&g.t!=='BOUCLE'&&g.t!=='RC_V'?(g.side==='D'?' D':' G'):''}</b><small>${(g.snaps||[]).length>1?g.snaps.length+' snapshots : '+g.snaps.map(x=>formL(x.form)).join(' → '):''}</small></span>${ED?`<button class="x" onclick="event.stopPropagation();mvFig(${i},-1)" aria-label="Monter">▲</button><button class="x" onclick="event.stopPropagation();mvFig(${i},1)" aria-label="Descendre">▼</button>`:''}</li>`).join('')}</ul>`;
+ h+=`<div hidden><h2>Figures du ruban</h2><ul class="fl">${CUR.figs.map((g,i)=>`<li class="${i===SEL?'sel':''}" onclick="selFig(${i})"><span class="n">${i+1}</span><span class="t"><b>${isAct(g)?'':esc(formL(g.form))+' · '}${esc(fName(g))}${(()=>{const q=figParams(g);return g.t!=='DEMI'&&q.a!=null&&fdef(g.t).ps.some(x=>x.k==='a')?' '+q.a+'°':''})()}${fdef(g.t).side&&g.t!=='BOUCLE'&&g.t!=='RC_V'?(g.side==='D'?' D':' G'):''}</b><small>${(g.snaps||[]).length>1?g.snaps.length+' snapshots : '+g.snaps.map(x=>formL(x.form)).join(' → '):''}</small></span>${ED?`<button class="x" onclick="event.stopPropagation();mvFig(${i},-1)" aria-label="Monter">▲</button><button class="x" onclick="event.stopPropagation();mvFig(${i},1)" aria-label="Descendre">▼</button>`:''}</li>`).join('')}</ul></div>`;
  if(ED&&!f)h+=bldPanel(sel,rng,fo);
- else if(ED&&f)h+=`<button class="b" style="margin-top:6px" onclick="SEL=-1;draw()">🎢 Continuer la construction</button>`;
+ else if(ED&&f)h+=`<div class="row" style="margin-top:8px;gap:4px"><button class="b" onclick="mvFig(${SEL},-1)" ${SEL?'':'disabled'} title="Avancer dans la série">◀ Avant</button><button class="b" onclick="mvFig(${SEL},1)" ${SEL<CUR.figs.length-1?'':'disabled'} title="Reculer dans la série">Après ▶</button><button class="b" onclick="dupFig(${SEL})">⧉ Dupliquer</button><button class="b" onclick="insAt(${SEL})">＋ Insérer après</button></div><button class="b" style="margin-top:6px;width:100%" onclick="toEnd()">🎢 Continuer au bout du ruban</button>`;
  if(f){const d=fdef(f.t),p=figParams(f),act=isAct(f);
   h+=`<h2>${SEL+1} · ${act?'':esc(formL(f.form))+' · '}${esc(fName(f))}</h2>`;
   if(f.t==='ACT_S'){const m=f.smk||{},N=fNorm(FORMS()[actForm(SEL)]||FORMS().DIAMANT).map(o=>o.n).sort((a,c)=>a-c);
@@ -781,20 +850,21 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
    ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'))).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']],`setP('${q.k}',this.value)`)}</div>`:rng(q.l,p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
    ${(()=>{const L=figLen(SEL);if(!L)return '';const mx=Math.max(50,Math.ceil(L/50)*50),v=+f.vis>0?Math.min(+f.vis,mx):mx;return rng('Longueur visible',v,50,mx,50,'m','setVis(this.value)')+`<p class="hint" style="margin-top:0">Figure complète : ${Math.round(L)} m. Réduisez pour ne montrer que la fin de la figure (ex. le dernier quart d'un virage de 360°).</p>`})()}
    <p class="hint">${ED?'Poignée orange : ligne d\'entrée (déplace la brique le long du ruban). Poignée verte : taille de la brique. Boule violette : inclinaison. Attrapez les avions dans la vue 3D pour faire glisser la formation le long de la trajectoire.':''}</p>`}}
- else if(ED){
-  h+=`<h2>Départ</h2>${rng('Altitude',ftOf(CUR.start.alt),100,8000,10,'ft','setStart(\'alt\',Math.round(this.value*FT))')}${rng('Cap',CUR.start.hdg,0,359,1,'°','setStart(\'hdg\',this.value)')}
+
+ if(ED){
+  sd+=`<h2>Départ</h2>${rng('Altitude',ftOf(CUR.start.alt),100,8000,10,'ft','setStart(\'alt\',Math.round(this.value*FT))')}${rng('Cap',CUR.start.hdg,0,359,1,'°','setStart(\'hdg\',this.value)')}
   <p class="hint">Poignées rouge (départ), violette (altitude), bleue (cap)${axLock()?'':' ; orange : centre et sens de l\'axe de présentation'}. Touchez une figure du ruban pour la régler.</p>`}
- h+=`<h2>Affichage</h2><div class="row"><button class="b ${OPT.sat?'on':''}" onclick="setOpt('sat',${!OPT.sat})">Satellite</button><button class="b ${OPT.lab?'on':''}" onclick="setOpt('lab',${!OPT.lab})">Étiquettes</button><button class="b ${OPT.shadow?'on':''}" onclick="setOpt('shadow',${!OPT.shadow})">Ombre</button></div>
+ sd+=`<h2>Affichage</h2><div class="row"><button class="b ${OPT.sat?'on':''}" onclick="setOpt('sat',${!OPT.sat})">Satellite</button><button class="b ${OPT.lab?'on':''}" onclick="setOpt('lab',${!OPT.lab})">Étiquettes</button><button class="b ${OPT.shadow?'on':''}" onclick="setOpt('shadow',${!OPT.shadow})">Ombre</button></div>
   ${rng('Taille avions',OPT.sc,1,10,1,'×','setOpt(\'sc\',+this.value)')}${rng('Ruban',OPT.W,20,160,5,'m','setOpt(\'W\',+this.value)')}
   <p class="hint">Les valeurs se tapent aussi dans les cases à droite des curseurs. Avions et écarts agrandis ${OPT.sc}× pour être lisibles à l'échelle de la démonstration. G : vue carte de dessus pour attraper le ruban et le déplacer au-dessus de la base. Glisser : tourner · deux doigts, clic droit ou molette pressée : déplacer · pincer / molette : zoom · flèches : se déplacer (Maj : plus vite), Page ↑/↓ : monter / descendre, + / − : zoom.</p>`;
- h+=stepPanel();
+ h+=stepPanel()+`<details class="serd" ${S_OPEN?'open':''} ontoggle="S_OPEN=this.open"><summary>⚙ La série : nom, axe, départ, affichage, rejeu</summary>${sd}</details>`;
  $('pan').innerHTML=h;
- $('vbar').innerHTML=`<div class="g"><button class="b" onclick="view('pub')" title="Vue d'ensemble de la série">Ensemble</button><button class="b ${PUBV?'on':''}" onclick="view('sol')" title="Le spectacle vu du public, au point central, au sol">👥 Public</button><button class="b" onclick="view('face')">De face</button><button class="b" onclick="view('top')">Dessus</button><button class="b ${TOPV?'on':''}" onclick="godView()" title="Vue carte, touche G">🗺 Carte (G)</button>${SEL>=0?`<button class="b" onclick="view('fig')">Figure</button>`:''}</div><div class="g"><button class="b ${CLEAN?'on':''}" onclick="CLEAN=!CLEAN;draw()" title="Masque poignées, étiquette DÉPART et traits d'aide">✨ Vue propre</button><button class="b" onclick="shot()">📷 Image</button><button class="b ${RP.on?'on':''}" onclick="RP.on?asmStop():asmStart()">▶ Assembler</button></div>`}
+ $('vbar').innerHTML=`<div class="g"><button class="b" onclick="view('pub')" title="Vue d'ensemble de la série">Ensemble</button><button class="b ${PUBV?'on':''}" onclick="view('sol')" title="Le spectacle vu du public, au point central, au sol">👥 Public</button><button class="b" onclick="view('face')">De face</button><button class="b" onclick="view('top')">Dessus</button><button class="b ${TOPV?'on':''}" onclick="godView()" title="Vue carte, touche G">🗺 Carte (G)</button>${SEL>=0?`<button class="b" onclick="view('fig')">Figure</button>`:''}</div><div class="g"><button class="b ${CLEAN?'on':''}" onclick="CLEAN=!CLEAN;draw()" title="Masque poignées, étiquette DÉPART et traits d'aide">✨ Vue propre</button><button class="b" onclick="shot()">📷 Image</button><button class="b ${RP.on?'on':''}" onclick="RP.on?asmStop():asmStart()">▶ Assembler</button></div>`;dock()}
 /* =========================== Synchro : formations libres et figures 3D (1 à 12 avions) ===========================
    Une figure synchro est enregistrée comme une série de type « sync » : chaque avion a sa position par rapport au
    centre de l'axe de présentation (a : le long de l'axe, c : vers le public, h : hauteur) et son attitude. */
 function TABS(){return `<div class="row" style="margin-bottom:12px"><button class="b ${MODE==='ruban'?'on':''}" style="flex:1" onclick="setMode('ruban')">Ruban</button><button class="b ${MODE==='sync'?'on':''}" style="flex:1" onclick="setMode('sync')">Synchro</button></div>`}
-function setMode(m){MODE=m;SEL=-1;SP=null;LIB=false;if(m==='sync'&&!SYN)SYN=SL().sort((a,b)=>(b.t||0)-(a.t||0))[0]||null;draw();setTimeout(()=>view('pub'),20)}
+function setMode(m){MODE=m;INS=null;SEL=-1;SP=null;LIB=false;if(m==='sync'&&!SYN)SYN=SL().sort((a,b)=>(b.t||0)-(a.t||0))[0]||null;draw();dock();setTimeout(()=>view('pub'),20)}
 function axF(){const ax=CUR.axis,hd=ax.hdg*D2R;return {c:V(ax.x,0,ax.z),F:V(Math.sin(hd),0,-Math.cos(hd)),Rp:V(Math.cos(hd),0,Math.sin(hd)).multiplyScalar(ax.side),hdg:ax.hdg,side:ax.side}}
 const plOf=n=>SYN&&SYN.pl.find(p=>p.n===n);
 function plPos(P,A){return A.c.clone().addScaledVector(A.F,P.a).addScaledVector(A.Rp,P.c).setY(P.h)}
@@ -936,7 +1006,7 @@ function start(d){SR={list:(d&&d.list)||[],forms:(d&&d.forms)||{},formsBy:(d&&d.
  SR.list.forEach(s=>{if(s.v>=2||s.kind==='sync')return;(s.figs||[]).forEach(f=>{if(f.t==='LIGNE'){f.t='DEMI';f.p=Object.assign({L:+((f.p||{}).L)||600},{L0:(f.p||{}).L0||0})}});s.v=2;if(ED&&mine(s))post({srSave:s})});
  SR.list.forEach(s=>{if(s.v>=3)return;(s.figs||[]).forEach(f=>{f.p=f.p||{};if(f.p.L0==null)f.p.L0=300});s.v=3;if(ED&&mine(s))post({srSave:s})});
  const byT=(a,b)=>(b.t||0)-(a.t||0);CUR=RL().filter(mine).sort(byT)[0]||(BED?null:RL().sort(byT)[0])||null;if(!CUR){CUR=newSerie();SR.list.push(CUR);if(ED)post({srSave:CUR})}
- if(!R3)init3d();draw();setTimeout(()=>view('pub'),30);$('load').hidden=true}
+ document.body.classList.toggle('pano',!$('pan').classList.contains('hid'));if(!R3)init3d();draw();setTimeout(()=>view('pub'),30);$('load').hidden=true}
 addEventListener('message',e=>{const d=e.data;if(d&&d.pafSize&&d.pafSize.w>50){PSZ=d.pafSize;if(R3)resize()}if(d&&d.srInit)start(d.srInit);if(d&&d.srList){const loc=new Map(SR.list.map(x=>[x.id,x]));SR.list=d.srList.map(x=>{const l=loc.get(x.id);return l&&(l.t||0)>=(x.t||0)?l:x});loc.forEach((l,id)=>{if(!SR.list.some(x=>x.id===id))SR.list.push(l)});
   const c=CUR&&SR.list.find(x=>x.id===CUR.id);if(c&&c!==CUR){CUR=c;draw()}if(SYN){SYN=SR.list.find(x=>x.id===SYN.id)||null}}});
 addEventListener('load',()=>{if(typeof THREE==='undefined'){$('load').textContent='Moteur 3D indisponible : vérifiez la connexion, puis rouvrez l\'outil.';return}
