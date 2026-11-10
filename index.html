@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>PAF OPS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap">
 <style>
 /* Mise en page : barre haute (logo + navigation), contenu centré 1040px, feuilles modales pour la saisie guidée. */
 :root{
@@ -618,10 +618,17 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .nick{font-weight:600;color:var(--muted)}
 .tgls{display:grid;gap:6px;margin-top:10px}.sgwait{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;background:color-mix(in srgb,var(--surface) 92%,transparent);border-radius:inherit}.sgwait .hg{font-size:46px;animation:sghg 1.4s ease-in-out infinite}@keyframes sghg{0%{transform:rotate(0)}40%,50%{transform:rotate(180deg)}90%,100%{transform:rotate(360deg)}}#sheet .sb{position:relative}
 #nver{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:80;border:0;border-radius:999px;padding:11px 18px;font:600 14px Figtree,system-ui,sans-serif;background:var(--navy);color:#fff;box-shadow:0 10px 30px rgba(12,31,74,.35);max-width:calc(100vw - 24px)}#nver b{color:#fcd34d}
-.bpcard{padding:0;overflow:hidden}.bph{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-bottom:2px solid var(--ink)}
-.bpt{width:100%;border-collapse:collapse}.bpt th,.bpt td{border-bottom:1.5px solid var(--line);vertical-align:middle;padding:8px 10px}.bpt th{width:38%;text-align:left;font-weight:800;font-size:14px;letter-spacing:.02em;border-right:2px solid var(--ink)}.bpt th small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0}
-.bpt td{position:relative}.bpin{width:100%;border:0;background:transparent;font:600 16px/1.35 'Segoe Print','Bradley Hand','Comic Sans MS',cursive,var(--font,system-ui);color:#1d4ed8;resize:vertical;padding:2px 26px 2px 0;min-height:28px}.bpin.own{color:#0f766e}.bpin:focus{outline:2px solid var(--blue,#2563eb);border-radius:6px;background:var(--surface2)}
-.bpro{font:600 16px/1.35 'Segoe Print','Bradley Hand','Comic Sans MS',cursive,system-ui;color:#1d4ed8}.bprs{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:16px;color:var(--muted);cursor:pointer}
+.bpboard{position:relative;max-width:560px;margin:6px auto 0;padding:26px 14px 16px;border-radius:18px;background:linear-gradient(160deg,#3f4651,#262b33);box-shadow:0 14px 40px rgba(15,23,42,.28)}
+.bpclip{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:120px;height:30px;border-radius:9px;background:linear-gradient(#cbd5e1,#94a3b8);box-shadow:0 3px 6px rgba(0,0,0,.35)}
+.bppaper{background:#fdfdfb;border-radius:4px;padding:16px 14px 14px;box-shadow:0 2px 8px rgba(0,0,0,.25);color:#0b0b0b}
+.bptop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin:2px 2px 10px;font:600 12px Arial,Helvetica,sans-serif;color:#475569}.bptop b{font:800 15px Arial,Helvetica,sans-serif;color:#0b0b0b;text-transform:uppercase;letter-spacing:.02em}
+.bpgrid{position:relative;border:2.5px solid #0b0b0b;display:grid;grid-template-columns:38% 62%;overflow:hidden}
+.bprose{position:absolute;left:38%;width:62%;top:50%;transform:translateY(-50%);opacity:.22;pointer-events:none;font:700 7.5px Arial,Helvetica,sans-serif;fill:#334155}
+.bpr{display:contents}.bpl,.bpv{border-bottom:2px solid #0b0b0b;min-height:50px;display:flex;align-items:center}.bpr:last-of-type .bpl,.bpr:last-of-type .bpv{border-bottom:0}
+.bpl{padding:6px 10px;border-right:2.5px solid #0b0b0b;font:700 15.5px/1.1 'Arial Narrow',Arial,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:.01em;color:#0b0b0b}.bpl.sm{font-size:12.5px}
+.bpv{position:relative;padding:4px 8px}.bpin,.bpro{width:100%;border:0;background:transparent;font:700 23px/1.12 Caveat,'Bradley Hand','Segoe Print',cursive;color:#1e3a8a;resize:none;padding:2px 24px 2px 2px;min-height:30px;overflow:hidden}.bpin.own{color:#0f766e}.bpin::placeholder{color:#94a3b8;font-weight:600}.bpin:focus{outline:2px solid #2563eb;border-radius:6px;background:rgba(219,234,254,.55)}
+.bprs{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.8);border-radius:50%;width:24px;height:24px;font-size:15px;color:#64748b;cursor:pointer}
+.bpmeta{margin-top:8px;font:500 11px Arial,Helvetica,sans-serif;color:#64748b}
 .sugb{color:#d97706}.sugb svg{filter:drop-shadow(0 0 6px rgba(250,204,21,.45))}
 .sgk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.sgk button{border:2px solid var(--line);background:var(--surface2);border-radius:16px;padding:12px 6px;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px}.sgk button span{font-size:26px;line-height:1}.sgk button.on{border-color:#f59e0b;background:rgba(250,204,21,.16)}
 .sgt{min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
@@ -1102,14 +1109,14 @@ const FU=[
  {k:'DT',l:'DT',d:'DT · un seul titulaire',i:'shield',c1:'#64748b',c2:'#334155',grp:'MECAS',one:1},
  {k:'CST',l:'CST',d:'CST · un seul titulaire',i:'wrench',c1:'#0ea5e9',c2:'#0369a1',grp:'MECAS',one:1},
  {k:'DEP',l:'DEP',d:'DEP',i:'wrench',c1:'#f59e0b',c2:'#c2410c',grp:'MECAS'},
- {k:'PISTE',l:'PISTE',d:'Piste',i:'cone',c1:'#22c55e',c2:'#15803d',grp:'MECAS'},
+ {k:'PISTE',l:'PISTE',d:'Piste',i:'cone',c1:'#22c55e',c2:'#15803d',grp:'MECAS'},{k:'CHPISTE',l:'CHEF DE PISTE',d:'Chef de piste · un seul titulaire',i:'cone',c1:'#16a34a',c2:'#14532d',grp:'MECAS',one:1},{k:'CHHANGAR',l:'CHEF DE HANGAR',d:'Chef de hangar · un seul titulaire',i:'wrench',c1:'#f97316',c2:'#9a3412',grp:'MECAS',one:1},{k:'CHDEP',l:'CHEF DU DEP',d:'Chef du DEP · un seul titulaire',i:'wrench',c1:'#eab308',c2:'#a16207',grp:'MECAS',one:1},
  {k:'COMM',l:'COMM',d:'Communication',i:'mega',c1:'#ec4899',c2:'#be185d'},
  {k:'PHOTO',l:'PHOTO',d:'Photo',i:'camera',c1:'#a855f7',c2:'#7e22ce'},
  {k:'CHAUFFEUR',l:'CHAUFFEUR',d:'Chauffeurs',i:'car',c1:'#06b6d4',c2:'#0e7490'},
  {k:'ARTA',l:'ARTA',d:'ARTA',i:'gear',c1:'#ef7f3a',c2:'#b4441a'}
 ];
 const FCm=Object.fromEntries(FC.map(f=>[f.k,f])),FUm=Object.fromEntries(FU.map(f=>[f.k,f]));
-const MECAS={k:'MECAS',l:'MÉCAS',d:'DT, CST, DEP et piste',i:'wrench',c1:'#f59e0b',c2:'#15803d'};
+const MECAS={k:'MECAS',l:'MÉCAS',d:'DT, CST, DEP, piste et leurs chefs',i:'wrench',c1:'#f59e0b',c2:'#15803d'};
 /* Spécialités techniques (sous-catégories du DEP, facultatives pour la piste) et fonctions particulières */
 const SPE=['Vecteur','Avio','Petaf','Motoriste','Servitude',"Choum'"];
 const DFN={DEP:['Chef du DEP','Adjoint chef du DEP','Équipement','Trads'],PISTE:['Chef de piste','Adjoint chef de piste']};
@@ -1294,7 +1301,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794299298';
+const APP_V='1794304728';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -1332,7 +1339,7 @@ const lineMail=m=>m?`<div class="line">${ic('mail',15)}<span>${esc(m)}</span><bu
 function go(v,mid){S.view=v;if(mid!==undefined)S.mid=mid;closeSheet();render();window.scrollTo(0,0)}
 function setRole(r){if(!ME||ME.role!=='chef'){return}ROLE=r;if(!viewOk(S.view))S.view='meetings';render();toast('Vous voyez l\'application comme : '+RLm[r].l)}
 const isOsab=()=>ROLE==='osab';
-const viewOk=v=>isOsab()||isBob()?v==='perfos':v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||((ROLE==='visit'||ROLE==='comm')&&!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.every(([k])=>ME.tools[k]===0)))||!!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.some(([k])=>ME.tools[k]===1))):true;
+const viewOk=v=>isOsab()||isBob()?v==='perfos':v==='retex'?rxCan():v==='unite'?canSee('annu')&&!dmmaMid():v==='acces'?canSee('acces'):v==='mails'?isChef():v==='perfos'?(isChef()||(typeof hgCan==='function'&&hgCan())||((ROLE==='visit'||ROLE==='comm')&&!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.every(([k])=>ME.tools[k]===0)))||!!(typeof ME!=='undefined'&&ME&&ME.tools&&TOOLS_A.some(([k])=>ME.tools[k]===1))):true;
 function render(){navMem();
  {const f=$('sr-fr');if(f&&S.view==='perfos'&&S.pfTab==='sr'&&f.dataset.role===String(ROLE)&&viewOk('perfos')&&srCan()){try{f.contentWindow.postMessage({srList:JSON.parse(JSON.stringify(srVis()))},'*')}catch(e){}return}}
  if(typeof ME!=='undefined'&&ME&&ME.mr){const r=(S.view==='meeting'||S.view==='recap')&&S.mid&&ME.mr[S.mid];ROLE=r&&RLm[r]?r:ME.role}
@@ -3086,6 +3093,7 @@ function vPerfos(){const sub=isOsab()?'fea':isBob()?'zr':(S.pfTab||'home');
   if(sub==='coupe'){if(!coupeCan()){S.pfTab='home';return vPerfos()}return vCoupe(tabs)}
  if(sub==='meteo'){if(!mtCan()){S.pfTab='home';return vPerfos()}return vMeteo(tabs)}
  if(sub==='bpc'){if(!bpcCan()){S.pfTab='home';return vPerfos()}return vBpc(tabs)}
+ if(sub==='hg'){if(!hgCan()){S.pfTab='home';return vPerfos()}return vHg(tabs)}
  if(sub==='nav'){if(!navCan()){S.pfTab='home';return vPerfos()}return vNav(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
  if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
@@ -3661,7 +3669,7 @@ function navBack(){let o=null;try{o=JSON.parse(localStorage.getItem(NAVK())||'nu
  render();if(o.y)[60,300,900].forEach(t=>setTimeout(()=>window.scrollTo(0,o.y),t))}
 addEventListener('scroll',navMem,{passive:true});addEventListener('pagehide',()=>{NAVOK&&(clearTimeout(NAVT),NAVT=null,(()=>{try{localStorage.setItem(NAVK(),JSON.stringify({t:Date.now(),v:S.view,mid:S.mid,rub:S.rub,pf:S.pfTab,pcW:S.pcW,zrW:S.zrW,acT:S.acT,y:Math.round(window.scrollY||0)}))}catch(e){}})())});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')navMem()});
-function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g){navBack();return}NAVOK=true;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='sugg'){setTimeout(suggOpen,500)}else if(g==='cad'||g==='itw'||g==='sr'){S.pfTab=g;go('perfos')}else if(g==='retex'){const t=iso(new Date()),L=DB.meetings.filter(m=>{const d=rxLast(m);return d&&d<t&&daysTo(d)>=-14}).sort((a,b)=>String(rxLast(b)).localeCompare(rxLast(a)));if(L[0]){S.rub='retex';go('meeting',L[0].id)}else go('retex')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='zr'){S.pfTab='zr';go('perfos')}else if(g==='mails'&&isChef())go('mails')}
+function deepLink(g){g=g||new URLSearchParams(location.search).get('go');if(!g){navBack();return}NAVOK=true;if(g==='fea'){S.pfTab='fea';S.feaF={st:'todo',ty:'',yr:''};go('perfos')}else if(g==='sugg'){setTimeout(suggOpen,500)}else if(g==='cad'||g==='itw'||g==='sr'||g==='hg'){S.pfTab=g;go('perfos')}else if(g==='retex'){const t=iso(new Date()),L=DB.meetings.filter(m=>{const d=rxLast(m);return d&&d<t&&daysTo(d)>=-14}).sort((a,b)=>String(rxLast(b)).localeCompare(rxLast(a)));if(L[0]){S.rub='retex';go('meeting',L[0].id)}else go('retex')}else if(g==='pc'){S.pfTab='pc';S.pcW=null;go('perfos')}else if(g==='zr'){S.pfTab='zr';go('perfos')}else if(g==='mails'&&isChef())go('mails')}
 if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.go)deepLink(e.data.go);if(e.data&&e.data.newVersion)newVer()});
 
 /* ====================== Centrage Cirrus SR20 / SR22 ====================== */
@@ -4594,7 +4602,7 @@ const mtCmp=(w,key)=>{if(!w||w.d==null)return{s:0,p:0};const B=MT_SITE[key].b,r=
 const mtCor=v=>{const n=Math.floor(Math.abs(v)/5+1e-9);return n?n+(v>0?'N':'S'):'Ø'};
 const mtAvg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 function mtBrief(cond,om,key){const L=[['SOL',cond.w],['250',om&&om.a250],['500',om&&om.a500],['1000',om&&om.a1000]].filter(x=>x[1]),C=L.map(x=>Object.assign({l:x[0],w:x[1]},mtCmp(x[1],key)));
- const rub=mtAvg(C.map(c=>c.s)),cx=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.s)),pub=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.p)),al=[];
+ const CR=C.filter(c=>c.l==='500'||c.l==='1000'),rub=mtAvg((CR.length?CR:C).map(c=>c.s)),cx=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.s)),pub=mtAvg(C.filter(c=>c.l==='SOL'||c.l==='250').map(c=>c.p)),al=[];
  const a=Math.round(Math.abs(pub));
  if(pub<=-1)al.push({c:a>10?'ko':'wa',t:`⚠️ VQR ${a} kt`});   // vent qui rapproche : il vient de la Perp
  else if(pub>=1)al.push(a>20?{c:'ko',t:`⚠️ Vent public ${a} kt · attention, pas de croisements`}:a>10?{c:'wa',t:`⚠️ Vent public ${a} kt`}:{c:'',t:`Vent public ${a} kt`});
@@ -4826,7 +4834,7 @@ function vMeteo(tabs){mtLoad();const D=S.mt,head=`${NOTE}<div class="head"><div>
   return `<tr><td><b>${n}</b> ${mtCatB(mtCat(m))}<div class="small muted">${id} · ${mtH(m.t)}${fc?` · prévu ${mtH(T)} ${mtCatB(fc)}`:''}</div></td><td>${mtArr(m.w)}${mtWT(m.w)}</td><td>${mtVis(m.vis)}</td><td>${mtCeilT(m)}</td><td>${m.q||'—'}</td><td>${mtCatB(mtCat(m))}</td></tr><tr class="mtraw"><td colspan="6"><details><summary>METAR${t?' et TAF':''}</summary><code>${esc(m.raw)}</code>${t?`<code>${esc(t)}</code>`:''}</details></td></tr>`});
  const tb=k=>`<tr class="mtgh"><td colspan="6">${k==='mil'?'Militaires':'Civils · déroutement'}</td></tr>`+MT_ST.map((x,i)=>x[2]===k?rows[i]:'').join('');
  const tab=`<div class="card mtc"><div class="mtrh2"><b>Terrains</b><span class="small muted">${D.demo?'<span class="chip demo">EXEMPLE</span> ':''}Mis à jour à ${mtH(D.t)} <button class="btn sm" onclick="mtLoad(1)" ${S.mtBusy?'disabled':''}>${S.mtBusy?'…':'↻ Actualiser'}</button></span></div><div class="mtscroll"><table class="mtt"><thead><tr><th>Terrain</th><th>Vent</th><th>Visi</th><th>Plafond</th><th>QNH</th><th>Catégorie</th></tr></thead><tbody>${tb('mil')}${tb('civ')}</tbody></table></div></div>`;
- const rules=`<details class="card mtc mtrules"><summary><b>Règles appliquées</b></summary><div class="small">Le type de démo dépend du plafond seul : BT ≥ 4500 ft · INT ≥ 2500 ft · MT ≥ 1500 ft ; ⊘ Synchro si plafond &lt; 1500 ft ; pas de vol si plafond &lt; 1000 ft.<br>Visibilité &lt; 5 km : pas de vol. Entre 5 et 8 km : simple alerte, sans changer le type de démo.<br>Couleurs : BT bleu, INT vert, MT jaune, MT sans synchro orange, pas de vol rouge.<br>Plafond = première couche SCT, BKN, OVC ou VV jusqu'à 8 000 ft (les FEW ne comptent pas).<br>Corrections : 1 par tranche de 5 kt de composante axe, N si elle vient de Salon, S si elle vient de Marignane. Ruban = moyenne sol, 250, 500 et 1000 m. Croisements = moyenne sol et 250 m. Composante public = moyenne sol et 250 m : alerte au-delà de 10 kt, pas de croisements au-delà de 20 kt ; VQR si elle vient de Perp.<br>Terrains : catégorie de vol VFR (vert) plafond &gt; 3000 ft et visi &gt; 8 km · MVFR (bleu) plafond 1000–3000 ft ou visi 5–8 km · IFR (rouge) plafond 500–999 ft ou visi 1,6–5 km · LIFR (magenta) plafond &lt; 500 ft ou visi &lt; 1,6 km. Plafond = BKN, OVC ou VV.<br>Fumée : couleur s'il y a un fond nuageux (BKN, OVC ou voile), blanche si le ciel est clair.<br>Noms des vents tous les 45°, dans le sens horaire : ${MT_W.join(', ')}. Salon et PDD : vent de Salon = 338°. Istres : vent de Salon = 150°. Entre deux noms voisins seulement : « Salon tendance Pélissanne » de 10 à 17° d'écart, puis « Salon / Pélissanne » vers le milieu.</div></details>`;
+ const rules=`<details class="card mtc mtrules"><summary><b>Règles appliquées</b></summary><div class="small">Le type de démo dépend du plafond seul : BT ≥ 4500 ft · INT ≥ 2500 ft · MT ≥ 1500 ft ; ⊘ Synchro si plafond &lt; 1500 ft ; pas de vol si plafond &lt; 1000 ft.<br>Visibilité &lt; 5 km : pas de vol. Entre 5 et 8 km : simple alerte, sans changer le type de démo.<br>Couleurs : BT bleu, INT vert, MT jaune, MT sans synchro orange, pas de vol rouge.<br>Plafond = première couche SCT, BKN, OVC ou VV jusqu'à 8 000 ft (les FEW ne comptent pas).<br>Corrections : 1 par tranche de 5 kt de composante axe, N si elle vient de Salon, S si elle vient de Marignane. Ruban = moyenne 500 et 1000 m. Croisements = moyenne sol et 250 m. Composante public = moyenne sol et 250 m : alerte au-delà de 10 kt, pas de croisements au-delà de 20 kt ; VQR si elle vient de Perp.<br>Terrains : catégorie de vol VFR (vert) plafond &gt; 3000 ft et visi &gt; 8 km · MVFR (bleu) plafond 1000–3000 ft ou visi 5–8 km · IFR (rouge) plafond 500–999 ft ou visi 1,6–5 km · LIFR (magenta) plafond &lt; 500 ft ou visi &lt; 1,6 km. Plafond = BKN, OVC ou VV.<br>Fumée : couleur s'il y a un fond nuageux (BKN, OVC ou voile), blanche si le ciel est clair.<br>Noms des vents tous les 45°, dans le sens horaire : ${MT_W.join(', ')}. Salon et PDD : vent de Salon = 338°. Istres : vent de Salon = 150°. Entre deux noms voisins seulement : « Salon tendance Pélissanne » de 10 à 17° d'écart, puis « Salon / Pélissanne » vers le milieu.</div></details>`;
  return head+`<div class="card mtc"><div class="mtk">Météo pour quel vol ?</div>${chips}<div class="mtk" style="margin-top:10px">Lieu d'entraînement</div>${sites}</div>${res}${brief}${kv}${om?mtModH(om,key):''}${tab}${rules}`}
 
 /* ---------------- Nav Salon ⇄ Plan de Dieu (points centraux) : d'après la LOA CFAMI / BA 701 ---------------- */
@@ -5563,6 +5571,7 @@ function pfArt(k){
   <rect x="20" y="22" width="80" height="66" rx="6" fill="#fff"/><rect x="30" y="32" width="60" height="46" rx="3" fill="#fde68a"/>
   <path d="M34 72l16-18 12 12 8-8 16 14" stroke="#b45309" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="74" cy="44" r="5" fill="#b45309"/>
   <circle cx="92" cy="92" r="16" fill="#22c55e" stroke="#fff" stroke-width="4"/><path d="M84 92l6 6 10-11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+ if(k==='hg')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#22c55e','#14532d','g_hg')}<path d="M10 70 Q10 40 34 36 L34 104 L10 104Z" fill="#fef9c3" opacity=".9"/><path d="M58 60 l-10 -3 4 -10 -4 0 -10 12 -14 0 c-3 0 -3 4 0 4 l14 0 10 12 4 0 -4 -10 10 -3z" transform="translate(30 4) scale(1.3)" fill="#fff"/><path d="M58 60 l-10 -3 4 -10 -4 0 -10 12 -14 0 c-3 0 -3 4 0 4 l14 0 10 12 4 0 -4 -10 10 -3z" transform="translate(30 -36) scale(1.3)" fill="#fff" opacity=".75"/></svg>`;
  if(k==='bpc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_bpc')}<rect x="30" y="20" width="60" height="82" rx="8" fill="#fff" opacity=".95"/><rect x="46" y="14" width="28" height="14" rx="5" fill="#0f766e"/><path d="M40 42h40M40 54h40M40 66h40M40 78h26" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/><path d="M58 34v54" stroke="#0f766e" stroke-width="3" opacity=".5"/></svg>`;
  if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
   <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/><circle cx="60" cy="60" r="18" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/>
@@ -5578,17 +5587,17 @@ function pfArt(k){
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
 const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Météo · Alphajet · Instruction · Zones · Espacement · Série',['meteo','alpha','ex','zr','rg','sr']],com:['Rayonnement / Comm','Interviews · Cadres',['itw','cad']],pcf:['Point central','Points centraux · Bfg PC · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','bpc','nav','meteo','coupe','cirrus']]};
-const TOOLS_A=[['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
+const TOOLS_A=[['hg','Hangar'],['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
 function toolDef(role,x,k){if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
- switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
+ switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'hg':return role==='visit'&&!!x&&(pd||pc||!!(FUm[x.fn]&&FUm[x.fn].grp==='MECAS'));case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
 const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
-const pfVis=k=>isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan());
+const pfVis=k=>isMeca()&&!PF_DIR[k]&&tov(k)==null?k==='hg':isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan())&&(k!=='hg'||hgCan());
 const pfTile=k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k),n=D?D[2].filter(pfVis).length:0;return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfUp=S.pfTab||'home';S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${n} outils</small>`:''}</button>`};
-const PF_HOME=['pbd','pcf','com','fea','tcas'];
+const PF_HOME=['hg','pbd','pcf','com','fea','tcas'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
+const PF_TOOLS=[['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['hg','Hangar','Les Alphajet : ligne de vol, remise en œuvre, dépannage'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
@@ -5935,7 +5944,7 @@ const ROLE_D={chef:'Vous : tous les droits, toujours. Seul à régler les droits
  osab:'OSAB : ne voit que les FEA que vous avez cochées « Transmise à l\'OSAB » (avec leurs photos), en lecture. Rien d\'autre : ni meetings, ni Annuaire, ni outils.',
  org:'Organisateur d\'un meeting : ne voit que son ou ses meetings. Jamais l\'Annuaire complet, le RETEX, les FEA, les PC ni les outils.',
  dv:'Directeur des vols d\'un meeting : ne voit que son ou ses meetings et remplit la partie aéronautique. Jamais le RETEX, les FEA, les PC ni les outils.'};
-const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',sr:'tous les pilotes (chacun son espace ; le leader et le chef ops voient tout en lecture)',bpc:'les points centraux (écriture) ; tous les Athos et la direction (lecture)',zr:'les marqueuses ops et les Athos 5, 15 et 16 (l\'OPS BOB voit et valide la R276)',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
+const TOOL_W=k=>({pc:'les points centraux cochés « PC » dans l\'Unité',nav:'les points centraux cochés « PC » dans l\'Unité',ex:'l\'Athos '+exN(),rg:'les Athos '+rgN()+', 1 et 5',itw:'la comm, les pilotes et la direction',cad:'la comm et l\'Athos 9',sr:'tous les pilotes (chacun son espace ; le leader et le chef ops voient tout en lecture)',bpc:'les points centraux (écriture) ; tous les Athos et la direction (lecture)',hg:'CST, DT, chefs de piste, de hangar et du DEP (écriture) ; pilotes, direction, PC et mécas (lecture)',zr:'les marqueuses ops et les Athos 5, 15 et 16 (l\'OPS BOB voit et valide la R276)',tcas:'les pilotes et la direction',meteo:'les pilotes, la direction et les points centraux',coupe:'les pilotes, la direction et les points centraux'})[k]||'tout le groupe Pilote PAF et la comm';
 const toolTip=k=>{const t=PF_TOOLS.find(x=>x[0]===k);return (t?t[1]+' : '+t[2]:k)+'. Par défaut : '+TOOL_W(k)+' (et vous).'};
 const athW=n=>{const x=(DB.members||[]).find(y=>y.fn==='PILOTES'&&athN(y)===n);return x?memLabel(x):'personne dans l\'Unité pour l\'instant'};
 const ridesc=(r,d)=>'· '+r.l+' : '+(LV_D[d]||'');
@@ -6109,7 +6118,8 @@ const BPC_F=[['ter','TERRAIN','à remplir par le PC (mer, marée, bouées, sable
 const bpcName=(az,B)=>MT_W[Math.round((((az-B)%360)+360)%360/45)%8];
 function bpcW(w,key){if(!w)return '';if(w.s<3)return 'Calme';const sp=Math.round(w.s)+' kt'+(w.g?' G'+Math.round(w.g):'');if(w.d==null)return 'Variable '+sp;return mtWN(w,key).replace(/^Vent /,'')+' · '+sp+' ('+String(Math.round(w.d)).padStart(3,'0')+'°)'}
 /* préremplissage : mêmes calculs que l'outil Météo (cartouche) pour le terrain et l'heure du vol */
-function bpcAuto(SEL){const A={pax:SEL.fl&&SEL.fl.px||''},D=S.mt;if(!D)return A;const key=SEL.fl?mtSiteOf(SEL.fl):'salon',site=MT_SITE[key],T=SEL.T,now=Date.now(),M=mtMetar(D.M[site.st]),F=mtTaf(D.T[site.st]),om=mtOM(key,T),ta=mtTafAt(F,T);
+function bpcPax(px){px=String(px||'').trim();if(!px)return 'Pas de pax · pas de remplacement';const p=/pax/i.test(px),r=/\b9\s*=|remplac/i.test(px);return (p?'':'Pas de pax · ')+px+(r?'':' · pas de remplacement')}
+function bpcAuto(SEL){const A={pax:SEL.fl?bpcPax(SEL.fl.px):''},D=S.mt;if(!D)return A;const key=SEL.fl?mtSiteOf(SEL.fl):'salon',site=MT_SITE[key],T=SEL.T,now=Date.now(),M=mtMetar(D.M[site.st]),F=mtTaf(D.T[site.st]),om=mtOM(key,T),ta=mtTafAt(F,T);
  let cond;if(T-now<36e5&&M&&now-M.t<3*36e5)cond=M;else if(ta)cond=ta.pre;else if(om)cond=om.f;else cond=M||{};
  const qM=mtMetar(D.M[site.st]),qfe=qM&&mtQFE(qM.q,site.el),BR=mtBrief(cond,om,key),sm=mtSmoke(cond,om),hi=mtHigh(cond,om);
  const L8=(cond.cl||[]).filter(c=>c.h<8000),cl=c=>c.c+' '+mtFt(c.h)+' ft'+(c.cb?' '+c.cb:''),pl=L8.filter(c=>c.c==='BKN'||c.c==='OVC'||c.c==='VV'),ot=L8.filter(c=>!pl.includes(c));
@@ -6121,18 +6131,24 @@ function bpcAuto(SEL){const A={pax:SEL.fl&&SEL.fl.px||''},D=S.mt;if(!D)return A;
  A.v0=bpcW(cond.w,key);if(om){A.v250=bpcW(om.a250,key);A.v500=bpcW(om.a500,key);A.v1000=bpcW(om.a1000,key)}
  A.cor=BR.R===BR.X?BR.R:'R '+BR.R+' · X '+BR.X;
  const a=Math.round(Math.abs(BR.pub));A.vqr=BR.pub<=-1?`Oui · ≈ ${a} kt (sol à 250 m)`:BR.pub>=1?`Non · vent public ${a} kt`:'Ø';
- A.fum=sm==='W'?'W · blanc (ciel clair)':'C · couleur (fond nuageux)';if(qfe)A.brdd=String(qfe);
+ try{A.fum=mtWin(key,T,cond,F,D).P.l}catch(e){A.fum=''}if(qfe)A.brdd=String(qfe);
  A.src=`${site.n} · ${mtH(T)}`;return A}
 function bpcId(SEL){return SEL.fl?SEL.fl.id:'t'+Math.round(SEL.T/9e5)}
 function bpcPick(id){S.bpF=id;render()}
-function vBpc(tabs){mtLoad();const SEL=mtSel('bp'),id=bpcId(SEL),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{},ed=bpcEd();
- const head=`${NOTE}<div class="head"><div><h1>Bfg PC</h1><p class="muted">Fiche de briefing du point central, préremplie avec la plaquette et la météo du vol. ${ed?'Chaque case se corrige à la main ; ↺ remet la valeur automatique.':'Lecture seule : les points centraux la remplissent.'}</p></div></div>${tabs}`;
- const rows=BPC_F.map(([k,l,h])=>{const own=V[k]!=null,v=own?V[k]:(A[k]||''),ph=k==='ter'||k==='per'?'Rempli par le PC':h||'';
-  return `<tr><th>${l}${h&&!own&&!A[k]?`<small>${esc(h)}</small>`:''}</th><td>${ed?`<textarea class="bpin ${own?'own':''}" rows="${Math.max(1,Math.ceil(v.length/20))}" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" placeholder="${esc(ph)}" onchange="bpcSet('${esc(id)}','${k}',this.value)">${esc(v)}</textarea>${own&&A[k]!=null&&A[k]!==V[k]?`<button class="bprs" title="Revenir à la valeur automatique : ${esc(A[k]||'vide')}" onclick="bpcSet('${esc(id)}','${k}','')">↺</button>`:''}`:`<div class="bpro">${esc(v)||'<span class="muted">—</span>'}</div>`}</td></tr>`}).join('');
- const meta=V.t?`<div class="small muted" style="margin-top:8px">Modifiée par ${esc(V.by||'?')} le ${new Date(V.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>`:'';
+function bpcRose(key){const B=(MT_SITE[key]||MT_SITE.salon).b,r=Math.PI/180;let g='';
+ for(let i=0;i<8;i++){const off=i<=4?i*45:(i-8)*45,a=off*r,x=Math.sin(a),y=-Math.cos(a);if(i<4)g+=`<path d="M${(x*92).toFixed(1)} ${(y*92).toFixed(1)}L${(-x*92).toFixed(1)} ${(-y*92).toFixed(1)}" stroke="#334155" stroke-width="1.1"/>`;
+  const deg=String(((B+off)%360+360)%360).padStart(3,'0');g+=`<text x="${(x*70).toFixed(1)}" y="${(y*70+3).toFixed(1)}" text-anchor="middle" transform="rotate(${off>90||off<-90?off+180:off} ${(x*70).toFixed(1)} ${(y*70+3).toFixed(1)})">${off?(off>0?'+':'')+off+' ':''}${MT_W[i].toUpperCase()} ${deg}°</text>`}
+ return `<svg class="bprose" viewBox="-100 -100 200 200" aria-hidden="true"><path d="M0 -96V96" stroke="#e11d48" stroke-width="7" opacity=".5"/>${g}</svg>`}
+function vBpc(tabs){mtLoad();const SEL=mtSel('bp'),id=bpcId(SEL),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{},ed=bpcEd(),key=SEL.fl?mtSiteOf(SEL.fl):'salon';
+ const head=`${NOTE}<div class="head"><div><h1>Bfg PC</h1><p class="muted">Fiche de briefing du point central, préremplie avec la plaquette et la météo du vol. ${ed?'Touchez une case pour la corriger ; ↺ remet la valeur automatique.':'Lecture seule : les points centraux la remplissent.'}</p></div></div>${tabs}`;
+ const rows=BPC_F.map(([k,l,h])=>{const own=V[k]!=null,v=own?V[k]:(A[k]||''),ph=k==='ter'||k==='per'?'à remplir':'';
+  return `<div class="bpr"><div class="bpl${l.length>14?' sm':''}">${l}</div><div class="bpv">${ed?`<textarea class="bpin ${own?'own':''}" rows="1" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'" placeholder="${esc(ph)}" onchange="bpcSet('${esc(id)}','${k}',this.value)">${esc(v)}</textarea>${own&&A[k]!=null&&A[k]!==V[k]?`<button class="bprs" title="Revenir à la valeur automatique : ${esc(A[k]||'vide')}" onclick="bpcSet('${esc(id)}','${k}','')">↺</button>`:''}`:`<div class="bpro">${esc(v)||'—'}</div>`}</div></div>`}).join('');
+ const meta=V.t?`<div class="bpmeta">Modifiée par ${esc(V.by||'?')} le ${new Date(V.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>`:'';
+ setTimeout(()=>document.querySelectorAll('.bpin').forEach(t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'}),0);
  return `${head}<div class="card mtc"><div class="mtk">Vol</div>${mtChipsH('bp','bpcPick')}</div>
- <div class="card bpcard"><div class="bph"><b>${esc(SEL.lab)}</b>${A.src?`<span class="small muted">Météo : ${esc(A.src)}${S.mt&&S.mt.demo?' (exemple)':''}</span>`:S.mtBusy||!S.mt?`<span class="small muted">${waitH('Lecture de la météo',1)}</span>`:''}</div>
- <table class="bpt">${rows}</table>${meta}<div class="pcbtns" style="margin-top:10px"><button class="btn sm" onclick="bpcCopy('${esc(id)}')">📋 Copier la fiche</button></div></div>`}
+ <div class="bpboard"><div class="bpclip"></div><div class="bppaper"><div class="bptop"><b>${esc(SEL.lab)}</b><span>${A.src?`Météo ${esc(A.src)}${S.mt&&S.mt.demo?' (exemple)':''}`:S.mtBusy||!S.mt?waitH('Lecture de la météo',1):''}</span></div>
+ <div class="bpgrid">${bpcRose(key)}${rows}</div>${meta}</div></div>
+ <div class="pcbtns" style="margin:12px auto 0;max-width:560px"><button class="btn sm" onclick="bpcCopy('${esc(id)}')">📋 Copier la fiche</button></div>`}
 function bpcVals(id){const SEL=mtSel('bp'),A=bpcAuto(SEL),V=(DB.bpc||{})[id]||{};return BPC_F.map(([k,l])=>[l,V[k]!=null?V[k]:(A[k]||'')])}
 function bpcCopy(id){const t=mtSel('bp').lab+'\n'+bpcVals(id).map(([l,v])=>l+' : '+(v||'—')).join('\n');try{navigator.clipboard.writeText(t).then(()=>toast('Fiche copiée'),()=>toast('Copie impossible'))}catch(e){toast('Copie impossible')}}
 async function bpcSet(id,k,v){v=String(v||'').trim();const SEL=mtSel('bp'),A=bpcAuto(SEL);if(v===(A[k]||''))v='';   // identique à l'automatique : on ne garde rien
@@ -6140,6 +6156,95 @@ async function bpcSet(id,k,v){v=String(v||'').trim();const SEL=mtSel('bp'),A=bpc
  if(!isOnline()){save();return}
  let r;try{r=await api('bpcPut',{id,f:k,v,lab:SEL.lab})}catch(e){r={error:'Connexion impossible : non enregistré'}}
  if(r&&r.error){if(old!=null)o[k]=old;else delete o[k];toast(r.error);render();return}DB.bpc[id]=r.bpc;try{if(typeof BASE!=='undefined'&&BASE){BASE.bpc=BASE.bpc||{};BASE.bpc[id]=JSON.parse(JSON.stringify(r.bpc))}}catch(_){}}
+/* ====================== HANGAR : les Alphajet sur la ligne de vol et dans le hangar ======================
+   Vert = prêt au vol (sur la ligne, face au hangar, places 1 à 8 du sud au nord, spares décalés au sud), orange = remise en œuvre,
+   rouge = en dépannage (dans le hangar). On déplace les avions du doigt ; un toucher ouvre la fiche de l'avion. */
+const isMeca=()=>ROLE==='cst'||ROLE==='dt'||(ROLE==='visit'&&(()=>{const x=ccMe();return !!x&&!!FUm[x.fn]&&FUm[x.fn].grp==='MECAS'})());
+const hgEd=()=>isChef()||ROLE==='cst'||ROLE==='dt'||(ROLE==='visit'&&(()=>{const x=ccMe();return !!x&&['CHPISTE','CHHANGAR','CHDEP','DT','CST'].includes(x.fn)})());
+const hgCan=()=>tov('hg')!=null?!!tov('hg'):hgEd()||isMeca()||ccPilDir()||!!pcMe()||(!isOnline()&&ROLE==='visit');
+const HG_ST={ok:['Prêt au vol','#16a34a','#dcfce7'],rmo:['Remise en œuvre','#ea580c','#ffedd5'],dep:['En dépannage','#dc2626','#fee2e2']};
+const HG_SMK=['Blanc / Bleu','Blanc / Rouge','Blanc / Blanc','Blanc / Vide','Vide / Vide','Bleu / Rouge'];
+const HG_FUEL=['FUS','N1','N1 + 100','N1 + 200','N1 + 300','N2','D'];
+/* emplacements (coordonnées du dessin, nord en haut, hangar à l'ouest) */
+const HG_W=400,HG_H=730;
+const HG_POS=(()=>{const P={};for(let n=1;n<=8;n++)P['L'+n]={x:236,y:568-(n-1)*62,l:String(n)};P.S1={x:206,y:636,l:'S1',sp:1};P.S2={x:206,y:698,l:'S2',sp:1};
+ [[1,30],[2,107],[3,184],[4,272],[5,349],[6,426]].forEach(([n,y])=>P['H'+n]={x:79,y,l:'H'+n,h:1});return P})();
+function hgDemo(){const sn=[41,58,72,96,103,118,124,137,152,160,171,98];return{ac:sn.map((n,i)=>({id:'hg'+n,sn:String(n),fin:i<8?String(i+1):'',s:i<8?(i===5?'rmo':'ok'):i<10?'dep':'',pos:i<8?'L'+(i+1):i<10?'H'+(i-7):'',fuel:i<8?'N2':'',smk:i<8?HG_SMK[i%3]:'',panne:i===8?'Changement roue train principal':i===9?'Fuite hydraulique':'',eta:i===8?'2 h':i===9?'2 jours':'',pil:'',pist:'',meca:'',pax:i===2?'M. Dupont (journaliste)':''}))}}
+const hgDB=()=>{if(!DB.hg){if(isOnline())DB.hg={ac:[]};else{DB.hg=hgDemo();save()}}DB.hg.ac=DB.hg.ac||[];return DB.hg};
+const hgMem=f=>DB.members.filter(f).sort((a,b)=>String(a.last).localeCompare(String(b.last)));
+const hgMecas=()=>hgMem(x=>FUm[x.fn]&&FUm[x.fn].grp==='MECAS'),hgPil=()=>hgMem(x=>x.fn==='PILOTES').sort((a,b)=>athN(a)-athN(b)),hgPist=()=>hgMem(x=>x.fn==='PISTE'||x.fn==='CHPISTE');
+const hgNm=id=>{const x=DB.members.find(y=>y.id===id);if(!x)return id||'';return x.fn==='PILOTES'?pcName(x):((x.grade?x.grade+' ':'')+(x.last||x.first||'')).trim()};
+const hgLab=a=>a.fin?a.fin:'#'+a.sn;
+const HG_SC={Blanc:'#ffffff',Bleu:'#2563eb',Rouge:'#dc2626',Vide:'none'};
+/* Alphajet vu de dessus, nez vers l'ouest (vers le hangar) : nez pointu, aile en flèche haute, empennage en flèche */
+const HG_AC='M-30 0C-27-2.6-20-3.4-12-3.6L-3-3.8L6-19L11-19.5L10-4L17-4L21-11L25-11.4L24-3.2L28-2.2L28 2.2L24 3.2L25 11.4L21 11L17 4L10 4L11 19.5L6 19L-3 3.8L-12 3.6C-20 3.4-27 2.6-30 0Z';
+const hgPlane=(c,sc)=>`<path d="${HG_AC}" transform="scale(${sc||1})" fill="${c}" stroke="#fff" stroke-width="1.3" stroke-linejoin="round" filter="url(#hgsh)"/><ellipse cx="${-15*(sc||1)}" cy="0" rx="${7*(sc||1)}" ry="${2.2*(sc||1)}" fill="#0f172a" opacity=".55"/>`;
+const hgSmk=(v,x,y)=>{if(!v)return '';const [l,r]=v.split(' / ');const d=(c,dx)=>`<circle cx="${x+dx}" cy="${y}" r="4.2" fill="${HG_SC[c]==='none'?'transparent':HG_SC[c]}" stroke="${HG_SC[c]==='none'?'#94a3b8':'#cbd5e1'}" stroke-width="1.2" ${HG_SC[c]==='none'?'stroke-dasharray="2 1.6"':''}/>`;return d(l,0)+d(r,10)};
+function hgScene(){const H=hgDB(),ed=hgEd();
+ let g=`<defs><linearGradient id="hgroof" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#efe9c0"/><stop offset=".5" stop-color="#fbf8e7"/><stop offset="1" stop-color="#e6dfb0"/></linearGradient><filter id="hgsh" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="1" dy="2" stdDeviation="1.6" flood-opacity=".3"/></filter><filter id="hgsh2" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.4" flood-opacity=".18"/></filter></defs>
+ <rect width="${HG_W}" height="${HG_H}" fill="#c3c8ce"/><rect x="160" width="${HG_W-160}" height="${HG_H}" fill="#b4bac1"/><rect x="384" width="16" height="${HG_H}" fill="#cbbd99"/>`;
+ [[6,8,232,1],[6,250,232,2]].forEach(([x,y,h,n])=>{g+=`<rect x="${x}" y="${y}" width="146" height="${h}" rx="16" fill="url(#hgroof)" stroke="#d3cb98" stroke-width="1.5"/>`;for(let i=1;i<3;i++)g+=`<path d="M${x+10} ${y+h*i/3}h126" stroke="#d8d1a3" stroke-width="1" stroke-dasharray="3 4"/>`;g+=`<text x="${x+14}" y="${y+h-10}" class="hgtx2">HANGAR ${n}</text>`});
+ g+=`<rect x="6" y="500" width="146" height="${HG_H-506}" rx="8" fill="#949ca5"/><rect x="16" y="512" width="126" height="${HG_H-530}" rx="5" fill="#a3aab2"/>`;
+ g+=`<path d="M168 0V${HG_H}" stroke="#f8fafc" stroke-width="2" opacity=".5"/><path d="M372 0V${HG_H}" stroke="#facc15" stroke-width="2" opacity=".6"/>`;
+ Object.values(HG_POS).forEach(p=>{if(p.h){g+=`<text x="${p.x+64}" y="${p.y-6}" text-anchor="end" class="hgtx3">${p.l}</text>`;return}g+=`<circle cx="${p.x}" cy="${p.y}" r="28" fill="none" stroke="#f8fafc" stroke-width="1.6" opacity=".7"/><path d="M${p.x+30} ${p.y}h${p.sp?40:22}" stroke="#f8fafc" stroke-width="1.4" opacity=".55"/><text x="${p.x-44}" y="${p.y+5}" text-anchor="middle" class="hgtx">${p.l}</text>`});
+ H.ac.filter(a=>a.pos&&HG_POS[a.pos]).forEach(a=>{const p=HG_POS[a.pos],st=HG_ST[a.s]||['Sans état','#64748b','#e2e8f0'];
+  const big=esc(a.fin||'#'+a.sn),small=a.fin?'#'+esc(a.sn):'sans n°';
+  let lab;
+  if(p.h){const L1=esc((a.panne||'En dépannage').length>23?(a.panne.slice(0,22)+'…'):(a.panne||'En dépannage')),L2=a.eta?'≈ '+esc(a.eta.slice(0,10)):'';
+   lab=`<g transform="translate(-66 17)"><rect width="132" height="36" rx="10" fill="#fff" opacity=".95" filter="url(#hgsh2)"/><rect width="4" height="36" rx="2" fill="${st[1]}"/><text x="11" y="15" class="hgbg">${big} <tspan class="hgsn">${small}${L2?' · '+L2:''}</tspan></text><text x="11" y="29" class="hgsub hgdep">${L1}</text></g>`}
+  else{const who=[a.pil?hgNm(a.pil).replace(/^Athos (\d+)\s*·\s*/,'A$1 '):'',a.pax?'Pax '+a.pax:''].filter(Boolean).join(' · ');const who2=who.length>21?who.slice(0,20)+'…':who,fu=a.fuel||(a.s==='rmo'?'Remise en œuvre':'');
+   const w=126,hh=who?46:34;
+   lab=`<g transform="translate(36 ${-hh/2})"><rect width="${w}" height="${hh}" rx="10" fill="#fff" opacity=".95" filter="url(#hgsh2)"/><rect x="0" y="0" width="4" height="${hh}" rx="2" fill="${st[1]}"/><text x="11" y="15" class="hgbg">${big} <tspan class="hgsn">${small}</tspan></text>${hgSmk(a.smk,w-24,11)}<text x="11" y="29" class="hgsub" ${a.s==='rmo'&&!a.fuel?'style="fill:#ea580c;font-weight:700"':''}>${esc(fu)}${a.smk?' · '+esc(a.smk):''}</text>${who?`<text x="11" y="41" class="hgsub hgwho">${esc(who2)}</text>`:''}</g>`}
+  g+=`<g class="hgac ${ed?'drag':''}" data-id="${esc(a.id)}" transform="translate(${p.x} ${p.y})"><circle r="30" fill="transparent"/>${hgPlane(st[1],p.h?1:1.25)}${lab}</g>`});
+ return `<svg viewBox="0 0 ${HG_W} ${HG_H}" class="hgsvg" id="hgsvg">${g}</svg>`}
+function vHg(tabs){const H=hgDB(),ed=hgEd(),n=k=>H.ac.filter(a=>a.s===k).length,off=H.ac.filter(a=>!a.pos||!HG_POS[a.pos]);
+ setTimeout(hgBind,0);
+ return `${NOTE}<div class="head"><div><h1>Hangar</h1><p class="muted">${ed?'Glissez un avion pour le déplacer, touchez-le pour sa fiche.':'État des Alphajet, mis à jour par les mécanos.'}</p></div></div>${tabs}
+ <div class="hgsum"><span class="hgp ok"><b>${n('ok')}</b> prêts au vol</span><span class="hgp rmo"><b>${n('rmo')}</b> en remise en œuvre</span><span class="hgp dep"><b>${n('dep')}</b> en dépannage</span></div>
+ <div class="hgwrap">${hgScene()}</div>
+ ${off.length||ed?`<div class="card hgoff"><div class="mtk">Hors ligne ${off.length?'· '+off.length:''}</div><div class="hgchips">${off.map(a=>`<button class="hgchip" onclick="hgOpen('${esc(a.id)}')"><svg viewBox="-32 -22 64 44" width="34" height="24"><path d="${HG_AC}" fill="${(HG_ST[a.s]||[0,'#64748b'])[1]}"/></svg><b>${esc(hgLab(a))}</b><small>#${esc(a.sn)}</small></button>`).join('')||'<span class="small muted">Tous les avions sont placés.</span>'}</div>${ed?`<div class="pcbtns" style="margin-top:10px"><button class="btn sm" onclick="hgFleet()">✈︎ Gérer la flotte (${H.ac.length})</button></div>`:''}</div>`:''}`}
+/* glisser-déposer : on lâche près d'une place libre (ou occupée : les deux avions échangent) */
+let HGD=null;
+function hgBind(){const sv=$('hgsvg');if(!sv)return;const pt=e=>{const r=sv.getBoundingClientRect();return{x:(e.clientX-r.left)*HG_W/r.width,y:(e.clientY-r.top)*HG_H/r.height}};
+ sv.querySelectorAll('.hgac').forEach(el=>{el.addEventListener('pointerdown',e=>{const id=el.dataset.id,a=hgDB().ac.find(x=>x.id===id);if(!a)return;HGD={id,el,p0:pt(e),moved:false,pos:a.pos};if(hgEd()){el.setPointerCapture(e.pointerId);e.preventDefault()}});
+  el.addEventListener('pointermove',e=>{if(!HGD||HGD.el!==el||!hgEd())return;const q=pt(e),dx=q.x-HGD.p0.x,dy=q.y-HGD.p0.y;if(!HGD.moved&&Math.hypot(dx,dy)<6)return;HGD.moved=true;const P=HG_POS[HGD.pos];el.setAttribute('transform',`translate(${P.x+dx} ${P.y+dy}) scale(1.12)`);el.classList.add('lift');
+   const k=hgNear(q);sv.querySelectorAll('.hgtarget').forEach(t=>t.remove());if(k){const T=HG_POS[k];sv.insertAdjacentHTML('afterbegin','');const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('class','hgtarget');c.setAttribute('cx',T.x);c.setAttribute('cy',T.y);c.setAttribute('r',31);sv.insertBefore(c,sv.querySelector('.hgac'))}});
+  el.addEventListener('pointerup',e=>{if(!HGD||HGD.el!==el)return;const d=HGD;HGD=null;if(!d.moved){hgOpen(d.id);return}const k=hgNear(pt(e));if(!k||k===d.pos){render();return}hgMove(d.id,k)});
+  el.addEventListener('pointercancel',()=>{HGD=null;render()})})}
+function hgNear(q){let b=null,bd=48;Object.entries(HG_POS).forEach(([k,p])=>{const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;b=k}});return b}
+function hgMove(id,k){const H=hgDB(),a=H.ac.find(x=>x.id===id),b=H.ac.find(x=>x.pos===k&&x.id!==id),L=[];if(!a)return;
+ if(b){b.pos=a.pos||'';L.push(b)}a.pos=k;if(HG_POS[k].h&&a.s!=='dep')a.s='dep';else if(!HG_POS[k].h&&a.s==='dep'){a.s='rmo'}if(!a.s)a.s=HG_POS[k].h?'dep':'rmo';L.unshift(a);hgSave(L)}
+async function hgSave(L){render();if($('ov')&&!$('ov').hidden&&S.hgSel)$('sheet').innerHTML=hgSheet(S.hgSel);if(!isOnline()){save();return}
+ let r;try{r=await api('hgSet',{L:JSON.parse(JSON.stringify(L))})}catch(e){r={error:'Connexion impossible : non enregistré'}}if(r&&r.error){toast(r.error);return}DB.hg=r.hg;try{if(typeof BASE!=='undefined'&&BASE)BASE.hg=JSON.parse(JSON.stringify(r.hg))}catch(_){}render()}
+function hgFreePos(h){const H=hgDB(),occ=new Set(H.ac.map(a=>a.pos));return Object.keys(HG_POS).filter(k=>!!HG_POS[k].h===h&&!occ.has(k))[0]||''}
+/* fiche d'un avion */
+function hgOpen(id){S.hgSel=id;openSheet(()=>hgSheet(id))}
+function hgSet(id,k,v){const a=hgDB().ac.find(x=>x.id===id);if(!a)return;a[k]=v;
+ if(k==='s'){if(v==='dep'&&!(HG_POS[a.pos]||{}).h)a.pos=hgFreePos(true)||a.pos;else if(v!=='dep'&&(!a.pos||(HG_POS[a.pos]||{}).h))a.pos=hgFreePos(false)||a.pos}
+ hgSave([a])}
+function hgSheet(id){const a=hgDB().ac.find(x=>x.id===id);if(!a)return `<div class="sb"><p>Avion introuvable.</p></div>`;const ed=hgEd(),st=HG_ST[a.s]||['Sans état','#64748b','#e2e8f0'],ro=!ed?'disabled':'';
+ const sel=(k,L,ph)=>`<select class="in" ${ro} onchange="hgSet('${esc(id)}','${k}',this.value)"><option value="">${ph}</option>${L.map(x=>`<option value="${x.id}" ${a[k]===x.id?'selected':''}>${esc(hgNm(x.id))}</option>`).join('')}</select>`;
+ const chips=(k,L)=>`<div class="hgseg2">${L.map(v=>`<button class="${a[k]===v?'on':''}" ${ro} onclick="hgSet('${esc(id)}','${k}',${a[k]===v?"''":`'${v}'`})">${v}</button>`).join('')}</div>`;
+ const txt=(k,ph,ta)=>ta?`<textarea class="in" rows="2" ${ro} placeholder="${ph}" onchange="hgSet('${esc(id)}','${k}',this.value.trim())">${esc(a[k]||'')}</textarea>`:`<input class="in" ${ro} placeholder="${ph}" value="${esc(a[k]||'')}" onchange="hgSet('${esc(id)}','${k}',this.value.trim())">`;
+ const fly=a.s==='ok'||a.s==='rmo';
+ return `<div class="sh"><div class="hgbig" style="background:${st[2]}"><svg viewBox="-32 -22 64 44" width="64" height="46"><path d="${HG_AC}" fill="${st[1]}"/></svg></div><div class="t"><div class="q">${a.fin?'Dérive '+esc(a.fin):'Sans n° de dérive'} · <span class="muted">#${esc(a.sn)}</span></div><div class="small" style="color:${st[1]};font-weight:700">${st[0]}${a.pos&&HG_POS[a.pos]?' · '+(HG_POS[a.pos].h?'hangar '+HG_POS[a.pos].l:a.pos[0]==='S'?'spare '+HG_POS[a.pos].l:'place '+HG_POS[a.pos].l):' · hors ligne'}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><div class="hgseg">${Object.entries(HG_ST).map(([k,v])=>`<button class="${a.s===k?'on':''}" style="--c:${v[1]};--b:${v[2]}" ${ro} onclick="hgSet('${esc(id)}','s','${k}')">${v[0]}</button>`).join('')}</div>
+ ${fly?`<label class="l">Mécano affecté</label>${sel('meca',hgMecas(),'—')}
+  <div class="hgg2"><div><label class="l">Pilote</label>${sel('pil',hgPil(),'—')}</div><div><label class="l">Pistard</label>${sel('pist',hgPist(),'—')}</div></div>
+  <label class="l">Carburant</label>${chips('fuel',HG_FUEL)}<label class="l">Fumigène (gauche / droite)</label>${chips('smk',HG_SMK)}
+  <label class="l">Pax prévu</label>${txt('pax','Nom, même extérieur à l\'unité')}`:''}
+ ${a.s==='dep'?`<label class="l">Ce qu'il a</label>${txt('panne','Panne, travaux en cours…',1)}<label class="l">Durée estimée</label>${txt('eta','ex. 2 h, demain midi, 3 jours')}`:''}
+ <label class="l">Emplacement</label><select class="in" ${ro} onchange="hgMove('${esc(id)}',this.value)"><option value="" ${!a.pos?'selected':''}>Hors ligne</option><optgroup label="Ligne de vol (sud → nord)">${[1,2,3,4,5,6,7,8].map(n=>`<option value="L${n}" ${a.pos==='L'+n?'selected':''}>Place ${n}</option>`).join('')}<option value="S1" ${a.pos==='S1'?'selected':''}>Spare S1</option><option value="S2" ${a.pos==='S2'?'selected':''}>Spare S2</option></optgroup><optgroup label="Hangar">${[1,2,3,4,5,6].map(n=>`<option value="H${n}" ${a.pos==='H'+n?'selected':''}>Hangar H${n}</option>`).join('')}</optgroup></select>
+ ${a.t?`<p class="small muted" style="margin-top:10px">Mis à jour par ${esc(a.by||'?')} · ${new Date(+a.t).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</p>`:''}</div>`}
+/* flotte : la liste de nos avions (n° de série 2 ou 3 chiffres, n° de dérive facultatif) */
+function hgFleet(){openSheet(hgFleetH)}
+function hgFleetH(){const H=hgDB();return `<div class="sh"><div class="t"><div class="q">La flotte</div><div class="small muted">${H.ac.length} Alphajet</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">
+ ${H.ac.slice().sort((a,b)=>+a.sn-+b.sn).map(a=>`<div class="hgfl"><span class="hgdot" style="background:${(HG_ST[a.s]||[0,'#94a3b8'])[1]}"></span><label>N° série<input class="in" inputmode="numeric" maxlength="3" value="${esc(a.sn)}" onchange="hgFl('${esc(a.id)}','sn',this.value)"></label><label>Dérive<input class="in" maxlength="3" placeholder="sans" value="${esc(a.fin||'')}" onchange="hgFl('${esc(a.id)}','fin',this.value)"></label><button class="ib" aria-label="Retirer de la flotte" onclick="if(confirm('Retirer l\\'avion #${esc(a.sn)} de la flotte ?'))hgDel('${esc(a.id)}')">${ic('trash',15)}</button></div>`).join('')}
+ <div class="hgfl add"><label>N° série<input class="in" id="hg-sn" inputmode="numeric" maxlength="3" placeholder="ex. 125"></label><label>Dérive<input class="in" id="hg-fin" maxlength="3" placeholder="sans"></label><button class="btn pri sm" onclick="hgAdd()">Ajouter</button></div></div>`}
+function hgFl(id,k,v){v=String(v||'').trim();if(k==='sn'&&!/^\d{2,3}$/.test(v)){toast('N° de série : 2 ou 3 chiffres');$('sheet').innerHTML=hgFleetH();return}const a=hgDB().ac.find(x=>x.id===id);if(!a)return;a[k]=v;hgSave([a]);$('sheet').innerHTML=hgFleetH()}
+function hgAdd(){const sn=($('hg-sn').value||'').trim(),fin=($('hg-fin').value||'').trim();if(!/^\d{2,3}$/.test(sn)){toast('N° de série : 2 ou 3 chiffres');return}if(hgDB().ac.some(a=>a.sn===sn)){toast('Cet avion est déjà dans la flotte');return}
+ const a={id:'hg'+uid(),sn,fin,s:'',pos:''};hgDB().ac.push(a);hgSave([a]);$('sheet').innerHTML=hgFleetH()}
+async function hgDel(id){const H=hgDB();H.ac=H.ac.filter(a=>a.id!==id);render();$('sheet').innerHTML=hgFleetH();if(!isOnline()){save();return}let r;try{r=await api('hgDel',{id})}catch(e){r={error:'Connexion impossible'}}if(r&&r.error){toast(r.error);return}DB.hg=r.hg}
 function closeSheet(){$('ov').hidden=true;sheetFn=null;SHD=false}
 /* Fermeture en touchant à côté : seulement si le doigt s'est posé ET levé à côté (pas en fin de sélection de texte ou de défilement),
    et jamais quand une saisie est en cours (on ferme alors avec la croix ou « Annuler ») */
