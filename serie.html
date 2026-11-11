@@ -148,14 +148,14 @@ const FIG={
  /* Construction façon RollerCoaster Tycoon : tout droit (à plat, courbe vers le haut ou vers le bas) ou virage G/D.
     Un virage = l'avion s'incline puis tire dans son plan : à 90° d'inclinaison il tourne à plat, en dessous la trajectoire
     monte (boucle oblique, et boucle si 0°), au-delà elle descend ; il se remet ensuite ailes à plat. */
- RC_S:{l:'Tout droit',ps:[P('v','Trajectoire',-1,1,1,0,''),P('ang','Angle de la courbe',5,360,5,90,'°'),P('R','Rayon',150,1200,10,400,'m'),P('L','Ligne droite',0,5000,50,800,'m')],
-  gen:(T,p)=>{if(+p.v){T.pitch(+p.v*p.ang,p.R,'top')}if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
- RC_V:{l:'Virage',side:1,ps:[P('bank','Inclinaison',0,180,5,90,'°'),P('ang','Angle de virage',5,720,5,90,'°'),P('R','Rayon',150,3000,10,700,'m'),P('L','Ligne après',0,5000,50,0,'m')],
-  gen:(T,p,s)=>{const b=+p.bank,rl=Math.max(60,b*1.4);if(b)T.roll(-s*b,rl);T.pitch(p.ang,p.R,'mid');if(b)T.roll(s*b,rl);if(p.L)T.line(p.L);T.mark('end')},h:[['mid','OUT','R',1]]},
+ RC_S:{l:'Tout droit',ps:[P('v','Trajectoire',-1,1,1,0,''),P('ang','Angle de la courbe',5,360,5,90,'°'),P('R','Rayon',150,1200,10,400,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne droite',0,5000,50,800,'m')],
+  gen:(T,p)=>{if(+p.v){T.pitch(+p.v*p.ang,p.R,'top',{n:p.n})}if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
+ RC_V:{l:'Virage',side:1,ps:[P('bank','Inclinaison',0,180,5,90,'°'),P('ang','Angle de virage',5,720,5,90,'°'),P('R','Rayon',150,3000,10,700,'m'),P('n','Facteur de charge',1.5,7,.1,null,'G'),P('L','Ligne après',0,5000,50,0,'m')],
+  gen:(T,p,s)=>{const b=+p.bank,rl=Math.max(60,b*1.4);if(b)T.roll(-s*b,rl);T.pitch(p.ang,p.R,'mid',{n:p.n||(PHY&&PHY.nv),cst:1});if(b)T.roll(s*b,rl);if(p.L)T.line(p.L);T.mark('end')},h:[['mid','OUT','R',1]]},
  ACT_F:{l:'Changement de formation',ps:[P('tr','Durée du passage',0,2000,50,400,'m')],gen:()=>{},h:[]},
  ACT_S:{l:'Action fumée',ps:[],gen:()=>{},h:[]},
- RC_VRH:{l:'VRH',ps:[P('R','Rayon de la mise en palier',150,1500,10,500,'m'),P('L','Ligne après',0,5000,50,300,'m')],gen:(T,p)=>T.vrh(p.R,p.L),h:[['end','F','L',1]]},
- RC_P:{l:'Pente',ps:[P('g','Pente visée (par rapport à l\'horizon)',-90,90,5,45,'°'),P('R','Rayon',150,1500,10,500,'m'),P('L','Ligne après',0,5000,50,600,'m')],gen:(T,p)=>{T.slope(+p.g,p.R);if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
+ RC_VRH:{l:'VRH',ps:[P('R','Rayon de la mise en palier',150,1500,10,500,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne après',0,5000,50,300,'m')],gen:(T,p)=>T.vrh(p.R,p.L,p.n),h:[['end','F','L',1]]},
+ RC_P:{l:'Pente',ps:[P('g','Pente visée (par rapport à l\'horizon)',-90,90,5,45,'°'),P('R','Rayon',150,1500,10,500,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne après',0,5000,50,600,'m')],gen:(T,p)=>{T.slope(+p.g,p.R,p.n);if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
  RC_LVL:{l:'Ailes à plat',ps:[P('L','Longueur de la remise à plat',50,2000,10,300,'m')],gen:(T,p)=>{T.level(p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO ENV':{l:'Tonneau envoyé (barrique)',side:1,ps:[P('a','Rotation',30,720,10,180,'°'),P('R','Rayon de la barrique',30,600,5,120,'m'),P('L','Longueur',150,2500,10,700,'m')],gen:(T,p,s)=>{T.cask(s,p.a,p.R,p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO SIMU':{base:'TNO ENV',l:'Tonneau simu'},
@@ -173,8 +173,9 @@ const FIG_ORDER=['RC_S','RC_P','RC_V','RC_LVL','RC_VRH','TNO ENV'];
 /* propositions du menu « Ajouter » : brique + réglages de départ */
 const PRESETS=[['LIGNE'],['DEMI',{a:45,L:500},'1/8 de boucle','Montée à 45°'],['DEMI',{a:90,L:400},'1/4 de boucle','Montée à la verticale'],['DEMI'],['VIRAGE'],['BOUCLE OBL'],['TNO ENV']];
 function demiName(a){a=+a;const k=Math.abs(a),m={45:'1/8 de boucle',90:'1/4 de boucle',135:'3/8 de boucle',180:'Demi-boucle',225:'5/8 de boucle',270:'3/4 de boucle',315:'7/8 de boucle',360:'Boucle'}[k]||'Arrondi '+k+'°';return a<0?m+' poussé'+(k>=360?'e':''):m}
+const lvB=()=>{const p=physOf(CUR);return p.on?Math.round(Math.acos(1/Math.max(1.05,p.nv))/D2R):90};
 function rcName(f){const p=figParams(f);if(f.t==='RC_S')return +p.v?(+p.v>0?'Courbe ↑ ':'Courbe ↓ ')+p.ang+'°':'Tout droit '+p.L+' m';
- const b=+p.bank;return 'Virage '+(f.side==='D'?'D':'G')+' '+p.ang+'° · incl. '+b+'° '+(b<85?'(monte)':b>95?'(descend)':'(à plat)')}
+ const b=+p.bank;return 'Virage '+(f.side==='D'?'D':'G')+' '+p.ang+'° · incl. '+b+'° '+(b<lvB()-4?'(monte)':b>lvB()+4?'(descend)':'(à plat)')}
 const isAct=f=>f&&(f.t==='ACT_F'||f.t==='ACT_S');
 function smSum(m){const v=Object.values(m||{}).filter(Boolean);if(!v.length)return 'coupée';const c=new Set(v);return c.size===1?(SMN[[...c][0]]||'').toLowerCase()+' ('+v.length+')':'tricolore ('+v.length+')'}
 const fName=f=>(f.ref?'↩ ':'')+fName0(f),fName0=f=>f.t==='ACT_F'?'⇢ Passage en '+formL(f.form):f.t==='ACT_S'?'💨 Fumée '+(f.smkName||smSum(f.smk)):f.t==='DEMI'?demiName(figParams(f).a):f.t==='RC_S'||f.t==='RC_V'?rcName(f):f.t==='RC_P'?(+figParams(f).g>0?'Montée '+figParams(f).g+'°':+figParams(f).g<0?'Descente '+(-figParams(f).g)+'°':'Remise en palier'):figName(f.t);
@@ -187,15 +188,32 @@ function figParams(f){const d=fdef(f.t),o={L0:LEAD.def};d.ps.forEach(p=>o[p.k]=p
 /* --- « Pilote » : positions et attitudes le long du ruban --- */
 const V=(x,y,z)=>new THREE.Vector3(x,y,z),Q=()=>new THREE.Quaternion();
 const AX=V(1,0,0),AY=V(0,1,0),AZ=V(0,0,1);
+/* Trajectoire réaliste (dans le référentiel du leader) : vitesse de passage (300 kt) qui baisse quand on monte (150 kt en haut d'une boucle),
+   facteur de charge tenu par le pilote (≈ 5 G en boucle, moins en haut), pesanteur. La courbure vient de là : R = V² / accélération.
+   En virage, l'inclinaison « à plat » est celle où la portance compense le poids : n·cos φ = 1 (≈ 75° à 3,9 G). Moins incliné : ça monte ; plus : ça descend. */
+const KT=.5144,G0=9.81,PHY_D={on:true,v:300,vt:150,n:5,nv:3.9};let PHY=null;const PHYK={};
+function physOf(s){return Object.assign({},PHY_D,(s&&s.phys)||{})}
+/* coefficient de perte d'énergie : réglé pour qu'une boucle à n G (n − 2 en haut) partie à v kt passe vt kt en haut */
+function physK(v,vt,n){const key=v+'|'+vt+'|'+n;if(PHYK[key])return PHYK[key];const top=k=>{const V0=v*KT;let gm=0,h=0,s=0;while(gm<Math.PI&&s<20000){const V2=V0*V0-2*G0*k*Math.max(0,h);if(V2<100)return 0;const c=Math.cos(gm),nn=Math.max(1.5,n-2)+(n-Math.max(1.5,n-2))*(1+c)/2;gm+=G0*(nn-c)/V2*2;h+=Math.sin(gm)*2;s+=2}return Math.sqrt(Math.max(0,V0*V0-2*G0*k*h))/KT};
+ let a=.2,b=4;for(let i=0;i<30;i++){const m=(a+b)/2,t=top(m);if(t>vt)a=m;else b=m}return PHYK[key]=(a+b)/2}
 class Tur{
- constructor(x,z,alt,hdg){this.p=V(x,alt,z);this.q=Q().setFromAxisAngle(AY,(90-hdg)*D2R);this.pts=[];this.marks={};this.b=0;this.push()}
- push(){this.pts.push({p:this.p.clone(),q:this.q.clone(),b:this.b})}
+ constructor(x,z,alt,hdg){this.p=V(x,alt,z);this.q=Q().setFromAxisAngle(AY,(90-hdg)*D2R);this.pts=[];this.marks={};this.b=0;this.ph=PHY;if(this.ph)this.ph.h0=alt;this.push()}
+ vsq(){const P=this.ph,V0=P.v*KT,dh=this.p.y-P.h0;let v2=dh>0?V0*V0-2*G0*P.k*dh:V0*V0-2*G0*dh;return Math.max((80*KT)**2,Math.min((380*KT)**2,v2))}
+ kt(){return this.ph?Math.round(Math.sqrt(this.vsq())/KT):null}
+ push(){this.pts.push({p:this.p.clone(),q:this.q.clone(),b:this.b,v:this.ph?Math.sqrt(this.vsq())/KT:0})}
  F(){return AX.clone().applyQuaternion(this.q)}
  U(){return AY.clone().applyQuaternion(this.q)}
  R(){return AZ.clone().applyQuaternion(this.q)}
  mark(n){if(n)this.marks[n]={p:this.p.clone(),q:this.q.clone(),i:this.pts.length-1}}
  line(L,dz){dz=dz||0;const n=Math.max(1,Math.ceil(Math.abs(L)/40)),f=this.F();for(let i=0;i<n;i++){this.p.addScaledVector(f,L/n);this.p.y+=dz/n;this.push()}}
- pitch(deg,R,mk){const n=Math.max(2,Math.ceil(Math.abs(deg)/3)),d=deg/n*D2R;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AZ,d));this.p.addScaledVector(this.F(),R*Math.abs(d));this.push();if(mk&&i===n-1)this.mark(mk)}}
+ pitch(deg,R,mk,o){if(this.ph)return this.pitchP(deg,mk,o||{});const n=Math.max(2,Math.ceil(Math.abs(deg)/3)),d=deg/n*D2R;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AZ,d));this.p.addScaledVector(this.F(),R*Math.abs(d));this.push();if(mk&&i===n-1)this.mark(mk)}}
+ /* ressource / boucle / virage « réels » : à chaque pas, la portance (n G le long du haut de l'avion, vers le bas si on pousse) et la pesanteur
+    font tourner la vitesse ; on s'arrête quand elle a tourné de l'angle demandé. Pour une boucle ailes à plat, c'est la courbe en œuf habituelle. */
+ pitchP(deg,mk,o){const P=this.ph,tot=Math.abs(deg)*D2R,sg=deg<0?-1:1,nb=+o.n||P.n,nt=Math.max(1.5,nb-2),ds=10,Y=V(0,1,0);let th=0,k=0;
+  while(th<tot-1e-6&&k++<6000){const F=this.F(),U=this.U(),uy=U.y,nn=o.cst?nb:sg>0?nt+(nb-nt)*(1+uy)/2:Math.min(nb,2.5),a=U.clone().multiplyScalar(sg*G0*nn).addScaledVector(Y,-G0);a.addScaledVector(F,-a.dot(F));
+   const am=a.length();if(am<1e-6)break;const v2=this.vsq();let dt=am*ds/v2,L=ds;if(th+dt>tot){dt=tot-th;L=dt*v2/am}const ax=F.clone().cross(a).normalize();
+   this.q.premultiply(Q().setFromAxisAngle(ax,dt));this.p.addScaledVector(F,L/2).addScaledVector(this.F(),L/2);th+=dt;this.push()}
+  if(mk)this.mark(mk)}
  roll(deg,L){const n=Math.max(2,Math.ceil(Math.abs(deg)/6)),d=deg/n*D2R;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AX,d));this.p.addScaledVector(this.F(),L/n);this.push()}}
  turn(deg,R,bank,mk){const n=Math.max(4,Math.ceil(Math.abs(deg)/3)),d=deg/n*D2R,rmp=Math.min(8,Math.floor(n/3));
   for(let i=0;i<n;i++){const k=Math.min(1,(i+1)/rmp,(n-i)/rmp);this.b=-Math.sign(deg)*bank*(k<1?.5-.5*Math.cos(k*Math.PI):1);this.q.premultiply(Q().setFromAxisAngle(AY,d));this.p.addScaledVector(this.F(),R*Math.abs(d));this.push();if(mk&&i===Math.floor(n/2))this.mark(mk)}this.b=0}
@@ -209,12 +227,12 @@ class Tur{
    this.p.copy(P0).addScaledVector(A,k*t).addScaledVector(U0,R*(1-c)).addScaledVector(Rt,-R*sn);
    const v=A.clone().multiplyScalar(k).addScaledVector(U0,R*sn).addScaledVector(Rt,-R*c).normalize(),u=U0.clone().multiplyScalar(c).addScaledVector(Rt,sn).normalize(),z=v.clone().cross(u).normalize();
    u.copy(z).cross(v).normalize();m.makeBasis(v,u,z);this.q.setFromRotationMatrix(m);this.push();if(i===Math.round(n/2))this.mark('top')}}
- slope(g,R){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()>.05){Ut.normalize();const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)>2)this.roll(a,Math.max(80,Math.abs(a)*1.5))}
-  const g0=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R,d=g-g0;if(Math.abs(d)>.5)this.pitch(d,R,'top')}
+ slope(g,R,n){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()>.05){Ut.normalize();const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)>2)this.roll(a,Math.max(80,Math.abs(a)*1.5))}
+  const g0=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R,d=g-g0;if(Math.abs(d)>.5)this.pitch(d,R,'top',{n})}
  level(L){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()<.05){this.line(L);return}Ut.normalize();
   const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)<.5){this.line(L);return}this.roll(a,L)}
  /* VRH : ailes à plat puis ressource (ou rendue) jusqu'à Vz = 0 */
- vrh(R,L){this.level(150);const g=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R;if(Math.abs(g)>.5)this.pitch(-g,R);this.p.y=this.p.y;if(L)this.line(L);this.mark('end')}
+ vrh(R,L,n){this.level(150);const g=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R;if(Math.abs(g)>.5)this.pitch(-g,R,null,{n});this.p.y=this.p.y;if(L)this.line(L);this.mark('end')}
  barrel(s,R){const n=120;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AZ,2*Math.PI/n));this.q.multiply(Q().setFromAxisAngle(AX,s*2*Math.PI/n));this.p.addScaledVector(this.F(),R*2*Math.PI/n);this.push();if(i===n/2)this.mark('top')}}
  clover(s,R){for(let k=0;k<4;k++){this.pitch(90,R);this.roll(s*90,120);this.pitch(270,R,k===0?'top':null)}}
 }
@@ -232,7 +250,7 @@ let MODE='ruban',SYN=null,SP=null;
 function newSerie(){const a=toW(C0.la,C0.lo),hd=155*D2R,F=[Math.sin(hd),-Math.cos(hd)],Rr=[Math.cos(hd),Math.sin(hd)];return {id:uid(),own:ME.k,ownN:ME.name,year:new Date().getFullYear()+1,name:'Beau temps',t:Date.now(),
  start:{x:Math.round(a.x-F[0]*3000-Rr[0]*350),z:Math.round(a.z-F[1]*3000-Rr[1]*350),alt:250,hdg:155},axis:{x:a.x,z:a.z,hdg:155,side:1},axOk:false,
  v:3,figs:[{id:uid(),t:'LIGNE',form:'DIAMANT',p:{L:1600,L0:0},snaps:[{u:.1,form:'DIAMANT'}]},{id:uid(),t:'DEMI',form:'DIAMANT',p:{a:360,L:0,L0:200},snaps:[{u:.55,form:'DIAMANT'}]},{id:uid(),t:'VIRAGE',form:'CONCORDE',p:{a:180,R:800,L0:400},snaps:[{u:.5,form:'CONCORDE'}]}]}}
-function build(s){const T=new Tur(s.start.x,s.start.z,s.start.alt,s.start.hdg),out=[];
+function build(s){const ph=physOf(s);PHY=ph.on?Object.assign(ph,{k:physK(ph.v,ph.vt,ph.n)}):null;const T=new Tur(s.start.x,s.start.z,s.start.alt,s.start.hdg),out=[];
  s.figs.forEach((f,i)=>{const d=fdef(f.t),p=figParams(f),sd=f.side==='D'?-1:1;const i0=T.pts.length-1;if(p.L0)T.line(p.L0);const i1=T.pts.length-1;T.marks={};T.mark('start');
   try{d.gen(T,p,sd)}catch(e){console.error(e)}
   out.push({f,d,p,i0,i1,i2:T.pts.length-1,marks:Object.assign({},T.marks)})});
@@ -367,7 +385,7 @@ function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(
    /* la formation en transparence au milieu et au bout de la prochaine brique : on voit dans quelle position elle finit */
    {const fm=fNorm(FORMS()[GF.f.form]||FORMS().DIAMANT),sc=OPT.sc,gm=GHM();[.5,1].forEach(u=>{const i=Math.min(n-1,Math.round(GF.i1+(GF.i2-GF.i1)*u)),pt=pts[i],grp=new THREE.Group();grp.position.copy(pt.p);grp.quaternion.copy(disp(pt));
     fm.forEach(({x:la,y:bk,n:k})=>{const j=jet();j.traverse(o=>{if(o.isMesh)o.material=k===1?GHL():gm});j.scale.setScalar(sc);j.position.set(-bk*15*sc,(k===1?0:-.15)*sc,la*15*sc);grp.add(j)});G.add(grp)})}
-   const ep=pts[GF.i2].p,l=label(INS!=null?'Insertion':'Prochaine brique','rgba(234,88,12,.92)',.8);l.position.copy(ep);l.position.y+=180;G.add(l)}
+   const ep=pts[GF.i2].p,vk=pts[GF.i2].v?Math.round(pts[GF.i2].v):0,vmin=vk?Math.round(Math.min(...pts.slice(GF.i0,GF.i2+1).map(x=>x.v||999))):0,hmin=Math.min(...pts.slice(GF.i0,GF.i2+1).map(x=>x.p.y)),l=label((INS!=null?'Insertion':'Prochaine brique')+(vk?' · '+vk+' kt'+(vmin<vk-15?' (mini '+vmin+')':''):'')+(hmin<60?' · ⚠ trop bas':''),(vmin&&vmin<120)||hmin<60?'rgba(220,38,38,.92)':'rgba(234,88,12,.92)',.8);l.position.copy(ep);l.position.y+=180;G.add(l)}
   if(OPT.shadow){const g2=new THREE.BufferGeometry();g2.setAttribute('position',new THREE.BufferAttribute(sh,3));g2.setIndex(idx);G.add(new THREE.Mesh(g2,new THREE.MeshBasicMaterial({color:0x334155,transparent:true,opacity:.35,side:THREE.DoubleSide,depthWrite:false})))}}
  /* figures : étiquettes, snapshots, sélection */
  const FM=FORMS(),sc=OPT.sc;
@@ -389,7 +407,7 @@ function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(
   if(!axLock()){const ac=V(CUR.axis.x,10,CUR.axis.z);addHandle(ac,0xf59e0b,{axis:'xz'},1.1);addHandle(ac.clone().addScaledVector(Fh,1500),0xf59e0b,{axis:'hdg'})}}
  dirty=1;if(!NOPAN)panel()}
 let CLEAN=false,S_OPEN=false;
-function figHandles(F,fi,pts){if(!ED||CLEAN)return;const d=F.d;(d.h||[]).forEach(([mk,dir,par,k])=>{const m=F.marks[mk];if(!m)return;let dv;const q=m.q;
+function figHandles(F,fi,pts){if(!ED||CLEAN)return;const d=F.d,phOn=physOf(CUR).on;(d.h||[]).forEach(([mk,dir,par,k])=>{if(phOn&&par==='R')return;const m=F.marks[mk];if(!m)return;let dv;const q=m.q;
   if(dir==='F')dv=AX.clone().applyQuaternion(q);else if(dir==='U')dv=AY.clone().applyQuaternion(q);else{const cen=pts[F.i1].p;dv=m.p.clone().sub(cen).setY(0).normalize()}
   const hp=m.p.clone().addScaledVector(dv,300);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([m.p,hp]),new THREE.LineBasicMaterial({color:0x22c55e})));addHandle(hp,0x22c55e,{fi,par,dir:dv,k})});
  /* barre de rotation : on attrape la boule violette et on la fait tourner autour du ruban pour pencher les avions */
@@ -399,7 +417,7 @@ function figHandles(F,fi,pts){if(!ED||CLEAN)return;const d=F.d;(d.h||[]).forEach
   const hp=c.clone().addScaledVector(U0,Math.cos(b)*Lh).addScaledVector(R0,-s*Math.sin(b)*Lh);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([c,hp]),new THREE.LineBasicMaterial({color:0xa855f7})));
   addHandle(hp,0xa855f7,{fi,bank:1,c:c.clone(),Fw,U0,R0},1.1)}
  if(F.f.t==='RC_S'||F.f.t==='RC_P'){const p=F.p,me=F.marks.end;if(me){const U=AY.clone().applyQuaternion(me.q),hp=me.p.clone().addScaledVector(U,460);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([me.p,hp]),new THREE.LineBasicMaterial({color:0x06b6d4})));addHandle(hp,0x06b6d4,{fi,slope:1,dir:U},1.05)}
-  const mt=F.marks.top,sv=F.f.t==='RC_P'?Math.sign(F.marks.top?(+p.g-0.0001):1):+p.v;if(sv&&mt&&F.f.t==='RC_S'){const o=AY.clone().applyQuaternion(mt.q).multiplyScalar(-Math.sign(sv)),hp=mt.p.clone().addScaledVector(o,320);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([mt.p,hp]),new THREE.LineBasicMaterial({color:0x84cc16})));addHandle(hp,0x84cc16,{fi,par:'R',dir:o,k:1},.95)}}
+  if(phOn)return void(fi!=='G'&&addHandle(pts[F.i1].p,0xf59e0b,{fi,par:'L0',dir:AX.clone().applyQuaternion(pts[F.i0].q),k:1}));const mt=F.marks.top,sv=F.f.t==='RC_P'?Math.sign(F.marks.top?(+p.g-0.0001):1):+p.v;if(sv&&mt&&F.f.t==='RC_S'){const o=AY.clone().applyQuaternion(mt.q).multiplyScalar(-Math.sign(sv)),hp=mt.p.clone().addScaledVector(o,320);G.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([mt.p,hp]),new THREE.LineBasicMaterial({color:0x84cc16})));addHandle(hp,0x84cc16,{fi,par:'R',dir:o,k:1},.95)}}
  if(fi!=='G'){const st=pts[F.i1];addHandle(st.p,0xf59e0b,{fi,par:'L0',dir:AX.clone().applyQuaternion(pts[F.i0].q),k:1})}}
 function addHandle(p,col,data,s){if(CLEAN)return;const m=new THREE.Mesh(new THREE.SphereGeometry(55*(s||1),18,12),new THREE.MeshBasicMaterial({color:col,depthTest:false,transparent:true,opacity:.92}));m.position.copy(p);m.renderOrder=20;m.userData=data;G.add(m);HANDLES.push(m)}
 /* =========================== Commandes : caméra et poignées =========================== */
@@ -456,7 +474,7 @@ function moveDrag(e){ndc(e);if(DRAG.d.snap){const {fi,si}=DRAG.d.snap,F=BUILT&&B
  else if(d.axis==='xz'){s.axis.x=DRAG.v0.x+dl.x;s.axis.z=DRAG.v0.z+dl.z}
  else if(d.axis==='hdg'){const v=p.clone().sub(V(s.axis.x,p.y,s.axis.z));s.axis.hdg=Math.round(((Math.atan2(v.x,-v.z)/D2R)+360)%360)}
  else if(d.bank){const v=p.clone().sub(d.c),a=Math.atan2(-v.dot(d.R0),v.dot(d.U0))/D2R,bk=Math.min(180,Math.round(Math.abs(a)/5)*5),sd=a>=0?'G':'D';
-  if(d.fi==='G'){BLD.bank=bk;BLD.dir=sd}else{const f=s.figs[d.fi];f.p=f.p||{};f.p.bank=bk;f.side=sd}info('Inclinaison '+bk+'° '+(sd==='G'?'à gauche':'à droite')+' · '+(bk<85?'ça monte':bk>95?'ça descend':'à plat'));NOPAN=true;try{draw()}finally{NOPAN=false}return}
+  if(d.fi==='G'){BLD.bank=bk;BLD.dir=sd}else{const f=s.figs[d.fi];f.p=f.p||{};f.p.bank=bk;f.side=sd}info('Inclinaison '+bk+'° '+(sd==='G'?'à gauche':'à droite')+' · '+(bk<lvB()-4?'ça monte':bk>lvB()+4?'ça descend':'à plat'));NOPAN=true;try{draw()}finally{NOPAN=false}return}
  else if(d.slope&&d.abs){let g=Math.round((DRAG.v0+dl.dot(d.dir)*.12)/5)*5;g=Math.max(-90,Math.min(90,g));if(d.toP&&Math.abs(g-DRAG.v0)>=5){d.toP=false;BLD.Lv=BLD.L||600;BLD.R=500;BLD.dir='P'}if(d.fi==='G'&&BLD.dir==='P')BLD.g=g;else{const f=s.figs[d.fi];f.p=f.p||{};f.p.g=g}
   info(!g?'Remise en palier':(g>0?'⤴ Montée ':'⤵ Descente ')+Math.abs(g)+'° par rapport à l\'horizon');NOPAN=true;try{draw()}finally{NOPAN=false}return}
  else if(d.slope){let a=Math.round((DRAG.v0+dl.dot(d.dir)*.12)/5)*5;a=Math.max(-360,Math.min(360,a));const v=Math.sign(a),g=Math.abs(a);
@@ -721,7 +739,7 @@ function recStart(spd){const cv=$('cv');if(!window.MediaRecorder||!cv.captureStr
  RP.vs=spd;RP.spd0=RP.spd;RP.spd=spd;RP.d=0;RP.rec=mr;RP.rec0={spd};CLEAN=true;draw();mr.start(500);RP.play=true;RP.t=performance.now();asmBar()}
 function recStop(cancel){const mr=RP.rec;if(!mr)return;RP.rec=null;if(cancel&&RP.rec0)RP.rec0.cancel=1;try{mr.stop()}catch(e){}RP.play=false;RP.spd=RP.spd0||1;CLEAN=false;if(RP.on){draw();asmBar()}}
 /* ---------- constructeur façon RollerCoaster Tycoon : on choisit la prochaine brique, elle apparaît en fantôme au bout du ruban, on la pose ---------- */
-const BLD0={g:45,dir:'S',v:0,bank:90,ang:90,R:500,L:800,Lv:0,lvl:300,vrhR:500,vrhL:300,tr:400,nf:null,nsmk:null,nsmkName:''};
+const BLD0={n:null,g:45,dir:'S',v:0,bank:90,ang:90,R:500,L:800,Lv:0,lvl:300,vrhR:500,vrhL:300,tr:400,nf:null,nsmk:null,nsmkName:''};
 const BLD=Object.assign({form:null,smk:null,on:true,hov:null},BLD0);
 /* Barre de construction : chaque bouton règle la prochaine brique d'un coup (comme une pièce de rail) */
 const BRK=[['L','➡️','Tout droit',{dir:'S',v:0}],['UP','↗️','Montée',{dir:'P',g:45,R:500,Lv:600}],['DN','↘️','Descente',{dir:'P',g:-45,R:500,Lv:600}],
@@ -729,8 +747,8 @@ const BRK=[['L','➡️','Tout droit',{dir:'S',v:0}],['UP','↗️','Montée',{d
  ['TNO','🌀','Tonneau',{dir:'TNO'}],['LVL','✈️','À plat',{dir:'LVL'}],['VRH','═','Palier',{dir:'VRH'}],['AF','🔀','Formation',{dir:'AF'}],['AS','💨','Fumée',{dir:'AS'}]];
 const BRKm=Object.fromEntries(BRK.map(b=>[b[0],b]));
 function brkOf(b){if(b.dir==='P')return +b.g<0?'DN':'UP';if(b.dir==='S')return !+b.v?'L':+b.v>0?(+b.ang>=360?'LOOP':'UP'):'DN';return b.dir}
-function bldPick(k){const b=BRKm[k];if(!b)return;SEL=-1;Object.assign(BLD,b[3],{hov:null});if(k==='G'||k==='D'){if(BLD.ang<15)BLD.ang=90}draw()}
-function bldPrevK(k){BLD.hov=k&&BRKm[k]?Object.assign({},BRKm[k][3]):null;NOPAN=true;try{draw()}finally{NOPAN=false}}
+function bldPick(k){const b=BRKm[k];if(!b)return;SEL=-1;Object.assign(BLD,b[3],{hov:null,n:null});if(k==='G'||k==='D'){BLD.bank=lvB();if(BLD.ang<15)BLD.ang=90}draw()}
+function bldPrevK(k){BLD.hov=k&&BRKm[k]?Object.assign({},BRKm[k][3],k==='G'||k==='D'?{bank:lvB()}:{}):null;NOPAN=true;try{draw()}finally{NOPAN=false}}
 /* INS : on insère la prochaine brique après la brique n° INS (null = au bout du ruban) */
 let INS=null,CAMT=null,HIST={id:null,a:[],i:-1},HNO=false;
 /* formation et fumée en vigueur au bout du ruban (dernière brique ou dernière action) */
@@ -741,10 +759,10 @@ function bldPiece(){const b=Object.assign({},BLD,BLD.hov||{}),at=INS==null?undef
  if(b.dir==='AS')return {id:'ghost',t:'ACT_S',form,smk:b.nsmk||actSmk(at),smkName:b.nsmkName||'',p:{L0:0},snaps:[]};
  if(b.dir==='TNO')return {id:'ghost',t:'TNO ENV',side:'G',form,p:{L0:0},snaps:[]};
  if(b.dir==='LVL')return {id:'ghost',t:'RC_LVL',form,p:{L0:0,L:b.lvl},snaps:[]};
- if(b.dir==='VRH')return {id:'ghost',t:'RC_VRH',form,p:{L0:0,R:b.vrhR,L:b.vrhL},snaps:[]};
- if(b.dir==='P')return {id:'ghost',t:'RC_P',form,p:{L0:0,g:b.g,R:b.R,L:b.Lv},snaps:[]};
- if(b.dir==='S')return {id:'ghost',t:'RC_S',form,p:{L0:0,v:b.v,ang:b.ang,R:b.R,L:+b.v?b.Lv:b.L},snaps:[]};
- return {id:'ghost',t:'RC_V',side:b.dir,form,p:{L0:0,bank:b.bank,ang:b.ang,R:b.R,L:b.Lv},snaps:[]}}
+ if(b.dir==='VRH')return {id:'ghost',t:'RC_VRH',form,p:{L0:0,R:b.vrhR,L:b.vrhL,n:b.n},snaps:[]};
+ if(b.dir==='P')return {id:'ghost',t:'RC_P',form,p:{L0:0,g:b.g,R:b.R,L:b.Lv,n:b.n},snaps:[]};
+ if(b.dir==='S')return {id:'ghost',t:'RC_S',form,p:{L0:0,v:b.v,ang:b.ang,R:b.R,L:+b.v?b.Lv:b.L,n:b.n},snaps:[]};
+ return {id:'ghost',t:'RC_V',side:b.dir,form,p:{L0:0,bank:b.bank,ang:b.ang,R:b.R,L:b.Lv,n:b.n},snaps:[]}}
 /* poignée du fantôme → réglage du constructeur */
 function bldKey(par){if(BLD.dir==='P')return par==='R'?'R':par==='L'?'Lv':par==='g'?'g':null;if(BLD.dir==='VRH')return par==='R'?'vrhR':par==='L'?'vrhL':null;if(par==='R'||par==='bank'||par==='ang')return par;if(par==='L')return BLD.dir==='LVL'?'lvl':BLD.dir==='S'&&!+BLD.v?'L':'Lv';return null}
 function bldSet(k,v){BLD[k]=v;BLD.hov=null;if(k==='dir'&&(v==='G'||v==='D')&&BLD.ang<15)BLD.ang=90;draw()}
@@ -781,17 +799,17 @@ function dock(){const d=$('dock');if(!d)return;if(!CUR||MODE!=='ruban'||RP.on){d
   <button class="bk" onclick="asmStart()" title="Rejouer la série"><span>▶</span><small>Rejouer</small></button></div>`}
  d.innerHTML=h;document.documentElement.style.setProperty('--dockh',d.offsetHeight+'px');
  const tl=$('tl'),el=tl&&tl.querySelector('.sel,.gh.on');if(el)el.scrollIntoView({block:'nearest',inline:'nearest'})}
-function bldPanel(sel,rng,fo){const b=BLD,hv=(k,v)=>` onmouseenter="bldPrev('${k}',${typeof v==='string'?`'${v}'`:v})" onmouseleave="bldPrev()"`;
+function bldPanel(sel,rng0,fo){const ph=physOf(CUR),rng=(lab,v,min,max,st,u,on)=>lab==='Rayon'&&ph.on&&/bldSet\('R'|vrhR/.test(on)?rng0('Facteur de charge',+BLD.n||(b.dir==='G'||b.dir==='D'?ph.nv:ph.n),1.5,7,b.dir==='G'||b.dir==='D'?.1:.5,'G',"bldSet('n',+this.value)"):rng0(lab,v,min,max,st,u,on),b=BLD,hv=(k,v)=>` onmouseenter="bldPrev('${k}',${typeof v==='string'?`'${v}'`:v})" onmouseleave="bldPrev()"`;
  const B=(on,ico,lab,k,v)=>`<button class="b rcb ${on?'on':''}" onclick="bldSet('${k}',${typeof v==='string'?`'${v}'`:v})"${hv(k,v)}><span class="rci">${ico}</span><small>${lab}</small></button>`;
  const chips=(k,vals)=>`<div class="rcchips">${vals.map(([v,l])=>`<button class="b ${+b[k]===v?'on':''}" onclick="bldSet('${k}',${v})"${hv(k,v)}>${l}</button>`).join('')}</div>`;
- const cur=b.form||actForm(),bk=+b.bank,trend=bk<85?'⤴ ça monte'+(bk===0?' (boucle)':' (boucle oblique)'):bk>95?'⤵ ça descend':'→ ça tourne à plat';
+ const cur=b.form||actForm(),bk=+b.bank,lv=lvB(),trend=bk<lv-4?'⤴ ça monte'+(bk===0?' (boucle)':' (boucle oblique)'):bk>lv+4?'⤵ ça descend':'→ ça tourne à plat';
  const pl=(r)=>`<svg viewBox="-20 -20 40 40" width="34" height="34" aria-hidden="true"><g transform="rotate(${r})"><rect x="-17" y="-2" width="34" height="4" rx="2" fill="currentColor"/><circle r="5" fill="currentColor"/><rect x="-1.5" y="-11" width="3" height="9" fill="currentColor"/></g></svg>`;
  let h=`<div class="rcbox"><h2 style="margin-top:0">🎢 ${INS!=null?'Insérer une brique':'Construire la suite'}</h2><div class="rcnow"><span>${(BRKm[brkOf(b)]||[0,'＋'])[1]}</span><b>${esc((BRKm[brkOf(b)]||[0,0,'Brique'])[2])}</b>${INS!=null?`<small>insérée après la n° ${INS+1}</small>`:''}</div><p class="hint" style="margin-top:0">Choisis la brique dans la barre du bas : elle apparaît en transparence ${INS!=null?'à l\'endroit choisi':'au bout du ruban'}. Étire-la avec les poignées (verte : longueur et rayon · cyan : pente · violette : inclinaison), puis <b>Poser</b> (ou Entrée).</p>`;
  if(b.dir==='S'){h+=`<div class="rcdir">${B(+b.v===0,'⟶','À plat','v',0)}${B(+b.v===1,'⤴','Ça monte','v',1)}${B(+b.v===-1,'⤵','Ça descend','v',-1)}</div>`;
   if(+b.v){h+=`<div class="mu">Jusqu'où ça tourne ?</div>${chips('ang',[[45,'↗ ⅛'],[90,'↑ ¼'],[135,'⅜'],[180,'↩ ½ boucle'],[270,'¾'],[360,'⟳ boucle']])}`+rng('Rayon',b.R,150,1200,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
   else h+=rng('Longueur',b.L,50,5000,50,'m',"bldSet('L',+this.value)")}
  else if(b.dir==='P'){h+=`<div class="mu">Pente visée par rapport à l'horizon (la patrouille arrondit jusqu'à cette pente, quelle que soit la pente d'avant) :</div>${chips('g',[[90,'↑ 90°'],[60,'60°'],[45,'↗ 45°'],[30,'30°'],[15,'15°'],[0,'→ palier'],[-15,'−15°'],[-30,'−30°'],[-45,'↘ −45°'],[-60,'−60°'],[-90,'↓ −90°']])}`+rng('Pente',+b.g,-90,90,5,'°',"bldSet('g',+this.value)")+rng('Rayon',b.R,150,1500,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
- else if(b.dir==='G'||b.dir==='D'){h+=`<div class="mu">Penche les avions : <b>${bk}°</b> · ${trend}</div><div class="rcchips rcpl">${[[0,'droit'],[45,'un peu'],[90,'couché'],[135,'beaucoup'],[180,'sur le dos']].map(([v,l])=>`<button class="b ${bk===v?'on':''}" onclick="bldSet('bank',${v})"${hv('bank',v)}>${pl((b.dir==='G'?-1:1)*v)}<small>${v}° ${l}</small></button>`).join('')}</div>`+rng('Inclinaison',bk,0,180,5,'°',"bldSet('bank',+this.value)")
+ else if(b.dir==='G'||b.dir==='D'){h+=`<div class="mu">Penche les avions : <b>${bk}°</b> · ${trend}</div><div class="rcchips rcpl">${[[0,'droit'],[45,'un peu'],[lv,'à plat']].concat(lv===90?[]:[[90,'couché']],[[135,'beaucoup'],[180,'sur le dos']]).map(([v,l])=>`<button class="b ${bk===v?'on':''}" onclick="bldSet('bank',${v})"${hv('bank',v)}>${pl((b.dir==='G'?-1:1)*v)}<small>${v}° ${l}</small></button>`).join('')}</div>`+rng('Inclinaison',bk,0,180,5,'°',"bldSet('bank',+this.value)")
   +`<div class="mu">Combien ça tourne ?</div>${chips('ang',[[45,'⅛ tour'],[90,'¼ tour'],[180,'½ tour'],[270,'¾ tour'],[360,'1 tour']])}`+rng('Rayon',b.R,150,3000,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
  else if(b.dir==='LVL')h+=`<p class="hint">Remet la patrouille ailes à plat par rapport à l'horizon, sans changer de direction.</p>`+rng('Longueur',b.lvl,50,2000,10,'m',"bldSet('lvl',+this.value)");
  else if(b.dir==='AF'){const nf=b.nf||cur;h+=`<p class="hint">La patrouille passe de <b>${esc(formL(cur))}</b> à la formation choisie, sans changer de trajectoire.</p><div class="lib lbf">${fo.map(k=>`<button class="${k===nf?'on':''}" onclick="bldSet('nf','${esc(k)}')">${fIco(k)}<span>${esc(formL(k))}</span></button>`).join('')}</div>`+rng('Durée du passage',b.tr,0,2000,50,'m',"bldSet('tr',+this.value)")}
@@ -807,6 +825,7 @@ function delFig(i){CUR.figs.splice(i,1);SEL=-1;draw();touch()}
 function setSer(k,v){if(k==='year')v=+v;CUR[k]=v;touch();panel()}
 const axLock=()=>CUR&&CUR.axOk!==false;
 function axSet(ok){CUR.axOk=!!ok;draw();touch();info(ok?'Axe et public validés : ils sont verrouillés':'Axe et public déverrouillés');setTimeout(()=>info(''),1600)}
+function setPhys(k,v){CUR.phys=Object.assign(physOf(CUR),{[k]:v});draw();touch()}
 function setStart(k,v){CUR.start[k]=+v;draw();touch()}
 function setAxis(k,v){CUR.axis[k]=k==='side'?+v:+v;draw();touch()}
 function pickSer(id){if(id==='+'){const s=newSerie();SR.list.push(s);CUR=s;SEL=-1;post({srSave:s})}else{CUR=SR.list.find(x=>x.id===id)||CUR;SEL=-1}draw();setTimeout(()=>view('pub'),20)}
@@ -847,11 +866,14 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
    <h2>Réglages fins de la trajectoire</h2>
    <p class="hint" style="margin:2px 0 6px">${esc(FIG_TIP[f.t]||'')}</p><div class="pr" style="grid-template-columns:96px 1fr"><label>Figure</label>${sel(f.t,(FIG_ORDER.includes(f.t)?FIG_ORDER:FIG_ORDER.concat([f.t])).map(t=>[t,figName(t)]),"setF('t',this.value)")}</div>
    ${d.side?`<div class="pr" style="grid-template-columns:96px 1fr"><label>Côté</label>${sel(f.side||'G',SIDE,"setF('side',this.value)")}</div>`:''}
-   ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'))).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']],`setP('${q.k}',this.value)`)}</div>`:rng(q.l,p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
+   ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'||q.k==='n'))&&!(physOf(CUR).on?q.k==='R':q.k==='n')).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']],`setP('${q.k}',this.value)`)}</div>`:rng(q.l,q.k==='n'&&p.n==null?(f.t==='RC_V'?physOf(CUR).nv:physOf(CUR).n):p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
    ${(()=>{const L=figLen(SEL);if(!L)return '';const mx=Math.max(50,Math.ceil(L/50)*50),v=+f.vis>0?Math.min(+f.vis,mx):mx;return rng('Longueur visible',v,50,mx,50,'m','setVis(this.value)')+`<p class="hint" style="margin-top:0">Figure complète : ${Math.round(L)} m. Réduisez pour ne montrer que la fin de la figure (ex. le dernier quart d'un virage de 360°).</p>`})()}
    <p class="hint">${ED?'Poignée orange : ligne d\'entrée (déplace la brique le long du ruban). Poignée verte : taille de la brique. Boule violette : inclinaison. Attrapez les avions dans la vue 3D pour faire glisser la formation le long de la trajectoire.':''}</p>`}}
 
  if(ED){
+  {const ph=physOf(CUR);sd+=`<h2>Vol réaliste</h2><div class="row"><button class="b ${ph.on?'on':''}" onclick="setPhys('on',${!ph.on})">${ph.on?'✓ Trajectoire réaliste':'Trajectoire géométrique'}</button></div>
+  <p class="hint">${ph.on?'Les trajectoires suivent le vol du leader : la vitesse baisse quand on monte, la courbure vient du facteur de charge et de la pesanteur. En virage, à '+ph.nv+' G on reste à plat à '+lvB()+'° d\'inclinaison ; moins incliné ça monte, plus ça descend.':'Rayons fixes, sans pesanteur ni vitesse (ancien mode).'}</p>
+  ${ph.on?rng('Vitesse de passage',ph.v,200,420,10,'kt',"setPhys('v',+this.value)")+rng('Vitesse en haut de boucle',ph.vt,100,250,5,'kt',"setPhys('vt',+this.value)")+rng('G en boucle',ph.n,3,7,.5,'G',"setPhys('n',+this.value)")+rng('G en virage',ph.nv,1.5,7,.1,'G',"setPhys('nv',+this.value)"):''}`}
   sd+=`<h2>Départ</h2>${rng('Altitude',ftOf(CUR.start.alt),100,8000,10,'ft','setStart(\'alt\',Math.round(this.value*FT))')}${rng('Cap',CUR.start.hdg,0,359,1,'°','setStart(\'hdg\',this.value)')}
   <p class="hint">Poignées rouge (départ), violette (altitude), bleue (cap)${axLock()?'':' ; orange : centre et sens de l\'axe de présentation'}. Touchez une figure du ruban pour la régler.</p>`}
  sd+=`<h2>Affichage</h2><div class="row"><button class="b ${OPT.sat?'on':''}" onclick="setOpt('sat',${!OPT.sat})">Satellite</button><button class="b ${OPT.lab?'on':''}" onclick="setOpt('lab',${!OPT.lab})">Étiquettes</button><button class="b ${OPT.shadow?'on':''}" onclick="setOpt('shadow',${!OPT.shadow})">Ombre</button></div>
