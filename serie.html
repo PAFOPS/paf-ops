@@ -150,12 +150,13 @@ const FIG={
     monte (boucle oblique, et boucle si 0°), au-delà elle descend ; il se remet ensuite ailes à plat. */
  RC_S:{l:'Tout droit',ps:[P('v','Trajectoire',-1,1,1,0,''),P('ang','Angle de la courbe',5,360,5,90,'°'),P('R','Rayon',150,1200,10,400,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne droite',0,5000,50,800,'m')],
   gen:(T,p)=>{if(+p.v){T.pitch(+p.v*p.ang,p.R,'top',{n:p.n})}if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
- RC_V:{l:'Virage',side:1,ps:[P('bank','Inclinaison',0,180,5,90,'°'),P('ang','Angle de virage',5,720,5,90,'°'),P('R','Rayon',150,3000,10,700,'m'),P('n','Facteur de charge',1.5,7,.1,null,'G'),P('L','Ligne après',0,5000,50,0,'m')],
-  gen:(T,p,s)=>{const b=+p.bank,rl=Math.max(60,b*1.4);if(b)T.roll(-s*b,rl);T.pitch(p.ang,p.R,'mid',{n:p.n||(PHY&&PHY.nv),cst:1});if(b)T.roll(s*b,rl);if(p.L)T.line(p.L);T.mark('end')},h:[['mid','OUT','R',1]]},
+ RC_V:{l:'Virage',side:1,ps:[P('bank','Inclinaison',0,180,5,90,'°'),P('ang','Angle de virage',5,720,5,90,'°'),P('R','Rayon',150,3000,10,700,'m'),P('n','Facteur de charge',1.5,7,.1,null,'G'),P('out','Remise à plat à la fin',0,1,1,0,''),P('L','Ligne après',0,5000,50,0,'m')],
+  gen:(T,p,s)=>{const b=+p.bank,rl=Math.max(60,b*1.4);if(+p.abs&&T.ph){T.rollTo(-s*b);T.pitch(p.ang,p.R,'mid',{n:p.n||PHY.nv,cst:1,bk:-s*b});if(+p.out)T.rollTo(0)}else{if(b)T.roll(-s*b,rl);T.pitch(p.ang,p.R,'mid',{n:p.n||(PHY&&PHY.nv),cst:1});if(b)T.roll(s*b,rl)}if(p.L)T.line(p.L);T.mark('end')},h:[['mid','OUT','R',1]]},
  ACT_F:{l:'Changement de formation',ps:[P('tr','Durée du passage',0,2000,50,400,'m')],gen:()=>{},h:[]},
  ACT_S:{l:'Action fumée',ps:[],gen:()=>{},h:[]},
  RC_VRH:{l:'VRH',ps:[P('R','Rayon de la mise en palier',150,1500,10,500,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne après',0,5000,50,300,'m')],gen:(T,p)=>T.vrh(p.R,p.L,p.n),h:[['end','F','L',1]]},
  RC_P:{l:'Pente',ps:[P('g','Pente visée (par rapport à l\'horizon)',-90,90,5,45,'°'),P('R','Rayon',150,1500,10,500,'m'),P('n','Facteur de charge',1.5,7,.5,null,'G'),P('L','Ligne après',0,5000,50,600,'m')],gen:(T,p)=>{T.slope(+p.g,p.R,p.n);if(p.L)T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
+ RC_C:{l:'Continuer comme ça',ps:[P('ang','Angle',10,720,5,360,'°'),P('L','Si on va tout droit',50,5000,50,800,'m')],gen:(T,p)=>{const st=T.st||{};if(st.pull&&T.ph)T.pitch(st.sg*p.ang,null,'mid',{n:st.n,cst:st.cst,bk:st.bk});else T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
  RC_LVL:{l:'Ailes à plat',ps:[P('L','Longueur de la remise à plat',50,2000,10,300,'m')],gen:(T,p)=>{T.level(p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO ENV':{l:'Tonneau envoyé (barrique)',side:1,ps:[P('a','Rotation',30,720,10,180,'°'),P('R','Rayon de la barrique',30,600,5,120,'m'),P('L','Longueur',150,2500,10,700,'m')],gen:(T,p,s)=>{T.cask(s,p.a,p.R,p.L);T.mark('end')},h:[['end','F','L',1]]},
  'TNO SIMU':{base:'TNO ENV',l:'Tonneau simu'},
@@ -169,7 +170,7 @@ const FIG={
  BOMBE:{l:'Bombe',ps:[P('R','Rayon',200,700,10,380,'m'),P('L','Montée verticale',100,1500,10,500,'m')],gen:(T,p)=>{T.pitch(90,p.R);T.line(p.L);T.mark('end')},h:[['end','F','L',1]]},
  MONTEE:{l:'Ressource / piqué',ps:[P('a','Angle',-80,80,1,30,'°'),P('R','Rayon',200,1200,10,600,'m'),P('L','Ligne',0,2000,10,400,'m')],gen:(T,p)=>{T.pitch(p.a,p.R);T.line(p.L);T.mark('end');T.pitch(-p.a,p.R)},h:[['end','F','L',1]]}};
 /* Briques de base : toute trajectoire de voltige s'obtient en les enchaînant (les anciennes figures restent lisibles). */
-const FIG_ORDER=['RC_S','RC_P','RC_V','RC_LVL','RC_VRH','TNO ENV'];
+const FIG_ORDER=['RC_S','RC_P','RC_V','RC_C','RC_LVL','RC_VRH','TNO ENV'];
 /* propositions du menu « Ajouter » : brique + réglages de départ */
 const PRESETS=[['LIGNE'],['DEMI',{a:45,L:500},'1/8 de boucle','Montée à 45°'],['DEMI',{a:90,L:400},'1/4 de boucle','Montée à la verticale'],['DEMI'],['VIRAGE'],['BOUCLE OBL'],['TNO ENV']];
 function demiName(a){a=+a;const k=Math.abs(a),m={45:'1/8 de boucle',90:'1/4 de boucle',135:'3/8 de boucle',180:'Demi-boucle',225:'5/8 de boucle',270:'3/4 de boucle',315:'7/8 de boucle',360:'Boucle'}[k]||'Arrondi '+k+'°';return a<0?m+' poussé'+(k>=360?'e':''):m}
@@ -178,8 +179,8 @@ function rcName(f){const p=figParams(f);if(f.t==='RC_S')return +p.v?(+p.v>0?'Cou
  const b=+p.bank;return 'Virage '+(f.side==='D'?'D':'G')+' '+p.ang+'° · incl. '+b+'° '+(b<lvB()-4?'(monte)':b>lvB()+4?'(descend)':'(à plat)')}
 const isAct=f=>f&&(f.t==='ACT_F'||f.t==='ACT_S');
 function smSum(m){const v=Object.values(m||{}).filter(Boolean);if(!v.length)return 'coupée';const c=new Set(v);return c.size===1?(SMN[[...c][0]]||'').toLowerCase()+' ('+v.length+')':'tricolore ('+v.length+')'}
-const fName=f=>(f.ref?'↩ ':'')+fName0(f),fName0=f=>f.t==='ACT_F'?'⇢ Passage en '+formL(f.form):f.t==='ACT_S'?'💨 Fumée '+(f.smkName||smSum(f.smk)):f.t==='DEMI'?demiName(figParams(f).a):f.t==='RC_S'||f.t==='RC_V'?rcName(f):f.t==='RC_P'?(+figParams(f).g>0?'Montée '+figParams(f).g+'°':+figParams(f).g<0?'Descente '+(-figParams(f).g)+'°':'Remise en palier'):figName(f.t);
-const FIG_TIP={RC_P:'Pente visée par rapport à l\'horizon : la patrouille se remet ailes à plat puis arrondit jusqu\'à cette pente (+ = montée, − = descente), quelle que soit la pente d\'avant',RC_VRH:'Vol rectiligne horizontal : ailes à plat et trajectoire remise à plat (Vz = 0)',RC_LVL:'Remet la patrouille ailes à plat par rapport à l\'horizon, sans changer de direction',RC_S:'Tout droit : à plat (ligne), ou courbe vers le haut (boucle) ou vers le bas',RC_V:'Virage : l\'avion s\'incline puis tire. 90° = virage à plat, moins = la trajectoire monte (boucle oblique), plus = elle descend',LIGNE:'Tout droit dans le plan des avions',DEMI:'Arrondi vers le haut (ou poussé) : 45° = 1/8 de boucle, 90° = 1/4, 180° = demi-boucle, 360° = boucle',VIRAGE:'Virage à plat : angle, rayon et inclinaison de 10 à 180° (au-delà de 90°, sur le dos)',
+const fName=f=>(f.ref?'↩ ':'')+fName0(f),fName0=f=>f.t==='ACT_F'?'⇢ Passage en '+formL(f.form):f.t==='ACT_S'?'💨 Fumée '+(f.smkName||smSum(f.smk)):f.t==='DEMI'?demiName(figParams(f).a):f.t==='RC_S'||f.t==='RC_V'?rcName(f):f.t==='RC_C'?'Continuer '+figParams(f).ang+'°':f.t==='RC_P'?(+figParams(f).g>0?'Montée '+figParams(f).g+'°':+figParams(f).g<0?'Descente '+(-figParams(f).g)+'°':'Remise en palier'):figName(f.t);
+const FIG_TIP={RC_C:'On garde la manœuvre en cours (inclinaison et facteur de charge) sur l\'angle choisi : dans un virage, on continue le virage ; en ligne droite, on continue tout droit',RC_P:'Pente visée par rapport à l\'horizon : la patrouille se remet ailes à plat puis arrondit jusqu\'à cette pente (+ = montée, − = descente), quelle que soit la pente d\'avant',RC_VRH:'Vol rectiligne horizontal : ailes à plat et trajectoire remise à plat (Vz = 0)',RC_LVL:'Remet la patrouille ailes à plat par rapport à l\'horizon, sans changer de direction',RC_S:'Tout droit : à plat (ligne), ou courbe vers le haut (boucle) ou vers le bas',RC_V:'Virage : l\'avion s\'incline puis tire. 90° = virage à plat, moins = la trajectoire monte (boucle oblique), plus = elle descend',LIGNE:'Tout droit dans le plan des avions',DEMI:'Arrondi vers le haut (ou poussé) : 45° = 1/8 de boucle, 90° = 1/4, 180° = demi-boucle, 360° = boucle',VIRAGE:'Virage à plat : angle, rayon et inclinaison de 10 à 180° (au-delà de 90°, sur le dos)',
  'BOUCLE OBL':'Boucle dans un plan incliné (0° = boucle verticale)','TNO ENV':'Barrique : l\'avion cabre et tourne en même temps, la trajectoire fait le tour d\'un tonneau (rayon et longueur réglables)'};
 const FIG_NAME={'BOUCLE OBL':'Boucle oblique','TNO ENV':'TNO envoyé','TNO SIMU':'TNO simu','TR G':'Trèfle G','TR D':'Trèfle D','CACAHUETE':'Cacahuète','P ANG':'P ANG'};
 function fdef(t){const d=FIG[t]||FIG.LIGNE;if(!d.base)return d;const b=fdef(d.base);return Object.assign({},b,d,{ps:d.ps||b.ps,h:d.h||b.h,gen:d.gen||b.gen,l:d.l||b.l,side:d.side!=null?d.side:b.side})}
@@ -197,7 +198,7 @@ function physOf(s){return Object.assign({},PHY_D,(s&&s.phys)||{})}
 function physK(v,vt,n){const key=v+'|'+vt+'|'+n;if(PHYK[key])return PHYK[key];const top=k=>{const V0=v*KT;let gm=0,h=0,s=0;while(gm<Math.PI&&s<20000){const V2=V0*V0-2*G0*k*Math.max(0,h);if(V2<100)return 0;const c=Math.cos(gm),nn=Math.max(1.5,n-2)+(n-Math.max(1.5,n-2))*(1+c)/2;gm+=G0*(nn-c)/V2*2;h+=Math.sin(gm)*2;s+=2}return Math.sqrt(Math.max(0,V0*V0-2*G0*k*h))/KT};
  let a=.2,b=4;for(let i=0;i<30;i++){const m=(a+b)/2,t=top(m);if(t>vt)a=m;else b=m}return PHYK[key]=(a+b)/2}
 class Tur{
- constructor(x,z,alt,hdg){this.p=V(x,alt,z);this.q=Q().setFromAxisAngle(AY,(90-hdg)*D2R);this.pts=[];this.marks={};this.b=0;this.ph=PHY;if(this.ph)this.ph.h0=alt;this.push()}
+ constructor(x,z,alt,hdg){this.p=V(x,alt,z);this.q=Q().setFromAxisAngle(AY,(90-hdg)*D2R);this.pts=[];this.marks={};this.b=0;this.ph=PHY;if(this.ph)this.ph.h0=alt;this.st={pull:0};this.push()}
  vsq(){const P=this.ph,V0=P.v*KT,dh=this.p.y-P.h0;let v2=dh>0?V0*V0-2*G0*P.k*dh:V0*V0-2*G0*dh;return Math.max((80*KT)**2,Math.min((380*KT)**2,v2))}
  kt(){return this.ph?Math.round(Math.sqrt(this.vsq())/KT):null}
  push(){this.pts.push({p:this.p.clone(),q:this.q.clone(),b:this.b,v:this.ph?Math.sqrt(this.vsq())/KT:0})}
@@ -205,15 +206,15 @@ class Tur{
  U(){return AY.clone().applyQuaternion(this.q)}
  R(){return AZ.clone().applyQuaternion(this.q)}
  mark(n){if(n)this.marks[n]={p:this.p.clone(),q:this.q.clone(),i:this.pts.length-1}}
- line(L,dz){dz=dz||0;const n=Math.max(1,Math.ceil(Math.abs(L)/40)),f=this.F();for(let i=0;i<n;i++){this.p.addScaledVector(f,L/n);this.p.y+=dz/n;this.push()}}
+ line(L,dz){dz=dz||0;if(L>0&&this.st)this.st.pull=0;const n=Math.max(1,Math.ceil(Math.abs(L)/40)),f=this.F();for(let i=0;i<n;i++){this.p.addScaledVector(f,L/n);this.p.y+=dz/n;this.push()}}
  pitch(deg,R,mk,o){if(this.ph)return this.pitchP(deg,mk,o||{});const n=Math.max(2,Math.ceil(Math.abs(deg)/3)),d=deg/n*D2R;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AZ,d));this.p.addScaledVector(this.F(),R*Math.abs(d));this.push();if(mk&&i===n-1)this.mark(mk)}}
  /* ressource / boucle / virage « réels » : à chaque pas, la portance (n G le long du haut de l'avion, vers le bas si on pousse) et la pesanteur
     font tourner la vitesse ; on s'arrête quand elle a tourné de l'angle demandé. Pour une boucle ailes à plat, c'est la courbe en œuf habituelle. */
  pitchP(deg,mk,o){const P=this.ph,tot=Math.abs(deg)*D2R,sg=deg<0?-1:1,nb=+o.n||P.n,nt=Math.max(1.5,nb-2),ds=10,Y=V(0,1,0);let th=0,k=0;
   while(th<tot-1e-6&&k++<6000){const F=this.F(),U=this.U(),uy=U.y,nn=o.cst?nb:sg>0?nt+(nb-nt)*(1+uy)/2:Math.min(nb,2.5),a=U.clone().multiplyScalar(sg*G0*nn).addScaledVector(Y,-G0);a.addScaledVector(F,-a.dot(F));
    const am=a.length();if(am<1e-6)break;const v2=this.vsq();let dt=am*ds/v2,L=ds;if(th+dt>tot){dt=tot-th;L=dt*v2/am}const ax=F.clone().cross(a).normalize();
-   this.q.premultiply(Q().setFromAxisAngle(ax,dt));this.p.addScaledVector(F,L/2).addScaledVector(this.F(),L/2);th+=dt;this.push()}
-  if(mk)this.mark(mk)}
+   this.q.premultiply(Q().setFromAxisAngle(ax,dt));this.p.addScaledVector(F,L/2).addScaledVector(this.F(),L/2);th+=dt;if(o.bk!=null&&Math.abs(this.F().y)<.95){let d=o.bk-this.bankNow();while(d>180)d-=360;while(d<-180)d+=360;if(Math.abs(d)>.01)this.q.multiply(Q().setFromAxisAngle(AX,d*D2R))}this.push()}
+  this.st={pull:1,n:nb,cst:!!o.cst,sg,bk:o.bk};if(mk)this.mark(mk)}
  roll(deg,L){const n=Math.max(2,Math.ceil(Math.abs(deg)/6)),d=deg/n*D2R;for(let i=0;i<n;i++){this.q.multiply(Q().setFromAxisAngle(AX,d));this.p.addScaledVector(this.F(),L/n);this.push()}}
  turn(deg,R,bank,mk){const n=Math.max(4,Math.ceil(Math.abs(deg)/3)),d=deg/n*D2R,rmp=Math.min(8,Math.floor(n/3));
   for(let i=0;i<n;i++){const k=Math.min(1,(i+1)/rmp,(n-i)/rmp);this.b=-Math.sign(deg)*bank*(k<1?.5-.5*Math.cos(k*Math.PI):1);this.q.premultiply(Q().setFromAxisAngle(AY,d));this.p.addScaledVector(this.F(),R*Math.abs(d));this.push();if(mk&&i===Math.floor(n/2))this.mark(mk)}this.b=0}
@@ -229,7 +230,9 @@ class Tur{
    u.copy(z).cross(v).normalize();m.makeBasis(v,u,z);this.q.setFromRotationMatrix(m);this.push();if(i===Math.round(n/2))this.mark('top')}}
  slope(g,R,n){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()>.05){Ut.normalize();const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)>2)this.roll(a,Math.max(80,Math.abs(a)*1.5))}
   const g0=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R,d=g-g0;if(Math.abs(d)>.5)this.pitch(d,R,'top',{n})}
- level(L){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()<.05){this.line(L);return}Ut.normalize();
+ bankNow(){const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()<.05)return 0;Ut.normalize();return -Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R}
+ rollTo(b,L){let d=b-this.bankNow();while(d>180)d-=360;while(d<-180)d+=360;if(Math.abs(d)>.5)this.roll(d,L||Math.max(60,Math.abs(d)*1.4))}
+ level(L){if(this.st)this.st.pull=0;const F=this.F(),U=this.U(),Ut=V(0,1,0).addScaledVector(F,-F.y);if(Ut.length()<.05){this.line(L);return}Ut.normalize();
   const a=Math.atan2(F.dot(U.clone().cross(Ut)),U.dot(Ut))/D2R;if(Math.abs(a)<.5){this.line(L);return}this.roll(a,L)}
  /* VRH : ailes à plat puis ressource (ou rendue) jusqu'à Vz = 0 */
  vrh(R,L,n){this.level(150);const g=Math.asin(Math.max(-1,Math.min(1,this.F().y)))/D2R;if(Math.abs(g)>.5)this.pitch(-g,R,null,{n});this.p.y=this.p.y;if(L)this.line(L);this.mark('end')}
@@ -254,7 +257,7 @@ function build(s){const ph=physOf(s);PHY=ph.on?Object.assign(ph,{k:physK(ph.v,ph
  s.figs.forEach((f,i)=>{const d=fdef(f.t),p=figParams(f),sd=f.side==='D'?-1:1;const i0=T.pts.length-1;if(p.L0)T.line(p.L0);const i1=T.pts.length-1;T.marks={};T.mark('start');
   try{d.gen(T,p,sd)}catch(e){console.error(e)}
   out.push({f,d,p,i0,i1,i2:T.pts.length-1,marks:Object.assign({},T.marks)})});
- return {pts:T.pts,figs:out}}
+ return {pts:T.pts,figs:out,T}}
 /* =========================== Rendu 3D =========================== */
 let R3,SC,CAM,ROOT,GROUND,GTEX={};
 const VIEW={t:V(0,300,0),d:7000,az:-.6,el:.42};
@@ -277,6 +280,8 @@ let dirty=1;function loop(){requestAnimationFrame(loop);
  if(SKY)SKY.position.copy(cm==='pv'?PUBV.E:cm!=='ext'?RP.camP:CAM.position);
  if(cm==='pv'){const E=PUBV.E,cp=Math.cos(PUBV.pit);CAM.up.set(0,1,0);CAM.position.copy(E);CAM.lookAt(E.x+Math.sin(PUBV.yaw)*cp,E.y+Math.sin(PUBV.pit),E.z+Math.cos(PUBV.yaw)*cp)}
  else if(cm!=='ext'){CAM.position.copy(RP.camP);CAM.up.copy(RP.camU);CAM.lookAt(RP.camL)}
+ else if(CH&&BUILT&&BUILT.pts.length&&!TOPV){const g=BUILT.ghost,pt=BUILT.pts[g?g.i1:BUILT.pts.length-1],q=pt.q,F=AX.clone().applyQuaternion(q),U=AY.clone().applyQuaternion(q),Rr=AZ.clone().applyQuaternion(q),ce=Math.cos(CH.el);
+  const Uw=CH.hz?V(0,1,0):U;CAM.position.copy(pt.p).addScaledVector(F,-CH.d*ce*Math.cos(CH.az)).addScaledVector(Rr,CH.d*ce*Math.sin(CH.az)).addScaledVector(Uw,CH.d*Math.sin(CH.el));CAM.up.copy(Uw);const la=pt.p.clone().addScaledVector(F,CH.d*.6);if(g){const m=BUILT.pts[Math.round((g.i1+g.i2)/2)].p;if(m.distanceTo(pt.p)<CH.d*2)la.lerp(m,.5)}CAM.lookAt(la)}
  else{CAM.up.set(0,1,0);const t=VIEW.t,c=Math.cos(VIEW.el);CAM.position.set(t.x+VIEW.d*c*Math.sin(VIEW.az),t.y+VIEW.d*Math.sin(VIEW.el),t.z+VIEW.d*c*Math.cos(VIEW.az));CAM.lookAt(t)}
  HANDLES.forEach(h=>{const u=h.userData;if(!u.base)return;const dd=CAM.position.distanceTo(u.base),L=dd*.085*u.off;if(u.dir)h.position.copy(u.base).addScaledVector(u.dir,L);h.scale.setScalar(dd*.013*u.r/55);
   if(u.li){const a=u.li.geometry.attributes.position;a.setXYZ(1,h.position.x,h.position.y,h.position.z);a.needsUpdate=true}});
@@ -385,6 +390,10 @@ function draw(){if(!SC||!CUR)return;edSet();SNAPG=[];if(G){ROOT.remove(G);freeG(
    /* la formation en transparence au milieu et au bout de la prochaine brique : on voit dans quelle position elle finit */
    {const fm=fNorm(FORMS()[GF.f.form]||FORMS().DIAMANT),sc=OPT.sc,gm=GHM();[.5,1].forEach(u=>{const i=Math.min(n-1,Math.round(GF.i1+(GF.i2-GF.i1)*u)),pt=pts[i],grp=new THREE.Group();grp.position.copy(pt.p);grp.quaternion.copy(disp(pt));
     fm.forEach(({x:la,y:bk,n:k})=>{const j=jet();j.traverse(o=>{if(o.isMesh)o.material=k===1?GHL():gm});j.scale.setScalar(sc);j.position.set(-bk*15*sc,(k===1?0:-.15)*sc,la*15*sc);grp.add(j)});G.add(grp)})}
+   if(B0.T&&B0.T.ph&&INS==null){const T0=B0.T,T2=Object.create(Tur.prototype);T2.p=T0.p.clone();T2.q=T0.q.clone();T2.pts=[];T2.marks={};T2.b=0;T2.ph=T0.ph;T2.st=Object.assign({},T0.st);
+    try{if(T2.st.pull)T2.pitchP(T2.st.sg*360,null,{n:T2.st.n,cst:T2.st.cst,bk:T2.st.bk});else T2.line(2500)}catch(e){}
+    if(T2.pts.length>1){const rp=[pts[n-1].p].concat(T2.pts.map(x=>x.p)),rl=new THREE.Line(new THREE.BufferGeometry().setFromPoints(rp),new THREE.LineDashedMaterial({color:0xffffff,dashSize:40,gapSize:30,transparent:true,opacity:.85}));rl.computeLineDistances();G.add(rl);
+     const tie=[];for(let i=0;i<T2.pts.length;i+=3){const x=T2.pts[i],r=AZ.clone().applyQuaternion(x.q).multiplyScalar(W/2);tie.push(x.p.clone().sub(r),x.p.clone().add(r))}G.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(tie),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.35})))}}
    const ep=pts[GF.i2].p,vk=pts[GF.i2].v?Math.round(pts[GF.i2].v):0,vmin=vk?Math.round(Math.min(...pts.slice(GF.i0,GF.i2+1).map(x=>x.v||999))):0,hmin=Math.min(...pts.slice(GF.i0,GF.i2+1).map(x=>x.p.y)),l=label((INS!=null?'Insertion':'Prochaine brique')+(vk?' · '+vk+' kt'+(vmin<vk-15?' (mini '+vmin+')':''):'')+(hmin<60?' · ⚠ trop bas':''),(vmin&&vmin<120)||hmin<60?'rgba(220,38,38,.92)':'rgba(234,88,12,.92)',.8);l.position.copy(ep);l.position.y+=180;G.add(l)}
   if(OPT.shadow){const g2=new THREE.BufferGeometry();g2.setAttribute('position',new THREE.BufferAttribute(sh,3));g2.setIndex(idx);G.add(new THREE.Mesh(g2,new THREE.MeshBasicMaterial({color:0x334155,transparent:true,opacity:.35,side:THREE.DoubleSide,depthWrite:false})))}}
  /* figures : étiquettes, snapshots, sélection */
@@ -431,14 +440,15 @@ function ctl(){const cv=$('cv');
   if(DRAG){moveDrag(e);return}
   const ids=Object.keys(PT);
   if(ids.length===1&&PUBV&&!(RP.on&&RP.cam!=='ext')){const k=PUBV.fov/45;PUBV.yaw+=dx*.004*k;PUBV.pit=Math.max(-.35,Math.min(1.45,PUBV.pit+dy*.004*k))}
+  else if(ids.length===1&&CH&&!TOPV){CH.az-=dx*.005;CH.el=Math.max(-.6,Math.min(1.3,CH.el+dy*.004))}
   else if(ids.length===1){if(o.b===2||o.b===1||e.shiftKey||TOPV)pan(dx,dy);else{VIEW.az-=dx*.006;VIEW.el=Math.max(.04,Math.min(1.5,VIEW.el+dy*.005))}}
   else if(ids.length===2){const [a,b]=ids.map(i=>PT[i]),d0=Math.hypot(a.x-b.x,a.y-b.y);o.x=e.clientX;o.y=e.clientY;const d1=Math.hypot(a.x-b.x,a.y-b.y);if(d0>10){if(PUBV)PUBV.fov=Math.max(10,Math.min(80,PUBV.fov*d0/d1));else VIEW.d=Math.max(400,Math.min(40000,VIEW.d*d0/d1))}pan(dx/2,dy/2);dirty=1;return}
   o.x=e.clientX;o.y=e.clientY;dirty=1});
  const up=e=>{const g=GEST&&GEST.tap;if(g&&!DRAG&&Math.hypot(e.clientX-g.x,e.clientY-g.y)<6&&Date.now()-g.t<500&&g.fi!=null){if(MODE==='sync')selPl(g.fi);else selFig(g.fi)}
   delete PT[e.pointerId];if(DRAG){endDrag()}GEST=null};
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);cv.addEventListener('contextmenu',e=>e.preventDefault());cv.addEventListener('mousedown',e=>{if(e.button===1)e.preventDefault()});cv.addEventListener('auxclick',e=>{if(e.button===1)e.preventDefault()});
- cv.addEventListener('wheel',e=>{e.preventDefault();CAMT=null;if(PUBV){PUBV.fov=Math.max(10,Math.min(80,PUBV.fov*Math.exp(e.deltaY*.0012)));dirty=1;return}VIEW.d=Math.max(400,Math.min(40000,VIEW.d*Math.exp(e.deltaY*.0012)));dirty=1},{passive:false})}
-let TOPV=null,PUBV=null;   // PUBV : vue du public, œil au point central au sol (on regarde autour en glissant, molette / pincer = zoom)
+ cv.addEventListener('wheel',e=>{e.preventDefault();CAMT=null;if(CH){CH.d=Math.max(150,Math.min(6000,CH.d*Math.exp(e.deltaY*.0012)));dirty=1;return}if(PUBV){PUBV.fov=Math.max(10,Math.min(80,PUBV.fov*Math.exp(e.deltaY*.0012)));dirty=1;return}VIEW.d=Math.max(400,Math.min(40000,VIEW.d*Math.exp(e.deltaY*.0012)));dirty=1},{passive:false})}
+let TOPV=null,PUBV=null,CH=null;   // CH : caméra derrière la patrouille, au point de construction (az, el autour, d distance)   // PUBV : vue du public, œil au point central au sol (on regarde autour en glissant, molette / pincer = zoom)
 /* G : vue de dessus façon carte (nord en haut) ; on y attrape le ruban pour le poser où l'on veut au-dessus de la base. G encore : retour à la vue d'avant */
 function godView(){if(PUBV){PUBV=null;if(!(RP.on&&RP.cam==='pub'))crowdOn(false);draw()}if(TOPV){Object.assign(VIEW,TOPV.v);VIEW.t=TOPV.t;TOPV=null;info('')}else{TOPV={v:{d:VIEW.d,az:VIEW.az,el:VIEW.el},t:VIEW.t.clone()};
   const b=MODE==='sync'?bboxS():BUILT?bbox(0,BUILT.pts.length-1):null;if(b){const c=b.getCenter(V(0,0,0));VIEW.t.set(c.x,0,c.z);const sz=b.getSize(V(0,0,0));VIEW.d=Math.max(2500,Math.max(sz.x,sz.z)*1.9)}
@@ -488,9 +498,12 @@ const slopeTxt=a=>!a?'Pente : à plat (tout droit)':Math.abs(a)>=360?(a>0?'Boucl
 function dragTxt(d){if(d.bank)return 'Tournez la boule violette pour pencher les avions';if(d.slope)return 'Montez ou descendez la boule cyan pour changer la pente';if(d.fi==='G')return 'Étirez la prochaine brique';if(d.sp){const P=plOf(d.sp)||{};return 'Avion '+d.sp+' : axe '+P.a+' m · public '+P.c+' m · hauteur '+ftOf(P.h)+' ft'}const s=CUR;if(d.start==='xz')return 'Départ déplacé';if(d.start==='alt')return 'Altitude de départ : '+ftOf(s.start.alt)+' ft';if(d.start==='hdg')return 'Cap de départ : '+String(s.start.hdg).padStart(3,'0')+'°';
  if(d.axis==='xz')return 'Centre de l\'axe déplacé';if(d.axis==='hdg')return 'Axe de présentation : '+String(s.axis.hdg).padStart(3,'0')+'°';const f=s.figs[d.fi],pd=(fdef(f.t).ps.concat([LEAD])).find(x=>x.k===d.par);return pd?pd.l+' : '+figParams(f)[d.par]+' '+pd.u:''}
 function info(t){$('info').textContent=t}
+function chase(){if(CH){CH=null;info('');view('fig')}else{PUBV=null;TOPV=null;CH={az:0,el:.32,d:1600,hz:true};info('Derrière la patrouille : glissez pour tourner autour · molette / pincer pour reculer ou avancer');setTimeout(()=>{if(CH)info('')},3500)}dirty=1;panel()}
+/* ▲ ▼ : on monte ou on descend la vue (on peut garder le doigt appuyé) */
+let VUPT=null;function vUp(d,e){if(e)e.preventDefault();const st=()=>{if(CH)CH.el=Math.max(-.6,Math.min(1.3,CH.el+d*.05));else if(PUBV)PUBV.E.y=Math.max(2,PUBV.E.y+d*30);else{VIEW.t.y=Math.max(0,VIEW.t.y+d*Math.max(30,VIEW.d*.03))}CAMT=null;dirty=1};st();clearInterval(VUPT);let n=0;VUPT=setInterval(()=>{if(++n>3)st()},60);const up=()=>{clearInterval(VUPT);removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};addEventListener('pointerup',up);addEventListener('pointercancel',up)}
 /* vues */
 function bbox(i0,i1){const b=new THREE.Box3();for(let i=i0;i<=i1;i++)b.expandByPoint(BUILT.pts[i].p);return b}
-function view(k){if(TOPV&&k!=='keep'){TOPV=null}if(!BUILT)return;
+function view(k){if(k!=='keep')CH=null;if(TOPV&&k!=='keep'){TOPV=null}if(!BUILT)return;
  if(k==='sol'){const {c,Rh}=asmAx(),E=asmEye(),b=MODE==='sync'?bboxS():bbox(0,BUILT.pts.length-1),T=b.getCenter(V(0,0,0)),d=T.clone().sub(E);
   PUBV={E,yaw:Math.atan2(d.x,d.z),pit:Math.max(.05,Math.min(1.2,Math.atan2(d.y,Math.hypot(d.x,d.z)))),fov:50};draw();if(!RP.crowd){info('Mise en place du site…');setTimeout(()=>{if(PUBV){crowdOn(true);dirty=1;info('Vue du public, au point central : glissez pour regarder autour · molette / pincer pour zoomer')}},40)}else crowdOn(true);if(RP.crowd)info('Vue du public, au point central : glissez pour regarder autour · molette / pincer pour zoomer');setTimeout(()=>{if(PUBV)info('')},3500);if(MODE==='ruban')panel();return}
  if(PUBV&&k!=='keep'){PUBV=null;if(!(RP.on&&RP.cam==='pub'))crowdOn(false);draw()}const ax=CUR.axis,hd=ax.hdg*D2R;
@@ -744,9 +757,9 @@ const BLD=Object.assign({form:null,smk:null,on:true,hov:null},BLD0);
 /* Barre de construction : chaque bouton règle la prochaine brique d'un coup (comme une pièce de rail) */
 const BRK=[['L','➡️','Tout droit',{dir:'S',v:0}],['UP','↗️','Montée',{dir:'P',g:45,R:500,Lv:600}],['DN','↘️','Descente',{dir:'P',g:-45,R:500,Lv:600}],
  ['G','↩️','Virage G',{dir:'G',bank:90,ang:90,R:700,Lv:0}],['D','↪️','Virage D',{dir:'D',bank:90,ang:90,R:700,Lv:0}],['LOOP','🔄','Boucle',{dir:'S',v:1,ang:360,R:500,Lv:0}],
- ['TNO','🌀','Tonneau',{dir:'TNO'}],['LVL','✈️','À plat',{dir:'LVL'}],['VRH','═','Palier',{dir:'VRH'}],['AF','🔀','Formation',{dir:'AF'}],['AS','💨','Fumée',{dir:'AS'}]];
+ ['C','⟳','Continuer',{dir:'C',ang:360,L:800}],['TNO','🌀','Tonneau',{dir:'TNO'}],['LVL','✈️','À plat',{dir:'LVL'}],['VRH','═','Palier',{dir:'VRH'}],['AF','🔀','Formation',{dir:'AF'}],['AS','💨','Fumée',{dir:'AS'}]];
 const BRKm=Object.fromEntries(BRK.map(b=>[b[0],b]));
-function brkOf(b){if(b.dir==='P')return +b.g<0?'DN':'UP';if(b.dir==='S')return !+b.v?'L':+b.v>0?(+b.ang>=360?'LOOP':'UP'):'DN';return b.dir}
+function brkOf(b){if(b.dir==='C')return 'C';if(b.dir==='P')return +b.g<0?'DN':'UP';if(b.dir==='S')return !+b.v?'L':+b.v>0?(+b.ang>=360?'LOOP':'UP'):'DN';return b.dir}
 function bldPick(k){const b=BRKm[k];if(!b)return;SEL=-1;Object.assign(BLD,b[3],{hov:null,n:null});if(k==='G'||k==='D'){BLD.bank=lvB();if(BLD.ang<15)BLD.ang=90}draw()}
 function bldPrevK(k){BLD.hov=k&&BRKm[k]?Object.assign({},BRKm[k][3],k==='G'||k==='D'?{bank:lvB()}:{}):null;NOPAN=true;try{draw()}finally{NOPAN=false}}
 /* INS : on insère la prochaine brique après la brique n° INS (null = au bout du ruban) */
@@ -760,11 +773,12 @@ function bldPiece(){const b=Object.assign({},BLD,BLD.hov||{}),at=INS==null?undef
  if(b.dir==='TNO')return {id:'ghost',t:'TNO ENV',side:'G',form,p:{L0:0},snaps:[]};
  if(b.dir==='LVL')return {id:'ghost',t:'RC_LVL',form,p:{L0:0,L:b.lvl},snaps:[]};
  if(b.dir==='VRH')return {id:'ghost',t:'RC_VRH',form,p:{L0:0,R:b.vrhR,L:b.vrhL,n:b.n},snaps:[]};
+ if(b.dir==='C')return {id:'ghost',t:'RC_C',form,p:{L0:0,ang:b.ang||360,L:b.L||800},snaps:[]};
  if(b.dir==='P')return {id:'ghost',t:'RC_P',form,p:{L0:0,g:b.g,R:b.R,L:b.Lv,n:b.n},snaps:[]};
- if(b.dir==='S')return {id:'ghost',t:'RC_S',form,p:{L0:0,v:b.v,ang:b.ang,R:b.R,L:+b.v?b.Lv:b.L,n:b.n},snaps:[]};
- return {id:'ghost',t:'RC_V',side:b.dir,form,p:{L0:0,bank:b.bank,ang:b.ang,R:b.R,L:b.Lv,n:b.n},snaps:[]}}
+ if(b.dir==='S')return {id:'ghost',t:'RC_S',form,p:{L0:0,v:b.v,ang:b.ang,R:b.R,L:+b.v?b.Lv:b.L,n:b.n,abs:1},snaps:[]};
+ return {id:'ghost',t:'RC_V',side:b.dir,form,p:{L0:0,bank:b.bank,ang:b.ang,R:b.R,L:b.Lv,n:b.n,abs:1,out:0},snaps:[]}}
 /* poignée du fantôme → réglage du constructeur */
-function bldKey(par){if(BLD.dir==='P')return par==='R'?'R':par==='L'?'Lv':par==='g'?'g':null;if(BLD.dir==='VRH')return par==='R'?'vrhR':par==='L'?'vrhL':null;if(par==='R'||par==='bank'||par==='ang')return par;if(par==='L')return BLD.dir==='LVL'?'lvl':BLD.dir==='S'&&!+BLD.v?'L':'Lv';return null}
+function bldKey(par){if(BLD.dir==='C')return par==='L'?'L':null;if(BLD.dir==='P')return par==='R'?'R':par==='L'?'Lv':par==='g'?'g':null;if(BLD.dir==='VRH')return par==='R'?'vrhR':par==='L'?'vrhL':null;if(par==='R'||par==='bank'||par==='ang')return par;if(par==='L')return BLD.dir==='LVL'?'lvl':BLD.dir==='S'&&!+BLD.v?'L':'Lv';return null}
 function bldSet(k,v){BLD[k]=v;BLD.hov=null;if(k==='dir'&&(v==='G'||v==='D')&&BLD.ang<15)BLD.ang=90;draw()}
 /* aperçu au survol (souris) : on voit la brique avant de cliquer */
 function bldPrev(k,v){BLD.hov=k?{[k]:v}:null;NOPAN=true;try{draw()}finally{NOPAN=false}}
@@ -787,7 +801,7 @@ function toEnd(){INS=null;SEL=-1;draw();camEnd(true)}
 /* la caméra suit le point de construction, en douceur */
 function camEnd(force){if(!force&&!OPT.follow)return;setTimeout(()=>{if(!BUILT||!BUILT.pts.length)return;const g=BUILT.ghost;const p=g?BUILT.pts[g.i1].p:BUILT.pts[BUILT.pts.length-1].p;CAMT=p.clone();if(force)VIEW.d=Math.min(VIEW.d,4500)},0)}
 /* frise chronologique + barre de briques */
-const figIco=f=>{const t=f.t,p=figParams(f);if(t==='RC_P')return +p.g>0?'↗️':+p.g<0?'↘️':'➡️';if(t==='RC_S')return !+p.v?'➡️':+p.ang>=360?'🔄':+p.v>0?'↗️':'↘️';if(t==='RC_V')return f.side==='D'?'↪️':'↩️';if(t==='LIGNE')return '➡️';if(/^TNO/.test(t))return '🌀';if(t==='RC_LVL')return '✈️';if(t==='RC_VRH')return '═';if(t==='ACT_F')return '🔀';if(t==='ACT_S')return '💨';if(t==='DEMI')return '◠';if(t==='VIRAGE')return '↪️';if(t==='BOUCLE'||t==='BOUCLE OBL')return '🔄';return '★'};
+const figIco=f=>{const t=f.t,p=figParams(f);if(t==='RC_C')return '⟳';if(t==='RC_P')return +p.g>0?'↗️':+p.g<0?'↘️':'➡️';if(t==='RC_S')return !+p.v?'➡️':+p.ang>=360?'🔄':+p.v>0?'↗️':'↘️';if(t==='RC_V')return f.side==='D'?'↪️':'↩️';if(t==='LIGNE')return '➡️';if(/^TNO/.test(t))return '🌀';if(t==='RC_LVL')return '✈️';if(t==='RC_VRH')return '═';if(t==='ACT_F')return '🔀';if(t==='ACT_S')return '💨';if(t==='DEMI')return '◠';if(t==='VIRAGE')return '↪️';if(t==='BOUCLE'||t==='BOUCLE OBL')return '🔄';return '★'};
 function dock(){const d=$('dock');if(!d)return;if(!CUR||MODE!=='ruban'||RP.on){d.hidden=true;document.documentElement.style.setProperty('--dockh','0px');return}d.hidden=false;
  const F=CUR.figs,ghostOn=ED&&SEL<0&&BLD.on,cur=brkOf(BLD),ti=i=>ED?`<button class="ti ${ghostOn&&INS===i?'on':''}" onclick="insAt(${i})" title="Insérer une brique ici">＋</button>`:'';
  let h=`<div class="tl" id="tl">${ti(-1)}${F.map((f,i)=>`<button class="tc ${i===SEL?'sel':''}" onclick="selFig(${i})" title="${esc(fName(f))}"><b>${i+1}</b><i>${figIco(f)}</i>${esc(fName(f)).slice(0,22)}</button>${INS===i&&ghostOn?`<span class="tc gh on"><i>${(BRKm[cur]||[0,'＋'])[1]}</i>insertion</span>`:''}${i<F.length-1?ti(i):''}`).join('')}
@@ -808,6 +822,7 @@ function bldPanel(sel,rng0,fo){const ph=physOf(CUR),rng=(lab,v,min,max,st,u,on)=
  if(b.dir==='S'){h+=`<div class="rcdir">${B(+b.v===0,'⟶','À plat','v',0)}${B(+b.v===1,'⤴','Ça monte','v',1)}${B(+b.v===-1,'⤵','Ça descend','v',-1)}</div>`;
   if(+b.v){h+=`<div class="mu">Jusqu'où ça tourne ?</div>${chips('ang',[[45,'↗ ⅛'],[90,'↑ ¼'],[135,'⅜'],[180,'↩ ½ boucle'],[270,'¾'],[360,'⟳ boucle']])}`+rng('Rayon',b.R,150,1200,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
   else h+=rng('Longueur',b.L,50,5000,50,'m',"bldSet('L',+this.value)")}
+ else if(b.dir==='C'){h+=`<p class="hint">On reste dans la manœuvre en cours (le rail en pointillés blancs) : même inclinaison, même facteur de charge. Dans un virage, on continue le virage ; sinon on va tout droit.</p><div class="mu">Jusqu'où ?</div>${chips('ang',[[90,'¼'],[180,'½'],[270,'¾'],[360,'⟳ 360°'],[720,'2 tours']])}`+rng('Si on va tout droit',b.L||800,50,5000,50,'m',"bldSet('L',+this.value)")}
  else if(b.dir==='P'){h+=`<div class="mu">Pente visée par rapport à l'horizon (la patrouille arrondit jusqu'à cette pente, quelle que soit la pente d'avant) :</div>${chips('g',[[90,'↑ 90°'],[60,'60°'],[45,'↗ 45°'],[30,'30°'],[15,'15°'],[0,'→ palier'],[-15,'−15°'],[-30,'−30°'],[-45,'↘ −45°'],[-60,'−60°'],[-90,'↓ −90°']])}`+rng('Pente',+b.g,-90,90,5,'°',"bldSet('g',+this.value)")+rng('Rayon',b.R,150,1500,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
  else if(b.dir==='G'||b.dir==='D'){h+=`<div class="mu">Penche les avions : <b>${bk}°</b> · ${trend}</div><div class="rcchips rcpl">${[[0,'droit'],[45,'un peu'],[lv,'à plat']].concat(lv===90?[]:[[90,'couché']],[[135,'beaucoup'],[180,'sur le dos']]).map(([v,l])=>`<button class="b ${bk===v?'on':''}" onclick="bldSet('bank',${v})"${hv('bank',v)}>${pl((b.dir==='G'?-1:1)*v)}<small>${v}° ${l}</small></button>`).join('')}</div>`+rng('Inclinaison',bk,0,180,5,'°',"bldSet('bank',+this.value)")
   +`<div class="mu">Combien ça tourne ?</div>${chips('ang',[[45,'⅛ tour'],[90,'¼ tour'],[180,'½ tour'],[270,'¾ tour'],[360,'1 tour']])}`+rng('Rayon',b.R,150,3000,10,'m',"bldSet('R',+this.value)")+rng('Ligne après',b.Lv,0,5000,50,'m',"bldSet('Lv',+this.value)")}
@@ -866,7 +881,7 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
    <h2>Réglages fins de la trajectoire</h2>
    <p class="hint" style="margin:2px 0 6px">${esc(FIG_TIP[f.t]||'')}</p><div class="pr" style="grid-template-columns:96px 1fr"><label>Figure</label>${sel(f.t,(FIG_ORDER.includes(f.t)?FIG_ORDER:FIG_ORDER.concat([f.t])).map(t=>[t,figName(t)]),"setF('t',this.value)")}</div>
    ${d.side?`<div class="pr" style="grid-template-columns:96px 1fr"><label>Côté</label>${sel(f.side||'G',SIDE,"setF('side',this.value)")}</div>`:''}
-   ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'||q.k==='n'))&&!(physOf(CUR).on?q.k==='R':q.k==='n')).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']],`setP('${q.k}',this.value)`)}</div>`:rng(q.l,q.k==='n'&&p.n==null?(f.t==='RC_V'?physOf(CUR).nv:physOf(CUR).n):p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
+   ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'||q.k==='n'))&&!(physOf(CUR).on?q.k==='R':q.k==='n')).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),(q.k==='out'?[['0','Non : on reste inscrit dans le virage'],['1','Oui : ailes à plat à la sortie']]:[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']]),`setP('${q.k}',this.value)`)}</div>`:rng(q.l,q.k==='n'&&p.n==null?(f.t==='RC_V'?physOf(CUR).nv:physOf(CUR).n):p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
    ${(()=>{const L=figLen(SEL);if(!L)return '';const mx=Math.max(50,Math.ceil(L/50)*50),v=+f.vis>0?Math.min(+f.vis,mx):mx;return rng('Longueur visible',v,50,mx,50,'m','setVis(this.value)')+`<p class="hint" style="margin-top:0">Figure complète : ${Math.round(L)} m. Réduisez pour ne montrer que la fin de la figure (ex. le dernier quart d'un virage de 360°).</p>`})()}
    <p class="hint">${ED?'Poignée orange : ligne d\'entrée (déplace la brique le long du ruban). Poignée verte : taille de la brique. Boule violette : inclinaison. Attrapez les avions dans la vue 3D pour faire glisser la formation le long de la trajectoire.':''}</p>`}}
 
@@ -881,7 +896,7 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
   <p class="hint">Les valeurs se tapent aussi dans les cases à droite des curseurs. Avions et écarts agrandis ${OPT.sc}× pour être lisibles à l'échelle de la démonstration. G : vue carte de dessus pour attraper le ruban et le déplacer au-dessus de la base. Glisser : tourner · deux doigts, clic droit ou molette pressée : déplacer · pincer / molette : zoom · flèches : se déplacer (Maj : plus vite), Page ↑/↓ : monter / descendre, + / − : zoom.</p>`;
  h+=stepPanel()+`<details class="serd" ${S_OPEN?'open':''} ontoggle="S_OPEN=this.open"><summary>⚙ La série : nom, axe, départ, affichage, rejeu</summary>${sd}</details>`;
  $('pan').innerHTML=h;
- $('vbar').innerHTML=`<div class="g"><button class="b" onclick="view('pub')" title="Vue d'ensemble de la série">Ensemble</button><button class="b ${PUBV?'on':''}" onclick="view('sol')" title="Le spectacle vu du public, au point central, au sol">👥 Public</button><button class="b" onclick="view('face')">De face</button><button class="b" onclick="view('top')">Dessus</button><button class="b ${TOPV?'on':''}" onclick="godView()" title="Vue carte, touche G">🗺 Carte (G)</button>${SEL>=0?`<button class="b" onclick="view('fig')">Figure</button>`:''}</div><div class="g"><button class="b ${CLEAN?'on':''}" onclick="CLEAN=!CLEAN;draw()" title="Masque poignées, étiquette DÉPART et traits d'aide">✨ Vue propre</button><button class="b" onclick="shot()">📷 Image</button><button class="b ${RP.on?'on':''}" onclick="RP.on?asmStop():asmStart()">▶ Assembler</button></div>`;dock()}
+ $('vbar').innerHTML=`<div class="g"><button class="b" onclick="view('pub')" title="Vue d'ensemble de la série">Ensemble</button><button class="b ${PUBV?'on':''}" onclick="view('sol')" title="Le spectacle vu du public, au point central, au sol">👥 Public</button><button class="b" onclick="view('face')">De face</button><button class="b" onclick="view('top')">Dessus</button><button class="b ${TOPV?'on':''}" onclick="godView()" title="Vue carte, touche G">🗺 Carte (G)</button>${SEL>=0?`<button class="b" onclick="view('fig')">Figure</button>`:''}</div><div class="g"><button class="b ${CH?'on':''}" onclick="chase()" title="Derrière la patrouille, au point de construction : la prochaine brique et le rail à venir devant soi">🎥 Derrière</button><button class="b" onpointerdown="vUp(1,event)" title="Monter la vue">▲</button><button class="b" onpointerdown="vUp(-1,event)" title="Descendre la vue">▼</button></div><div class="g"><button class="b ${CLEAN?'on':''}" onclick="CLEAN=!CLEAN;draw()" title="Masque poignées, étiquette DÉPART et traits d'aide">✨ Vue propre</button><button class="b" onclick="shot()">📷 Image</button><button class="b ${RP.on?'on':''}" onclick="RP.on?asmStop():asmStart()">▶ Assembler</button></div>`;dock()}
 /* =========================== Synchro : formations libres et figures 3D (1 à 12 avions) ===========================
    Une figure synchro est enregistrée comme une série de type « sync » : chaque avion a sa position par rapport au
    centre de l'axe de présentation (a : le long de l'axe, c : vers le public, h : hauteur) et son attitude. */
