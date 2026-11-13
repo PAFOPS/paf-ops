@@ -615,6 +615,71 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cgsvg .cgenv{fill:var(--c);fill-opacity:.14;stroke:var(--c);stroke-width:2.5;stroke-linejoin:round}.cgsvg .cgmax{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}.cgsvg .cgline{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:3 3}
 .pfig .cgsvg{min-width:0}
 @media (max-width:760px){.pfgrid{grid-template-columns:1fr}}
+.cb-wrap{max-width:1180px}
+.cb-hero{position:relative;border-radius:24px;padding:18px 20px 16px;color:#fff;background:radial-gradient(120% 140% at 100% 0%,#2563eb 0%,#0c1f4a 55%,#071233 100%);box-shadow:0 12px 30px -12px rgba(12,31,74,.55);overflow:hidden;margin-bottom:14px}
+.cb-hero::after{content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 30px rgba(255,255,255,.03),0 0 0 60px rgba(255,255,255,.02);pointer-events:none}
+.cb-empty{display:flex;gap:14px;align-items:center}.cb-empty p{margin:4px 0 0;opacity:.8;font-size:14px;line-height:1.4}.cb-hi{font-size:34px;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:rgba(255,255,255,.12);flex:none}
+.cb-rt{display:flex;align-items:center;gap:10px;font-size:24px;letter-spacing:.02em}.cb-rt b{font-weight:900}
+.cb-line{flex:1;height:2px;background:linear-gradient(90deg,rgba(255,255,255,.25),rgba(255,255,255,.7),rgba(255,255,255,.25));display:flex;justify-content:space-evenly;align-items:center;position:relative}.cb-line i{width:7px;height:7px;border-radius:50%;background:#fff;opacity:.85}
+.cb-line::after{content:"✈";position:absolute;right:-4px;top:-12px;font-size:16px}
+.cb-sub{opacity:.75;font-size:13px;margin-top:2px}
+.cb-kp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.cb-kp>div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 11px;display:grid;gap:1px;min-width:0}
+.cb-kp small{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;font-weight:800}.cb-kp b{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}.cb-kp em{font-style:normal;font-size:11.5px;opacity:.75;line-height:1.25}
+.cb-g{margin-top:12px}.cb-gb{position:relative;height:14px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}.cb-gb i{position:absolute;top:0;bottom:0;left:0}
+.cb-gf{background:linear-gradient(90deg,#22c55e,#4ade80)}.cb-gf.ko{background:linear-gradient(90deg,#ef4444,#f87171)}.cb-gu{background:rgba(255,255,255,.22)}
+.cb-gr{background:repeating-linear-gradient(135deg,rgba(239,68,68,.85) 0 5px,rgba(239,68,68,.35) 5px 10px);border-right:2px solid #fecaca}
+.cb-gb u{position:absolute;top:-2px;bottom:-2px;width:3px;margin-left:-1px;background:#fbbf24;border-radius:2px}
+.cb-gl{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;opacity:.8;margin-top:6px}.cb-gl span{display:inline-flex;gap:5px;align-items:center}.cb-d{width:10px;height:10px;border-radius:3px;display:inline-block}.cb-d.f{background:#4ade80}.cb-d.u{background:rgba(255,255,255,.35)}.cb-d.r{background:#ef4444}.cb-d.v{background:#fbbf24}
+.cb-vd{margin-top:12px;display:inline-flex;font-weight:800;font-size:14px;border-radius:99px;padding:6px 12px}.cb-vd.ok{background:#16a34a}.cb-vd.ko{background:#dc2626}
+.cb-cols{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:14px;align-items:start}.cb-cols>div{display:grid;gap:14px;min-width:0}
+.cb-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:14px 16px;min-width:0}
+.cb-card h3{display:flex;align-items:center;gap:9px;margin:0 0 12px;font-size:16px}.cb-n{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--solid);color:#fff;font-size:13px;font-weight:900}
+.cb-drop{display:flex;gap:12px;align-items:center;border:2px dashed color-mix(in srgb,var(--navy2,#3b82f6) 45%,var(--line));border-radius:16px;padding:14px;cursor:pointer;background:color-mix(in srgb,#3b82f6 5%,var(--surface));transition:.15s}.cb-drop:hover{background:color-mix(in srgb,#3b82f6 10%,var(--surface))}
+.cb-drop>span{display:grid}.cb-drop small{color:var(--muted);font-size:12.5px}.cb-drop svg{flex:none;color:#2563eb}
+.cb-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;margin:10px 0}.cb-or::before,.cb-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.cb-tx{display:flex;gap:6px;align-items:center}.cb-tx .in{flex:1;min-width:0;padding:10px 12px;font-size:15px}#cbtxt{font-family:ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.02em}
+.cb-hint{font-size:12.5px;color:var(--muted);line-height:1.45;margin:8px 0 0}
+.cb-chain{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:10px}.cb-chain span{font-weight:800;font-size:12.5px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:3px 7px}.cb-chain i{color:var(--muted);font-style:normal}
+.cb-src{font-size:12px;color:#0284c7;font-weight:700;margin-top:7px}
+.cb-f{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}.cb-f>label{width:96px;font-size:12.5px;font-weight:800;color:var(--muted)}.cb-f>.cb-seg,.cb-f>.cb-tx{flex:1;min-width:200px}
+.cb-seg{display:flex;flex-wrap:wrap;gap:3px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:3px}
+.cb-seg button{flex:1 1 auto;border:0;background:transparent;border-radius:9px;padding:6px 8px;font:inherit;font-size:13px;font-weight:800;color:var(--fg);cursor:pointer;display:grid;line-height:1.1;min-width:48px}
+.cb-seg button small{font-size:10px;font-weight:600;opacity:.6}.cb-seg button[aria-pressed="true"]{background:var(--solid);color:#fff;box-shadow:0 2px 6px -2px rgba(12,31,74,.5)}
+.cb-step{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface2)}.cb-step button{border:0;background:transparent;width:38px;height:36px;font-size:20px;font-weight:800;cursor:pointer;color:var(--fg)}.cb-step b{min-width:74px;text-align:center;font-size:15px;font-variant-numeric:tabular-nums}
+.cb-mini{width:62px!important;display:inline-block;padding:4px 8px!important;font-size:14px!important;border-radius:9px!important}
+.cbch{width:100%;height:auto;display:block}
+.cb-pf{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}.cb-pf li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:12px;background:var(--surface2)}
+.cb-pf li>i{font-style:normal;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:900;flex:none;color:#fff;background:#0ea5e9}.cb-pf li.up>i{background:#16a34a}.cb-pf li.dn>i{background:#f97316}
+.cb-pf li>div{display:grid;font-size:14px}.cb-pf small{color:var(--muted);font-size:12.5px}
+.cb-tl{list-style:none;margin:0;padding:0 0 0 14px;position:relative}.cb-tl::before{content:"";position:absolute;left:19px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.cb-wp,.cb-ev{display:flex;align-items:center;gap:12px;padding:6px 0;position:relative}.cb-wp>i,.cb-ev>i{width:12px;height:12px;border-radius:50%;background:var(--surface);border:3px solid var(--solid);flex:none;z-index:1}.cb-wp.end>i{background:var(--solid)}
+.cb-wp>div:first-of-type,.cb-ev>div:first-of-type{flex:1;display:grid}.cb-wp small,.cb-ev small{color:var(--muted);font-size:12px}.cb-wp .r,.cb-ev .r{text-align:right;display:grid;font-variant-numeric:tabular-nums}.cb-wp .r b{font-size:16px}
+.cb-wp .r b.vo{color:#d97706}.cb-wp .r b.ko{color:var(--bad)}
+.cb-ev>i{border-color:#f59e0b;background:#fde68a}.cb-ev.req>i{border-color:#dc2626;background:#fecaca}.cb-ev{color:#b45309}.cb-ev.req{color:var(--bad)}.cb-ev small{color:inherit;opacity:.8}
+.cb-lg{margin-left:24px;padding:2px 0}.cb-lg details{border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.cb-lg summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;gap:3px 12px;padding:7px 34px 7px 10px;font-size:13px;position:relative;font-variant-numeric:tabular-nums}.cb-lg summary::-webkit-details-marker{display:none}
+.cb-lg summary em{font-style:normal;font-weight:800;font-size:12px}.cb-lg summary em.hw{color:var(--bad)}.cb-lg summary em.tw{color:var(--ok)}.cb-ed{position:absolute;right:9px;top:8px;color:var(--muted)}
+.cb-edit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:4px 10px 10px}.cb-edit label{display:grid;gap:3px;font-size:11.5px;font-weight:800;color:var(--muted)}.cb-edit .in{padding:7px 9px;font-size:14px;border-radius:10px}
+.cb-dst{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:9px 11px;border-radius:12px;background:var(--surface2);margin-bottom:10px}.cb-dst small{width:100%;color:var(--muted);font-size:12px}
+.cb-wx{font-size:11px;font-weight:900;border-radius:7px;padding:2px 7px;letter-spacing:.04em}.cb-wx.v{background:#dcfce7;color:#15803d}.cb-wx.i{background:#ffedd5;color:#c2410c}
+.cb-alts{display:grid;gap:8px}.cb-alt{position:relative;display:grid;grid-template-columns:auto 1fr auto auto;gap:4px 10px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:10px 10px 10px 12px}
+.cb-alt.sel{border-color:var(--solid);box-shadow:0 0 0 3px color-mix(in srgb,#2563eb 14%,transparent)}
+.cb-rad{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);background:transparent;cursor:pointer;padding:0}.cb-alt.sel .cb-rad{border-color:var(--solid);background:radial-gradient(circle,var(--solid) 45%,transparent 50%)}
+.cb-ah{display:flex;flex-wrap:wrap;gap:0 6px;align-items:baseline;min-width:0}.cb-ah span{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px}.cb-ah small{width:100%;color:var(--muted);font-size:12px}
+.cb-x{width:30px;height:30px}.cb-aw,.cb-ar,.cb-req{grid-column:2/5;font-size:12.5px}.cb-aw{color:var(--muted)}
+.cb-ar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.cb-ar .cb-seg{flex:none}.cb-ar .cb-seg button{min-width:44px;padding:4px 7px;font-size:12px}.cb-af{color:var(--muted)}.cb-af b{color:var(--fg)}
+.cb-req{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:6px;color:var(--muted)}.cb-req b{color:var(--fg)}
+.cb-add{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;font-size:12.5px;color:var(--muted)}.cb-add button{border:1px dashed var(--line);background:transparent;border-radius:9px;padding:4px 8px;font:inherit;font-weight:800;color:var(--fg);cursor:pointer}.cb-add button small{color:var(--muted);font-weight:600}
+@media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
+@media (max-width:560px){.cb-kp{grid-template-columns:1fr 1fr}.cb-kp b{font-size:19px}.cb-rt{font-size:20px}.cb-f>label{width:100%}.cb-edit{grid-template-columns:1fr 1fr}.cb-hero{padding:16px 14px 14px;border-radius:20px}.cb-card{padding:12px}}
+
+.cbsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.cbsum .pfc b{font-size:24px}.pfc.warn{border-color:#f59e0b;background:color-mix(in srgb,#f59e0b 12%,var(--surface))}.pfc.warn b{color:#b45309}
+.cbcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.cbch{width:100%;height:auto;display:block}
+.cbt{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}.cbt th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:left;padding:8px 5px;border-bottom:1px solid var(--line);white-space:nowrap}
+.cbt td{padding:5px 5px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}.cbt tr.cbp td{background:var(--surface2)}.cbt .cbin{width:50px;padding:4px 6px;font-size:13.5px;border-radius:8px}.cbt select.cbin{width:86px!important;padding:4px 2px}.cbt td:last-child,.cbt th:last-child{padding-right:10px}
+@media (max-width:760px){.cbsum{grid-template-columns:1fr 1fr}.cbg>section:last-child{order:-1}.cbt{font-size:12.5px}.cbt td,.cbt th{padding:4px 4px}}
+.cbt tr.cbev td{font-weight:700;font-size:12.5px}.cbt tr.cbev.fv td{background:color-mix(in srgb,#f59e0b 16%,var(--surface));color:#b45309}.cbt tr.cbev.sec td{background:var(--bad2);color:var(--bad)}
+.chips button small{opacity:.7;font-weight:600}
 .nick{font-weight:600;color:var(--muted)}
 .tgls{display:grid;gap:6px;margin-top:10px}.sgwait{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;background:color-mix(in srgb,var(--surface) 92%,transparent);border-radius:inherit}.sgwait .hg{font-size:46px;animation:sghg 1.4s ease-in-out infinite}@keyframes sghg{0%{transform:rotate(0)}40%,50%{transform:rotate(180deg)}90%,100%{transform:rotate(360deg)}}#sheet .sb{position:relative}
 #nver{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:80;border:0;border-radius:999px;padding:11px 18px;font:600 14px Figtree,system-ui,sans-serif;background:var(--solid);color:#fff;box-shadow:0 10px 30px rgba(12,31,74,.35);max-width:calc(100vw - 24px)}#nver b{color:#fcd34d}
@@ -1335,7 +1400,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794382664';
+const APP_V='1794605328';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -3129,6 +3194,7 @@ function vPerfos(){const sub=isOsab()?'fea':isBob()?'zr':(S.pfTab||'home');
  if(sub==='meteo'){if(!mtCan()){S.pfTab='home';return vPerfos()}return vMeteo(tabs)}
  if(sub==='bpc'){if(!bpcCan()){S.pfTab='home';return vPerfos()}return vBpc(tabs)}
  if(sub==='hg'){if(!hgCan()){S.pfTab='home';return vPerfos()}return vHg(tabs)}
+ if(sub==='cb'){if(!cbCan()){S.pfTab='home';return vPerfos()}return vCb(tabs)}
  if(sub==='nav'){if(!navCan()){S.pfTab='home';return vPerfos()}return vNav(tabs)}
  if(ROLE==='comm'){S.pfTab='home';return vPerfos()}
  if(sub==='ex'){if(!exCan()){S.pfTab='home';return vPerfos()}setTimeout(exAuto,50);return vEx(tabs)}
@@ -5627,6 +5693,8 @@ function pfArt(k){
   <rect x="20" y="22" width="80" height="66" rx="6" fill="#fff"/><rect x="30" y="32" width="60" height="46" rx="3" fill="#fde68a"/>
   <path d="M34 72l16-18 12 12 8-8 16 14" stroke="#b45309" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="74" cy="44" r="5" fill="#b45309"/>
   <circle cx="92" cy="92" r="16" fill="#22c55e" stroke="#fff" stroke-width="4"/><path d="M84 92l6 6 10-11" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+ if(k==='mecas')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#64748b','#1e293b','g_mec')}<path d="M78 22a20 20 0 0 0-24 26L24 78a8 8 0 0 0 11 11l30-30a20 20 0 0 0 26-24l-12 12-11-3-3-11z" fill="#fff"/><circle cx="31" cy="84" r="3" fill="#64748b"/></svg>`;
+ if(k==='cb')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#f59e0b','#9a3412','g_cb')}<rect x="28" y="26" width="42" height="72" rx="7" fill="#fff"/><rect x="35" y="34" width="28" height="18" rx="3" fill="#fde68a"/><path d="M70 44h8a6 6 0 0 1 6 6v30a5 5 0 0 0 10 0V44l-9-9" ${st}/><path d="M24 98h50" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M49 62c-5 7-7 10-7 13a7 7 0 0 0 14 0c0-3-2-6-7-13z" fill="#f59e0b"/></svg>`;
  if(k==='hg')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#22c55e','#14532d','g_hg')}<path d="M10 70 Q10 40 34 36 L34 104 L10 104Z" fill="#fef9c3" opacity=".9"/><path d="M58 60 l-10 -3 4 -10 -4 0 -10 12 -14 0 c-3 0 -3 4 0 4 l14 0 10 12 4 0 -4 -10 10 -3z" transform="translate(30 4) scale(1.3)" fill="#fff"/><path d="M58 60 l-10 -3 4 -10 -4 0 -10 12 -14 0 c-3 0 -3 4 0 4 l14 0 10 12 4 0 -4 -10 10 -3z" transform="translate(30 -36) scale(1.3)" fill="#fff" opacity=".75"/></svg>`;
  if(k==='bpc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#14b8a6','#134e4a','g_bpc')}<rect x="30" y="20" width="60" height="82" rx="8" fill="#fff" opacity=".95"/><rect x="46" y="14" width="28" height="14" rx="5" fill="#0f766e"/><path d="M40 42h40M40 54h40M40 66h40M40 78h26" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/><path d="M58 34v54" stroke="#0f766e" stroke-width="3" opacity=".5"/></svg>`;
  if(k==='pc')return `<svg viewBox="0 0 120 120" class="pfart">${bg('#8b5cf6','#3b0764','g_pc')}
@@ -5642,18 +5710,280 @@ function pfArt(k){
   <path d="M60 26 V96 M40 98 H80 M24 40 H96" ${st}/><circle cx="60" cy="26" r="5" fill="#fff"/>
   <path d="M30 40 L20 66 M30 40 L40 66 M90 40 L80 66 M90 40 L100 66" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <path d="M14 66 Q30 84 46 66 Z" fill="#fde68a"/><path d="M74 66 Q90 84 106 66 Z" fill="#fde68a"/></svg>`}
-const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Météo · Alphajet · Instruction · Zones · Espacement · Série',['meteo','alpha','ex','zr','rg','sr']],com:['Rayonnement / Comm','Interviews · Cadres',['itw','cad']],pcf:['Point central','Points centraux · Bfg PC · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','bpc','nav','meteo','coupe','cirrus']]};
-const TOOLS_A=[['hg','Hangar'],['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
+const PF_DIR={alpha:['Alphajet','Perfos décollage · réchauffage POD',['to','pod']],cirrus:['Cirrus','Perfos · masse et centrage',['cto','cg']],pbd:['Préparation / Briefing / Débriefing','Météo · Carburant · Alphajet · Instruction · Zones · Espacement · Série',['meteo','cb','alpha','ex','zr','rg','sr']],mecas:['Mécas','Hangar · état des Alphajet',['hg']],com:['Rayonnement / Comm','Interviews · Cadres',['itw','cad']],pcf:['Point central','Points centraux · Bfg PC · NAV · Météo · Coupe Salon ⇄ PDD · Cirrus',['pc','bpc','nav','meteo','coupe','cirrus']]};
+const TOOLS_A=[['hg','Hangar'],['cb','Carburant'],['bpc','Bfg PC'],['sr','Série'],['zr','Zones'],['meteo','Météo'],['to','Perfos Alphajet'],['pod','POD'],['cto','Perfos Cirrus'],['cg','Centrage'],['fea','FEA'],['pc','Points centraux'],['nav','NAV'],['coupe','Coupe'],['ex','Instruction'],['rg','Espacement'],['tcas','TCAS'],['itw','Interviews'],['cad','Cadres']];
 const tov=k=>{const t=typeof ME!=='undefined'&&ME&&ME.tools;return t&&(t[k]===1||t[k]===0)?t[k]:null};
 /* Outil par défaut pour une personne (rôle + fiche de l'Unité), même logique que dans les outils */
 function toolDef(role,x,k){role=vrole(role);if(role==='chef')return true;const n=x?athN(x):0,pil=!!x&&x.fn==='PILOTES',pd=!!x&&(x.fn==='PILOTES'||x.fn==='DIR'),comm=role==='comm'||(role==='visit'&&!!x&&x.fn==='COMM'),pc=!!x&&!!x.pc&&pd;if(role!=='visit'&&role!=='comm')return false;if(x&&x.fn==='MOPS')return k==='zr';
- switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'hg':return role==='visit'&&!!x&&(pd||pc||!!(FUm[x.fn]&&FUm[x.fn].grp==='MECAS'));case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
+ switch(k){case 'pc':case 'nav':return pc;case 'bpc':return role==='visit'&&(pd||pc);case 'hg':return role==='visit'&&!!x&&(pd||pc||!!(FUm[x.fn]&&FUm[x.fn].grp==='MECAS'));case 'ex':return role==='visit'&&pil&&n===exN();case 'rg':return role==='visit'&&pil&&[rgN(),1,5].includes(n);case 'itw':return comm||(role==='visit'&&pd);case 'cad':return comm||(role==='visit'&&pil&&n===9);case 'tcas':case 'meteo':case 'coupe':case 'cb':return role==='visit'&&pd;case 'sr':return role==='visit'&&pil;case 'zr':return role==='visit'&&!!x&&(x.fn==='MOPS'||(pil&&[5,15,16].includes(n)));default:return true}}
 const isMops=()=>ROLE==='visit'&&(zrMe()||{}).fn==='MOPS';
-const pfVis=k=>isMeca()&&!PF_DIR[k]&&tov(k)==null?k==='hg':isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan())&&(k!=='hg'||hgCan());
+const pfVis=k=>isMeca()&&!PF_DIR[k]&&tov(k)==null?k==='hg':isMops()&&!PF_DIR[k]&&tov(k)==null?k==='zr':!PF_DIR[k]&&tov(k)!=null?!!tov(k):PF_DIR[k]?PF_DIR[k][2].some(pfVis):(k!=='pc'||pcCan())&&(k!=='ex'||exCan())&&(k!=='itw'||itwCan())&&(k!=='rg'||rgCan())&&(k!=='cad'||cadCan())&&(k!=='tcas'||tcasCan())&&(k!=='nav'||navCan())&&(k!=='meteo'||mtCan())&&(k!=='coupe'||coupeCan())&&(k!=='zr'||zrCan())&&(k!=='sr'||srCan())&&(k!=='bpc'||bpcCan())&&(k!=='hg'||hgCan())&&(k!=='cb'||cbCan());
 const pfTile=k=>{const D=PF_DIR[k],t=D?[k,D[0],D[1]]:PF_TOOLS.find(x=>x[0]===k),n=D?D[2].filter(pfVis).length:0;return `<button class="pftool ${D?'pfdir':''}" onclick="S.pfUp=S.pfTab||'home';S.pfTab='${k}';render();window.scrollTo(0,0)">${pfArt(k)}<b>${t[1]}</b><span>${t[2]}</span>${D?`<small class="pfn2">${n} outils</small>`:''}</button>`};
-const PF_HOME=['hg','pbd','pcf','com','fea','tcas'];
+const PF_HOME=['pbd','pcf','com','fea','tcas','mecas'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
-const PF_TOOLS=[['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['hg','Hangar','Les Alphajet : ligne de vol, remise en œuvre, dépannage'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
+const PF_TOOLS=[['cb','Carburant','Route ForeFlight : pétrole à chaque point, fin de voilure, vent au FL'],['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['hg','Hangar','Les Alphajet : ligne de vol, remise en œuvre, dépannage'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
+
+/* ====================== Carburant : conso Alphajet par étape (fiche PAF « CONSO PÉTROLE », IT10 niveau 2) ====================== */
+const CB_PL=[[1250,'FUS'],[1350,'FUS+100'],[1450,'N1'],[1550,'N1+100'],[1650,'N1+200'],[1750,'N1+300'],[1960,'N2']];
+const CB_MER=[[60,'10′'],[90,'15′'],[120,'20′']];
+/* Montée PMC à la VOM depuis 1000 ft · descente éco 80 % (0,7 / 300 kt) : FL → litres, secondes, Nm */
+const CB_CL={fl:[0,50,100,150,200,250,300,350],f:[0,30,60,100,140,185,245,295],t:[0,50,115,200,295,435,600,825],d:[0,4,8.5,15.5,26,39.5,58.5,84]};
+const CB_DE={fl:[0,50,100,150,200,250,300,350,400,450],f:[0,8,18,26,34,42,50,61,76,95],t:[0,70,140,215,290,360,440,535,660,825],d:[0,5,12.5,20,28,36,46,56,64,75]};
+/* Croisières : Vp (kt) et L/min selon le FL */
+const CB_CR={n:{fl:[50,100,150,200,250,300,350],v:[423,414,416,411,405,403,401],q:[28.8,22,19,16.3,14.3,12.5,10.3]},
+ dl:{fl:[50,100,150,200,250,300,350,400],v:[267,284,307,332,370,392,401,402],q:[13.5,12.9,12.4,11.9,11.8,11.5,10.8,11.0]},
+ dg:{fl:[50,100,150,200,250,300,350,400,420],v:[255,268,286,309,346,368,394,401,402],q:[12.3,11.5,11,10.4,10.6,10.1,9.7,9.3,9.2]}};
+const CB_PR=[['n','Normale','check-list'],['dmf','DMF','distance max'],['t320','TBA 320','20 L/min'],['t360','TBA 360','24 L/min'],['t420','TBA 420','30 L/min'],['t450','TBA 450','≈ 38 L/min']];
+const CB_TBA={t320:[320,20],t360:[360,24],t420:[420,30],t450:[450,38]};
+const CB_TO={f:43,t:69,d:3.3};   // lâcher des freins → 280 kt (1000 ft)
+const CB_LV=[850,700,600,500,400,300,250,200];
+const CB_VFR={c:1500,v:5000};      // VFR : plafond ≥ 1 500 ft et visi ≥ 5 km sur le créneau ETA −30′ / +1 h
+const cbFLp=p=>145366.45*(1-Math.pow(p/1013.25,0.190284))/100;
+const cbI=(xs,ys,x)=>{if(x<=xs[0])return ys[0];for(let i=1;i<xs.length;i++)if(x<=xs[i])return ys[i-1]+(ys[i]-ys[i-1])*(x-xs[i-1])/(xs[i]-xs[i-1]);return ys[ys.length-1]};
+const cbDv=(T,k,fl)=>{const top=T.fl[T.fl.length-1],a=Math.max(0,Math.min(top-5,fl-2.5)),b=a+5;return (cbI(T.fl,T[k],b)-cbI(T.fl,T[k],a))/5};
+const cbDesD=fl=>cbI(CB_DE.fl,CB_DE.d,fl),cbDesFl=d=>cbI(CB_DE.d,CB_DE.fl,d);
+function cbCruise(pr,fl,fuel){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};
+ if(pr==='dmf'){const w=Math.max(0,Math.min(1,(fuel-1200)/760)),a=CB_CR.dl,b=CB_CR.dg;return{v:cbI(a.fl,a.v,fl)*w+cbI(b.fl,b.v,fl)*(1-w),q:cbI(a.fl,a.q,fl)*w+cbI(b.fl,b.q,fl)*(1-w)}}
+ const a=CB_CR.n;return{v:cbI(a.fl,a.v,fl),q:cbI(a.fl,a.q,fl)}}
+const cbRd=Math.PI/180;
+function cbDist(a,b){const p1=a.la*cbRd,p2=b.la*cbRd,dl=(b.lo-a.lo)*cbRd;return 2*Math.asin(Math.min(1,Math.sqrt(Math.sin((p2-p1)/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2)))*3440.065}
+function cbBrg(a,b){const p1=a.la*cbRd,p2=b.la*cbRd,dl=(b.lo-a.lo)*cbRd;return (Math.atan2(Math.sin(dl)*Math.cos(p2),Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl))/cbRd+360)%360}
+/* Vent au FL : manuel (« 330/25 »), sinon profil prévu de la branche (interpolation des composantes) */
+function cbWm(s){const m=String(s||'').match(/^\s*(\d{1,3})\s*[\/°\s]\s*(\d{1,3})/);return m?{d:+m[1]%360,s:+m[2]}:null}
+function cbWind(L,fl){const m=cbWm(L.wm);if(m)return m;const P=L.wp;if(!P||!P.length)return null;
+ const uv=w=>[-w.s*Math.sin(w.d*cbRd),-w.s*Math.cos(w.d*cbRd)],xs=P.map(p=>p.fl),U=P.map(p=>uv(p)[0]),V=P.map(p=>uv(p)[1]),u=cbI(xs,U,fl),v=cbI(xs,V,fl);
+ return{d:Math.round((Math.atan2(-u,-v)/cbRd+360)%360),s:Math.round(Math.hypot(u,v)),T:cbI(xs,P.map(p=>p.T??(15-1.98*p.fl/10)),fl)}}
+function cbGs(v,c,w){if(!w)return{gs:v,hw:0,xw:0};const a=(w.d-c)*cbRd,hw=w.s*Math.cos(a),xw=w.s*Math.sin(a);return{gs:Math.max(60,Math.sqrt(Math.max(0,v*v-xw*xw))-hw),hw,xw}}
+/* Profil complet : montée au plus tôt, palier par branche, descentes placées pour être au niveau de la branche suivante au point tournant,
+   descente finale pour arriver à destination ; fin de voilure et mini arrivée repérés sur la route */
+function cbCalc(st){const P=st.pts||[];if(P.length<2)return null;
+ const L=[];let tot=0;for(let i=0;i<P.length-1;i++){const lg=(st.legs||[])[i]||{},d=cbDist(P[i],P[i+1]);L.push({i,a:P[i],b:P[i+1],d,c:cbBrg(P[i],P[i+1]),x0:tot,fl:Math.max(0,Math.min(420,+(lg.fl??st.fl)||0)),pr:lg.pr||st.pr||'n',wm:lg.wm||'',wp:lg.wp||null,f:0,t:0,cr:null});tot+=d}
+ const n=L.length,cons=[];for(let j=1;j<n;j++)cons[j]=L[j].fl<L[j-1].fl?L[j].fl:Infinity;cons[n]=0;
+ const f0=st.fuel-(st.mer||0);let fuel=f0,t=0,alt=10,x=0;
+ if(!st.noTO){fuel-=CB_TO.f;t=CB_TO.t;x=Math.min(CB_TO.d,tot*0.5);L[0].f+=CB_TO.f;L[0].t+=CB_TO.t}
+ const trace=[{x:0,f:f0,a:0,t:0},{x,f:fuel,a:alt,t}],ev=[],wps=[{x:0,f:f0,t:0,a:0}],seg=[];let li=0;
+ const lim=[['fv',st.fv],['req',st.req]].filter(l=>l[1]>0);
+ const mark=(fa,fb,xa,xb,ta,tb)=>lim.forEach(([k,v])=>{if(fa>=v&&fb<v&&!ev.some(e=>e.k===k)){const r=(fa-v)/(fa-fb||1),xx=xa+(xb-xa)*r,lg=L.find(l=>xx<=l.x0+l.d+1e-6)||L[n-1];ev.push({k,x:xx,t:ta+(tb-ta)*r,f:v,leg:lg.i,dl:xx-lg.x0})}});
+ const kdOf=(j,a)=>{const w=cbWind(L[j-1],Math.max(a,50));return w?cbGs(320,L[j-1].c,w).gs/320:1};
+ let guard=0;
+ while(x<tot-1e-6&&guard++<200000){while(li<n-1&&x>=L[li].x0+L[li].d-1e-9){wps.push({x:L[li].x0+L[li].d,f:fuel,t,a:alt});li++}
+  const lg=L[li],rem=tot-x,legEnd=lg.x0+lg.d,w=cbWind(lg,alt);let allowed=Infinity;const C=[];
+  for(let j=li+1;j<=n;j++){if(cons[j]===Infinity)continue;const dj=L[j-1].x0+L[j-1].d-x,kd=kdOf(j,alt);C.push([dj,kd,cons[j]]);allowed=Math.min(allowed,cbDesFl(cbDesD(cons[j])+dj/kd))}
+  const tgt=Math.min(lg.fl,allowed);let ds=Math.min(0.5,legEnd-x,rem),dt=0,df=0,da=0,ph;
+  if(alt<tgt-0.05){const dtl=cbDv(CB_CL,'t',alt),ddl=cbDv(CB_CL,'d',alt),dfl=cbDv(CB_CL,'f',alt),g=cbGs(ddl/dtl*3600,lg.c,w).gs;
+   dt=ds/g*3600;da=dt/dtl;if(alt+da>tgt){da=tgt-alt;dt=da*dtl;ds=g*dt/3600}df=dfl*da;ph='mt'}
+  else if(alt>tgt+0.05){const dtl=cbDv(CB_DE,'t',alt),ddl=cbDv(CB_DE,'d',alt),dfl=cbDv(CB_DE,'f',alt),g=cbGs(ddl/dtl*3600,lg.c,w).gs;
+   dt=ds/g*3600;da=-dt/dtl;if(alt+da<tgt){da=tgt-alt;dt=-da*dtl;ds=g*dt/3600}df=-dfl*da;ph='de'}
+  else{alt=tgt;const cr=cbCruise(lg.pr,alt,fuel),Tc=w&&w.T!=null&&!CB_TBA[lg.pr]?Math.sqrt((273.15+w.T)/(273.15+15-1.98*alt/10)):1,g=cbGs(cr.v*Tc,lg.c,w);
+   if(!lg.cr)lg.cr={fl:alt,v:cr.v*Tc,q:cr.q,gs:g.gs,hw:g.hw,w};
+   C.forEach(([dj,kd,cj])=>{if(alt>cj+0.05){const nd=dj/kd-(cbDesD(alt)-cbDesD(cj));if(nd>0.01)ds=Math.min(ds,nd*kd)}});
+   dt=ds/g.gs*3600;df=cr.q*dt/60;ph='cr'}
+  if(ds<=1e-6)ds=Math.min(0.05,legEnd-x,rem);
+  const fa=fuel,xa=x,ta=t,aa=alt;fuel-=df;t+=dt;x+=ds;alt=Math.max(0,alt+da);lg.f+=df;lg.t+=dt;mark(fa,fuel,xa,x,ta,t);
+  const s=seg[seg.length-1];if(s&&s.ph===ph){s.x1=x;s.t1=t;s.a1=alt;s.f1=fuel}else seg.push({ph,x0:xa,t0:ta,a0:aa,f0:fa,x1:x,t1:t,a1:alt,f1:fuel});
+  if(trace.length<4000)trace.push({x,f:fuel,a:alt,t})}
+ while(li<n){wps.push({x:L[li].x0+L[li].d,f:fuel,t,a:alt});li++}
+ L.forEach(l=>{if(!l.cr){const w=cbWind(l,l.fl),cr=cbCruise(l.pr,l.fl,fuel),g=cbGs(cr.v,l.c,w);l.cr={fl:l.fl,v:cr.v,q:cr.q,gs:g.gs,hw:g.hw,w,none:1}}});
+ /* phases propres : on retire les paliers de moins d'1 Nm et on fusionne */
+ const S2=[];seg.filter(s=>!(s.ph==='cr'&&s.x1-s.x0<1)).forEach(s=>{const p=S2[S2.length-1];if(p&&p.ph===s.ph){p.x1=s.x1;p.t1=s.t1;p.a1=s.a1;p.f1=s.f1}else S2.push(Object.assign({},s))});
+ return{L,tot,f0,fA:fuel,t,trace,wps,ev,seg:S2,used:f0-fuel}}
+/* --- Lecture des routes : texte (OACI, coordonnées, niveaux /F250) ou fichier ForeFlight .fpl / .gpx / .kml (altitudes lues) --- */
+function cbCoord(tk){let m;const dm=(d,mn,s)=>+d+(+mn||0)/60+(+s||0)/3600;
+ if((m=tk.match(/^(\d{2})(\d{2}(?:\.\d+)?)(\d{2}(?:\.\d+)?)?([NS])\/?(\d{3})(\d{2}(?:\.\d+)?)(\d{2}(?:\.\d+)?)?([EW])$/)))return{la:dm(m[1],m[2],m[3])*(m[4]==='S'?-1:1),lo:dm(m[5],m[6],m[7])*(m[8]==='W'?-1:1)};
+ if((m=tk.match(/^([NS])(\d{2})(\d{2}(?:\.\d+)?)?(\d{2}(?:\.\d+)?)?\/?([EW])(\d{3})(\d{2}(?:\.\d+)?)?(\d{2}(?:\.\d+)?)?$/)))return{la:dm(m[2],m[3],m[4])*(m[1]==='S'?-1:1),lo:dm(m[6],m[7],m[8])*(m[5]==='W'?-1:1)};
+ if((m=tk.match(/^(-?\d{1,2}\.\d+)\/(-?\d{1,3}\.\d+)$/)))return{la:+m[1],lo:+m[2]};return null}
+const cbLvl=s=>{const m=String(s||'').match(/^(?:[NKM]\d{3,4})?(F|FL|A)(\d{2,3})$/);return m?(m[1]==='A'?+m[2]*10/10:+m[2]):null};   // F250 / FL250 → 250 ; A050 → 50 (5 000 ft)
+function cbParse(txt){const pts=[],bad=[],lv=[];
+ String(txt||'').toUpperCase().replace(/(-?\d+\.\d+)\s*[,;]\s*(-?\d+\.\d+)/g,'$1/$2').replace(/[,;]/g,' ').split(/\s+/).filter(Boolean).forEach(tk=>{
+  tk=tk.replace(/^-+|-+$/g,'');if(!tk||tk==='DCT'||/^(SID|STAR|VFR|IFR)$/.test(tk))return;
+  const l0=cbLvl(tk);if(l0!=null){if(pts.length)lv[pts.length-1]=l0;return}
+  let z=null;if(!cbCoord(tk)&&tk.includes('/')){const i=tk.lastIndexOf('/'),l=cbLvl(tk.slice(i+1));if(l!=null){z=l;tk=tk.slice(0,i)}}
+  const c=cbCoord(tk),U=((S.cb&&S.cb.u)||{})[tk],A=PF_AD[tk];let p=null;
+  if(c)p={n:tk.slice(0,14),...c};else if(U)p={n:tk,la:U.la,lo:U.lo};else if(A)p={n:tk,la:A[1],lo:A[2]};
+  else{if(!/^[A-Z]{1,2}\d{1,3}[A-Z]?$/.test(tk))bad.push(tk);return}   // sinon : voie aérienne ignorée
+  pts.push(p);if(z!=null)lv[pts.length-1]=z});
+ /* niveau « à partir de ce point » : chaque branche prend le dernier niveau donné */
+ let cur=null;const legFl=pts.slice(1).map((_,i)=>{if(lv[i]!=null)cur=lv[i];return cur});
+ return{pts,bad,legFl:lv.some(v=>v!=null)?legFl:null}}
+function cbDP(N,err,max){if(N<=max)return [...Array(N).keys()];let tol=1;const keep=new Set();
+ const rec=(i,j,T)=>{let b=-1,bd=0;for(let k=i+1;k<j;k++){const d=err(i,j,k,T);if(d>bd){bd=d;b=k}}if(b>0&&bd>1){keep.add(b);rec(i,b,T);rec(b,j,T)}};
+ for(;;){keep.clear();keep.add(0);keep.add(N-1);rec(0,N-1,tol);if(keep.size<=max)break;tol*=1.5}return [...keep].sort((a,b)=>a-b)}
+function cbXte(a,b,p){const d13=cbDist(a,p)/3440.065,t13=cbBrg(a,p)*cbRd,t12=cbBrg(a,b)*cbRd;return Math.abs(Math.asin(Math.sin(d13)*Math.sin(t13-t12)))*3440.065}
+/* Trace : on garde les points qui comptent en plan (écart latéral) et en profil (écart d'altitude) */
+function cbSimp(P,max){if(P.length<=max)return P;const s=[0];for(let i=1;i<P.length;i++)s.push(s[i-1]+cbDist(P[i-1],P[i]));const z3=P.some(p=>p.z!=null);
+ const ix=cbDP(P.length,(i,j,k,T)=>{const lat=cbXte(P[i],P[j],P[k])/(0.4*T);if(!z3)return lat;const zi=P[i].z||0,zj=P[j].z||0,zk=P[k].z||0,r=(s[k]-s[i])/((s[j]-s[i])||1),dz=Math.abs(zk-(zi+(zj-zi)*r))/(8*T);return Math.max(lat,dz)},max);
+ return ix.map(i=>P[i])}
+function cbFileParse(name,txt){const X=new DOMParser().parseFromString(txt,'application/xml'),T=(el,n)=>{const e=el.getElementsByTagName(n)[0];return e?e.textContent.trim():''},A=n=>[...X.getElementsByTagName(n)];
+ const ext=(name.split('.').pop()||'').toLowerCase(),fl=m=>m==null||m===''||!isFinite(+m)||+m===0?null:Math.max(0,Math.round(+m*3.28084/100/5)*5);let P=[];
+ if(A('flight-plan').length||ext==='fpl'){const W={};A('waypoint').forEach(w=>{const al=T(w,'altitude')||T(w,'altitude-ft');W[T(w,'identifier')]={n:T(w,'identifier'),la:+T(w,'lat'),lo:+T(w,'lon'),z:al?Math.round(+al/100/5)*5||null:null}});
+  const R=A('route-point').map(r=>W[T(r,'waypoint-identifier')]).filter(Boolean);P=R.length?R:Object.values(W)}
+ else if(A('gpx').length||ext==='gpx'){const pt=e=>({n:T(e,'name')||'',la:+e.getAttribute('lat'),lo:+e.getAttribute('lon'),z:fl(T(e,'ele'))});
+  P=A('rtept').map(pt);if(P.length<2)P=A('wpt').map(pt);if(P.length<2)P=cbSimp(A('trkpt').map(pt),30)}
+ else{const pm=A('Placemark'),pts=[];let line=[];
+  pm.forEach(p=>{const nm=T(p,'name'),pt=p.getElementsByTagName('Point')[0],ls=p.getElementsByTagName('LineString')[0];
+   if(pt){const c=T(pt,'coordinates').split(',');pts.push({n:nm,la:+c[1],lo:+c[0],z:fl(c[2])})}
+   else if(ls&&!line.length)line=T(ls,'coordinates').split(/\s+/).filter(Boolean).map(s=>{const c=s.split(',');return{n:'',la:+c[1],lo:+c[0],z:fl(c[2])}})});
+  if(!line.length)line=A('gx:coord').map(e=>{const c=e.textContent.trim().split(/\s+/);return{n:'',la:+c[1],lo:+c[0],z:fl(c[2])}});
+  P=pts.length>=2?pts:cbSimp(line,30)}
+ P=P.filter(p=>isFinite(p.la)&&isFinite(p.lo)&&(p.la||p.lo));
+ P.forEach((p,i)=>{if(!p.n){const a=Object.entries(PF_AD).find(([k,v])=>Math.abs(v[1]-p.la)<.03&&Math.abs(v[2]-p.lo)<.04);p.n=a?a[0]:i===0?'DEP':i===P.length-1?'ARR':'P'+i}p.n=String(p.n).toUpperCase().replace(/\s+/g,'').slice(0,10)});
+ return P}
+/* Altitudes des points (fichier 3D) → niveau de chaque branche : le plus haut de ses deux extrémités (départ et arrivée au sol) */
+function cbFlFromZ(P){const z=P.map((p,i)=>i===0||i===P.length-1?(p.z!=null&&p.z>=10?p.z:0):p.z);if(!z.slice(1,-1).some(v=>v!=null)&&!(z[0]||z[z.length-1]))return null;
+ for(let i=1;i<z.length-1;i++)if(z[i]==null)z[i]=z[i-1];return P.slice(1).map((_,i)=>Math.max(z[i]||0,z[i+1]||0)||null)}
+/* --- état --- */
+function cbSt(){if(!S.cb){let o=null;try{o=JSON.parse(localStorage.getItem('pafCb')||'null')}catch(e){}
+  const d=new Date(Date.now()+3600e3);d.setMinutes(0,0,0);
+  S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1250,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{}},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
+ return S.cb}
+function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,alts:c.alts,altSel:c.altSel,altDest:c.altDest}))}catch(e){}}
+function cbSet(k,v){const c=cbSt();c[k]=v;cbSave();render()}
+function cbSetPts(P,src,legFl,dim){const c=cbSt();c.pts=P;c.src=src||'';c.dim=dim||'';c.legs=P.slice(1).map((_,i)=>({fl:legFl?legFl[i]:null,f0:legFl?legFl[i]:null,pr:'',wm:'',wp:null}));
+ const D=P[P.length-1];if(D&&c.altDest!==D.n){c.altDest=D.n;c.alts=cbNear(D,2).map(([id])=>({id,wx:'a',fl:null}));c.altSel=c.alts[0]?c.alts[0].id:''}
+ cbSave();render();if(P.length>=2){cbWindLoad(1);cbWxLoad(1)}}
+function cbRead(){const c=cbSt(),v=($('cbtxt')||{}).value||'';c.txt=v;const r=cbParse(v);c.bad=r.bad;if(r.pts.length<2){cbSave();render();toast(r.bad.length?'Points inconnus : '+r.bad.join(' '):'Saisissez au moins deux points');return}
+ cbSetPts(r.pts,'texte',r.legFl,r.legFl?'txt':'');if(r.bad.length)toast('Ignorés : '+r.bad.join(' '))}
+function cbFile(inp){const f=inp.files&&inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{let P=[];try{P=cbFileParse(f.name,String(rd.result))}catch(e){}
+  if(P.length<2){toast('Fichier illisible : exportez la route en .fpl, .kml ou .gpx');return}
+  const c=cbSt();c.u=c.u||{};P.forEach(p=>{if(!PF_AD[p.n]&&!cbCoord(p.n))c.u[p.n]={la:+p.la.toFixed(5),lo:+p.lo.toFixed(5)}});const ks=Object.keys(c.u);if(ks.length>300)ks.slice(0,ks.length-300).forEach(k=>delete c.u[k]);
+  const lf=cbFlFromZ(P);c.txt=P.map((p,i)=>p.n+(lf&&i<P.length-1&&(i===0||lf[i]!==lf[i-1])&&lf[i]?'/F'+String(lf[i]).padStart(3,'0'):'')).join(' ');c.bad=[];
+  cbSetPts(P.map(({n,la,lo})=>({n,la,lo})),f.name,lf,lf?'3d':'2d');toast(P.length+' points importés'+(lf?' · altitudes lues':''))};rd.readAsText(f)}
+function cbLeg(i,k,v){const c=cbSt(),l=c.legs[i];if(!l)return;if(k==='fl'){v=String(v).replace(/\D/g,'');l.fl=v===''?null:Math.min(420,+v)}else l[k]=v;cbSave();render()}
+function cbEx(){const e=$('cbtxt');if(e)e.value='LFMY MTL/F250 ROA LFSI';cbRead()}
+/* Dégagements : terrains proches de la destination */
+function cbNear(D,k,ex){return Object.entries(PF_AD).filter(([id,a])=>id!==D.n&&!(ex||[]).includes(id)&&Math.max(0,...(a[4]||[]).map(r=>r[6]||0))>=1800).map(([id,a])=>[id,cbDist(D,{la:a[1],lo:a[2]})]).filter(x=>x[1]>3).sort((a,b)=>a[1]-b[1]).slice(0,k)}
+function cbAltAdd(id){const c=cbSt();id=String(id||'').toUpperCase().trim();if(!PF_AD[id]){toast('Terrain inconnu : '+id);return}if(c.alts.some(a=>a.id===id))return;c.alts.push({id,wx:'a',fl:null});if(!c.altSel)c.altSel=id;cbSave();render();cbWxLoad(1)}
+function cbAltDel(id){const c=cbSt();c.alts=c.alts.filter(a=>a.id!==id);if(c.altSel===id)c.altSel=c.alts[0]?c.alts[0].id:'';cbSave();render()}
+function cbAltSet(id,k,v){const c=cbSt(),a=c.alts.find(x=>x.id===id);if(!a)return;if(k==='fl'){v=String(v).replace(/\D/g,'');a.fl=v===''?null:Math.min(400,+v)}else a[k]=v;cbSave();render()}
+function cbAltFl(d){for(const fl of [300,250,200,150,100,70,50])if(cbI(CB_CL.fl,CB_CL.d,fl)+cbDesD(fl)<=d*0.75)return fl;return 30}
+/* Météo des terrains (METAR / TAF) : serveur en ligne, sinon en direct */
+async function cbWxLoad(force){const c=cbSt(),D=c.pts[c.pts.length-1],ids=[...new Set([D&&D.n,...(c.alts||[]).map(a=>a.id)].filter(x=>x&&PF_AD[x]))];if(!ids.length)return;
+ const key=ids.join(',');if(S.cbWxBusy)return;if(!force&&S.cbWx&&S.cbWx.key===key&&Date.now()-S.cbWx.t<10*60e3)return;if(force&&S.cbWx&&S.cbWx.key===key&&S.cbWx.ok&&Date.now()-S.cbWx.t<60e3)return;S.cbWxBusy=1;
+ let m='',t='',ok=0;
+ if(isOnline()){try{const r=await api('metarTaf',{ids:key});if(r&&!r.error){m=r.mtxt||'';t=r.ttxt||'';ok=1}}catch(e){}}
+ if(!ok){try{const g=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return r.text()};[m,t]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+key+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+key+'&format=raw')]);ok=1}catch(e){}}
+ S.cbWxBusy=0;S.cbWx={key,t:Date.now(),ok,M:mtMetars(m),T:mtTafs(t)};if(S.pfTab==='cb')render()}
+const cbIfr=f=>{const c=mtCeil(f);return (c!=null&&c<CB_VFR.c)||(f.vis!=null&&f.vis<CB_VFR.v)};
+const cbWxT=f=>[f.vis!=null?(f.vis>=10000?'≥ 10 km':f.vis>=5000?Math.round(f.vis/1000)+' km':cbN(f.vis)+' m'):'',mtCeilT(f)].filter(Boolean).join(' · ');
+function cbWxCat(id,eta){const W=S.cbWx;if(!W||!W.ok)return{cat:null,why:S.cbWxBusy?'Météo en cours de chargement…':'Météo indisponible'};
+ const F=W.T[id]?mtTaf(W.T[id]):null,M=W.M[id]?mtMetar(W.M[id]):null,C=[];
+ if(M&&Math.abs(eta-Date.now())<90*60e3)C.push({f:M,src:'METAR'});
+ for(let t=eta-30*60e3;t<=eta+60*60e3;t+=10*60e3){const a=mtTafAt(F,t);if(a){C.push({f:a.pre,src:'TAF'});a.alt.forEach(x=>C.push({f:x.f,src:'TAF '+x.g.ty}))}}
+ if(!C.length)return{cat:null,why:F?'Le TAF ne couvre pas l\'heure d\'arrivée':M?'METAR seul, trop loin de l\'heure d\'arrivée':'Pas de TAF pour ce terrain'};
+ const bad=C.find(x=>cbIfr(x.f));return bad?{cat:'IFR',why:bad.src+' · '+cbWxT(bad.f)}:{cat:'VFR',why:C[C.length-1].src.split(' ')[0]+' · '+cbWxT(C.find(x=>x.src==='TAF')?C.find(x=>x.src==='TAF').f:C[0].f)}}
+/* Vent prévu (Open-Meteo) au milieu de chaque branche, à l'heure de passage estimée */
+async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBusy=1;if(!quiet)render();
+ const r0=cbCalc(cbIn()),dep=new Date(c.dep).getTime()||Date.now(),M=c.pts.slice(1).map((p,i)=>({la:(c.pts[i].la+p.la)/2,lo:(c.pts[i].lo+p.lo)/2}));
+ const V=[].concat(...CB_LV.map(l=>['wind_speed_'+l+'hPa','wind_direction_'+l+'hPa','temperature_'+l+'hPa']));
+ const u='https://api.open-meteo.com/v1/forecast?latitude='+M.map(m=>m.la.toFixed(3)).join(',')+'&longitude='+M.map(m=>m.lo.toFixed(3)).join(',')+'&hourly='+V.join(',')+'&wind_speed_unit=kn&timezone=UTC&timeformat=unixtime&past_days=1&forecast_days=7';
+ let D=null;try{const r=await fetch(u,{cache:'no-store'});if(r.ok)D=await r.json()}catch(e){}
+ S.cbWBusy=0;if(!D){S.cbWErr=1;render();if(!quiet)toast('Vent prévu indisponible : saisissez-le à la main (ex. 330/25)');return}
+ S.cbWErr=0;const A=Array.isArray(D)?D:[D];
+ c.legs.forEach((l,i)=>{const h=A[i]&&A[i].hourly;if(!h)return;const lg=r0&&r0.L[i],tt=(dep+((lg?r0.wps[i].t+lg.t/2:0))*1000)/1000;let k=0,bd=1e18;h.time.forEach((x,j)=>{const d=Math.abs(x-tt);if(d<bd){bd=d;k=j}});
+  l.wp=CB_LV.map(p=>({fl:Math.round(cbFLp(p)),s:h['wind_speed_'+p+'hPa'][k],d:h['wind_direction_'+p+'hPa'][k],T:h['temperature_'+p+'hPa'][k]})).filter(o=>o.s!=null&&o.d!=null).sort((a,b)=>a.fl-b.fl);l.wt=h.time[k]});
+ cbSave();render();if(!quiet)toast('Vent prévu chargé')}
+function cbIn(req){const c=cbSt();return{pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0}}
+/* Calcul complet : route, puis dégagements depuis la destination (DMF, sans décollage), puis mini à l'arrivée */
+function cbAll(){const c=cbSt(),R0=cbCalc(cbIn());if(!R0)return null;const D=c.pts[c.pts.length-1],last=c.legs[c.legs.length-1]||{},eta=(new Date(c.dep).getTime()||Date.now())+R0.t*1000;
+ const AL=(c.alts||[]).filter(a=>PF_AD[a.id]).map(a=>{const A=PF_AD[a.id],p={n:a.id,la:A[1],lo:A[2]},d=cbDist(D,p),fl=a.fl??cbAltFl(d);
+  const r=cbCalc({pts:[D,p],legs:[{fl,pr:'dmf',wp:last.wp}],fuel:Math.max(R0.fA,300),mer:0,fl,pr:'dmf',noTO:1});
+  const wx=cbWxCat(a.id,eta+r.t*1000),cat=a.wx==='v'?'VFR':a.wx==='i'?'IFR':(wx.cat||'IFR'),sec=cat==='VFR'?250:400;
+  return{id:a.id,name:A[0],d,c:cbBrg(D,p),fl,auto:a.fl==null,f:r.used,t:r.t,wx,mode:a.wx,cat,sec,req:Math.ceil((r.used+sec)/10)*10}});
+ const sel=AL.find(a=>a.id===c.altSel)||AL[0]||null,req=sel?sel.req:+c.sec,R=cbCalc(cbIn(req));R.req=req;R.alt=sel;R.AL=AL;R.eta=eta;R.dwx=cbWxCat(D.n,eta);R.marge=R.fA-req;return R}
+const cbCan=()=>tov('cb')!=null?!!tov('cb'):isChef()||ccPilDir()||!!pcMe()||(!isOnline()&&ROLE==='visit');
+const cbT=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h?h+' h '+String(m).padStart(2,'0'):m+'′'+String(x).padStart(2,'0')};
+const cbN=v=>Math.round(v).toLocaleString('fr-FR');
+const cbW=w=>w?String(Math.round(w.d)).padStart(3,'0')+'°/'+Math.round(w.s):'—';
+const cbFL=a=>a<1?'le sol':'FL'+String(a>=95?Math.round(a/10)*10:Math.round(a/5)*5).padStart(3,'0');
+function cbPos(R,x){const lg=R.L.find(l=>x<=l.x0+l.d+1e-6)||R.L[R.L.length-1],a=x-lg.x0,b=lg.x0+lg.d-x;
+ return a<1?'à '+esc(lg.a.n):b<1?'à '+esc(lg.b.n):a<=b?`${Math.round(a)} Nm après ${esc(lg.a.n)}`:`${Math.round(b)} Nm avant ${esc(lg.b.n)}`}
+/* Profil vertical en clair : où on monte, à quel niveau, où on descend */
+function cbProfil(R,c){const D=esc(c.pts[c.pts.length-1].n),out=[];
+ R.seg.forEach((s,i)=>{const last=i===R.seg.length-1;
+  if(s.ph==='mt')out.push(['up',i===0?`Montée vers <b>${cbFL(s.a1)}</b> dès le décollage de ${esc(c.pts[0].n)}`:`Montée de ${cbFL(s.a0)} vers <b>${cbFL(s.a1)}</b> ${cbPos(R,s.x0)}`,`niveau atteint ${cbPos(R,s.x1)} · T + ${cbT(s.t1)}`]);
+  else if(s.ph==='cr')out.push(['lvl',`Palier <b>${cbFL(s.a1)}</b> de ${cbPos(R,s.x0).replace(/^à /,'')} à ${cbPos(R,s.x1).replace(/^à /,'')}`,`${Math.round(s.x1-s.x0)} Nm · ${cbT(s.t1-s.t0)} · ${cbN(s.f0-s.f1)} L`]);
+  else if(last&&s.a1<10)out.push(['dn',`Descente finale ${cbPos(R,s.x0)}`,`${Math.round(R.tot-s.x0)} Nm avant ${D} · T + ${cbT(s.t0)} · depuis ${cbFL(s.a0)}`]);
+  else out.push(['dn',`Descente vers <b>${cbFL(s.a1)}</b> ${cbPos(R,s.x0)}`,`niveau atteint ${cbPos(R,s.x1)} · T + ${cbT(s.t1)}`])});
+ return out}
+function cbChart(R,c){const W=720,H=210,l=40,r=46,t=12,b=30,mx=R.tot,fm=Math.max(+c.fuel,200),am=Math.max(50,...R.trace.map(p=>p.a))*1.18;
+ const X=v=>l+(W-l-r)*v/mx,Y=f=>t+(H-t-b)*(1-f/fm),Ya=a=>t+(H-t-b)*(1-a/am);
+ const alt='M'+X(0)+','+Ya(0)+' '+R.trace.map(p=>'L'+X(p.x).toFixed(1)+','+Ya(p.a).toFixed(1)).join(' ')+' L'+X(mx)+','+Ya(0)+'Z';
+ const fl=R.trace.map((p,i)=>(i?'L':'M')+X(p.x).toFixed(1)+','+Y(p.f).toFixed(1)).join(' ');
+ const hl=(v,col,lab)=>v>0&&v<fm?`<line x1="${l}" x2="${W-r}" y1="${Y(v)}" y2="${Y(v)}" stroke="${col}" stroke-dasharray="5 4" stroke-width="1.5"/><text x="${W-r+4}" y="${Y(v)+3.5}" font-size="10" fill="${col}" font-weight="800">${lab}</text>`:'';
+ const wp=R.wps.map((p,i)=>`<line x1="${X(p.x)}" x2="${X(p.x)}" y1="${t}" y2="${H-b}" stroke="var(--line)"/><text x="${X(p.x)}" y="${H-b+13}" font-size="10" text-anchor="${i===0?'start':i===R.wps.length-1?'end':'middle'}" fill="var(--muted)" font-weight="800">${esc(c.pts[i]?c.pts[i].n:'')}</text>`).join('');
+ const fls=R.seg.filter(s=>s.ph==='cr'&&s.x1-s.x0>mx*0.12).map(s=>`<text x="${X((s.x0+s.x1)/2)}" y="${Ya(s.a1)-5}" font-size="10" text-anchor="middle" fill="#0284c7" font-weight="800">${cbFL(s.a1)}</text>`).join('');
+ const ev=R.ev.map(e=>`<circle cx="${X(e.x)}" cy="${Y(e.f)}" r="5.5" fill="${e.k==='fv'?'#f59e0b':'#dc2626'}" stroke="#fff" stroke-width="2"/>`).join('');
+ const yt=[0,500,1000,1500,2000].filter(v=>v<=fm).map(v=>`<text x="${l-6}" y="${Y(v)+4}" font-size="10" text-anchor="end" fill="var(--muted)">${v}</text>`).join('');
+ return `<svg viewBox="0 0 ${W} ${H}" class="cbch" role="img" aria-label="Pétrole restant et profil d'altitude"><path d="${alt}" fill="color-mix(in srgb,#38bdf8 16%,transparent)" stroke="#38bdf8" stroke-width="1.2"/>${wp}${fls}${yt}${hl(+c.fv,'#d97706','voilure')}${hl(R.req,'#dc2626','mini')}<path d="${fl}" fill="none" stroke="var(--fg)" stroke-width="2.6" stroke-linejoin="round"/>${ev}<text x="${W-r}" y="${H-3}" font-size="10" text-anchor="end" fill="var(--muted)">${Math.round(mx)} Nm</text><text x="${l-6}" y="${t-1}" font-size="10" text-anchor="end" fill="var(--muted)">L</text></svg>`}
+function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
+ const seg=(k,arr,cur,fn)=>`<div class="cb-seg">${arr.map(([v,lab,sub])=>`<button aria-pressed="${String(cur)===String(v)}" onclick="${fn?fn(v):`cbSet('${k}',${typeof v==='number'?v:`'${v}'`})`}">${lab}${sub?`<small>${sub}</small>`:''}</button>`).join('')}</div>`;
+ const D=c.pts.length?c.pts[c.pts.length-1]:null,fv=R&&R.ev.find(e=>e.k==='fv'),rq=R&&R.ev.find(e=>e.k==='req');
+ const evT=e=>{const lg=R.L[e.leg];return `${esc(lg.a.n)} + ${Math.round(e.dl)} Nm`};
+ const wsrc=c.legs.some(l=>l.wp)?`Vent prévu (Open-Meteo)${c.legs[0]&&c.legs[0].wt?' · '+new Date(c.legs[0].wt*1000).toLocaleString('fr-FR',{weekday:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}`:c.legs.some(l=>l.wm)?'Vent saisi à la main':'Sans vent pour l\'instant';
+ const wxB=(cat,k)=>`<span class="cb-wx ${cat==='VFR'?'v':'i'}" title="${k==='?'?'Météo inconnue : IFR par prudence':k==='m'?'Choisi à la main':'D\'après METAR / TAF'}">${cat}${k==='?'?' ?':k==='m'?' ✎':''}</span>`;
+ /* ---- bandeau ---- */
+ const hero=!R?`<div class="cb-hero cb-empty"><div class="cb-hi">⛽</div><div><b>Calcul carburant Alphajet</b><p>Importez la route ForeFlight (ou tapez-la) : pétrole à chaque point, profil vertical, fin de voilure et mini à l'arrivée selon les dégagements et leur météo.</p></div></div>`:(()=>{
+  const P=+c.fuel,pc=v=>Math.max(0,Math.min(100,v/P*100)),ok=R.marge>=0,used=R.f0-R.fA;
+  return `<div class="cb-hero"><div class="cb-rt"><b>${esc(c.pts[0].n)}</b><span class="cb-line">${c.pts.slice(1,-1).map(p=>`<i title="${esc(p.n)}"></i>`).join('')}</span><b>${esc(D.n)}</b></div>
+   <div class="cb-sub">${cbN(R.tot)} Nm · ${cbT(R.t)} · ${esc((CB_PL.find(p=>p[0]===+c.fuel)||[0,cbN(c.fuel)+' L'])[1])} · ${c.dim==='3d'?'altitudes du fichier':cbFL(+c.fl)+' '+esc(CB_PR.find(p=>p[0]===c.pr)[1])}</div>
+   <div class="cb-kp"><div><small>Conso route</small><b>${cbN(used+ +c.mer)} L</b><em>dont ${c.mer} L mise en route</em></div>
+    <div><small>Arrivée ${esc(D.n)}</small><b>${cbN(R.fA)} L</b><em>T + ${cbT(R.t)}</em></div>
+    <div><small>Mini à l'arrivée</small><b>${cbN(R.req)} L</b><em>${R.alt?`dégagement ${esc(R.alt.id)} ${cbN(R.alt.f)} L + ${R.alt.cat} ${R.alt.sec} L`:`sécurité ${c.sec==400?'IFR':'VFR'} seule`}</em></div>
+    <div><small>Fin de voilure</small><b>${fv?'T + '+cbT(fv.t):R.f0<=c.fv?'—':'non atteinte'}</b><em>${fv?evT(fv):R.f0<=c.fv?'plein sous le seuil':'reste en voilure'}</em></div></div>
+   <div class="cb-g"><div class="cb-gb"><i class="cb-gf ${ok?'':'ko'}" style="width:${pc(R.fA)}%"></i><i class="cb-gu" style="left:${pc(R.fA)}%;width:${pc(used+ +c.mer)}%"></i><i class="cb-gr" style="width:${pc(R.req)}%"></i>
+     <u style="left:${pc(c.fv)}%" title="fin de voilure"></u></div>
+    <div class="cb-gl"><span><i class="cb-d f"></i>arrivée</span><span><i class="cb-d u"></i>consommé</span><span><i class="cb-d r"></i>mini (dégagement + sécu)</span><span><i class="cb-d v"></i>voilure ${cbN(c.fv)} L</span></div></div>
+   <div class="cb-vd ${ok?'ok':'ko'}">${ok?`✓ Marge ${cbN(R.marge)} L au-dessus du mini`:`✕ Il manque ${cbN(-R.marge)} L : mini atteint ${rq?evT(rq)+' (T + '+cbT(rq.t)+')':''}`}</div></div>`})();
+ /* ---- route ---- */
+ const route=`<section class="cb-card"><h3><span class="cb-n">1</span>Route</h3>
+  <label class="cb-drop">${ic('upload',22)}<span><b>Importer la route ForeFlight</b><small>.fpl · .kml · .gpx · trace : les altitudes du fichier sont reprises</small></span><input type="file" accept=".fpl,.gpx,.kml,.xml" hidden onchange="cbFile(this)"></label>
+  <div class="cb-or"><span>ou tapez-la</span></div>
+  <div class="cb-tx"><input id="cbtxt" class="in" value="${esc(c.txt)}" placeholder="LFMY MTL/F250 ROA/F100 LFSI" autocapitalize="characters" spellcheck="false" onkeydown="if(event.key==='Enter')cbRead()" onchange="S.cb.txt=this.value"><button class="btn pri" onclick="cbRead()">OK</button></div>
+  <p class="cb-hint">Terrains OACI, points du fichier importé, coordonnées (4336N00507E). « MTL/F250 » : FL250 après MTL.${c.pts.length?'':` <a href="#" onclick="event.preventDefault();cbEx()">Exemple</a>`}</p>
+  ${c.bad&&c.bad.length?`<p class="cb-hint" style="color:var(--bad)">Inconnus : ${esc(c.bad.join(' '))} — importez le fichier ForeFlight pour avoir leurs coordonnées.</p>`:''}
+  ${c.pts.length>=2?`<div class="cb-chain">${c.pts.map(p=>`<span>${esc(p.n)}</span>`).join('<i>›</i>')}</div><div class="cb-src">${c.dim==='3d'?'⛰ Altitudes lues dans le fichier : un niveau par branche':c.dim==='txt'?'Niveaux donnés dans la route':'Trajectoire 2D : profil construit au niveau choisi ci-dessous'}${c.src&&c.src!=='texte'?' · '+esc(c.src):''}</div>`:''}</section>`;
+ /* ---- avion & vol ---- */
+ const vol=`<section class="cb-card"><h3><span class="cb-n">2</span>Avion et vol</h3>
+  <div class="cb-f"><label>Plein</label>${seg('fuel',CB_PL.map(([v,n])=>[v,n,v]),c.fuel)}</div>
+  <div class="cb-f"><label>Mise en route</label>${seg('mer',CB_MER.map(([v,n])=>[v,n,v+' L']),c.mer)}</div>
+  <div class="cb-f"><label>Niveau</label><div class="cb-step"><button onclick="cbSet('fl',Math.max(10,${+c.fl}-(${+c.fl}>100?50:10)))" aria-label="Descendre">−</button><b>${cbFL(+c.fl)}</b><button onclick="cbSet('fl',Math.min(420,${+c.fl}+(${+c.fl}>=100?50:10)))" aria-label="Monter">+</button></div>${c.dim==='3d'||c.dim==='txt'?'<span class="cb-hint" style="margin:0">branches sans niveau</span>':''}</div>
+  <div class="cb-f"><label>Croisière</label>${seg('pr',CB_PR.map(([v,n])=>[v,n]),c.pr)}</div>
+  <div class="cb-f"><label>Décollage</label><div class="cb-tx"><input type="datetime-local" class="in" value="${esc(c.dep)}" onchange="S.cb.dep=this.value;cbSave();cbWindLoad(1);S.cbWx&&(S.cbWx.t=0);render()"><button class="btn" ${c.pts.length<2||S.cbWBusy?'disabled':''} onclick="cbWindLoad()">${S.cbWBusy?'…':'Vent prévu'}</button></div></div>
+  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants.</p></section>`;
+ if(!R)return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}<div class="cb-wrap">${hero}<div class="cb-cols">${route}${vol}</div></div>`;
+ /* ---- profil vertical ---- */
+ const prof=`<section class="cb-card"><h3><span class="cb-n">3</span>Profil vertical</h3>${cbChart(R,c)}
+  <ol class="cb-pf">${cbProfil(R,c).map(([k,a,b])=>`<li class="${k}"><i>${k==='up'?'↗':k==='dn'?'↘':'→'}</i><div><span>${a}</span><small>${b}</small></div></li>`).join('')}</ol></section>`;
+ /* ---- navlog ---- */
+ const fcol=f=>f<R.req?'ko':f<c.fv?'vo':'';
+ const nav=`<section class="cb-card"><h3><span class="cb-n">4</span>Navlog</h3><ol class="cb-tl">
+  <li class="cb-wp"><i></i><div><b>${esc(c.pts[0].n)}</b><small>lâcher des freins</small></div><div class="r"><b>${cbN(R.f0)} L</b><small>T + 0′00</small></div></li>
+  ${R.L.map((g,i)=>{const lg=c.legs[i]||{},w=g.cr.w,ev=R.ev.filter(e=>e.leg===i).map(e=>`<li class="cb-ev ${e.k}"><i></i><div><b>${e.k==='fv'?'Fin de voilure':'Mini arrivée atteint'}</b><small>${esc(g.a.n)} + ${Math.round(e.dl)} Nm</small></div><div class="r"><b>${cbN(e.f)} L</b><small>T + ${cbT(e.t)}</small></div></li>`).join('');
+   return `<li class="cb-lg"><details ${S.cbOpen===i?'open':''} ontoggle="if(this.open)S.cbOpen=${i};else if(S.cbOpen===${i})S.cbOpen=null"><summary>
+     <span><b>${String(Math.round(g.c)).padStart(3,'0')}°</b> · ${g.d.toFixed(g.d<10?1:0)} Nm</span><span>${cbFL(g.fl)}${lg.fl!=null&&lg.fl!==lg.f0?' ✎':''} · ${esc((CB_PR.find(p=>p[0]===g.pr)||CB_PR[0])[1])}</span>
+     <span>${w?`${cbW(w)}${Math.abs(g.cr.hw)>=1?` <em class="${g.cr.hw>0?'hw':'tw'}">${g.cr.hw>0?'face':'arrière'} ${Math.round(Math.abs(g.cr.hw))}</em>`:''}`:'<em>sans vent</em>'}</span>
+     <span>Vs ${Math.round(g.cr.gs)} · ${cbT(g.t)} · <b>${cbN(g.f)} L</b></span><span class="cb-ed">${ic('edit',14)}</span></summary>
+    <div class="cb-edit"><label>Niveau<input class="in" inputmode="numeric" value="${lg.fl??''}" placeholder="${c.fl}" onchange="cbLeg(${i},'fl',this.value)"></label>
+     <label>Croisière<select class="in" onchange="cbLeg(${i},'pr',this.value)"><option value="">${esc((CB_PR.find(p=>p[0]===c.pr)||CB_PR[0])[1])} (général)</option>${CB_PR.map(p=>`<option value="${p[0]}" ${lg.pr===p[0]?'selected':''}>${p[1]}</option>`).join('')}</select></label>
+     <label>Vent au niveau<input class="in" value="${esc(lg.wm||'')}" placeholder="${w&&!lg.wm?cbW(w)+' prévu':'330/25'}" onchange="cbLeg(${i},'wm',this.value.trim())"></label></div></details></li>
+    ${ev}<li class="cb-wp ${i===R.L.length-1?'end':''}"><i></i><div><b>${esc(g.b.n)}</b><small>${i===R.L.length-1?'arrivée':cbFL(R.wps[i+1].a)}</small></div><div class="r"><b class="${fcol(R.wps[i+1].f)}">${cbN(R.wps[i+1].f)} L</b><small>T + ${cbT(R.wps[i+1].t)}</small></div></li>`}).join('')}</ol></section>`;
+ /* ---- dégagements ---- */
+ const sug=cbNear(D,5,c.alts.map(a=>a.id)),dw=R.dwx;
+ const alts=`<section class="cb-card"><h3><span class="cb-n">5</span>Arrivée et dégagements</h3>
+  <div class="cb-dst"><b>${esc(D.n)}</b> <span class="muted">${esc(PF_AD[D.n]?PF_AD[D.n][0]:'')}</span> ${dw.cat?wxB(dw.cat,''):''}<small>${esc(dw.why)} · arrivée ${new Date(R.eta).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</small></div>
+  <div class="cb-alts">${R.AL.length?R.AL.map(a=>`<div class="cb-alt ${R.alt&&R.alt.id===a.id?'sel':''}">
+    <button class="cb-rad" onclick="cbSet('altSel','${a.id}')" aria-label="Retenir ${a.id}"></button>
+    <div class="cb-ah"><b>${esc(a.id)}</b> <span>${esc(a.name)}</span><small>${Math.round(a.d)} Nm · ${String(Math.round(a.c)).padStart(3,'0')}° depuis ${esc(D.n)}</small></div>${wxB(a.cat,a.mode!=='a'?'m':a.wx.cat?'':'?')}
+    <button class="ib cb-x" onclick="cbAltDel('${a.id}')" aria-label="Retirer">${ic('x',15)}</button>
+    <div class="cb-aw">${a.mode==='a'?esc(a.wx.cat?a.wx.why:a.wx.why+' : IFR par prudence'):'Choisi à la main'}</div>
+    <div class="cb-ar">${seg('',[['a','Auto'],['v','VFR'],['i','IFR']],a.mode,v=>`cbAltSet('${a.id}','wx','${v}')`)}
+     <span class="cb-af">Dégagement <input class="in cb-mini" inputmode="numeric" value="${a.auto?'':a.fl}" placeholder="${a.fl}" onchange="cbAltSet('${a.id}','fl',this.value)"> DMF · ${cbT(a.t)} · <b>${cbN(a.f)} L</b></span></div>
+    <div class="cb-req"><span>${cbN(a.f)} L dégagement + ${a.sec} L sécu ${a.cat}</span><b>= ${cbN(a.req)} L mini à ${esc(D.n)}</b></div></div>`).join(''):`<p class="cb-hint">Pas de dégagement : sécurité seule. ${seg('sec',[[250,'VFR 250 L'],[400,'IFR 400 L']],c.sec)}</p>`}</div>
+  <div class="cb-add"><span>Ajouter :</span>${sug.map(([id,d])=>`<button onclick="cbAltAdd('${id}')">${id} <small>${Math.round(d)} Nm</small></button>`).join('')}<input class="in cb-mini" style="width:74px" placeholder="OACI" onchange="cbAltAdd(this.value)"></div>
+  <p class="cb-hint">Le terrain retenu (●) fixe le mini à l'arrivée : pétrole du dégagement (DMF, niveau auto, sans décollage) + sécurité ${CB_VFR.c} ft / ${CB_VFR.v/1000} km → VFR 250 L, sinon IFR 400 L. Météo du terrain de 30′ avant à 1 h après l'arrivée prévue, TEMPO et PROB compris. <a href="#" onclick="event.preventDefault();S.cbWx=null;cbWxLoad(1)">Recharger la météo</a></p></section>`;
+ return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}
+ <div class="cb-wrap">${hero}<div class="cb-cols"><div>${route}${vol}${alts}</div><div>${prof}${nav}</div></div>
+ <p class="cb-hint" style="margin:12px 2px 0">Fiche PAF « Conso pétrole » (IT10, niveau 2) : décollage et accélération à 280 kt ${CB_TO.f} L, montée PMC à la VOM, croisière selon le profil (DMF interpolée entre plein et 1 200 L), descente éco 80 % (0,7 / 300 kt). Vent prévu au niveau de chaque branche, à l'heure de passage ; température prise en compte sur la vitesse propre. Estimation de préparation : les jauges et le carnet font foi.</p></div>`}
 
 /* ====================== Dossier des pilotes ====================== */
 const PCAT={cerfa:{l:'CERFA',i:'file',c1:'#3b82f6',c2:'#1d4ed8'},lic:{l:'Licences et qualifications',i:'shield',c1:'#10b981',c2:'#047857'},ass:{l:'Assurance',i:'briefcase',c1:'#f59e0b',c2:'#c2410c'},autre:{l:'Autre',i:'folder',c1:'#94a3b8',c2:'#475569'}};
