@@ -59,6 +59,10 @@ details.serd{margin-top:14px;border:1px solid var(--line);border-radius:12px;pad
 #fe .box{background:#0f172a;border:1px solid var(--line);border-radius:16px;padding:14px;width:min(560px,94vw);max-height:92vh;overflow:auto}
 #fesvg{width:100%;height:auto;background:#0b1220;border-radius:12px;touch-action:none;border:1px solid var(--line)}
 #pan .axb{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;font-size:13px}#pan .ownb{border:1px solid var(--line);border-radius:12px;padding:8px;margin:8px 0;background:rgba(100,116,139,.1)}#pan .ownb small{opacity:.7;margin-left:3px}
+#fed{position:fixed;right:12px;top:58px;width:min(410px,calc(100vw - 24px));max-height:calc(100vh - var(--dockh,0px) - 40px);z-index:25;background:var(--pan);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:flex;flex-direction:column}
+#fed .fh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line)}#fed .fb{overflow:auto;padding:4px 12px 12px}
+#fed .tight{display:flex;align-items:center;gap:6px;margin-top:10px;padding:8px 10px;border:1px solid #f59e0b;border-radius:12px;background:rgba(245,158,11,.1)}#fed .tight>div{flex:1;display:grid}#fed .tight small{color:var(--mu)}#fed .tight .b{font-weight:700}#fed .tight.sm{border-color:var(--line);background:none;margin-top:6px;padding:5px 10px}#fed .tight.sm small{flex:1}
+@media (max-width:760px){#fed{left:0;right:0;top:auto;bottom:var(--dockh,0px);width:100%;max-height:60vh;border-radius:16px 16px 0 0}}
 #mdl{position:fixed;inset:0;z-index:30;background:rgba(2,6,23,.6);display:grid;place-items:center;padding:16px}#mdl .mbox{position:relative;background:var(--pan);border:1px solid var(--line);border-radius:16px;padding:18px;max-width:min(760px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}#mdl .mx{position:absolute;right:10px;top:10px}#mdl h2{margin-top:0;padding-right:40px}
 .tw{overflow-x:auto}.smt{border-collapse:collapse;width:100%;font-size:13px}.smt th,.smt td{border:1px solid var(--line);padding:6px 8px;text-align:center;white-space:nowrap}.smt td:first-child{text-align:left}.smt td small{display:block;color:var(--mu);font-size:11px}.smt th{background:rgba(148,163,184,.12)}.smt .warn{background:rgba(245,158,11,.25);font-weight:700}.smt .over{background:rgba(239,68,68,.35);font-weight:800}
 #load{position:fixed;inset:0;display:grid;place-items:center;z-index:20;background:var(--bg);color:var(--mu)}#load[hidden]{display:none}
@@ -192,7 +196,7 @@ const AX=V(1,0,0),AY=V(0,1,0),AZ=V(0,0,1);
 /* Trajectoire réaliste (dans le référentiel du leader) : vitesse de passage (300 kt) qui baisse quand on monte (150 kt en haut d'une boucle),
    facteur de charge tenu par le pilote (≈ 5 G en boucle, moins en haut), pesanteur. La courbure vient de là : R = V² / accélération.
    En virage, l'inclinaison « à plat » est celle où la portance compense le poids : n·cos φ = 1 (≈ 75° à 3,9 G). Moins incliné : ça monte ; plus : ça descend. */
-const KT=.5144,G0=9.81,PHY_D={on:true,v:300,vt:150,n:5,nv:3.9};let PHY=null;const PHYK={};
+const KT=.5144,G0=9.81,PHY_D={on:true,v:300,vt:150,n:4,nv:3.9};let PHY=null;const PHYK={};
 function physOf(s){return Object.assign({},PHY_D,(s&&s.phys)||{})}
 /* coefficient de perte d'énergie : réglé pour qu'une boucle à n G (n − 2 en haut) partie à v kt passe vt kt en haut */
 function physK(v,vt,n){const key=v+'|'+vt+'|'+n;if(PHYK[key])return PHYK[key];const top=k=>{const V0=v*KT;let gm=0,h=0,s=0;while(gm<Math.PI&&s<20000){const V2=V0*V0-2*G0*k*Math.max(0,h);if(V2<100)return 0;const c=Math.cos(gm),nn=Math.max(1.5,n-2)+(n-Math.max(1.5,n-2))*(1+c)/2;gm+=G0*(nn-c)/V2*2;h+=Math.sin(gm)*2;s+=2}return Math.sqrt(Math.max(0,V0*V0-2*G0*k*h))/KT};
@@ -255,7 +259,9 @@ function newSerie(){const a=toW(C0.la,C0.lo),hd=155*D2R,F=[Math.sin(hd),-Math.co
  v:3,figs:[{id:uid(),t:'LIGNE',form:'DIAMANT',p:{L:1600,L0:0},snaps:[{u:.1,form:'DIAMANT'}]},{id:uid(),t:'DEMI',form:'DIAMANT',p:{a:360,L:0,L0:200},snaps:[{u:.55,form:'DIAMANT'}]},{id:uid(),t:'VIRAGE',form:'CONCORDE',p:{a:180,R:800,L0:400},snaps:[{u:.5,form:'CONCORDE'}]}]}}
 function build(s){const ph=physOf(s);PHY=ph.on?Object.assign(ph,{k:physK(ph.v,ph.vt,ph.n)}):null;const T=new Tur(s.start.x,s.start.z,s.start.alt,s.start.hdg),out=[];
  s.figs.forEach((f,i)=>{const d=fdef(f.t),p=figParams(f),sd=f.side==='D'?-1:1;const i0=T.pts.length-1;if(p.L0)T.line(p.L0);const i1=T.pts.length-1;T.marks={};T.mark('start');
+  const n0=PHY?PHY.n:null;if(PHY&&+p.n&&!d.ps.some(q=>q.k==='n'))PHY.n=+p.n;
   try{d.gen(T,p,sd)}catch(e){console.error(e)}
+  if(PHY)PHY.n=n0;
   out.push({f,d,p,i0,i1,i2:T.pts.length-1,marks:Object.assign({},T.marks)})});
  return {pts:T.pts,figs:out,T}}
 /* =========================== Rendu 3D =========================== */
@@ -517,7 +523,24 @@ function shot(){const was=CLEAN;CLEAN=true;NOPAN=true;try{draw()}finally{NOPAN=f
  CLEAN=was;NOPAN=true;try{draw()}finally{NOPAN=false}}
 /* =========================== Panneau =========================== */
 function togPan(){$('pan').classList.toggle('hid');document.body.classList.toggle('pano',!$('pan').classList.contains('hid'));if(R3)resize()}
-function selFig(i){SEL=SEL===i?-1:i;draw()}
+function selFig(i){if(SEL===i&&FEW){SEL=-1;FEW=false}else{SEL=i;FEW=true}draw()}
+/* fenêtre de la brique : tout se règle ici (trajectoire, serrage, formation, snapshots, fumées) ; la vue 3D reste visible à côté */
+let FEW=false,FEWP=false;function fedOpen(){FEW=true;panel()}function fedClose(){FEW=false;const e=$('fed');if(e)e.remove();if(FEWP){FEWP=false;SEL=-1;draw();dock()}else panel()}
+function figGcur(f){const ph=physOf(CUR),p=figParams(f);return +p.n||(f.t==='RC_V'||fdef(f.t).side&&f.t!=='RC_S'?ph.nv:ph.n)}
+function figTight(k){const f=CUR.figs[SEL];if(!f)return;const ph=physOf(CUR);f.p=f.p||{};
+ if(ph.on){const g=Math.max(1.5,Math.min(7,Math.round((figGcur(f)+k*.5)*10)/10));f.p.n=g;info((k>0?'Serré':'Desserré')+' : '+g+' G')}
+ else{const p=figParams(f);if(p.R!=null){f.p.R=Math.round(Math.max(100,Math.min(3000,p.R*(k>0?.85:1/.85)))/10)*10;info('Rayon '+f.p.R+' m')}}
+ draw();touch();setTimeout(()=>info(''),1400)}
+function serTight(k){const ph=physOf(CUR);CUR.phys=Object.assign(ph,{n:Math.max(2,Math.min(7,ph.n+k*.5)),nv:Math.max(1.5,Math.min(7,Math.round((ph.nv+k*.3)*10)/10))});draw();touch();info('Toute la série : '+CUR.phys.n+' G en boucle, '+CUR.phys.nv+' G en virage');setTimeout(()=>info(''),1600)}
+function figDims(fi){if(!BUILT||!BUILT.figs[fi])return null;const F=BUILT.figs[fi],P=BUILT.pts.slice(F.i1,F.i2+1);if(P.length<2)return null;const ys=P.map(x=>x.p.y),vs=P.map(x=>x.v).filter(Boolean);return{h:Math.max(...ys)-Math.min(...ys),vmin:vs.length?Math.round(Math.min(...vs)):0,vmax:vs.length?Math.round(Math.max(...vs)):0}}
+function fedShow(f,html){let e=$('fed');if(!f){if(e)e.remove();return}const ph=physOf(CUR),g=figGcur(f),D=figDims(SEL),act=isAct(f);
+ if(!e){e=document.createElement('div');e.id='fed';document.body.appendChild(e)}const st=e.querySelector('.fb')?e.querySelector('.fb').scrollTop:0;
+ e.innerHTML=`<div class="fh"><b>Brique n° ${SEL+1} · ${esc(fName(f))}</b><button class="b" onclick="fedClose()" aria-label="Fermer">✕</button></div><div class="fb">
+  ${act||!ED?'':`<div class="tight"><div><b>Serrage de la trajectoire</b><small>${ph.on?g+' G'+(D?' · hauteur '+Math.round(D.h/FT)+' ft · '+D.vmin+' à '+D.vmax+' kt':''):'rayon '+(figParams(f).R||'—')+' m'}</small></div><button class="b" onclick="figTight(-1)" title="Moins de G : trajectoire plus large">⊖ Desserrer</button><button class="b" onclick="figTight(1)" title="Plus de G : trajectoire plus serrée">⊕ Serrer</button></div>
+  <div class="tight sm"><small>Toute la série (${ph.n} G en boucle · ${ph.nv} G en virage)</small><button class="b" onclick="serTight(-1)">⊖</button><button class="b" onclick="serTight(1)">⊕</button></div>`}
+  ${html}
+  ${ED?`<div class="row" style="margin-top:10px;gap:4px"><button class="b" onclick="mvFig(${SEL},-1)" ${SEL?'':'disabled'}>◀ Avant</button><button class="b" onclick="mvFig(${SEL},1)" ${SEL<CUR.figs.length-1?'':'disabled'}>Après ▶</button><button class="b" onclick="dupFig(${SEL})">⧉ Dupliquer</button><button class="b" onclick="insAt(${SEL});fedClose()">＋ Insérer après</button></div><button class="b pri" style="width:100%;margin-top:8px" onclick="fedClose()">✓ Terminé</button>`:''}</div>`;
+ const fb=e.querySelector('.fb');if(fb)fb.scrollTop=st}
 let saveT=null;function touch(){hRec();CUR.t=Date.now();clearTimeout(saveT);saveT=setTimeout(()=>post({srSave:CUR}),900)}
 function post(m){if(parent!==window)parent.postMessage(m,'*');else{try{const i=SR.list.findIndex(x=>x.id===(m.srSave||{}).id);if(m.srSave){if(i>=0)SR.list[i]=m.srSave;else SR.list.push(m.srSave)}if(m.srDel)SR.list=SR.list.filter(x=>x.id!==m.srDel);if(m.srForms){SR.formsBy=SR.formsBy||{};SR.formsBy[ME.k]=m.srForms}localStorage.setItem('pafSerieLocal',JSON.stringify(SR))}catch(e){}}}
 /* curseurs : appliqués en direct (une fois par image) pendant qu'on glisse ; la case numérique accepte une saisie */
@@ -783,7 +806,7 @@ function bldSet(k,v){BLD[k]=v;BLD.hov=null;if(k==='dir'&&(v==='G'||v==='D')&&BLD
 /* aperçu au survol (souris) : on voit la brique avant de cliquer */
 function bldPrev(k,v){BLD.hov=k?{[k]:v}:null;NOPAN=true;try{draw()}finally{NOPAN=false}}
 function bldPose(){BLD.hov=null;const f=bldPiece();f.id=uid();if(isAct(f)){f.snaps=[];if(f.t==='ACT_F')BLD.form=f.form}else{f.snaps=[{u:.5,form:f.form}];f.smk=BLD.smk?JSON.parse(JSON.stringify(BLD.smk)):actSmk(INS==null?undefined:INS+1)}
- if(f.t==='ACT_S')BLD.smk=JSON.parse(JSON.stringify(f.smk));if(INS==null)CUR.figs.push(f);else{CUR.figs.splice(INS+1,0,f);INS++}SEL=-1;
+ if(f.t==='ACT_S')BLD.smk=JSON.parse(JSON.stringify(f.smk));if(INS==null)CUR.figs.push(f);else{CUR.figs.splice(INS+1,0,f);INS++}SEL=CUR.figs.indexOf(f);FEW=true;FEWP=true;
  /* remise à zéro : la prochaine brique repart des réglages de base (formation et fumée en vigueur conservées) */
  const keep={form:BLD.form,smk:BLD.smk,on:BLD.on};Object.assign(BLD,BLD0,keep);draw();touch();camEnd();info('Brique posée : '+fName(f)+(INS!=null?' (insérée)':''));setTimeout(()=>info(''),1400)}
 function bldSm(m){BLD.nsmk=smCalc(m,BLD.form||actForm());BLD.nsmkName=SMPN[m];draw()}
@@ -866,6 +889,7 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
  h+=`<div hidden><h2>Figures du ruban</h2><ul class="fl">${CUR.figs.map((g,i)=>`<li class="${i===SEL?'sel':''}" onclick="selFig(${i})"><span class="n">${i+1}</span><span class="t"><b>${isAct(g)?'':esc(formL(g.form))+' · '}${esc(fName(g))}${(()=>{const q=figParams(g);return g.t!=='DEMI'&&q.a!=null&&fdef(g.t).ps.some(x=>x.k==='a')?' '+q.a+'°':''})()}${fdef(g.t).side&&g.t!=='BOUCLE'&&g.t!=='RC_V'?(g.side==='D'?' D':' G'):''}</b><small>${(g.snaps||[]).length>1?g.snaps.length+' snapshots : '+g.snaps.map(x=>formL(x.form)).join(' → '):''}</small></span>${ED?`<button class="x" onclick="event.stopPropagation();mvFig(${i},-1)" aria-label="Monter">▲</button><button class="x" onclick="event.stopPropagation();mvFig(${i},1)" aria-label="Descendre">▼</button>`:''}</li>`).join('')}</ul></div>`;
  if(ED&&!f)h+=bldPanel(sel,rng,fo);
  else if(ED&&f)h+=`<div class="row" style="margin-top:8px;gap:4px"><button class="b" onclick="mvFig(${SEL},-1)" ${SEL?'':'disabled'} title="Avancer dans la série">◀ Avant</button><button class="b" onclick="mvFig(${SEL},1)" ${SEL<CUR.figs.length-1?'':'disabled'} title="Reculer dans la série">Après ▶</button><button class="b" onclick="dupFig(${SEL})">⧉ Dupliquer</button><button class="b" onclick="insAt(${SEL})">＋ Insérer après</button></div><button class="b" style="margin-top:6px;width:100%" onclick="toEnd()">🎢 Continuer au bout du ruban</button>`;
+ const h0=h;h='';
  if(f){const d=fdef(f.t),p=figParams(f),act=isAct(f);
   h+=`<h2>${SEL+1} · ${act?'':esc(formL(f.form))+' · '}${esc(fName(f))}</h2>`;
   if(f.t==='ACT_S'){const m=f.smk||{},N=fNorm(FORMS()[actForm(SEL)]||FORMS().DIAMANT).map(o=>o.n).sort((a,c)=>a-c);
@@ -884,6 +908,7 @@ function panel(){if(!CUR)return;edSet();if(MODE==='sync')return panelSync();cons
    ${[LEAD].concat(d.ps).filter(q=>!(f.t==='RC_S'&&+p.v===0&&(q.k==='ang'||q.k==='R'||q.k==='n'))&&!(physOf(CUR).on?q.k==='R':q.k==='n')).map(q=>f.t==='RC_S'&&q.k==='v'?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(+p.v),[['0','À plat'],['1','Courbe vers le haut'],['-1','Courbe vers le bas']],`setP('v',this.value)`)}</div>`:q.min===0&&q.max===1?`<div class="pr" style="grid-template-columns:96px 1fr"><label>${q.l}</label>${sel(String(p[q.k]?1:0),(q.k==='out'?[['0','Non : on reste inscrit dans le virage'],['1','Oui : ailes à plat à la sortie']]:[['0','Non (finit sur le dos)'],['1','Oui (remis à l\'endroit)']]),`setP('${q.k}',this.value)`)}</div>`:rng(q.l,q.k==='n'&&p.n==null?(f.t==='RC_V'?physOf(CUR).nv:physOf(CUR).n):p[q.k],q.min,q.max,q.st,q.u,`setP('${q.k}',this.value)`)).join('')}
    ${(()=>{const L=figLen(SEL);if(!L)return '';const mx=Math.max(50,Math.ceil(L/50)*50),v=+f.vis>0?Math.min(+f.vis,mx):mx;return rng('Longueur visible',v,50,mx,50,'m','setVis(this.value)')+`<p class="hint" style="margin-top:0">Figure complète : ${Math.round(L)} m. Réduisez pour ne montrer que la fin de la figure (ex. le dernier quart d'un virage de 360°).</p>`})()}
    <p class="hint">${ED?'Poignée orange : ligne d\'entrée (déplace la brique le long du ruban). Poignée verte : taille de la brique. Boule violette : inclinaison. Attrapez les avions dans la vue 3D pour faire glisser la formation le long de la trajectoire.':''}</p>`}}
+ const figH=h;h=h0;if(f&&FEW){h+=`<button class="b pri" style="width:100%;margin-top:8px" onclick="fedOpen()">✎ Fenêtre de la brique n° ${SEL+1}</button>`;fedShow(f,figH)}else{h+=figH;fedShow(null)}
 
  if(ED){
   {const ph=physOf(CUR);sd+=`<h2>Vol réaliste</h2><div class="row"><button class="b ${ph.on?'on':''}" onclick="setPhys('on',${!ph.on})">${ph.on?'✓ Trajectoire réaliste':'Trajectoire géométrique'}</button></div>
