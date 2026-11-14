@@ -725,6 +725,12 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .dr-oth{margin-top:12px}.dr-oth>summary{cursor:pointer;font-weight:800;margin-bottom:8px}
 .xsw{overflow-x:auto;margin:6px 0 10px;border-radius:12px;background:linear-gradient(#f8fbff,#eef5ff);border:1px solid var(--line)}.xsw svg.xs{display:block;width:100%;min-width:760px;height:auto}
 [data-theme=dark] .xsw{background:#0f1a2e}.xs-sub{font-weight:600;color:var(--muted);font-size:12px;margin-left:6px}.xsleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--muted);margin:8px 0}.xsleg b{color:var(--fg)}.xsmono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.cb-res{margin:4px 0 12px}.cb-res-h{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}.cb-res-h>div{background:var(--surface2);border-radius:12px;padding:8px 10px;display:grid}.cb-res-h small{font-size:11.5px;color:var(--muted);font-weight:700}.cb-res-h b{font-size:17px}
+.cb-rt2{width:100%;border-collapse:collapse;font-size:13.5px}.cb-rt2 th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:700;padding:4px 6px;border-bottom:1px solid var(--line)}.cb-rt2 td{padding:6px;border-bottom:1px solid var(--line);vertical-align:top}.cb-rt2 td small{display:block;color:var(--muted);font-size:12px}
+.cb-iso{display:flex;gap:10px;align-items:flex-start;background:#ecfeff;border:1px solid #a5f3fc;color:#164e63;border-radius:12px;padding:8px 10px;margin:6px 0 10px;font-size:14px}.cb-iso>div{display:grid}.cb-iso small{font-size:12.5px;color:#0e7490}.cb-iso.sm{margin:6px 0;font-size:13px}
+.cb-iso-i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0891b2;color:#fff;font-weight:900;font-size:12px}
+[data-theme=dark] .cb-iso{background:#083344;border-color:#155e75;color:#cffafe}[data-theme=dark] .cb-iso small{color:#67e8f9}
+@media (max-width:560px){.cb-res-h{grid-template-columns:1fr 1fr}}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
 @media (max-width:560px){.cb-kp{grid-template-columns:1fr 1fr}.cb-kp b{font-size:19px}.cb-rt{font-size:20px}.cb-f>label{width:100%}.cb-edit{grid-template-columns:1fr 1fr}.cb-hero{padding:16px 14px 14px;border-radius:20px}.cb-card{padding:12px}}
 
@@ -1455,7 +1461,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794653897';
+const APP_V='1794655705';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5804,12 +5810,14 @@ function cbSat(lg,alt){const w=cbWind(lg,Math.max(alt,0));let T=w&&w.T!=null?w.T
 /* échauffement cinétique : en transit, celui du tableau (recalé, ≈ 9,3 °C) pris comme plafond — on ne compte jamais plus chaud que la note ;
    en basse altitude, 10,5 °C à 300 kt comme la note, proportionnel à V² */
 const cbKin=(v,low)=>low?10.5*Math.pow((v||0)/300,2):POD_M.dk*Math.min(1,Math.pow((v||0)/400,2));
-function cbPodInit(L){const Tg=cbSat(L[0],0);return{Tm:Tg+POD_M.t0,Tg,hi:false,expo:0,ha:0,satMin:99,tmMin:99,X:[],cur:null}}
+function cbPodInit(L){const Tg=cbSat(L[0],0);return{Tm:Tg+POD_M.t0,Tg,hi:false,expo:0,ha:0,satMin:99,tmMin:99,X:[],cur:null,I:[],ps:null,chr:Tg<0?{x:0,t:0,a:0,sol:1}:null,iso:[]}}
 function cbPodStep(P,lg,am,alt,aa,v,dt,xa,x,ta,t){if(dt<=0)return;const sat=cbSat(lg,am),Ta=sat+cbKin(v,am<100),tau=(Ta>P.Tm?POD_M.t2:POD_M.t1)*60;P.Tm+=(Ta-P.Tm)*(1-Math.exp(-dt/tau));
- if(am>=100){P.ha+=dt;P.satMin=Math.min(P.satMin,sat);if(sat<0)P.expo+=dt}P.tmMin=Math.min(P.tmMin,P.Tm);
- if(aa>=100&&alt<100){const Tg=cbSat(lg,0),tr=Tg+10.5;P.cur={x,t,Tm:P.Tm,expo:P.expo,ha:P.ha,satMin:P.satMin,Tg,std:P.Tm>=0?0:(tr<=0?null:POD_M.t2*60*Math.log((tr-P.Tm)/tr)),ok:P.Tm>=0?{x,t}:null};P.X.push(P.cur)}
+ /* iso 0 °C : chrono d'exposition lancé au passage en montée (Athos 5), arrêté au retour sous FL100 */
+ if(P.ps!=null&&(P.ps>=0)!==(sat>=0)){const k={x,t,a:am,up:sat<0,ph:alt>aa+.05?'mt':alt<aa-.05?'de':'cr'};P.iso.push(k);if(k.up&&!P.cur){P.expo=0;P.chr=k}}P.ps=sat;
+ if(sat<0&&!P.cur)P.expo+=dt;if(am>=100){P.ha+=dt;P.satMin=Math.min(P.satMin,sat)}P.tmMin=Math.min(P.tmMin,P.Tm);
+ if(aa>=100&&alt<100){const Tg=cbSat(lg,0),tr=Tg+10.5;P.cur={x,t,Tm:P.Tm,expo:P.expo,ha:P.ha,satMin:P.satMin,Tg,chr:P.chr,isoD:P.iso.filter(k=>!k.up).slice(-1)[0]||null,std:P.Tm>=0?0:(tr<=0?null:POD_M.t2*60*Math.log((tr-P.Tm)/tr)),ok:P.Tm>=0?{x,t}:null};P.X.push(P.cur)}
  else if(P.cur&&!P.cur.ok&&alt<100&&P.Tm>=0)P.cur.ok={x,t};
- if(alt>=100&&aa<100){if(P.cur&&!P.cur.ok)P.cur.up={x,t};P.cur=null;P.expo=0;P.ha=0;P.satMin=99}}
+ if(alt>=100&&aa<100){if(P.cur&&!P.cur.ok)P.cur.up={x,t};if(P.cur){P.expo=0;P.chr=P.ps<0?{x,t,a:alt,f100:1}:null}P.cur=null;P.ha=0;P.satMin=99}}
 /* fin de route avant que la membrane soit dégelée : on prolonge en basse altitude à 300 kt (hypothèse de la note) */
 function cbPodEnd(P,L,t){const Tg=cbSat(L[L.length-1],0),tr=Tg+10.5;P.X.forEach(c=>{c.wt=c.ok?Math.max(0,c.ok.t-c.t):c.up?null:(P.Tm>=0?t-c.t:(tr<=0?null:(t-c.t)+POD_M.t2*60*Math.log((tr-P.Tm)/tr)));c.after=!c.ok&&!c.up})}
 /* ====================== Carburant : conso Alphajet par étape (fiche PAF « CONSO PÉTROLE », IT10 niveau 2) ====================== */
@@ -6039,6 +6047,13 @@ const cbW=w=>w?String(Math.round(w.d)).padStart(3,'0')+'°/'+Math.round(w.s):'�
 const cbFL=a=>a<1?'le sol':'FL'+String(a>=95?Math.round(a/10)*10:Math.round(a/5)*5).padStart(3,'0');
 function cbPos(R,x){const lg=R.L.find(l=>x<=l.x0+l.d+1e-6)||R.L[R.L.length-1],a=x-lg.x0,b=lg.x0+lg.d-x;
  return a<1?'à '+esc(lg.a.n):b<1?'à '+esc(lg.b.n):a<=b?`${Math.round(a)} Nm après ${esc(lg.a.n)}`:`${Math.round(b)} Nm avant ${esc(lg.b.n)}`}
+/* Résumé du profil : niveaux et vitesses de croisière choisis, par tronçon */
+function cbResume(R,c){const G=[];R.L.forEach((l,i)=>{const cr=l.cr||{},fl=Math.round(cr.fl!=null?cr.fl:l.fl),k=fl+'|'+l.pr,g=G[G.length-1];if(g&&g.k===k){g.i1=i;g.d+=l.d;g.t+=l.t;g.f+=l.f}else G.push({k,i0:i,i1:i,fl,pr:l.pr,cr,d:l.d,t:l.t,f:l.f})});
+ const T=w=>w&&w.T!=null?w.T:null,top=Math.max(...G.map(g=>g.fl)),cl=R.seg.find(s=>s.ph==='mt'),ds=[...R.seg].reverse().find(s=>s.ph==='de');
+ const rows=G.map(g=>{const cr=g.cr,v=cr.v||0,tc=T(cr.w),M=cbMach(g.fl,v,tc),vi=cbVi(g.fl,v,tc),low=CB_TBA[g.pr];
+  return `<tr><td><b>${g.fl<1?'—':cbFL(g.fl)}</b></td><td><b>${esc(low?cbPrL(g.pr):cbPrL(g.pr))}</b><small>${low?'':'M'+M.toFixed(2).replace('.',',')+' · '}Vi ${Math.round(vi)} kt · Vp ${Math.round(v)} kt${cr.gs?' · Vs '+Math.round(cr.gs)+' kt':''}</small></td><td>${esc(R.L[g.i0].a.n)} → ${esc(R.L[g.i1].b.n)}<small>${Math.round(g.d)} Nm${cr.q?' · '+cr.q.toFixed(1).replace('.',',')+' L/min':''}</small></td></tr>`}).join('');
+ return `<div class="cb-res"><div class="cb-res-h"><div><small>Niveau de croisière</small><b>${G.length>1&&G.some(g=>g.fl!==top)?'max '+cbFL(top):cbFL(top)}</b></div><div><small>Vitesse de croisière</small><b>${G.every(g=>g.pr===G[0].pr)?esc(CB_TBA[G[0].pr]?cbPrL(G[0].pr):cbPrL(G[0].pr)):'par tronçon'}</b></div><div><small>Montée</small><b>${cl?cbFL(cl.a1)+' à '+Math.round(cl.x1)+' Nm':'—'}</b></div><div><small>Descente ${esc(CB_DS[c.des||'eco'][0])}</small><b>${ds?Math.round(R.tot-ds.x0)+' Nm avant':'—'}</b></div></div>
+  <table class="cb-rt2"><thead><tr><th>Niveau</th><th>Vitesse</th><th>Tronçon</th></tr></thead><tbody>${rows}</tbody></table></div>`}
 /* Profil vertical en clair : où on monte, à quel niveau, où on descend */
 function cbProfil(R,c){const D=esc(c.pts[c.pts.length-1].n),out=[];
  R.seg.forEach((s,i)=>{const last=i===R.seg.length-1;
@@ -6090,11 +6105,18 @@ function cbPodTab(sat,expo,sol){if(typeof POD==='undefined')return null;if(sat>=
  if(expo>30&&v<600){const pm=(sa,so,e)=>{const M=POD_M,Ta=sa+M.dk,Tm=Ta+(so+M.t0-Ta)*Math.exp(-e/M.t1),tr=so+10.5;return Tm>=0?0:60*M.t2*Math.log((tr-Tm)/tr)};v=Math.min(600,Math.ceil((v+Math.max(0,pm(POD.sat[ri],POD.sol[ci],expo)-pm(POD.sat[ri],POD.sol[ci],30)))/30)*30)}return v}
 const cbPodV=p=>{const tb=p.expo>0?cbPodTab(p.satMin,p.expo/60,p.Tg):0;p.tab=tb;return Math.max(p.std||0,tb||0)};
 function cbPodTxt(p){const v=cbPodV(p);return p.std==null&&!p.tab?'réchauffage : sol à moins de −10 °C, hors note':v<5?'POD utilisable dès le passage':'réchauffage '+cbT(Math.ceil(v/30)*30)+(v>=600?' (≥ 10′, plafond de la règle)':'')}
-function cbPodRows(R,c,g){const P=R.pod;if(!P||!P.X.length)return[];return P.X.filter(p=>p.x>g.x0+1e-6&&p.x<=g.x0+g.d+1e-6).map(p=>{return [p.x,(()=>{const lg=R.L.find(l=>p.x<=l.x0+l.d+1e-6)||g;
-  return `<li class="cb-pod"><i></i><div><b>POD · passage FL100</b><small>${esc(cbPodTxt(p))}${(()=>{const v=Math.ceil(cbPodV(p)/30)*30;return v<5?'':p.t+v>R.t?' · utilisable après l’arrivée':' · utilisable vers T + '+cbT(p.t+v)})()}${cbVOk(c)?'':' · <em>plan non validé</em>'}</small></div><div class="r"><small>T + ${cbT(p.t)}</small></div></li>`})()]})}
+function cbPodRows(R,c,g){const P=R.pod;if(!P)return[];const I=P.iso.filter(k=>k.up&&k.x>g.x0+1e-6&&k.x<=g.x0+g.d+1e-6).map(k=>[k.x,`<li class="cb-pod"><i></i><div><b>Iso 0 °C · ${cbFL(k.ph!=='cr'?(cbIso0(g)??k.a):k.a)}</b><small>Athos 5 : top chrono d’exposition POD</small></div><div class="r"><small>T + ${cbT(k.t)}</small></div></li>`]);return I.concat(P.X.filter(p=>p.x>g.x0+1e-6&&p.x<=g.x0+g.d+1e-6).map(p=>{return [p.x,(()=>{const lg=R.L.find(l=>p.x<=l.x0+l.d+1e-6)||g;
+  return `<li class="cb-pod"><i></i><div><b>POD · passage FL100</b><small>${esc(cbPodTxt(p))}${(()=>{const v=Math.ceil(cbPodV(p)/30)*30;return v<5?'':p.t+v>R.t?' · utilisable après l’arrivée':' · utilisable vers T + '+cbT(p.t+v)})()}${cbVOk(c)?'':' · <em>plan non validé</em>'}</small></div><div class="r"><small>T + ${cbT(p.t)}</small></div></li>`})()]}))}
+const cbIso0=lg=>{if(cbSat(lg,0)<0)return 0;for(let a=0;a<=400;a+=1)if(cbSat(lg,a)<0)return a;return null};
+const cbIsoTx=a=>a==null?'au-dessus du FL400':a<=0?'au sol':cbFL(a)+' ('+cbN(Math.round(a*100/100)*100)+' ft)';
+function cbChrono(R,P){const ch=P.chr,i0=cbIso0(R.L[0]);
+ if(ch&&ch.sol)return `<div class="cb-iso"><b>Iso 0 °C au sol</b> à ${esc(R.L[0].a.n)} : <b>Athos 5, top chrono au décollage</b>.</div>`;
+ const up=P.iso.find(k=>k.up);
+ return `<div class="cb-iso"><span class="cb-iso-i">0°</span><div><b>Iso 0 °C au départ : ${cbIsoTx(i0)}</b><small>${up?`Athos 5 : <b>top chrono en passant ${up.ph!=='cr'?cbFL((()=>{const lg=R.L.find(l=>up.x<=l.x0+l.d+1e-6)||R.L[0],v=cbIso0(lg);return v!=null&&Math.abs(v-up.a)<15?v:up.a})()):cbFL(up.a)} ${up.ph==='mt'?'en montée':up.ph==='de'?'en descente':'en palier'}</b>, ${cbPos(R,up.x)} · T + ${cbT(up.t)}`:'La route reste au-dessus de 0 °C : pas de chrono d\'exposition.'}</small></div></div>`}
 function cbPodCard(R,c){const P=R.pod;if(!P)return'';const X=P.X,v=cbVOk(c);
  return `<section class="cb-card cb-podc"><h3><span class="cb-n">7</span>Réchauffage POD</h3>
-  ${X.length?X.map(p=>`<div class="cb-pr"><div><b>Passage FL100 ${cbPos(R,p.x)}</b><small>T + ${cbT(p.t)}</small></div>
+  ${cbChrono(R,P)}${X.length?X.map(p=>`<div class="cb-pr"><div><b>Passage FL100 ${cbPos(R,p.x)}</b><small>T + ${cbT(p.t)}</small></div>
+   ${(()=>{const lg=R.L.find(l=>p.x<=l.x0+l.d+1e-6)||R.L[R.L.length-1],ia=cbIso0(lg);return `<div class="cb-iso sm"><span class="cb-iso-i">0°</span><div><b>Iso 0 °C ici : ${cbIsoTx(ia)}</b><small>${p.chr?`chrono lancé ${p.chr.sol?'au décollage (sol sous 0 °C)':p.chr.f100?'au passage du FL100 (déjà sous 0 °C)':'au passage de l\'iso 0 °C · T + '+cbT(p.chr.t)} → ${cbT(p.expo)} d'exposition au passage FL100`:'pas d\'exposition sous 0 °C'}${p.isoD&&p.isoD.x>=(p.chr?p.chr.x:0)?` · iso 0 °C repassée à ${cbFL(p.isoD.a)} en descente`:''}</small></div></div>`})()}
    <div class="cb-pk"><span>Haute altitude</span><b>${cbT(p.ha)}</b><span>Exposition sous 0 °C</span><b>${cbT(p.expo)}</b><span>SAT mini</span><b>${p.satMin<90?Math.round(p.satMin)+' °C':'—'}</b><span>Membrane au passage</span><b>${Math.round(p.Tm)} °C</b><span>Sol prévu</span><b>${Math.round(p.Tg)} °C</b></div>
    <div class="cb-pt ${cbPodV(p)>=5?'w':'ok'}">${esc(cbPodTxt(p))}${cbPodV(p)>=5?`<small>le plus long de : note PAF (SAT ${Math.round(p.satMin)} °C, ${Math.round(p.expo/60)} min, sol ${Math.round(p.Tg)} °C) ${cbT(p.tab||0)} · calcul trajectoire ${cbT(Math.ceil((p.std||0)/30)*30)} — en basse altitude à 300 kt</small>`:''}</div></div>`).join(''):`<p class="cb-hint">La route ne repasse pas sous le FL100 après un transit au-dessus : pas de réchauffage à prévoir.</p>`}
   <p class="cb-hint">${v?'Calcul sur le plan validé.':'<b>Plan non validé</b> : estimation sur le plan affiché. Validez-le (en haut) quand la route, les niveaux et les vitesses sont arrêtés.'} Température prévue à chaque niveau (Open-Meteo), échauffement cinétique selon la vitesse vraie (en transit, jamais plus que celui de la note), membrane recalée sur le tableau de la note POD (écart moyen 21 s). Au-delà de 30 min de transit, la membrane est à l'équilibre : le temps n'augmente presque plus. <a href="#" onclick="event.preventDefault();S.pfUp='alpha';S.pfTab='pod';render();window.scrollTo(0,0)">Outil POD manuel</a></p></section>`}
@@ -6116,7 +6138,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
    <div class="cb-g"><div class="cb-gb"><i class="cb-gf ${ok?'':'ko'}" style="width:${pc(R.fA)}%"></i><i class="cb-gu" style="left:${pc(R.fA)}%;width:${pc(used+ +c.mer)}%"></i><i class="cb-gr" style="width:${pc(R.req)}%"></i>
      <u style="left:${pc(c.fv)}%" title="fin de voilure"></u></div>
     <div class="cb-gl"><span><i class="cb-d f"></i>arrivée</span><span><i class="cb-d u"></i>consommé</span><span><i class="cb-d r"></i>mini (dégagement + sécu)</span><span><i class="cb-d v"></i>voilure ${cbN(c.fv)} L</span></div></div>
-   <div class="cb-hb"><div class="cb-vd ${ok?'ok':'ko'}">${ok?`✓ Marge ${cbN(R.marge)} L au-dessus du mini`:`✕ Il manque ${cbN(-R.marge)} L : mini atteint ${rq?evT(rq)+' (T + '+cbT(rq.t)+')':''}`}</div>
+   <div class="cb-hb"><div class="cb-vd ${ok?'ok':'ko'}">${ok?`✓ COMBAT FUEL ${cbN(R.marge)} L au-dessus du mini`:`✕ Il manque ${cbN(-R.marge)} L : mini atteint ${rq?evT(rq)+' (T + '+cbT(rq.t)+')':''}`}</div>
    ${cbVOk(c)?`<span class="cb-val ok">✓ Plan validé à ${new Date(c.val.t).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</span>`:`<button class="cb-val" onclick="cbValid()">${c.val?'Plan modifié : revalider':'Valider le plan'}<small>route, niveaux et vitesses prévus</small></button>`}</div></div>`})();
  /* ---- route ---- */
  const route=`<section class="cb-card"><h3><span class="cb-n">1</span>Route</h3>
@@ -6144,8 +6166,8 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  /* ---- conseils : vitesse, niveau, descente ---- */
  const dl=(a,b,u)=>{const d=Math.round(a-b);return d===0?'=':(d>0?'+':'−')+Math.abs(d)+u};
  const ref=A.sp.find(x=>x.p===c.pr)||A.sp.find(x=>x.p==='n'),mx=A.sp.find(x=>x.p==='max'),fastOk=[...A.sp].reverse().find(x=>x.R.fA>=R.req);
- const vtxt=mx.R.fA>=R.req?`<b>Max (2×95 %), ça passe.</b> Arrivée ${cbN(mx.R.fA)} L, marge ${cbN(mx.R.fA-R.req)} L · ${dl(mx.R.t/60,ref.R.t/60,'′')} pour ${dl(mx.R.used,ref.R.used,' L')} par rapport à « ${esc(CB_PR.find(p=>p[0]===ref.p)[1])} ».`
-   :fastOk?`<b>Max (2×95 %), ça ne passe pas</b> (il manquerait ${cbN(R.req-mx.R.fA)} L). Le plus rapide possible : <b>${esc(CB_PR.find(p=>p[0]===fastOk.p)[1])}</b>, marge ${cbN(fastOk.R.fA-R.req)} L.`:`<b>Aucune vitesse ne laisse le mini à l'arrivée</b> : réduire la route ou prendre plus de pétrole.`;
+ const vtxt=mx.R.fA>=R.req?`<b>Max (2×95 %), ça passe.</b> Arrivée ${cbN(mx.R.fA)} L, COMBAT FUEL ${cbN(mx.R.fA-R.req)} L · ${dl(mx.R.t/60,ref.R.t/60,'′')} pour ${dl(mx.R.used,ref.R.used,' L')} par rapport à « ${esc(CB_PR.find(p=>p[0]===ref.p)[1])} ».`
+   :fastOk?`<b>Max (2×95 %), ça ne passe pas</b> (il manquerait ${cbN(R.req-mx.R.fA)} L). Le plus rapide possible : <b>${esc(CB_PR.find(p=>p[0]===fastOk.p)[1])}</b>, COMBAT FUEL ${cbN(fastOk.R.fA-R.req)} L.`:`<b>Aucune vitesse ne laisse le mini à l'arrivée</b> : réduire la route ou prendre plus de pétrole.`;
  const spT=`<table class="cb-cmp"><thead><tr><th>Croisière</th><th>Temps</th><th>Conso</th><th>Arrivée</th><th>L consommés par min gagnée</th></tr></thead><tbody>${A.sp.map((x,i)=>{const p=A.sp[i-1],gain=p?(p.R.t-x.R.t)/60:0,cost=p&&gain>0.05?(p.R.fA-x.R.fA)/gain:null;
    return `<tr class="${x.p===c.pr?'cur':''} ${x.R.fA<R.req?'ko':''}" onclick="cbSet('pr','${x.p}')"><td><b>${esc(x.p==='m'?'M'+(+c.mach).toFixed(2):CB_PR.find(q=>q[0]===x.p)[1])}</b><small>${esc(x.p==='m'?'curseur':CB_PR.find(q=>q[0]===x.p)[2])}</small></td><td>${cbT(x.R.t)}</td><td>${cbN(x.R.used+ +c.mer)} L</td><td>${cbN(x.R.fA)} L</td><td>${cost==null?'—':cost<=0?'gagnant':cbN(cost)}</td></tr>`}).join('')}</tbody></table>`;
  const bl=A.bestL,cur=A.lv.find(x=>x.fl===+c.fl),ifr=c.reg==='ifr'?cbIfrFl(c):null,top=[...A.lv].sort((a,b)=>a.cost-b.cost).slice(0,4).sort((a,b)=>a.fl-b.fl);
@@ -6165,7 +6187,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   <h4 class="cb-h4">Niveau</h4>${lvT}<h4 class="cb-h4">Descente</h4>${dsT}
   <p class="cb-hint">Vitesses i8, DMF, meilleur rapport, Mach choisi et Max : modèle IT10 recalé sur la fiche PAF et l'UCE 116.1 (fig. 5-2), poussée 2×95 % calée sur ≈ M0,80 au FL250, vent et température du jour. « Normale » : check-list. Descente sans AF 2×82 % : calculée à partir de la descente éco (80 %), à confirmer en vol.</p></section>`;
  /* ---- profil vertical ---- */
- const prof=`<section class="cb-card"><h3><span class="cb-n">5</span>Profil vertical</h3>${cbChart(R,c)}
+ const prof=`<section class="cb-card"><h3><span class="cb-n">5</span>Profil vertical</h3>${cbResume(R,c)}${cbChart(R,c)}
   <ol class="cb-pf">${cbProfil(R,c).map(([k,a,b])=>`<li class="${k}"><i>${k==='up'?'↗':k==='dn'?'↘':'→'}</i><div><span>${a}</span><small>${b}</small></div></li>`).join('')}</ol></section>`;
  /* ---- navlog ---- */
  const fcol=f=>f<R.req?'ko':f<c.fv?'vo':'';
