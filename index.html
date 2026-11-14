@@ -691,6 +691,11 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cb-pill{position:absolute;top:-11px;left:12px;background:#16a34a;color:#fff;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:3px 10px}
 .cb-sg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.cb-sg3>div{display:grid}.cb-sg3 small{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800}.cb-sg3 b{font-size:18px;font-weight:900;color:#15803d}
 .cb-sug p{font-size:12.5px;color:var(--muted);margin:8px 0}
+.cb-edit{grid-template-columns:repeat(2,minmax(0,1fr))!important}.cb-sp2{grid-column:1/-1}.cb-sp2h{font-size:11.5px;font-weight:800;color:var(--muted);margin:2px 0 5px}
+.cb-sp2g{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}.cb-sp2g button,.cb-sp2m{border:1px solid var(--line);border-left:4px solid var(--sc,#7c3aed);background:var(--surface);border-radius:9px;padding:5px 8px;font:inherit;cursor:pointer;display:grid;text-align:left;line-height:1.25;color:var(--fg)}
+.cb-sp2g button b,.cb-sp2m b{font-size:12.5px}.cb-sp2g button span{font-size:12px;font-variant-numeric:tabular-nums}.cb-sp2g button small{font-size:11px;color:var(--muted)}
+.cb-sp2g button.on,.cb-sp2m.on{background:color-mix(in srgb,var(--sc,#7c3aed) 14%,var(--surface));border-color:var(--sc,#7c3aed);box-shadow:0 0 0 2px color-mix(in srgb,var(--sc,#7c3aed) 30%,transparent)}.cb-sp2m .in{padding:4px 7px!important;font-size:13.5px;margin-top:3px}
+.cb-wk{cursor:pointer;border-radius:10px}.cb-wk:hover{background:var(--surface2)}
 .dr-strip{width:100%;height:auto;display:block}.dr-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--muted);margin-top:6px}.dr-leg span{display:inline-flex;gap:5px;align-items:center}
 .dr-cat{display:inline-block;color:#fff;font-weight:900;font-size:12px;letter-spacing:.04em;border-radius:7px;padding:3px 8px}.dr-cat.sm{font-size:10.5px;padding:2px 6px}.dr-cat.na{background:var(--surface2);color:var(--muted)}.dr-arr{color:var(--muted);margin:0 3px;font-size:12px}
 .dr-hk{font-size:15px!important;white-space:normal!important}
@@ -1440,7 +1445,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794646455';
+const APP_V='1794647687';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5773,7 +5778,7 @@ const LD_TX=[n=>`Cher ${n}, je sais que tu es impatient, mais dis-toi que je vai
  n=>`${n}, pendant que je calcule, une pensée émue pour ceux qui faisaient ça à la règle Cras.`,
  n=>`Encore quelques secondes, ${n}. Promis, c'est moins long qu'une attente au point d'arrêt.`];
 function ldN(){try{const x=typeof ccMe==='function'?ccMe():null,n=x?athN(x):0;return n&&n<100?n:''}catch(e){return''}}
-function ldBan(what){const k=ldN(),n=k?'Athos '+k:'Athos';clearInterval(window.__ldT);window.__ldI=(window.__ldI||0)%LD_TX.length;
+function ldBan(what){const n='Athos 7';clearInterval(window.__ldT);window.__ldI=(window.__ldI||0)%LD_TX.length;
  window.__ldT=setInterval(()=>{const e=document.getElementById('ldtx');if(!e){clearInterval(window.__ldT);return}window.__ldI=(window.__ldI+1)%LD_TX.length;e.style.opacity=0;setTimeout(()=>{e.textContent=LD_TX[window.__ldI](n);e.style.opacity=1},250)},6000);
  return `<div class="ldb" role="status" aria-live="polite"><span class="ldh" aria-hidden="true">⏳</span><div><b>${esc(what)}</b><span id="ldtx">${esc(LD_TX[window.__ldI](n))}</span></div></div>`}
 /* ====================== Carburant : conso Alphajet par étape (fiche PAF « CONSO PÉTROLE », IT10 niveau 2) ====================== */
@@ -5816,10 +5821,10 @@ function cbVmax(fl,m,Tc,vimax){const A=cbAtm(fl,Tc),Ta=CB_MD.T0*Math.pow(A.sig,C
 let CB_M0=3850,CB_VIM=520,CB_MACH=.72;const CB_CC=new Map();
 /* vitesse qui maximise la distance sol par litre (vent compris), et « meilleur rapport » : la plus rapide qui garde 96 % de cette distance */
 function cbOpt(fl,m,Tc,c,w,lo,hi,lrc){const sr=v=>cbGs(v,c||0,w).gs/cbFF(fl,v,m,Tc).q;let a=lo,b=hi;for(let i=0;i<40;i++){const m1=a+(b-a)/3,m2=b-(b-a)/3;if(sr(m1)<sr(m2))a=m1;else b=m2}const vb=(a+b)/2;if(!lrc)return vb;const tg=sr(vb)*.96;let x=vb,y=hi;if(sr(hi)>=tg)return hi;for(let i=0;i<30;i++){const md=(x+y)/2;if(sr(md)>=tg)x=md;else y=md}return x}
-function cbCruise(pr,fl,fuel,Tc,w,c){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};if(pr==='r')pr='lrc';
- if(pr==='max'||pr==='lrc'||pr==='dmf'||pr==='i8'||pr==='m'){const m=CB_M0+.79*Math.max(0,fuel),k=[pr,Math.round(fl),Math.round(fuel/40),Tc==null?'':Math.round(Tc),w?w.d+'/'+w.s:'',Math.round(c||0),pr==='m'?CB_MACH:'',CB_VIM,CB_M0].join('|');
+function cbCruise(pr,fl,fuel,Tc,w,c){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};if(pr==='r')pr='lrc';let MX=null;if(/^m[\d.]/.test(pr)){MX=+pr.slice(1);pr='m'}else if(pr==='m')MX=CB_MACH;
+ if(pr==='max'||pr==='lrc'||pr==='dmf'||pr==='i8'||pr==='m'){const m=CB_M0+.79*Math.max(0,fuel),k=[pr,Math.round(fl),Math.round(fuel/40),Tc==null?'':Math.round(Tc),w?w.d+'/'+w.s:'',Math.round(c||0),pr==='m'?MX:'',CB_VIM,CB_M0].join('|');
   let o=CB_CC.get(k);if(o)return o;if(CB_CC.size>20000)CB_CC.clear();
-  const vi=cbVi8(fl,m,Tc),vx=Math.max(vi,cbVmax(fl,m,Tc,CB_VIM));let v=pr==='max'?vx:pr==='i8'?vi:pr==='m'?Math.max(vi,Math.min(vx,CB_MACH*cbAtm(fl,Tc).a/.5144)):cbOpt(fl,m,Tc,c,w,vi,vx,pr==='lrc');
+  const vi=cbVi8(fl,m,Tc),vx=Math.max(vi,cbVmax(fl,m,Tc,CB_VIM));let v=pr==='max'?vx:pr==='i8'?vi:pr==='m'?Math.max(vi,Math.min(vx,MX*cbAtm(fl,Tc).a/.5144)):cbOpt(fl,m,Tc,c,w,vi,vx,pr==='lrc');
   o={v,q:cbFF(fl,v,m,Tc).q,abs:1};CB_CC.set(k,o);return o}
  if(pr==='dmf'){const w=Math.max(0,Math.min(1,(fuel-1200)/760)),a=CB_CR.dl,b=CB_CR.dg;return{v:cbI(a.fl,a.v,fl)*w+cbI(b.fl,b.v,fl)*(1-w),q:cbI(a.fl,a.q,fl)*w+cbI(b.fl,b.q,fl)*(1-w)}}
  const a=CB_CR.n;return{v:cbI(a.fl,a.v,fl),q:cbI(a.fl,a.q,fl)}}
@@ -5932,6 +5937,9 @@ function cbLeg(i,k,v){const c=cbSt(),l=c.legs[i];if(!l)return;if(k==='fl'){v=Str
 function cbEx(){const e=$('cbtxt');if(e)e.value='LFMY MTL/F250 ROA LFSI';cbRead()}
 /* Dégagements : terrains proches de la destination */
 function cbNear(D,k,ex){return Object.entries(PF_AD).filter(([id,a])=>id!==D.n&&!(ex||[]).includes(id)&&Math.max(0,...(a[4]||[]).map(r=>r[6]||0))>=1800).map(([id,a])=>[id,cbDist(D,{la:a[1],lo:a[2]})]).filter(x=>x[1]>3).sort((a,b)=>a[1]-b[1]).slice(0,k)}
+/* Nom en clair d'un terrain : base Dérouto PAF, sinon nom international raccourci */
+const cbPrL=pr=>/^m[\d.]/.test(pr||'')?'M'+(+pr.slice(1)).toFixed(2).replace('.',','):pr==='m'?'M'+(+cbSt().mach||.72).toFixed(2).replace('.',','):(CB_PR.find(p=>p[0]===pr)||CB_PR[3])[1];
+function cbAdNm(id){try{const r=(typeof DR_DB!=='undefined'?DR_DB:[]).find(x=>String(x[1]).split(/\s+/)[0]===id);if(r)return r[0].replace(/\s+\d{2}[LRC]?$/,'');const a=PF_AD[id];return a?(typeof drNm==='function'?drNm(a[0]):a[0]):id}catch(e){return id}}
 function cbAltAdd(id){const c=cbSt();id=String(id||'').toUpperCase().trim();if(!PF_AD[id]){toast('Terrain inconnu : '+id);return}if(c.alts.some(a=>a.id===id))return;c.alts.push({id,wx:'a',fl:null});if(!c.altSel)c.altSel=id;cbSave();render();cbWxLoad(1)}
 function cbAltDel(id){const c=cbSt();c.alts=c.alts.filter(a=>a.id!==id);if(c.altSel===id)c.altSel=c.alts[0]?c.alts[0].id:'';cbSave();render()}
 function cbAltSet(id,k,v){const c=cbSt(),a=c.alts.find(x=>x.id===id);if(!a)return;if(k==='fl'){v=String(v).replace(/\D/g,'');a.fl=v===''?null:Math.min(400,+v)}else a[k]=v;cbSave();render()}
@@ -6027,6 +6035,15 @@ function cbSlider(c){const Z=cbSpdAt(c),cur=c.pr==='m'?Math.max(Z.lo,Math.min(Z.
   <div class="cb-spdv" id="cbspdv">${cbSpdTxt(Z,val)+cbZone(Z,val)}</div>
   <div class="cb-idx">${Z.idx.map(([p,M])=>`<button aria-pressed="${c.pr===p}" style="--cbc:${CB_SPC[p][0]}" onclick="cbSet('pr','${p}')"><b><i></i>${esc(lab[p])} · M${M.toFixed(2).replace('.',',')}</b><small>${esc(CB_SPC[p][1])}</small></button>`).join('')}</div>
   <div class="cb-hint" style="margin:2px 0 0">Au ${cbFL(Z.fl)}${Z.w?', vent '+cbW(Z.w)+(Z.Tc!=null?', '+Math.round(Z.Tc)+' °C':''):''} · de i8 (incidence 8°) à 2×95 % · ${c.pr==='m'?'Mach choisi au curseur':esc((CB_PR.find(p=>p[0]===c.pr)||['','',''])[1])}</div></div>`}
+/* Choix de la vitesse d'une branche : chaque repère chiffré (Mach, TAS, débit) au niveau, au vent et à la température de la branche */
+function cbSpdPick(R,c,g,lg,i){const w=g.cr.w,Tc=w&&w.T!=null?w.T:null,fl=g.fl,f=R.wps[i]?R.wps[i].f:+c.fuel;
+ const one=p=>{const cr=cbCruise(p,fl,f,Tc,w,g.c),Tk=!cr.abs&&!CB_TBA[p]&&Tc!=null?Math.sqrt((273.15+Tc)/(273.15+15-1.98*Math.min(fl,361)/10)):1,v=cr.v*Tk,gs=cbGs(v,g.c,w).gs;return{p,v,M:cbMach(fl,v,Tc),q:cr.q,gs}};
+ const L=['i8','dmf','lrc','n','max'].concat(fl<=CB_LOWFL?['t320','t360','t420','t450']:[]).map(one),cur=lg.pr||'',gen=one(fl<=CB_LOWFL&&c.low?c.low:c.pr),fm=x=>x.toFixed(2).replace('.',',');
+ const btn=(x,lab,val,col)=>`<button type="button" class="${cur===val?'on':''}" style="--sc:${col}" onclick="cbLeg(${i},'pr','${val}')"><b>${esc(lab)}</b><span>M${fm(x.M)} · ${Math.round(x.v)} kt TAS</span><small>Vs ${Math.round(x.gs)} · ${x.q.toFixed(1).replace('.',',')} L/min</small></button>`;
+ const mc=/^m[\d.]/.test(cur)?+cur.slice(1):null;
+ return `<div class="cb-sp2"><div class="cb-sp2h">Vitesse de la branche au ${cbFL(fl)}${w?' · vent '+cbW(w)+(Tc!=null?' · '+Math.round(Tc)+' °C':''):''}</div>
+  <div class="cb-sp2g">${btn(gen,'Général : '+cbPrL(fl<=CB_LOWFL&&c.low?c.low:c.pr),'','#64748b')}${L.map(x=>btn(x,cbPrL(x.p),x.p,(CB_SPC[x.p]||['#0f766e'])[0])).join('')}
+   <label class="cb-sp2m ${mc!=null?'on':''}"><b>Mach libre</b><input class="in" inputmode="decimal" value="${mc!=null?fm(mc):''}" placeholder="0,74" onchange="const v=parseFloat(this.value.replace(',','.'));if(v>0.2&&v<0.9)cbLeg(${i},'pr','m'+v.toFixed(3))"></label></div></div>`}
 function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  const seg=(k,arr,cur,fn)=>`<div class="cb-seg">${arr.map(([v,lab,sub])=>`<button aria-pressed="${String(cur)===String(v)}" onclick="${fn?fn(v):`cbSet('${k}',${typeof v==='number'?v:`'${v}'`})`}">${lab}${sub?`<small>${sub}</small>`:''}</button>`).join('')}</div>`;
  const D=c.pts.length?c.pts[c.pts.length-1]:null,fv=R&&R.ev.find(e=>e.k==='fv'),rq=R&&R.ev.find(e=>e.k==='req');
@@ -6098,29 +6115,28 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  /* ---- navlog ---- */
  const fcol=f=>f<R.req?'ko':f<c.fv?'vo':'';
  const nav=`<section class="cb-card"><h3><span class="cb-n">6</span>Navlog</h3><ol class="cb-tl">
-  <li class="cb-wp"><i></i><div><b>${esc(c.pts[0].n)}</b><small>lâcher des freins</small></div><div class="r"><b>${cbN(R.f0)} L</b><small>T + 0′00</small></div></li>
+  <li class="cb-wp cb-wk" onclick="S.cbOpen=S.cbOpen===0?null:0;render()" title="Niveau et vitesse de la branche suivante"><i></i><div><b>${esc(c.pts[0].n)}</b><small>lâcher des freins</small></div><div class="r"><b>${cbN(R.f0)} L</b><small>T + 0′00</small></div></li>
   ${R.L.map((g,i)=>{const lg=c.legs[i]||{},w=g.cr.w,ev=R.ev.filter(e=>e.leg===i).map(e=>`<li class="cb-ev ${e.k}"><i></i><div><b>${e.k==='fv'?'Fin de voilure':'Mini arrivée atteint'}</b><small>${esc(g.a.n)} + ${Math.round(e.dl)} Nm</small></div><div class="r"><b>${cbN(e.f)} L</b><small>T + ${cbT(e.t)}</small></div></li>`).join('');
    return `<li class="cb-lg"><details ${S.cbOpen===i?'open':''} ontoggle="if(this.open)S.cbOpen=${i};else if(S.cbOpen===${i})S.cbOpen=null"><summary>
-     <span><b>${String(Math.round(g.c)).padStart(3,'0')}°</b> · ${g.d.toFixed(g.d<10?1:0)} Nm</span><span>${cbFL(g.fl)}${lg.fl!=null&&lg.fl!==lg.f0?' ✎':''} · ${esc((CB_PR.find(p=>p[0]===g.pr)||CB_PR[0])[1])}</span>
+     <span><b>${String(Math.round(g.c)).padStart(3,'0')}°</b> · ${g.d.toFixed(g.d<10?1:0)} Nm</span><span>${cbFL(g.fl)}${lg.fl!=null&&lg.fl!==lg.f0?' ✎':''} · ${esc(cbPrL(g.pr))}${lg.pr?' ✎':''}</span>
      <span>${w?`${cbW(w)}${Math.abs(g.cr.hw)>=1?` <em class="${g.cr.hw>0?'hw':'tw'}">${g.cr.hw>0?'face':'arrière'} ${Math.round(Math.abs(g.cr.hw))}</em>`:''}${Math.abs(g.cr.xw||0)>=1?` <em class="xw">travers ${Math.round(Math.abs(g.cr.xw))} ${g.cr.xw>0?'D':'G'}</em>`:''}`:'<em>sans vent</em>'}</span>
      <span>Vs ${Math.round(g.cr.gs)} · ${cbT(g.t)} · <b>${cbN(g.f)} L</b></span><span class="cb-ed">${ic('edit',14)}</span></summary>
     <div class="cb-edit"><label>Niveau<input class="in" inputmode="numeric" value="${lg.fl??''}" placeholder="${c.fl}" onchange="cbLeg(${i},'fl',this.value)"></label>
-     <label>Croisière<select class="in" onchange="cbLeg(${i},'pr',this.value)"><option value="">${esc((CB_PR.find(p=>p[0]===c.pr)||CB_PR[0])[1])} (général)</option>${CB_PR.map(p=>`<option value="${p[0]}" ${lg.pr===p[0]?'selected':''}>${p[1]}</option>`).join('')}</select></label>
-     <label>Vent au niveau<input class="in" value="${esc(lg.wm||'')}" placeholder="${w&&!lg.wm?cbW(w)+' prévu':'330/25'}" onchange="cbLeg(${i},'wm',this.value.trim())"></label></div></details></li>
-    ${ev}<li class="cb-wp ${i===R.L.length-1?'end':''}"><i></i><div><b>${esc(g.b.n)}</b><small>${i===R.L.length-1?'arrivée':cbFL(R.wps[i+1].a)}</small></div><div class="r"><b class="${fcol(R.wps[i+1].f)}">${cbN(R.wps[i+1].f)} L</b><small>T + ${cbT(R.wps[i+1].t)}</small></div></li>`}).join('')}</ol></section>`;
+     <label>Vent au niveau<input class="in" value="${esc(lg.wm||'')}" placeholder="${w&&!lg.wm?cbW(w)+' prévu':'330/25'}" onchange="cbLeg(${i},'wm',this.value.trim())"></label>${cbSpdPick(R,c,g,lg,i)}</div></details></li>
+    ${ev}<li class="cb-wp ${i===R.L.length-1?'end':'cb-wk'}" ${i<R.L.length-1?`onclick="S.cbOpen=S.cbOpen===${i+1}?null:${i+1};render()" title="Niveau et vitesse de la branche suivante"`:''}><i></i><div><b>${esc(g.b.n)}</b><small>${i===R.L.length-1?'arrivée':cbFL(R.wps[i+1].a)}</small></div><div class="r"><b class="${fcol(R.wps[i+1].f)}">${cbN(R.wps[i+1].f)} L</b><small>T + ${cbT(R.wps[i+1].t)}</small></div></li>`}).join('')}</ol></section>`;
  /* ---- dégagements ---- */
  const sug=cbNear(D,5,c.alts.map(a=>a.id)),dw=R.dwx;
  const alts=`<section class="cb-card"><h3><span class="cb-n">3</span>Arrivée et dégagements</h3>
   <div class="cb-dst"><b>${esc(D.n)}</b> <span class="muted">${esc(PF_AD[D.n]?PF_AD[D.n][0]:'')}</span> ${dw.cat?wxB(dw.cat,''):''}<small>${esc(dw.why)} · arrivée ${new Date(R.eta).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</small></div>
   <div class="cb-alts">${R.AL.length?R.AL.map(a=>`<div class="cb-alt ${R.alt&&R.alt.id===a.id?'sel':''}">
     <button class="cb-rad" onclick="cbSet('altSel','${a.id}')" aria-label="Retenir ${a.id}"></button>
-    <div class="cb-ah"><b>${esc(a.id)}</b> <span>${esc(a.name)}</span><small>${Math.round(a.d)} Nm · ${String(Math.round(a.c)).padStart(3,'0')}° depuis ${esc(D.n)}</small></div>${wxB(a.cat,a.mode!=='a'?'m':a.wx.cat?'':'?')}
+    <div class="cb-ah"><b>${esc(cbAdNm(a.id))} / ${esc(a.id)}</b><small>${Math.round(a.d)} Nm · ${String(Math.round(a.c)).padStart(3,'0')}° depuis ${esc(D.n)}</small></div>${wxB(a.cat,a.mode!=='a'?'m':a.wx.cat?'':'?')}
     <button class="ib cb-x" onclick="cbAltDel('${a.id}')" aria-label="Retirer">${ic('x',15)}</button>
     <div class="cb-aw">${a.mode==='a'?esc(a.wx.cat?a.wx.why:a.wx.why+' : IFR par prudence'):'Choisi à la main'}</div>
     <div class="cb-ar">${seg('',[['a','Auto'],['v','VFR'],['i','IFR']],a.mode,v=>`cbAltSet('${a.id}','wx','${v}')`)}
      <span class="cb-af">Dégagement <input class="in cb-mini" inputmode="numeric" value="${a.auto?'':a.fl}" placeholder="${a.fl}" onchange="cbAltSet('${a.id}','fl',this.value)"> DMF · ${cbT(a.t)} · <b>${cbN(a.f)} L</b></span></div>
     <div class="cb-req"><span>${cbN(a.f)} L dégagement + ${a.sec} L sécu ${a.cat}</span><b>= ${cbN(a.req)} L mini à ${esc(D.n)}</b></div></div>`).join(''):`<p class="cb-hint">Pas de dégagement : sécurité seule. ${seg('sec',[[250,'VFR 250 L'],[400,'IFR 400 L']],c.sec)}</p>`}</div>
-  <div class="cb-add"><span>Ajouter :</span>${sug.map(([id,d])=>`<button onclick="cbAltAdd('${id}')">${id} <small>${Math.round(d)} Nm</small></button>`).join('')}<input class="in cb-mini" style="width:74px" placeholder="OACI" onchange="cbAltAdd(this.value)"></div>
+  <div class="cb-add"><span>Ajouter :</span>${sug.map(([id,d])=>`<button onclick="cbAltAdd('${id}')" title="${esc(cbAdNm(id))} (${id})">${esc(cbAdNm(id))} / ${id} <small>${Math.round(d)} Nm</small></button>`).join('')}<input class="in cb-mini" style="width:74px" placeholder="OACI" onchange="cbAltAdd(this.value)"></div>
   <p class="cb-hint">Le terrain retenu (●) fixe le mini à l'arrivée : pétrole du dégagement (DMF, niveau auto, sans décollage) + sécurité ${CB_VFR.c} ft / ${CB_VFR.v/1000} km → VFR 250 L, sinon IFR 400 L. Météo du terrain de 30′ avant à 1 h après l'arrivée prévue, TEMPO et PROB compris. <a href="#" onclick="event.preventDefault();S.cbWx=null;cbWxLoad(1)">Recharger la météo</a></p></section>`;
  return `${NOTE}${S.cbWBusy||S.cbWxBusy?ldBan(S.cbWBusy&&S.cbWxBusy?'Chargement du vent en altitude et de la météo des terrains…':S.cbWBusy?'Chargement du vent en altitude…':'Chargement de la météo des terrains…'):''}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}
  <div class="cb-wrap">${hero}<div class="cb-cols"><div>${route}${vol}${alts}</div><div>${adv}${prof}${nav}</div></div>
@@ -6291,20 +6307,22 @@ function vDr(tabs){const c=cbSt(),d=drSt();setTimeout(()=>drLoad(),40);const D=d
 /* --- PDF : même présentation que le classeur Derouto_PAF (4 terrains par ligne), avec météo, contrôle et alertes --- */
 function drWrap(g,s,mw,n){const out=[];let w=s.split(' '),line='';for(const t of w){const tt=line?line+' '+t:t;if(g.measureText(tt).width<=mw)line=tt;else{out.push(line);line=t;if(out.length===n){line='';break}}}if(line&&out.length<n)out.push(line);if(out.length===n&&w.join(' ').length>out.join(' ').length){let l=out[n-1];while(g.measureText(l+'…').width>mw&&l.length>2)l=l.slice(0,-1);out[n-1]=l+'…'}return out.length?out:['']}
 /* Page « vue d'ensemble » : route et terrains retenus en plan, avec OACI, QFU, moyens radio et couleur météo */
-function drPdfOv(D,W,H,head){const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);head(g,'Vue d\'ensemble');
- const S1=D.L.filter(x=>x.sel),c=D.c,P=c.pts.map(p=>({la:p.la,lo:p.lo,n:p.n})),T=S1.map(x=>({la:x.p.ad[1],lo:x.p.ad[2]})),all=P.concat(T),lam=all.reduce((a,p)=>a+p.la,0)/all.length,k=Math.cos(lam*cbRd);
+function drPdfOv(D,W,H,head,part){const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);head(g,'Vue d\'ensemble'+(part&&part.ttl?' · '+part.ttl:''));
+ const pa=part||{x0:-1,x1:1e9},wx=D.R.wps.map(w=>w.x),i0=Math.max(0,wx.reduce((a,v,i)=>v<=pa.x0+1e-6?i:a,0)),i1=Math.min(wx.length-1,wx.findIndex(v=>v>=pa.x1-1e-6)<0?wx.length-1:wx.findIndex(v=>v>=pa.x1-1e-6));
+ const S1=D.L.filter(x=>x.sel&&x.a.x>=pa.x0&&x.a.x<pa.x1),c=D.c,P=c.pts.slice(i0,i1+1).map((p,j)=>({la:p.la,lo:p.lo,n:p.n,end:i0+j===0||i0+j===c.pts.length-1})),T=S1.map(x=>({la:x.p.ad[1],lo:x.p.ad[2]})),all=P.concat(T),lam=all.reduce((a,p)=>a+p.la,0)/all.length,k=Math.cos(lam*cbRd);
  const xs=all.map(p=>p.lo*k),ys=all.map(p=>p.la),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),M={l:260,r:260,t:150,b:120},sc=Math.min((W-M.l-M.r)/((x1-x0)||1),(H-M.t-M.b)/((y1-y0)||1));
  const cx=(W-M.l-M.r-(x1-x0)*sc)/2+M.l,cy=(H-M.t-M.b-(y1-y0)*sc)/2+M.t,X=p=>cx+(p.lo*k-x0)*sc,Y=p=>cy+(y1-p.la)*sc;
  /* échelle */
  const nm=[10,20,50,100].find(v=>v*sc/60>120)||100;g.strokeStyle='#0b1f45';g.lineWidth=3;g.beginPath();g.moveTo(60,H-70);g.lineTo(60+nm*sc/60,H-70);g.stroke();g.fillStyle='#0b1f45';g.font='600 16px system-ui,sans-serif';g.fillText(nm+' Nm',60,H-78);
  /* route */
  g.strokeStyle='#0b1f45';g.lineWidth=5;g.lineJoin='round';g.beginPath();P.forEach((p,i)=>i?g.lineTo(X(p),Y(p)):g.moveTo(X(p),Y(p)));g.stroke();
- P.forEach((p,i)=>{g.beginPath();g.arc(X(p),Y(p),i===0||i===P.length-1?11:7,0,7);g.fillStyle=i===0||i===P.length-1?'#0b1f45':'#fff';g.fill();g.lineWidth=3;g.strokeStyle='#0b1f45';g.stroke();
+ P.forEach((p,i)=>{g.beginPath();g.arc(X(p),Y(p),p.end?11:7,0,7);g.fillStyle=p.end?'#0b1f45':'#fff';g.fill();g.lineWidth=3;g.strokeStyle='#0b1f45';g.stroke();
   g.font='800 20px system-ui,sans-serif';g.fillStyle='#0b1f45';g.textAlign='center';g.fillText(p.n,X(p),Y(p)-18);g.textAlign='left'});
  /* étiquettes : à l'opposé de la route, poussées pour ne pas se chevaucher */
  const box=[],placed=[],MK=S1.map(x=>({x:X({lo:x.p.ad[2]}),y:Y({la:x.p.ad[1]})}));const RP=[];for(let i=0;i<P.length-1;i++){const ax=X(P[i]),ay=Y(P[i]),bx2=X(P[i+1]),by2=Y(P[i+1]),n=Math.ceil(Math.hypot(bx2-ax,by2-ay)/8);for(let j=0;j<=n;j++)RP.push({x:ax+(bx2-ax)*j/n,y:ay+(by2-ay)*j/n})}S1.forEach(x=>{const r0=x.p.db[0]||[],w=x.wx,col=x.red?'#dc2626':w&&w.worst?DR_CAT[w.worst][1]:'#94a3b8',px=X({lo:x.p.ad[2],la:x.p.ad[1]}),py=Y({la:x.p.ad[1]});
   const qfu=x.rec.qfu,nav=[...x.rec.ils.slice(0,2).map(([q,v])=>'ILS '+(q?q+' ':'')+String(v).replace(/\s*\(.*$/,'')),x.rec.vor&&('VOR/TAC '+x.rec.vor)].filter(Boolean);
-  const nmL=(x.name.length>22?x.name.slice(0,21)+'…':x.name)+' / '+x.id,L=[[nmL,'800 19px'],['QFU '+qfu,'600 15px'],...nav.map(v=>[v,'600 14px'])];const wt=w&&w.worst?(w.base===w.worst?w.base:w.base+'→'+w.worst):'';g.font='800 13px system-ui,sans-serif';const bdw=wt?g.measureText(wt).width+22:0;g.font='800 19px system-ui,sans-serif';const idw=g.measureText(nmL).width+bdw+12;const bw=Math.min(380,Math.max(idw,...L.slice(1).map(([t,f])=>{g.font=f+' system-ui,sans-serif';return g.measureText(t).width}))+30),bh=12+L.length*20;
+  const R=x.rec,fqs=[R.app&&'APP '+R.app,R.twr&&(/^AFIS/.test(R.twr)?R.twr:'TWR '+R.twr)].filter(Boolean).join(' · '),nmL=(x.name.length>22?x.name.slice(0,21)+'…':x.name)+' / '+x.id,
+   L=[[nmL,'800 19px'],['QFU '+qfu,'600 15px'],[(x.len?cbN(x.len)+' m':'long. ?')+' · SSLIA '+(x.lvl!=null?x.lvl:x.mil?'base mil.':'?'),'700 15px'],...nav.map(v=>[v,'600 14px']),fqs&&[fqs,'600 14px'],R.atis&&['ATIS '+R.atis,'600 14px']].filter(Boolean);const wt=w&&w.worst?(w.base===w.worst?w.base:w.base+'→'+w.worst):'';g.font='800 13px system-ui,sans-serif';const bdw=wt?g.measureText(wt).width+22:0;g.font='800 19px system-ui,sans-serif';const idw=g.measureText(nmL).width+bdw+12;const bw=Math.min(400,Math.max(idw,...L.slice(1).map(([t,f])=>{g.font=f+' system-ui,sans-serif';return g.measureText(t).width}))+30),bh=12+L.length*20;
   /* direction : depuis le point le plus proche de la route */
   let best=null;for(let i=0;i<P.length-1;i++){const ax=X(P[i]),ay=Y(P[i]),bx=X(P[i+1]),by=Y(P[i+1]),dx=bx-ax,dy=by-ay,t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/((dx*dx+dy*dy)||1))),qx=ax+t*dx,qy=ay+t*dy,d=Math.hypot(px-qx,py-qy);if(!best||d<best.d)best={d,qx,qy,dx,dy}}
   let ux=px-best.qx,uy=py-best.qy,ul=Math.hypot(ux,uy);if(ul<2){ux=-best.dy;uy=best.dx;ul=Math.hypot(ux,uy)||1;if(x.a.side==='D'){ux=-ux;uy=-uy}}ux/=ul;uy/=ul;
@@ -6322,12 +6340,12 @@ function drPdfOv(D,W,H,head){const cv=document.createElement('canvas');cv.width=
  let lx=W-60;g.textAlign='right';g.font='600 15px system-ui,sans-serif';[...DR_RK].reverse().forEach(k=>{const t=k+' : '+DR_CAT[k][2];g.fillStyle='#334155';g.fillText(t,lx,H-62);lx-=g.measureText(t).width+12;g.fillStyle=DR_CAT[k][1];g.fillRect(lx-4,H-76,16,16);lx-=24});g.textAlign='left';
  g.fillStyle='#64748b';g.font='500 15px system-ui,sans-serif';g.fillText('Couleur : pire cas météo sur le créneau du vol (TEMPO / PROB compris). Cercle rouge : alerte NOTAM bloquante. Gros point : piste ≥ 1 800 m / SSLIA ≥ 4.',60,H-30);
  return cv}
-async function drPdf(){const D=drCalc();if(!D)return;const S1=D.L.filter(x=>x.sel),c=D.c,per=8,pages=[],W=1684,H=1190,np=1+Math.max(1,Math.ceil(S1.length/per));
+async function drPdf(){const D=drCalc();if(!D)return;const S1=D.L.filter(x=>x.sel),c=D.c,per=8,pages=[],W=1684,H=1190,split=S1.length>10||D.R.tot>400,mid=split?(()=>{const xs=S1.map(x=>x.a.x).sort((a,b)=>a-b);return xs.length?(xs[Math.floor(xs.length/2)-1]+xs[Math.floor(xs.length/2)])/2:D.R.tot/2})():0,nOv=split?2:1,np=nOv+Math.max(1,Math.ceil(S1.length/per));
  const head=(g,ttl,pg)=>{g.fillStyle='#0b1f45';g.fillRect(0,0,W,96);g.fillStyle='#fff';g.font='800 36px system-ui,sans-serif';g.textBaseline='alphabetic';g.fillText(`Déroutement route : ${c.pts[0].n} – ${c.pts[c.pts.length-1].n}${ttl?' · '+ttl:''}`,40,52);
   g.font='500 20px system-ui,sans-serif';g.fillStyle='#cbd5e1';g.fillText(`PAF OPS · Dérouto · ${new Date(D.dep).toLocaleString('fr-FR',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})} · ${cbN(D.R.tot)} Nm · ${c.pts.map(p=>p.n).join(' ')} · page ${pg||1}/${np}`,40,82)};
- pages.push(drPdfOv(D,W,H,(g,t)=>head(g,t,1)));
+ if(split){pages.push(drPdfOv(D,W,H,(g,t)=>head(g,t,1),{x0:-1,x1:mid,ttl:'1re partie'}));pages.push(drPdfOv(D,W,H,(g,t)=>head(g,t,2),{x0:mid,x1:1e9,ttl:'2e partie'}))}else pages.push(drPdfOv(D,W,H,(g,t)=>head(g,t,1)));
  for(let i=0;i<Math.max(1,S1.length);i+=per){const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);
-  head(g,'',i/per+2);
+  head(g,'',i/per+1+nOv);
   S1.slice(i,i+per).forEach((x,j)=>{const cw=(W-80)/4,ch=(H-96-60)/2,x0=40+(j%4)*cw,y0=116+Math.floor(j/4)*ch,r0=x.p.db[0]||[],w=x.wx;
    g.strokeStyle='#0b1f45';g.lineWidth=2;g.strokeRect(x0+4,y0,cw-8,ch-16);g.fillStyle=x.red?'#fee2e2':'#eef2ff';g.fillRect(x0+5,y0+1,cw-10,44);
    let bw=0;if(w&&w.base){g.font='800 18px system-ui,sans-serif';bw=g.measureText(w.base===w.worst?w.base:w.base+'→'+w.worst).width+28}
