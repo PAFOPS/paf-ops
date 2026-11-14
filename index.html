@@ -703,7 +703,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .dr-ctl.ctl{color:var(--ok)}.dr-ctl.afis{color:#2563eb}.dr-ctl.aa{color:#c2410c}.dr-ctl.unk{color:var(--muted);font-weight:600}
 .dr-al{list-style:none;margin:0;padding:0;display:grid;gap:4px}.dr-al li{font-size:12px;border-radius:9px;padding:5px 8px;line-height:1.3}.dr-al li.r{background:var(--bad2);color:var(--bad)}.dr-al li.o{background:#ffedd5;color:#9a3412}.dr-al li span{opacity:.85}
 .dr-more summary{cursor:pointer;font-size:12px;color:var(--muted);font-weight:700}.dr-more .dr-fq{margin-top:6px}.dr-nt{font-size:11.5px;color:var(--muted);margin:4px 0 0}
-.dr-act{display:flex;justify-content:flex-end}.dr-wd{display:grid;gap:4px;font-size:12px;background:var(--surface2);border-radius:10px;padding:7px 9px}.dr-wd>div{line-height:1.35}.dr-ws{font-weight:800;margin-right:6px;white-space:nowrap}
+.dr-act{display:flex;justify-content:flex-end}.dr-src{font-weight:600!important;color:var(--muted)}.dr-wd{display:grid;gap:4px;font-size:12px;background:var(--surface2);border-radius:10px;padding:7px 9px}.dr-wd>div{line-height:1.35}.dr-ws{font-weight:800;margin-right:6px;white-space:nowrap}
 .dr-ph{display:flex;flex-wrap:wrap;gap:4px}.dr-ph span{background:#fef3c7;color:#92400e;font-weight:900;font-size:11px;border-radius:6px;padding:1px 6px}.dr-mt{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--muted);word-break:break-word}
 .dr-oth{margin-top:12px}.dr-oth>summary{cursor:pointer;font-weight:800;margin-bottom:8px}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
@@ -1436,7 +1436,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794644584';
+const APP_V='1794645584';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -6188,7 +6188,9 @@ async function drLoad(force){const ids=drIds();if(!ids.length||S.drBusy)return;c
  let m='',t='',wok=0,N=null,A={};
  if(on){try{const rs=await Promise.all(ch(ids,10).map(g=>api('metarTaf',{ids:g.join(',')})));if(rs.every(r=>r&&!r.error)){m=rs.map(r=>r.mtxt||'').join('\n');t=rs.map(r=>r.ttxt||'').join('\n');wok=1}}catch(e){}
   try{const r=await api('derNotam',{ids:ids.slice(0,40).join(',')});if(r&&r.n)N=r.n}catch(e){}
-  try{const rs=await Promise.all(ch(ids.filter(x=>/^LF/.test(x)).slice(0,36),12).map(g=>api('derAip',{ids:g.join(',')})));rs.forEach(r=>{if(r&&r.a)Object.assign(A,r.a)})}catch(e){}}
+  try{const rs=await Promise.all(ch(ids.filter(x=>/^LF/.test(x)).slice(0,36),12).map(g=>api('derAip',{ids:g.join(',')})));rs.forEach(r=>{if(r&&r.a)Object.assign(A,r.a)})}catch(e){}
+  /* terrains hors eAIP France (étranger, ou page absente) : OurAirports */
+  const oa=ids.filter(x=>!A[x]||A[x].none).slice(0,30);if(oa.length)try{const r=await api('derOa',{ids:oa.join(',')});if(r&&r.a)Object.keys(r.a).forEach(k=>{const o=r.a[k];if(o&&!o.none)A[k]=Object.assign({},A[k]&&A[k].none?{noaip:1}:{},o)})}catch(e){}}
  if(!wok){try{const g=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return r.text()};[m,t]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+key+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+key+'&format=raw')]);wok=1}catch(e){}}
  let demo=0;if(!on&&!N){const D=drDemo(ids);N=D.N;A=D.A;if(!wok){m=D.m;t=D.t;wok=1}demo=1}
  S.drWx={ok:wok,M:mtMetars(m),T:mtTafs(t)};S.drN=N;S.drA=A;S.drDemo=demo;S.drBusy=0;if(S.pfTab==='dr')render()}
@@ -6203,11 +6205,11 @@ function drDemo(ids){const n=new Date(),p=x=>String(x).padStart(2,'0'),z=p(n.get
 /* --- calcul : terrains du couloir, qualification, alertes, choix le long de la route --- */
 function drCalc(){const c=cbSt(),d=drSt();if(c.pts.length<2)return null;const R=cbCalc(Object.assign(cbIn(),{step:1}));if(!R)return null;const dep=new Date(c.dep).getTime()||Date.now();
  const L=drPool().map(p=>{const a=drAbeam(R,c,{la:p.ad[1],lo:p.ad[2]});if(!a||a.d>d.cor)return null;const A=(S.drA||{})[p.id]||null,r0=p.db[0]||null;
-  const len=(A&&A.len)||drLen(r0&&r0[3])||drAdLen(p.ad),lvl=A&&A.lvl!=null?A.lvl:null,mil=/AIR BASE|BASE AÉRIENNE|\bBA\s?\d|\(BA/i.test(p.ad[0]);
+  const rec=drRec(p,A),len=(A&&A.len)||drLen(rec.long)||drLen(r0&&r0[3])||drAdLen(p.ad),lvl=A&&A.lvl!=null?A.lvl:null,mil=/AIR BASE|BASE AÉRIENNE|\bBA\s?\d|\(BA/i.test(p.ad[0]);
   const eta=dep+(drTat(R,a.x)+a.d/6.5*60)*1000,nrw=(p.ad[4]||[]).length||String(r0&&r0[2]||'').split(',').length;
   const nts=(((S.drN||{})[p.id]||{}).L||[]).map(drNt).filter(x=>(x.B==null||x.B<=eta+2*36e5)&&(x.C==null||x.C>=eta-36e5)).map(x=>Object.assign(x,{al:drAlert(x,nrw)}));
   const red=nts.some(x=>x.al[0]==='r'),cls=len>=1800&&(lvl==null?(p.db.length>0||mil):lvl>=4)?'A':len>=1500&&(lvl==null||lvl>=2)?'B':'X';
-  return{id:p.id,p,a,eta,len,lvl,mil,cls,red,nts,A,wx:drWx(p.id,eta,dep,dep+R.t*1000+30*60e3),ctl:drCtl(A,eta),name:r0?r0[0]:drNm(p.ad[0])}}).filter(Boolean).sort((a,b)=>a.a.x-b.a.x);
+  return{id:p.id,p,a,eta,len,lvl,mil,cls,red,nts,A,rec,wx:drWx(p.id,eta,dep,dep+R.t*1000+30*60e3),ctl:drCtl(A,eta),name:r0?r0[0]:drNm(p.ad[0])}}).filter(Boolean).sort((a,b)=>a.a.x-b.a.x);
  /* tranches de 50 Nm : d'abord les terrains 1 800 m / SSLIA 4, complétés par 1 500 m / SSLIA 2 s'il y en a moins de deux utilisables */
  const nS=Math.max(1,Math.ceil(R.tot/50)),sel=new Set();
  for(let k=0;k<nS;k++){const T=L.filter(x=>x.a.x>=k*50-1e-6&&x.a.x<(k+1)*50+(k===nS-1?1:0)&&!d.x[x.id]&&!x.red),A=T.filter(x=>x.cls==='A').sort((a,b)=>a.a.d-b.a.d),B=T.filter(x=>x.cls==='B').sort((a,b)=>a.a.d-b.a.d);
@@ -6216,19 +6218,32 @@ function drCalc(){const c=cbSt(),d=drSt();if(c.pts.length<2)return null;const R=
  L.forEach(x=>{x.sel=sel.has(x.id);x.relax=x.sel&&x.cls==='B'});return{R,L,c,dep}}
 /* --- vue --- */
 const drBadge=(k,sm)=>k?`<span class="dr-cat${sm?' sm':''}" style="background:${DR_CAT[k][1]}">${k}</span>`:'';
+/* Fiche à jour du terrain : eAIP (AIRAC en vigueur) d'abord, sinon OurAirports, sinon la base PAF */
+const drF=s=>String(s||'').replace('.',',');
+function drRec(p,A){const r0=p.db[0]||[],o={qfu:r0[2]||'',long:r0[3]||'',ils:p.db.flatMap(r=>[r[4]&&[r[5],r[4]],r[6]&&[r[7],r[6]]]).filter(Boolean),vor:r0[8]||'',atis:r0[9]||'',app:r0[10]||'',twr:r0[11]||'',rem:r0[12]||'',src:p.db.length?'base PAF'+(r0[13]?' du '+new Date(r0[13]).toLocaleDateString('fr-FR'):''):'',upd:[]};
+ if(!o.qfu&&p.ad[4])o.qfu=p.ad[4].map(r=>r[0]+' / '+r[3]).join(', ');if(!o.long){const l=drAdLen(p.ad);if(l)o.long=l+' m'}
+ if(!A||A.none)return o;const set=(k,v)=>{if(v&&v!==o[k]){if(o[k]&&o[k]!==v)o.upd.push(k);o[k]=v}};
+ if(A.rw&&A.rw.length){const q=[];if(A.src){A.rw.forEach(r=>q.push(r.q.replace('/',' / ')))}else for(let i=0;i<A.rw.length;i+=2)q.push(A.rw[i].q+(A.rw[i+1]?' / '+A.rw[i+1].q:''));set('qfu',q.join(', '));const d=A.rw.map(r=>r.dim).filter(Boolean).sort((a,b)=>parseInt(b)-parseInt(a))[0];if(d)set('long',d)}
+ const N=A.nav||[];if(N.length){const loc=N.filter(n=>/ILS|LOC|LLZ/i.test(n.ty)),dme=id=>(N.find(n=>/DME/i.test(n.ty)&&n.id===id&&n.ch)||{}).ch||'';
+  if(loc.length)o.ils=loc.slice(0,3).map(n=>[n.rwy||'',drF(n.f)+((n.ch||dme(n.id))?'/'+(n.ch||dme(n.id)):'')]);
+  const v=N.filter(n=>/VOR|TACAN|VORTAC/i.test(n.ty)).slice(0,2).map(n=>n.id+' '+(/TACAN/i.test(n.ty)&&!/VOR/i.test(n.ty)?n.ch:drF(n.f)+(n.ch?' / '+n.ch:'')));if(v.length)set('vor',v.join(' · '))}
+ const fq=t=>(String(t).match(/\b(1[1-3]\d[.,]\d{2,3})\b/g)||[]).slice(0,2).map(drF).join(' / ');
+ if(A.svc&&A.svc.length){const g=rx=>A.svc.filter(r=>rx.test(r.slice(0,2).join(' '))).map(r=>fq(r.join(' '))).filter(Boolean).join(' · ');set('atis',g(/ATIS/i));set('app',g(/APP|Approche|Approach/i));const tw=g(/TWR|Tour|Tower/i),af=g(/AFIS|Info\b/i);set('twr',tw||(af?'AFIS '+af:''))}
+ if(A.fr&&A.fr.length){const g=rx=>A.fr.filter(f=>rx.test(f.ty)).map(f=>f.f).slice(0,2).join(' / ');set('atis',g(/ATIS/));set('app',g(/APP|DEP/));const tw=g(/TWR|TOWER/),af=g(/AFIS|CTAF|A\/A|INFO/);set('twr',tw||(af?'AFIS '+af:''))}
+ o.src=A.airac?'eAIP AIRAC '+new Date(A.airac).toLocaleDateString('fr-FR'):A.src||o.src;if(A.stale)o.src+=' (dernière lecture)';return o}
 function drCard(x,c){const r0=x.p.db[0],ft=x.a.d<1.5?'sur la route':`${Math.round(x.a.d)} Nm à ${x.a.side==='G'?'gauche':'droite'}`,al=x.nts.filter(n=>n.al[0]!=='i'),info=x.nts.length-al.length,w=x.wx;
- const ils=x.p.db.map(r=>[r[4]&&`ILS ${r[5]} ${r[4]}`,r[6]&&`ILS ${r[7]} ${r[6]}`]).flat().filter(Boolean);
+ const R=x.rec,ils=R.ils.map(([q,v])=>`${q?q+' ':''}${v}`);
  return `<article class="dr-c ${x.sel?'':'off'} ${x.red?'red':''}">
   <header><div><b>${esc(x.name)}</b> <span class="dr-id">${esc(x.id)}</span>${x.relax?'<span class="dr-tag b">1 500 m / niv. 2</span>':''}${!x.p.db.length?'<span class="dr-tag">hors liste PAF</span>':''}</div>
    <div class="dr-wxs">${w&&w.base?drBadge(w.base)+(w.worst!==w.base?`<span class="dr-arr">→</span>${drBadge(w.worst,1)}`:''):'<span class="dr-cat na">—</span>'}</div></header>
   <div class="dr-pos">${Math.round(x.a.x)} Nm · ${ft} · passage T + ${cbT((x.eta-new Date(c.dep).getTime())/1000)} (${new Date(x.eta).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})})</div>
-  <div class="dr-kv"><span>Piste</span><b>${x.len?cbN(x.len)+' m':'—'}${r0&&r0[2]?' · QFU '+esc(r0[2]):''}</b><span>SSLIA</span><b class="${x.lvl!=null&&x.lvl<4?'warn':''}">${x.lvl!=null?'niveau '+x.lvl:x.mil?'base militaire':'—'}</b>
+  <div class="dr-kv"><span>Piste</span><b>${x.len?cbN(x.len)+' m':'—'}${R.qfu?' · QFU '+esc(R.qfu):''}</b><span>SSLIA</span><b class="${x.lvl!=null&&x.lvl<4?'warn':''}">${x.lvl!=null?'niveau '+x.lvl:x.mil?'base militaire':'—'}</b>
    <span>À l'heure</span><b class="dr-ctl ${x.ctl?x.ctl.k:''}">${x.ctl?esc(x.ctl.t)+(x.ctl.s?' · '+esc(x.ctl.s):''):x.A&&x.A.none?'hors eAIP France':'—'}</b>
    <span>Météo</span><b>${w&&w.base?esc(w.base===w.worst?w.base+' sur tout le créneau':'prévu '+w.base+', risque '+w.worst+' ('+w.wsrc+')'):esc(w&&w.none||'non chargée')}</b></div>
   ${w&&w.base?`<div class="dr-wd"><div><span class="dr-ws">${drBadge(w.base,1)} ${esc(w.bsrc)} au passage</span>${esc(drWxT(w.bf))}</div>${w.worst!==w.base||w.wf!==w.bf&&w.wsrc!=='TAF'?`<div><span class="dr-ws">${drBadge(w.worst,1)} ${esc(w.wsrc)}</span>${esc(drWxT(w.wf))}</div>`:''}${w.ph.length?`<div class="dr-ph">${w.ph.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}${w.m?`<div class="dr-mt">METAR ${esc(w.m.raw.split(' ').slice(1).join(' '))}</div>`:''}</div>`:''}
   ${al.length?`<ul class="dr-al">${al.map(n=>`<li class="${n.al[0]}"><b>${esc(n.al[1])}</b> <span>${esc(n.E.slice(0,140))}</span></li>`).join('')}</ul>`:''}
-  <details class="dr-more"><summary>Fréquences${info?` · ${info} autre${info>1?'s':''} NOTAM`:''}</summary><div class="dr-fq">${r0?[['ATIS',r0[9]],['APP',r0[10]],['TWR',r0[11]],['VOR/TAC',r0[8]]].filter(v=>v[1]).map(([k,v])=>`<span>${k}</span><b>${esc(v)}</b>`).join('')+ils.map(v=>`<span>ILS</span><b>${esc(v.replace(/^ILS /,''))}</b>`).join(''):''}
-   ${(x.A&&x.A.svc||[]).map(r=>`<span>${esc(r[0])}</span><b>${esc(r.slice(1).join(' · '))}</b>`).join('')}${r0&&r0[12]?`<span>Note</span><b>${esc(r0[12])}</b>`:''}</div>
+  <details class="dr-more"><summary>Fréquences${info?` · ${info} autre${info>1?'s':''} NOTAM`:''}</summary><div class="dr-fq">${[['ATIS',R.atis],['APP',R.app],['TWR',R.twr],['VOR/TAC',R.vor]].filter(v=>v[1]).map(([k,v])=>`<span>${k}</span><b>${esc(v)}</b>`).join('')+ils.map(v=>`<span>ILS</span><b>${esc(v)}</b>`).join('')}<span>Source</span><b class="dr-src">${esc(R.src||'—')}${R.upd.length?` · mis à jour : ${esc(R.upd.join(', ').toUpperCase())}`:''}</b>
+   ${(x.A&&x.A.svc||[]).map(r=>`<span>${esc(r[0])}</span><b>${esc(r.slice(1).join(' · '))}</b>`).join('')}${R.rem?`<span>Note</span><b>${esc(R.rem)}</b>`:''}</div>
    ${x.nts.filter(n=>n.al[0]==='i').map(n=>`<p class="dr-nt">${esc(n.id)} · ${esc(n.E.slice(0,220))}</p>`).join('')}</details>
   <div class="dr-act">${x.sel?`<button class="btn sm" onclick="drPick('${x.id}',0)">Retirer</button>`:`<button class="btn sm" onclick="drPick('${x.id}',1)">Ajouter</button>`}</div></article>`}
 function drPick(id,on){const d=drSt();if(on){delete d.x[id];d.add[id]=1}else{d.x[id]=1;delete d.add[id]}drSave();render()}
@@ -6272,15 +6287,17 @@ function drPdfOv(D,W,H,head){const cv=document.createElement('canvas');cv.width=
  P.forEach((p,i)=>{g.beginPath();g.arc(X(p),Y(p),i===0||i===P.length-1?11:7,0,7);g.fillStyle=i===0||i===P.length-1?'#0b1f45':'#fff';g.fill();g.lineWidth=3;g.strokeStyle='#0b1f45';g.stroke();
   g.font='800 20px system-ui,sans-serif';g.fillStyle='#0b1f45';g.textAlign='center';g.fillText(p.n,X(p),Y(p)-18);g.textAlign='left'});
  /* étiquettes : à l'opposé de la route, poussées pour ne pas se chevaucher */
- const box=[],placed=[];S1.forEach(x=>{const r0=x.p.db[0]||[],w=x.wx,col=x.red?'#dc2626':w&&w.worst?DR_CAT[w.worst][1]:'#94a3b8',px=X({lo:x.p.ad[2],la:x.p.ad[1]}),py=Y({la:x.p.ad[1]});
-  const qfu=r0[2]||(x.p.ad[4]||[]).map(r=>r[0]+'/'+r[3]).join(' '),nav=[...x.p.db.flatMap(r=>[r[4]&&('ILS '+r[5]+' '+r[4].replace(/\s*\(.*$/,'')),r[6]&&('ILS '+r[7]+' '+r[6].replace(/\s*\(.*$/,''))]).filter(Boolean).slice(0,2),r0[8]&&('VOR/TAC '+r0[8])].filter(Boolean);
+ const box=[],placed=[],MK=S1.map(x=>({x:X({lo:x.p.ad[2]}),y:Y({la:x.p.ad[1]})}));const RP=[];for(let i=0;i<P.length-1;i++){const ax=X(P[i]),ay=Y(P[i]),bx2=X(P[i+1]),by2=Y(P[i+1]),n=Math.ceil(Math.hypot(bx2-ax,by2-ay)/8);for(let j=0;j<=n;j++)RP.push({x:ax+(bx2-ax)*j/n,y:ay+(by2-ay)*j/n})}S1.forEach(x=>{const r0=x.p.db[0]||[],w=x.wx,col=x.red?'#dc2626':w&&w.worst?DR_CAT[w.worst][1]:'#94a3b8',px=X({lo:x.p.ad[2],la:x.p.ad[1]}),py=Y({la:x.p.ad[1]});
+  const qfu=x.rec.qfu,nav=[...x.rec.ils.slice(0,2).map(([q,v])=>'ILS '+(q?q+' ':'')+String(v).replace(/\s*\(.*$/,'')),x.rec.vor&&('VOR/TAC '+x.rec.vor)].filter(Boolean);
   const nmL=(x.name.length>22?x.name.slice(0,21)+'…':x.name)+' / '+x.id,L=[[nmL,'800 19px'],['QFU '+qfu,'600 15px'],...nav.map(v=>[v,'600 14px'])];const wt=w&&w.worst?(w.base===w.worst?w.base:w.base+'→'+w.worst):'';g.font='800 13px system-ui,sans-serif';const bdw=wt?g.measureText(wt).width+22:0;g.font='800 19px system-ui,sans-serif';const idw=g.measureText(nmL).width+bdw+12;const bw=Math.min(380,Math.max(idw,...L.slice(1).map(([t,f])=>{g.font=f+' system-ui,sans-serif';return g.measureText(t).width}))+30),bh=12+L.length*20;
   /* direction : depuis le point le plus proche de la route */
   let best=null;for(let i=0;i<P.length-1;i++){const ax=X(P[i]),ay=Y(P[i]),bx=X(P[i+1]),by=Y(P[i+1]),dx=bx-ax,dy=by-ay,t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/((dx*dx+dy*dy)||1))),qx=ax+t*dx,qy=ay+t*dy,d=Math.hypot(px-qx,py-qy);if(!best||d<best.d)best={d,qx,qy,dx,dy}}
   let ux=px-best.qx,uy=py-best.qy,ul=Math.hypot(ux,uy);if(ul<2){ux=-best.dy;uy=best.dx;ul=Math.hypot(ux,uy)||1;if(x.a.side==='D'){ux=-ux;uy=-uy}}ux/=ul;uy/=ul;
-  const hit=(x,y)=>placed.some(q=>x<q.x+q.w+8&&x+bw+8>q.x&&y<q.y+q.h+8&&y+bh+8>q.y)||P.some(p=>{const X0=X(p),Y0=Y(p);return X0>x-14&&X0<x+bw+14&&Y0>y-30&&Y0<y+bh+14}),cl=(x,y)=>[Math.max(20,Math.min(W-20-bw,x)),Math.max(110,Math.min(H-100-bh,y))];
-  let bx,by,ok=false;for(const sd of [1,-1])for(const dist of [40,90,150]){for(let kk=0;kk<14&&!ok;kk++){const dy=(kk%2?1:-1)*Math.ceil(kk/2)*(bh/2+6),vx=ux*sd,c2=cl(px+vx*dist+(vx<0?-bw:0),py+uy*sd*dist-bh/2+dy);if(!hit(c2[0],c2[1])){[bx,by]=c2;ok=true}}if(ok)break}
-  if(!ok)[bx,by]=cl(px+ux*40+(ux<0?-bw:0),py-bh/2);
+  const hit=(x,y)=>placed.some(q=>x<q.x+q.w+10&&x+bw+10>q.x&&y<q.y+q.h+10&&y+bh+10>q.y)||P.some(p=>{const X0=X(p),Y0=Y(p);return X0>x-16&&X0<x+bw+16&&Y0>y-32&&Y0<y+bh+16})||MK.some(m=>m.x>x-14&&m.x<x+bw+14&&m.y>y-14&&m.y<y+bh+14)||RP.some(m=>m.x>x-6&&m.x<x+bw+6&&m.y>y-6&&m.y<y+bh+6),cl=(x,y)=>[Math.max(20,Math.min(W-20-bw,x)),Math.max(110,Math.min(H-110-bh,y))],free=(x,y)=>{const c2=cl(x,y);return c2[0]===x&&c2[1]===y&&!hit(x,y)};
+  let bx,by,ok=false;for(const sd of [1,-1]){for(const dist of [36,80,140]){for(let kk=0;kk<16&&!ok;kk++){const dy=(kk%2?1:-1)*Math.ceil(kk/2)*(bh/2+6),vx=ux*sd,tx=px+vx*dist+(vx<0?-bw:0),ty=py+uy*sd*dist-bh/2+dy;if(free(tx,ty)){bx=tx;by=ty;ok=true}}if(ok)break}if(ok)break}
+  /* sinon : spirale autour du terrain jusqu'à trouver une place libre */
+  for(let r=40;!ok&&r<1400;r+=14)for(let a=0;a<360&&!ok;a+=15){const tx=px+r*Math.cos(a*cbRd)-(Math.cos(a*cbRd)<0?bw:0),ty=py+r*Math.sin(a*cbRd)-bh/2;if(free(tx,ty)){bx=tx;by=ty;ok=true}}
+  if(!ok)[bx,by]=cl(px+30,py-bh/2);
   placed.push({x:bx,y:by,w:bw,h:bh});box.push({x,px,py,bx,by,bw,bh,L,col})});
  box.forEach(b=>{g.strokeStyle=b.col;g.lineWidth=2;g.setLineDash([5,4]);g.beginPath();g.moveTo(b.px,b.py);g.lineTo(Math.max(b.bx,Math.min(b.bx+b.bw,b.px)),Math.max(b.by,Math.min(b.by+b.bh,b.py)));g.stroke();g.setLineDash([])});
  box.forEach(b=>{g.beginPath();g.arc(b.px,b.py,b.x.cls==='A'?11:9,0,7);g.fillStyle=b.col;g.fill();g.lineWidth=3;g.strokeStyle='#fff';g.stroke();if(b.x.red){g.lineWidth=3;g.strokeStyle='#dc2626';g.beginPath();g.arc(b.px,b.py,16,0,7);g.stroke()}
@@ -6301,8 +6318,8 @@ async function drPdf(){const D=drCalc();if(!D)return;const S1=D.L.filter(x=>x.se
    let bw=0;if(w&&w.base){g.font='800 18px system-ui,sans-serif';bw=g.measureText(w.base===w.worst?w.base:w.base+'→'+w.worst).width+28}
    g.fillStyle='#0b1f45';g.font='800 24px system-ui,sans-serif';let tt=`DRT : ${x.name}`;while(g.measureText(tt).width>cw-40-bw&&tt.length>8)tt=tt.slice(0,-2);if(tt!==`DRT : ${x.name}`)tt+='…';g.fillText(tt,x0+16,y0+31);
    if(w&&w.base){const t=w.base===w.worst?w.base:w.base+'→'+w.worst;g.font='800 18px system-ui,sans-serif';const tw=g.measureText(t).width+16;g.fillStyle=DR_CAT[w.worst][1];g.fillRect(x0+cw-tw-16,y0+10,tw,26);g.fillStyle='#fff';g.fillText(t,x0+cw-tw-8,y0+29)}
-   const rows=[['OACI',x.id+(r0[1]&&r0[1]!==x.id?' ('+r0[1].replace(x.id,'').trim()+')':'')],['QFU',r0[2]||((x.p.ad[4]||[]).map(r=>r[0]+'/'+r[3]).join(' '))],['Long',r0[3]||(x.len?x.len+' m':'')],
-    ...x.p.db.flatMap(r=>[r[4]&&['ILS ('+r[5]+')',r[4]],r[6]&&['ILS ('+r[7]+')',r[6]]]).filter(Boolean).slice(0,2),['VOR/TAC',r0[8]||''],['ATIS',r0[9]||''],['APP',r0[10]||''],['TWR',r0[11]||''],['SSLIA',x.lvl!=null?'niveau '+x.lvl:x.mil?'base militaire':'—'],['Contrôle',x.ctl?x.ctl.t:'—'],['Météo',w&&w.base?(w.base===w.worst?w.base:w.base+', risque '+w.worst+' ('+w.wsrc+')'):(w&&w.none)||'—'],...(w&&w.base?[['Prévu',drWxT(w.bf)]].concat(w.worst!==w.base?[['Risque',drWxT(w.wf)]]:[]).concat(w.ph.length?[['Phénom.',w.ph.join(' ')]]:[]):[])];
+   const rows=[['OACI',x.id+(r0[1]&&r0[1]!==x.id?' ('+r0[1].replace(x.id,'').trim()+')':'')],['QFU',x.rec.qfu],['Long',x.rec.long||(x.len?x.len+' m':'')],
+    ...x.rec.ils.slice(0,2).map(([q,v])=>['ILS'+(q?' ('+q+')':''),v]),['VOR/TAC',x.rec.vor],['ATIS',x.rec.atis],['APP',x.rec.app],['TWR',x.rec.twr],['SSLIA',x.lvl!=null?'niveau '+x.lvl:x.mil?'base militaire':'—'],['Contrôle',x.ctl?x.ctl.t:'—'],['Météo',w&&w.base?(w.base===w.worst?w.base:w.base+', risque '+w.worst+' ('+w.wsrc+')'):(w&&w.none)||'—'],...(w&&w.base?[['Prévu',drWxT(w.bf)]].concat(w.worst!==w.base?[['Risque',drWxT(w.wf)]]:[]).concat(w.ph.length?[['Phénom.',w.ph.join(' ')]]:[]):[])];
    let y=y0+74;g.textBaseline='alphabetic';rows.forEach(([k,v])=>{g.font='600 18px system-ui,sans-serif';g.fillStyle='#475569';g.fillText(k,x0+16,y);g.font='700 18px system-ui,sans-serif';g.fillStyle='#0b1f45';const L=drWrap(g,String(v||''),cw-150,/^(Prévu|Risque|Phénom)/.test(k)?2:1);L.forEach((s,q)=>{g.fillText(s,x0+128,y);if(q<L.length-1)y+=22});y+=25});
    x.nts.filter(n=>n.al[0]!=='i').slice(0,4).forEach(n=>{if(y>y0+ch-24)return;g.fillStyle=n.al[0]==='r'?'#dc2626':'#c2410c';g.font='800 16px system-ui,sans-serif';let s='⚠ '+n.al[1];while(g.measureText(s).width>cw-36&&s.length>4)s=s.slice(0,-2);g.fillText(s,x0+16,y);y+=21})});
   g.fillStyle='#64748b';g.font='500 15px system-ui,sans-serif';g.fillText(`Météo : ${DR_RK.map(k=>k+' '+DR_CAT[k][2]).join(' · ')}. Sources : NOTAM, eAIP France, METAR/TAF au ${new Date(S.drT||Date.now()).toLocaleString('fr-FR')}. SOFIA / MIAC font foi.`,40,H-24);
