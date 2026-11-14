@@ -731,6 +731,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cb-iso-i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0891b2;color:#fff;font-weight:900;font-size:12px}
 [data-theme=dark] .cb-iso{background:#083344;border-color:#155e75;color:#cffafe}[data-theme=dark] .cb-iso small{color:#67e8f9}
 @media (max-width:560px){.cb-res-h{grid-template-columns:1fr 1fr}}
+.cb-lim{margin-top:8px;align-items:center}.cb-limv{display:inline-flex;align-items:center;gap:6px;font-weight:700;margin-left:8px}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
 @media (max-width:560px){.cb-kp{grid-template-columns:1fr 1fr}.cb-kp b{font-size:19px}.cb-rt{font-size:20px}.cb-f>label{width:100%}.cb-edit{grid-template-columns:1fr 1fr}.cb-hero{padding:16px 14px 14px;border-radius:20px}.cb-card{padding:12px}}
 
@@ -1461,7 +1462,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794655705';
+const APP_V='1794657231';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5855,13 +5856,13 @@ function cbFF(fl,v,m,Tc){const c=CB_MD,A=cbAtm(fl,Tc),V=v*.5144,M=V/A.a,q=.5*A.r
  return{q:(c.a+c.b*M)*Math.pow(A.T/288.15,c.n)*D/.79/60,D,M}}
 const cbVi8=(fl,m,Tc)=>{const A=cbAtm(fl,Tc);return Math.sqrt(2*m*9.81/(A.rho*CB_MD.S*CB_MD.CLi8))/.5144};
 const cbMach=(fl,v,Tc)=>v*.5144/cbAtm(fl,Tc).a,cbVi=(fl,v,Tc)=>v*Math.sqrt(cbAtm(fl,Tc).sig);
-function cbVmax(fl,m,Tc,vimax){const A=cbAtm(fl,Tc),Ta=CB_MD.T0*Math.pow(A.sig,CB_MD.nT),cap=Math.min((vimax||520)/Math.sqrt(A.sig),CB_MD.Mmo*A.a/.5144);
+function cbVmax(fl,m,Tc,vimax){const A=cbAtm(fl,Tc),Ta=CB_MD.T0*Math.pow(A.sig,CB_MD.nT),cap=Math.min((vimax||520)/Math.sqrt(A.sig),CB_MD.Mmo*A.a/.5144,CB_VL.k==='m'?CB_VL.v*A.a/.5144:CB_VL.k==='tas'?CB_VL.v:1e9);
  if(cbFF(fl,cap,m,Tc).D<=Ta)return cap;let vmd=200,dm=1e9;for(let v=180;v<cap;v+=5){const d=cbFF(fl,v,m,Tc).D;if(d<dm){dm=d;vmd=v}}if(dm>Ta)return vmd;let lo=vmd,hi=cap;for(let i=0;i<30;i++){const md=(lo+hi)/2;if(cbFF(fl,md,m,Tc).D<=Ta)lo=md;else hi=md}return lo}
-let CB_M0=3850,CB_VIM=520,CB_MACH=.72;const CB_CC=new Map();
+let CB_M0=3850,CB_VIM=520,CB_MACH=.72,CB_VL={k:''};const CB_CC=new Map();
 /* vitesse qui maximise la distance sol par litre (vent compris), et « meilleur rapport » : la plus rapide qui garde 96 % de cette distance */
 function cbOpt(fl,m,Tc,c,w,lo,hi,lrc){const sr=v=>cbGs(v,c||0,w).gs/cbFF(fl,v,m,Tc).q;let a=lo,b=hi;for(let i=0;i<40;i++){const m1=a+(b-a)/3,m2=b-(b-a)/3;if(sr(m1)<sr(m2))a=m1;else b=m2}const vb=(a+b)/2;if(!lrc)return vb;const tg=sr(vb)*.96;let x=vb,y=hi;if(sr(hi)>=tg)return hi;for(let i=0;i<30;i++){const md=(x+y)/2;if(sr(md)>=tg)x=md;else y=md}return x}
 function cbCruise(pr,fl,fuel,Tc,w,c){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};if(pr==='r')pr='lrc';let MX=null;if(/^m[\d.]/.test(pr)){MX=+pr.slice(1);pr='m'}else if(pr==='m')MX=CB_MACH;
- if(pr==='max'||pr==='lrc'||pr==='dmf'||pr==='i8'||pr==='m'){const m=CB_M0+.79*Math.max(0,fuel),k=[pr,Math.round(fl),Math.round(fuel/40),Tc==null?'':Math.round(Tc),w?w.d+'/'+w.s:'',Math.round(c||0),pr==='m'?MX:'',CB_VIM,CB_M0].join('|');
+ if(pr==='max'||pr==='lrc'||pr==='dmf'||pr==='i8'||pr==='m'){const m=CB_M0+.79*Math.max(0,fuel),k=[pr,Math.round(fl),Math.round(fuel/40),Tc==null?'':Math.round(Tc),w?w.d+'/'+w.s:'',Math.round(c||0),pr==='m'?MX:'',CB_VIM,CB_VL.k+CB_VL.v,CB_M0].join('|');
   let o=CB_CC.get(k);if(o)return o;if(CB_CC.size>20000)CB_CC.clear();
   const vi=cbVi8(fl,m,Tc),vx=Math.max(vi,cbVmax(fl,m,Tc,CB_VIM));let v=pr==='max'?vx:pr==='i8'?vi:pr==='m'?Math.max(vi,Math.min(vx,MX*cbAtm(fl,Tc).a/.5144)):cbOpt(fl,m,Tc,c,w,vi,vx,pr==='lrc');
   o={v,q:cbFF(fl,v,m,Tc).q,abs:1};CB_CC.set(k,o);return o}
@@ -5962,7 +5963,7 @@ function cbSt(){if(!S.cb){let o=null;try{o=JSON.parse(localStorage.getItem('pafC
   const d=new Date(Date.now()+3600e3);d.setMinutes(0,0,0);
   S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1150,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{},des:'eco',reg:'ifr',rvsm:5,vimax:520,m0:3850,mach:.72,low:'t420'},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
  return S.cb}
-function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,fu:l.fu,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,val:c.val,alts:c.alts,altSel:c.altSel,altDest:c.altDest,des:c.des,reg:c.reg,rvsm:c.rvsm,vimax:c.vimax,vimOk:c.vimOk,fvOk:c.fvOk,m0:c.m0,mach:c.mach,low:c.low}))}catch(e){}}
+function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,fu:l.fu,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,val:c.val,alts:c.alts,altSel:c.altSel,altDest:c.altDest,des:c.des,reg:c.reg,rvsm:c.rvsm,vimax:c.vimax,vimOk:c.vimOk,lk:c.lk,lm:c.lm,lt:c.lt,fvOk:c.fvOk,m0:c.m0,mach:c.mach,low:c.low}))}catch(e){}}
 function cbSet(k,v){const c=cbSt();c[k]=v;cbSave();render()}
 function cbSetPts(P,src,legFl,dim){const c=cbSt();c.pts=P;c.src=src||'';c.dim=dim||'';c.legs=P.slice(1).map((_,i)=>({fl:legFl?legFl[i]:null,f0:legFl?legFl[i]:null,pr:'',wm:'',wp:null}));
  const D=P[P.length-1];if(D&&c.altDest!==D.n){c.altDest=D.n;c.alts=cbNear(D,2).map(([id])=>({id,wx:'a',fl:null}));c.altSel=c.alts[0]?c.alts[0].id:''}
@@ -6018,7 +6019,7 @@ async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBu
  c.legs.forEach((l,i)=>{const h=A[i]&&A[i].hourly;if(!h)return;const lg=r0&&r0.L[i],tt=(dep+((lg?r0.wps[i].t+lg.t/2:0))*1000)/1000;let k=0,bd=1e18;h.time.forEach((x,j)=>{const d=Math.abs(x-tt);if(d<bd){bd=d;k=j}});
   l.wp=CB_LV.map(p=>({fl:Math.round(cbFLp(p)),s:h['wind_speed_'+p+'hPa'][k],d:h['wind_direction_'+p+'hPa'][k],T:h['temperature_'+p+'hPa'][k]})).filter(o=>o.s!=null&&o.d!=null).sort((a,b)=>a.fl-b.fl);l.wt=h.time[k]});
  cbSave();render();if(!quiet)toast('Vent prévu chargé')}
-function cbIn(req){const c=cbSt();if(+c.vimax===450&&!c.vimOk){c.vimax=520;c.vimOk=1}if(+c.fv===1250&&!c.fvOk){c.fv=1150;c.fvOk=1}CB_M0=+c.m0||3850;CB_VIM=+c.vimax||520;CB_MACH=+c.mach||.72;if(CB_TBA[c.pr]){c.low=c.pr;c.pr='n'}return{low:c.low||'t420',pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0,des:c.des||'eco',reg:c.reg||'ifr',rvsm:+c.rvsm||0}}
+function cbIn(req){const c=cbSt();if(+c.vimax===450&&!c.vimOk){c.vimax=520;c.vimOk=1}if(+c.fv===1250&&!c.fvOk){c.fv=1150;c.fvOk=1}CB_M0=+c.m0||3850;CB_VIM=+c.vimax||520;CB_MACH=+c.mach||.72;CB_VL=c.lk==='m'&&+c.lm?{k:'m',v:+c.lm}:c.lk==='tas'&&+c.lt?{k:'tas',v:+c.lt}:{k:''};if(CB_TBA[c.pr]){c.low=c.pr;c.pr='n'}return{low:c.low||'t420',pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0,des:c.des||'eco',reg:c.reg||'ifr',rvsm:+c.rvsm||0}}
 /* Variantes pour les conseils : même route, une seule chose change (vitesse, descente ou niveau) */
 function cbVar(o,req){const c=cbSt(),b=cbIn(req);b.step=1;
  if(o.pr){b.pr=o.pr;b.legs=c.legs.map(l=>Object.assign({},l,{pr:l.pr&&!CB_TBA[l.pr]?o.pr:l.pr}))}
@@ -6026,7 +6027,7 @@ function cbVar(o,req){const c=cbSt(),b=cbIn(req);b.step=1;
  if(o.des)b.des=o.des;return cbCalc(b)}
 const CB_LAM={i8:0,dmf:0,lrc:4,r:4,n:6,m:10,max:30};   // litres acceptés par minute gagnée, selon la croisière choisie
 function cbIfrFl(c){const P=c.pts,crs=(cbBrg(P[0],P[P.length-1])-2+360)%360,odd=crs<180;const L=[];for(let f=odd?50:60;f<=280;f+=20)L.push(f);return{L,odd,crs}}
-function cbAdvice(R){const c=cbSt(),k=JSON.stringify([c.pts,c.legs,c.fuel,c.mer,c.fl,c.pr,c.des,c.reg,c.rvsm,c.vimax,c.m0,c.mach,R.req]);if(S.cbAdv&&S.cbAdv.k===k)return S.cbAdv.v;
+function cbAdvice(R){const c=cbSt(),k=JSON.stringify([c.pts,c.legs,c.fuel,c.mer,c.fl,c.pr,c.des,c.reg,c.rvsm,c.vimax,c.lk,c.lm,c.lt,c.m0,c.mach,R.req]);if(S.cbAdv&&S.cbAdv.k===k)return S.cbAdv.v;
  const req=R.req,sp=['i8','dmf','lrc','n','max'].concat(c.pr==='m'?['m']:[]).map(p=>({p,R:cbVar({pr:p},req)})),ds=Object.keys(CB_DS).map(d=>({d,R:cbVar({des:d},req)}));
  const fls=c.reg==='ifr'?cbIfrFl(c).L:Array.from({length:31},(_,i)=>50+i*10),lam=CB_LAM[c.pr]??6;
  const lv=fls.map(fl=>{const r=cbVar({fl},req);return{fl,R:r,ok:r.fA>=req,cost:r.used+lam*r.t/60}});
@@ -6161,7 +6162,10 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   <div class="cb-f"><label>Espace</label>${seg('reg',[['ifr','IFR','≤ FL280'],['oat','OAT','RVSM au-dessus']],c.reg)}</div>
   ${c.reg==='oat'?`<p class="cb-hint" style="margin:-4px 0 10px">Au-dessus du FL285 (RVSM) : on compte <input class="in cb-mini" inputmode="numeric" value="${c.rvsm}" onchange="cbSet('rvsm',+this.value.replace(/\D/g,'')||0)"> min perdues en évitements de trafic.</p>`:''}
   <div class="cb-f"><label>Décollage</label><div class="cb-tx"><input type="datetime-local" class="in" value="${esc(c.dep)}" onchange="S.cb.dep=this.value;cbSave();cbWindLoad(1);S.cbWx&&(S.cbWx.t=0);render()"><button class="btn" ${c.pts.length<2||S.cbWBusy?'disabled':''} onclick="cbWindLoad()">${S.cbWBusy?'…':'Vent prévu'}</button></div></div>
-  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants (fuselage plein 1 250 L − 100 L) · À fond limité à Vi <input class="in cb-mini" inputmode="numeric" value="${c.vimax}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('vimax',v)"> kt et M 0,80 · masse sans pétrole <input class="in cb-mini" style="width:70px!important" inputmode="numeric" value="${c.m0}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('m0',v)"> kg.</p></section>`;
+  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants (fuselage plein 1 250 L − 100 L)</p>
+  <div class="cb-f cb-lim"><label>À fond limité à</label>${seg('lk',[['','Avion','M0,85 · Vi 520 kt'],['m','Mach',c.lk==='m'?'M'+(+c.lm||.8).toFixed(2).replace('.',','):'au choix'],['tas','Vp',c.lk==='tas'?(+c.lt||480)+' kt':'au choix']],c.lk||'')}
+   ${c.lk==='m'?`<span class="cb-limv">M <input class="in cb-mini" inputmode="decimal" value="${(+c.lm||.8).toFixed(2).replace('.',',')}" onchange="const v=+this.value.replace(',','.');if(v>.3&&v<=.85)cbSet('lm',v)"></span>`:c.lk==='tas'?`<span class="cb-limv">Vp <input class="in cb-mini" inputmode="numeric" value="${+c.lt||480}" onchange="const v=+this.value.replace(/\D/g,'');if(v>=200&&v<=560)cbSet('lt',v)"> kt</span>`:''}</div>
+  <p class="cb-hint">« Max » et le haut du curseur ne dépassent jamais la limite choisie, ni les limites avion (M0,85, Vi 520 kt). En altitude, la limite se donne en Mach ou en Vp : la Vi n'y est pas pertinente · masse sans pétrole <input class="in cb-mini" style="width:70px!important" inputmode="numeric" value="${c.m0}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('m0',v)"> kg.</p></section>`;
  if(!R)return `${NOTE}${S.cbWBusy||S.cbWxBusy?ldBan('Chargement…'):''}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}<div class="cb-wrap">${hero}<div class="cb-cols">${route}${vol}</div></div>`;
  /* ---- conseils : vitesse, niveau, descente ---- */
  const dl=(a,b,u)=>{const d=Math.round(a-b);return d===0?'=':(d>0?'+':'−')+Math.abs(d)+u};
