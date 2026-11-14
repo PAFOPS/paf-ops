@@ -670,6 +670,14 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cb-ar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.cb-ar .cb-seg{flex:none}.cb-ar .cb-seg button{min-width:44px;padding:4px 7px;font-size:12px}.cb-af{color:var(--muted)}.cb-af b{color:var(--fg)}
 .cb-req{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:6px;color:var(--muted)}.cb-req b{color:var(--fg)}
 .cb-add{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;font-size:12.5px;color:var(--muted)}.cb-add button{border:1px dashed var(--line);background:transparent;border-radius:9px;padding:4px 8px;font:inherit;font-weight:800;color:var(--fg);cursor:pointer}.cb-add button small{color:var(--muted);font-weight:600}
+.cb-h4{margin:14px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.cb-vt{padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.4;margin-bottom:8px}.cb-vt.ok{background:var(--ok2);color:var(--ok)}.cb-vt.ko{background:var(--bad2);color:var(--bad)}.cb-vt b{color:inherit}
+.cb-cmp{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}.cb-cmp th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:left;padding:5px 6px;border-bottom:1px solid var(--line)}
+.cb-cmp td{padding:6px;border-bottom:1px solid var(--line);vertical-align:top}.cb-cmp td small{display:block;color:var(--muted);font-size:11px}.cb-cmp tr{cursor:pointer}.cb-cmp tr:hover td{background:var(--surface2)}
+.cb-cmp tr.cur td{background:color-mix(in srgb,#2563eb 9%,var(--surface))}.cb-cmp tr.cur td:first-child{box-shadow:inset 3px 0 var(--solid)}.cb-cmp tr.ko td{color:var(--bad)}
+.cb-rec{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,#0ea5e9 14%,var(--surface)),var(--surface2));border:1px solid var(--line)}
+.cb-rec>div:first-child{display:grid}.cb-rec small{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800}.cb-rec b{font-size:24px;font-weight:900;color:#0369a1}.cb-rx{flex:1;font-size:13px}.cb-ok{color:var(--ok);font-weight:800;font-size:13px}
+.cb-lvs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.cb-lvs button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:5px 9px;font:inherit;cursor:pointer;display:grid;text-align:left}.cb-lvs button b{font-size:13px}.cb-lvs button small{font-size:11px;color:var(--muted)}.cb-lvs button.on{border-color:#0369a1;box-shadow:0 0 0 2px color-mix(in srgb,#0ea5e9 25%,transparent)}.cb-lvs button.ko{opacity:.55}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
 @media (max-width:560px){.cb-kp{grid-template-columns:1fr 1fr}.cb-kp b{font-size:19px}.cb-rt{font-size:20px}.cb-f>label{width:100%}.cb-edit{grid-template-columns:1fr 1fr}.cb-hero{padding:16px 14px 14px;border-radius:20px}.cb-card{padding:12px}}
 
@@ -1400,7 +1408,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794605328';
+const APP_V='1794641488';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5733,7 +5741,7 @@ const CB_DE={fl:[0,50,100,150,200,250,300,350,400,450],f:[0,8,18,26,34,42,50,61,
 const CB_CR={n:{fl:[50,100,150,200,250,300,350],v:[423,414,416,411,405,403,401],q:[28.8,22,19,16.3,14.3,12.5,10.3]},
  dl:{fl:[50,100,150,200,250,300,350,400],v:[267,284,307,332,370,392,401,402],q:[13.5,12.9,12.4,11.9,11.8,11.5,10.8,11.0]},
  dg:{fl:[50,100,150,200,250,300,350,400,420],v:[255,268,286,309,346,368,394,401,402],q:[12.3,11.5,11,10.4,10.6,10.1,9.7,9.3,9.2]}};
-const CB_PR=[['n','Normale','check-list'],['dmf','DMF','distance max'],['t320','TBA 320','20 L/min'],['t360','TBA 360','24 L/min'],['t420','TBA 420','30 L/min'],['t450','TBA 450','≈ 38 L/min']];
+const CB_PR=[['dmf','Éco','DMF'],['n','Normale','check-list'],['r','Rapide','mi-chemin'],['max','À fond','PMC'],['t320','TBA 320','20 L/min'],['t360','TBA 360','24 L/min'],['t420','TBA 420','30 L/min'],['t450','TBA 450','≈ 38 L/min']];
 const CB_TBA={t320:[320,20],t360:[360,24],t420:[420,30],t450:[450,38]};
 const CB_TO={f:43,t:69,d:3.3};   // lâcher des freins → 280 kt (1000 ft)
 const CB_LV=[850,700,600,500,400,300,250,200];
@@ -5741,8 +5749,25 @@ const CB_VFR={c:1500,v:5000};      // VFR : plafond ≥ 1 500 ft et visi ≥ 5 k
 const cbFLp=p=>145366.45*(1-Math.pow(p/1013.25,0.190284))/100;
 const cbI=(xs,ys,x)=>{if(x<=xs[0])return ys[0];for(let i=1;i<xs.length;i++)if(x<=xs[i])return ys[i-1]+(ys[i]-ys[i-1])*(x-xs[i-1])/(xs[i]-xs[i-1]);return ys[ys.length-1]};
 const cbDv=(T,k,fl)=>{const top=T.fl[T.fl.length-1],a=Math.max(0,Math.min(top-5,fl-2.5)),b=a+5;return (cbI(T.fl,T[k],b)-cbI(T.fl,T[k],a))/5};
-const cbDesD=fl=>cbI(CB_DE.fl,CB_DE.d,fl),cbDesFl=d=>cbI(CB_DE.d,CB_DE.fl,d);
-function cbCruise(pr,fl,fuel){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};
+/* Descentes (UCE 116.1, ch. 6, jusqu'à 1 500 ft) : éco = fiche PAF ; AF 2×80 % (IT10, 5 t) ; rapide M0,85 puis −20° ; 1000 ft/Nm 280 kt (lisse, extrapolée au-dessus du FL250) */
+const CB_DS={eco:['Éco','80 % · M0,70 puis 300 kt',CB_DE],
+ af:['AF 2×80 %','aérofreins sortis · M0,70 puis 300 kt',{fl:[0,100,200,300,375,400,450],t:[0,58,131,191,279,313,380],d:[0,6,13.6,19.8,29,32.6,40],f:[0,7.8,19,26.2,38,41,48]}],
+ rap:['Rapide','AF sortis · M0,85 puis assiette −20°',{fl:[0,100,200,300,330,400,450],t:[0,28,60,95,105,127,145],d:[0,3.4,7.3,11.5,12.75,15.5,17.5],f:[0,3.9,8.3,12.6,14,16.3,18]}],
+ k1:['1000 ft/Nm','AF sortis · 2×84 % · 280 kt',{fl:[0,100,200,250,300,400,450],t:[0,99,198,255,306,408,459],d:[0,8.5,18.5,23.5,28.5,38.5,43.5],f:[0,18.5,40,51,61,82,92]}]};
+const cbDT=k=>(CB_DS[k]||CB_DS.eco)[2];
+const cbDesD=(fl,T)=>cbI((T||CB_DE).fl,(T||CB_DE).d,fl),cbDesFl=(d,T)=>cbI((T||CB_DE).d,(T||CB_DE).fl,d);
+/* Modèle IT10 (polaire + conso spécifique) recalé sur la fiche PAF (normale, DMF, TBA) et sur l'exemple UCE 116.1 fig. 5-2 ;
+   poussée PMC déduite des montées PMC de la fiche. Sert pour « Rapide », « À fond » et le choix du niveau. */
+const CB_MD={cd0:.0306,k:.108,a:.9146,b:.0575,n:.9079,mc:.6271,dr:.8105,S:17.5,T0:1850,nT:.68};
+function cbAtm(fl,Tc){const h=fl*30.48;let T,p;if(h<11000){T=288.15-.0065*h;p=101325*Math.pow(T/288.15,5.2559)}else{T=216.65;p=22632*Math.exp(-(h-11000)/6341.6)}
+ const Ta=Tc!=null?273.15+Tc:T,rho=p/(287*Ta);return{T:Ta,rho,a:Math.sqrt(1.4*287*Ta),sig:rho/1.225}}
+function cbFF(fl,v,m,Tc){const c=CB_MD,A=cbAtm(fl,Tc),V=v*.5144,M=V/A.a,q=.5*A.rho*V*V,cl=m*9.81/(q*c.S),D=q*c.S*(c.cd0+c.k*cl*cl+c.dr*Math.max(0,M-c.mc)**2)/10;
+ return{q:(c.a+c.b*M)*Math.pow(A.T/288.15,c.n)*D/.79/60,D,M}}
+function cbVmax(fl,m,Tc,vimax){const A=cbAtm(fl,Tc),Ta=CB_MD.T0*Math.pow(A.sig,CB_MD.nT),cap=Math.min((vimax||450)/Math.sqrt(A.sig),0.80*A.a/.5144);
+ if(cbFF(fl,cap,m,Tc).D<=Ta)return cap;let vmd=200,dm=1e9;for(let v=180;v<cap;v+=5){const d=cbFF(fl,v,m,Tc).D;if(d<dm){dm=d;vmd=v}}if(dm>Ta)return vmd;let lo=vmd,hi=cap;for(let i=0;i<30;i++){const md=(lo+hi)/2;if(cbFF(fl,md,m,Tc).D<=Ta)lo=md;else hi=md}return lo}
+let CB_M0=3850,CB_VIM=450;
+function cbCruise(pr,fl,fuel,Tc){if(CB_TBA[pr])return{v:CB_TBA[pr][0],q:CB_TBA[pr][1]};
+ if(pr==='max'||pr==='r'){const m=CB_M0+.79*Math.max(0,fuel),vx=cbVmax(fl,m,Tc,CB_VIM);let v=vx;if(pr==='r'){const n=cbCruise('n',fl,fuel),Tk=Tc!=null?Math.sqrt((273.15+Tc)/(273.15+15-1.98*Math.min(fl,361)/10)):1;v=Math.min(vx,(n.v*Tk+vx)/2)}return{v,q:cbFF(fl,v,m,Tc).q,abs:1}}
  if(pr==='dmf'){const w=Math.max(0,Math.min(1,(fuel-1200)/760)),a=CB_CR.dl,b=CB_CR.dg;return{v:cbI(a.fl,a.v,fl)*w+cbI(b.fl,b.v,fl)*(1-w),q:cbI(a.fl,a.q,fl)*w+cbI(b.fl,b.q,fl)*(1-w)}}
  const a=CB_CR.n;return{v:cbI(a.fl,a.v,fl),q:cbI(a.fl,a.q,fl)}}
 const cbRd=Math.PI/180;
@@ -5758,7 +5783,7 @@ function cbGs(v,c,w){if(!w)return{gs:v,hw:0,xw:0};const a=(w.d-c)*cbRd,hw=w.s*Ma
    descente finale pour arriver à destination ; fin de voilure et mini arrivée repérés sur la route */
 function cbCalc(st){const P=st.pts||[];if(P.length<2)return null;
  const L=[];let tot=0;for(let i=0;i<P.length-1;i++){const lg=(st.legs||[])[i]||{},d=cbDist(P[i],P[i+1]);L.push({i,a:P[i],b:P[i+1],d,c:cbBrg(P[i],P[i+1]),x0:tot,fl:Math.max(0,Math.min(420,+(lg.fl??st.fl)||0)),pr:lg.pr||st.pr||'n',wm:lg.wm||'',wp:lg.wp||null,f:0,t:0,cr:null});tot+=d}
- const n=L.length,cons=[];for(let j=1;j<n;j++)cons[j]=L[j].fl<L[j-1].fl?L[j].fl:Infinity;cons[n]=0;
+ const n=L.length,cons=[],DT=cbDT(st.des),STP=st.step||0.5;for(let j=1;j<n;j++)cons[j]=L[j].fl<L[j-1].fl?L[j].fl:Infinity;cons[n]=0;
  const f0=st.fuel-(st.mer||0);let fuel=f0,t=0,alt=10,x=0;
  if(!st.noTO){fuel-=CB_TO.f;t=CB_TO.t;x=Math.min(CB_TO.d,tot*0.5);L[0].f+=CB_TO.f;L[0].t+=CB_TO.t}
  const trace=[{x:0,f:f0,a:0,t:0},{x,f:fuel,a:alt,t}],ev=[],wps=[{x:0,f:f0,t:0,a:0}],seg=[];let li=0;
@@ -5768,15 +5793,15 @@ function cbCalc(st){const P=st.pts||[];if(P.length<2)return null;
  let guard=0;
  while(x<tot-1e-6&&guard++<200000){while(li<n-1&&x>=L[li].x0+L[li].d-1e-9){wps.push({x:L[li].x0+L[li].d,f:fuel,t,a:alt});li++}
   const lg=L[li],rem=tot-x,legEnd=lg.x0+lg.d,w=cbWind(lg,alt);let allowed=Infinity;const C=[];
-  for(let j=li+1;j<=n;j++){if(cons[j]===Infinity)continue;const dj=L[j-1].x0+L[j-1].d-x,kd=kdOf(j,alt);C.push([dj,kd,cons[j]]);allowed=Math.min(allowed,cbDesFl(cbDesD(cons[j])+dj/kd))}
-  const tgt=Math.min(lg.fl,allowed);let ds=Math.min(0.5,legEnd-x,rem),dt=0,df=0,da=0,ph;
+  for(let j=li+1;j<=n;j++){if(cons[j]===Infinity)continue;const dj=L[j-1].x0+L[j-1].d-x,kd=kdOf(j,alt);C.push([dj,kd,cons[j]]);allowed=Math.min(allowed,cbDesFl(cbDesD(cons[j],DT)+dj/kd,DT))}
+  const tgt=Math.min(lg.fl,allowed);let ds=Math.min(STP,legEnd-x,rem),dt=0,df=0,da=0,ph;
   if(alt<tgt-0.05){const dtl=cbDv(CB_CL,'t',alt),ddl=cbDv(CB_CL,'d',alt),dfl=cbDv(CB_CL,'f',alt),g=cbGs(ddl/dtl*3600,lg.c,w).gs;
    dt=ds/g*3600;da=dt/dtl;if(alt+da>tgt){da=tgt-alt;dt=da*dtl;ds=g*dt/3600}df=dfl*da;ph='mt'}
-  else if(alt>tgt+0.05){const dtl=cbDv(CB_DE,'t',alt),ddl=cbDv(CB_DE,'d',alt),dfl=cbDv(CB_DE,'f',alt),g=cbGs(ddl/dtl*3600,lg.c,w).gs;
+  else if(alt>tgt+0.05){const dtl=cbDv(DT,'t',alt),ddl=cbDv(DT,'d',alt),dfl=cbDv(DT,'f',alt),g=cbGs(ddl/dtl*3600,lg.c,w).gs;
    dt=ds/g*3600;da=-dt/dtl;if(alt+da<tgt){da=tgt-alt;dt=-da*dtl;ds=g*dt/3600}df=-dfl*da;ph='de'}
-  else{alt=tgt;const cr=cbCruise(lg.pr,alt,fuel),Tc=w&&w.T!=null&&!CB_TBA[lg.pr]?Math.sqrt((273.15+w.T)/(273.15+15-1.98*alt/10)):1,g=cbGs(cr.v*Tc,lg.c,w);
+  else{alt=tgt;const cr=cbCruise(lg.pr,alt,fuel,w&&w.T!=null?w.T:null),Tc=w&&w.T!=null&&!CB_TBA[lg.pr]&&!cr.abs?Math.sqrt((273.15+w.T)/(273.15+15-1.98*alt/10)):1,g=cbGs(cr.v*Tc,lg.c,w);
    if(!lg.cr)lg.cr={fl:alt,v:cr.v*Tc,q:cr.q,gs:g.gs,hw:g.hw,w};
-   C.forEach(([dj,kd,cj])=>{if(alt>cj+0.05){const nd=dj/kd-(cbDesD(alt)-cbDesD(cj));if(nd>0.01)ds=Math.min(ds,nd*kd)}});
+   C.forEach(([dj,kd,cj])=>{if(alt>cj+0.05){const nd=dj/kd-(cbDesD(alt,DT)-cbDesD(cj,DT));if(nd>0.01)ds=Math.min(ds,nd*kd)}});
    dt=ds/g.gs*3600;df=cr.q*dt/60;ph='cr'}
   if(ds<=1e-6)ds=Math.min(0.05,legEnd-x,rem);
   const fa=fuel,xa=x,ta=t,aa=alt;fuel-=df;t+=dt;x+=ds;alt=Math.max(0,alt+da);lg.f+=df;lg.t+=dt;mark(fa,fuel,xa,x,ta,t);
@@ -5786,7 +5811,9 @@ function cbCalc(st){const P=st.pts||[];if(P.length<2)return null;
  L.forEach(l=>{if(!l.cr){const w=cbWind(l,l.fl),cr=cbCruise(l.pr,l.fl,fuel),g=cbGs(cr.v,l.c,w);l.cr={fl:l.fl,v:cr.v,q:cr.q,gs:g.gs,hw:g.hw,w,none:1}}});
  /* phases propres : on retire les paliers de moins d'1 Nm et on fusionne */
  const S2=[];seg.filter(s=>!(s.ph==='cr'&&s.x1-s.x0<1)).forEach(s=>{const p=S2[S2.length-1];if(p&&p.ph===s.ph){p.x1=s.x1;p.t1=s.t1;p.a1=s.a1;p.f1=s.f1}else S2.push(Object.assign({},s))});
- return{L,tot,f0,fA:fuel,t,trace,wps,ev,seg:S2,used:f0-fuel}}
+ /* RVSM (OAT au-dessus du FL285) : minutes perdues en évitements, au débit du palier le plus haut */
+ let rv=null;const top=Math.max(...L.map(l=>l.fl));if(st.reg==='oat'&&top>285&&st.rvsm>0){const l=L.find(x=>x.fl===top),q=l.cr?l.cr.q:12,mn=+st.rvsm;rv={mn,f:q*mn};fuel-=rv.f;t+=mn*60}
+ return{L,tot,f0,fA:fuel,t,trace,wps,ev,seg:S2,used:f0-fuel,rv}}
 /* --- Lecture des routes : texte (OACI, coordonnées, niveaux /F250) ou fichier ForeFlight .fpl / .gpx / .kml (altitudes lues) --- */
 function cbCoord(tk){let m;const dm=(d,mn,s)=>+d+(+mn||0)/60+(+s||0)/3600;
  if((m=tk.match(/^(\d{2})(\d{2}(?:\.\d+)?)(\d{2}(?:\.\d+)?)?([NS])\/?(\d{3})(\d{2}(?:\.\d+)?)(\d{2}(?:\.\d+)?)?([EW])$/)))return{la:dm(m[1],m[2],m[3])*(m[4]==='S'?-1:1),lo:dm(m[5],m[6],m[7])*(m[8]==='W'?-1:1)};
@@ -5834,9 +5861,9 @@ function cbFlFromZ(P){const z=P.map((p,i)=>i===0||i===P.length-1?(p.z!=null&&p.z
 /* --- état --- */
 function cbSt(){if(!S.cb){let o=null;try{o=JSON.parse(localStorage.getItem('pafCb')||'null')}catch(e){}
   const d=new Date(Date.now()+3600e3);d.setMinutes(0,0,0);
-  S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1250,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{}},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
+  S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1250,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{},des:'eco',reg:'ifr',rvsm:5,vimax:450,m0:3850},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
  return S.cb}
-function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,alts:c.alts,altSel:c.altSel,altDest:c.altDest}))}catch(e){}}
+function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,alts:c.alts,altSel:c.altSel,altDest:c.altDest,des:c.des,reg:c.reg,rvsm:c.rvsm,vimax:c.vimax,m0:c.m0}))}catch(e){}}
 function cbSet(k,v){const c=cbSt();c[k]=v;cbSave();render()}
 function cbSetPts(P,src,legFl,dim){const c=cbSt();c.pts=P;c.src=src||'';c.dim=dim||'';c.legs=P.slice(1).map((_,i)=>({fl:legFl?legFl[i]:null,f0:legFl?legFl[i]:null,pr:'',wm:'',wp:null}));
  const D=P[P.length-1];if(D&&c.altDest!==D.n){c.altDest=D.n;c.alts=cbNear(D,2).map(([id])=>({id,wx:'a',fl:null}));c.altSel=c.alts[0]?c.alts[0].id:''}
@@ -5882,7 +5909,21 @@ async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBu
  c.legs.forEach((l,i)=>{const h=A[i]&&A[i].hourly;if(!h)return;const lg=r0&&r0.L[i],tt=(dep+((lg?r0.wps[i].t+lg.t/2:0))*1000)/1000;let k=0,bd=1e18;h.time.forEach((x,j)=>{const d=Math.abs(x-tt);if(d<bd){bd=d;k=j}});
   l.wp=CB_LV.map(p=>({fl:Math.round(cbFLp(p)),s:h['wind_speed_'+p+'hPa'][k],d:h['wind_direction_'+p+'hPa'][k],T:h['temperature_'+p+'hPa'][k]})).filter(o=>o.s!=null&&o.d!=null).sort((a,b)=>a.fl-b.fl);l.wt=h.time[k]});
  cbSave();render();if(!quiet)toast('Vent prévu chargé')}
-function cbIn(req){const c=cbSt();return{pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0}}
+function cbIn(req){const c=cbSt();CB_M0=+c.m0||3850;CB_VIM=+c.vimax||450;return{pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0,des:c.des||'eco',reg:c.reg||'ifr',rvsm:+c.rvsm||0}}
+/* Variantes pour les conseils : même route, une seule chose change (vitesse, descente ou niveau) */
+function cbVar(o,req){const c=cbSt(),b=cbIn(req);b.step=1;
+ if(o.pr){b.pr=o.pr;b.legs=c.legs.map(l=>Object.assign({},l,{pr:CB_TBA[l.pr]?l.pr:o.pr}))}
+ if(o.fl!=null){b.fl=o.fl;b.legs=(b.legs||c.legs).map(l=>Object.assign({},l,{fl:null}))}
+ if(o.des)b.des=o.des;return cbCalc(b)}
+const CB_LAM={dmf:0,n:6,r:15,max:30};   // litres acceptés par minute gagnée, selon la croisière choisie
+function cbIfrFl(c){const P=c.pts,crs=(cbBrg(P[0],P[P.length-1])-2+360)%360,odd=crs<180;const L=[];for(let f=odd?50:60;f<=280;f+=20)L.push(f);return{L,odd,crs}}
+function cbAdvice(R){const c=cbSt(),k=JSON.stringify([c.pts,c.legs,c.fuel,c.mer,c.fl,c.pr,c.des,c.reg,c.rvsm,c.vimax,c.m0,R.req]);if(S.cbAdv&&S.cbAdv.k===k)return S.cbAdv.v;
+ const req=R.req,sp=['dmf','n','r','max'].map(p=>({p,R:cbVar({pr:p},req)})),ds=Object.keys(CB_DS).map(d=>({d,R:cbVar({des:d},req)}));
+ const fls=c.reg==='ifr'?cbIfrFl(c).L:Array.from({length:37},(_,i)=>50+i*10),lam=CB_LAM[c.pr]??6;
+ const lv=fls.map(fl=>{const r=cbVar({fl},req);return{fl,R:r,ok:r.fA>=req,cost:r.used+lam*r.t/60}});
+ const okL=lv.filter(x=>x.ok),bestL=(okL.length?okL:lv).reduce((a,b)=>b.cost<a.cost-0.5?b:a);
+ const fuelBest=ds.reduce((a,b)=>b.R.fA>a.R.fA?b:a),fast=ds.reduce((a,b)=>b.R.t<a.R.t?b:a),recD=fast!==fuelBest&&fuelBest.R.t-fast.R.t>=60&&fuelBest.R.fA-fast.R.fA<=15?fast:fuelBest;
+ const v={sp,ds,lv,bestL,recD,lam};S.cbAdv={k,v};return v}
 /* Calcul complet : route, puis dégagements depuis la destination (DMF, sans décollage), puis mini à l'arrivée */
 function cbAll(){const c=cbSt(),R0=cbCalc(cbIn());if(!R0)return null;const D=c.pts[c.pts.length-1],last=c.legs[c.legs.length-1]||{},eta=(new Date(c.dep).getTime()||Date.now())+R0.t*1000;
  const AL=(c.alts||[]).filter(a=>PF_AD[a.id]).map(a=>{const A=PF_AD[a.id],p={n:a.id,la:A[1],lo:A[2]},d=cbDist(D,p),fl=a.fl??cbAltFl(d);
@@ -5925,7 +5966,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  const hero=!R?`<div class="cb-hero cb-empty"><div class="cb-hi">⛽</div><div><b>Calcul carburant Alphajet</b><p>Importez la route ForeFlight (ou tapez-la) : pétrole à chaque point, profil vertical, fin de voilure et mini à l'arrivée selon les dégagements et leur météo.</p></div></div>`:(()=>{
   const P=+c.fuel,pc=v=>Math.max(0,Math.min(100,v/P*100)),ok=R.marge>=0,used=R.f0-R.fA;
   return `<div class="cb-hero"><div class="cb-rt"><b>${esc(c.pts[0].n)}</b><span class="cb-line">${c.pts.slice(1,-1).map(p=>`<i title="${esc(p.n)}"></i>`).join('')}</span><b>${esc(D.n)}</b></div>
-   <div class="cb-sub">${cbN(R.tot)} Nm · ${cbT(R.t)} · ${esc((CB_PL.find(p=>p[0]===+c.fuel)||[0,cbN(c.fuel)+' L'])[1])} · ${c.dim==='3d'?'altitudes du fichier':cbFL(+c.fl)+' '+esc(CB_PR.find(p=>p[0]===c.pr)[1])}</div>
+   <div class="cb-sub">${cbN(R.tot)} Nm · ${cbT(R.t)} · ${esc((CB_PL.find(p=>p[0]===+c.fuel)||[0,cbN(c.fuel)+' L'])[1])} · ${c.dim==='3d'?'altitudes du fichier':cbFL(+c.fl)} · ${esc(CB_PR.find(p=>p[0]===c.pr)[1])} · descente ${esc(CB_DS[c.des||'eco'][0])}${R.rv?` · RVSM +${R.rv.mn}′`:''}</div>
    <div class="cb-kp"><div><small>Conso route</small><b>${cbN(used+ +c.mer)} L</b><em>dont ${c.mer} L mise en route</em></div>
     <div><small>Arrivée ${esc(D.n)}</small><b>${cbN(R.fA)} L</b><em>T + ${cbT(R.t)}</em></div>
     <div><small>Mini à l'arrivée</small><b>${cbN(R.req)} L</b><em>${R.alt?`dégagement ${esc(R.alt.id)} ${cbN(R.alt.f)} L + ${R.alt.cat} ${R.alt.sec} L`:`sécurité ${c.sec==400?'IFR':'VFR'} seule`}</em></div>
@@ -5943,20 +5984,43 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   ${c.bad&&c.bad.length?`<p class="cb-hint" style="color:var(--bad)">Inconnus : ${esc(c.bad.join(' '))} — importez le fichier ForeFlight pour avoir leurs coordonnées.</p>`:''}
   ${c.pts.length>=2?`<div class="cb-chain">${c.pts.map(p=>`<span>${esc(p.n)}</span>`).join('<i>›</i>')}</div><div class="cb-src">${c.dim==='3d'?'⛰ Altitudes lues dans le fichier : un niveau par branche':c.dim==='txt'?'Niveaux donnés dans la route':'Trajectoire 2D : profil construit au niveau choisi ci-dessous'}${c.src&&c.src!=='texte'?' · '+esc(c.src):''}</div>`:''}</section>`;
  /* ---- avion & vol ---- */
+ const A=R?cbAdvice(R):null;
  const vol=`<section class="cb-card"><h3><span class="cb-n">2</span>Avion et vol</h3>
   <div class="cb-f"><label>Plein</label>${seg('fuel',CB_PL.map(([v,n])=>[v,n,v]),c.fuel)}</div>
   <div class="cb-f"><label>Mise en route</label>${seg('mer',CB_MER.map(([v,n])=>[v,n,v+' L']),c.mer)}</div>
   <div class="cb-f"><label>Niveau</label><div class="cb-step"><button onclick="cbSet('fl',Math.max(10,${+c.fl}-(${+c.fl}>100?50:10)))" aria-label="Descendre">−</button><b>${cbFL(+c.fl)}</b><button onclick="cbSet('fl',Math.min(420,${+c.fl}+(${+c.fl}>=100?50:10)))" aria-label="Monter">+</button></div>${c.dim==='3d'||c.dim==='txt'?'<span class="cb-hint" style="margin:0">branches sans niveau</span>':''}</div>
-  <div class="cb-f"><label>Croisière</label>${seg('pr',CB_PR.map(([v,n])=>[v,n]),c.pr)}</div>
+  <div class="cb-f"><label>Croisière</label>${seg('pr',CB_PR.slice(0,4).map(([v,n,s])=>[v,n,s]),c.pr)}</div>
+  <div class="cb-f"><label>Basse alt.</label>${seg('pr',CB_PR.slice(4).map(([v,n,s])=>[v,n,s]),c.pr)}</div>
+  <div class="cb-f"><label>Descente</label>${seg('des',Object.entries(CB_DS).map(([k,d])=>[k,(A&&A.recD.d===k?'★ ':'')+d[0]]),c.des)}</div>
+  <div class="cb-f"><label>Espace</label>${seg('reg',[['ifr','IFR','≤ FL280'],['oat','OAT','RVSM au-dessus']],c.reg)}</div>
+  ${c.reg==='oat'?`<p class="cb-hint" style="margin:-4px 0 10px">Au-dessus du FL285 (RVSM) : on compte <input class="in cb-mini" inputmode="numeric" value="${c.rvsm}" onchange="cbSet('rvsm',+this.value.replace(/\D/g,'')||0)"> min perdues en évitements de trafic.</p>`:''}
   <div class="cb-f"><label>Décollage</label><div class="cb-tx"><input type="datetime-local" class="in" value="${esc(c.dep)}" onchange="S.cb.dep=this.value;cbSave();cbWindLoad(1);S.cbWx&&(S.cbWx.t=0);render()"><button class="btn" ${c.pts.length<2||S.cbWBusy?'disabled':''} onclick="cbWindLoad()">${S.cbWBusy?'…':'Vent prévu'}</button></div></div>
-  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants.</p></section>`;
+  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants · À fond limité à Vi <input class="in cb-mini" inputmode="numeric" value="${c.vimax}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('vimax',v)"> kt et M 0,80 · masse sans pétrole <input class="in cb-mini" style="width:70px!important" inputmode="numeric" value="${c.m0}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('m0',v)"> kg.</p></section>`;
  if(!R)return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}<div class="cb-wrap">${hero}<div class="cb-cols">${route}${vol}</div></div>`;
+ /* ---- conseils : vitesse, niveau, descente ---- */
+ const dl=(a,b,u)=>{const d=Math.round(a-b);return d===0?'=':(d>0?'+':'−')+Math.abs(d)+u};
+ const ref=A.sp.find(x=>x.p===c.pr)||A.sp[1],mx=A.sp[3],fastOk=[...A.sp].reverse().find(x=>x.R.fA>=R.req);
+ const vtxt=mx.R.fA>=R.req?`<b>À fond, ça passe.</b> Arrivée ${cbN(mx.R.fA)} L, marge ${cbN(mx.R.fA-R.req)} L · ${dl(mx.R.t/60,ref.R.t/60,'′')} pour ${dl(mx.R.used,ref.R.used,' L')} par rapport à « ${esc(CB_PR.find(p=>p[0]===ref.p)[1])} ».`
+   :fastOk?`<b>À fond, ça ne passe pas</b> (il manquerait ${cbN(R.req-mx.R.fA)} L). Le plus rapide possible : <b>${esc(CB_PR.find(p=>p[0]===fastOk.p)[1])}</b>, marge ${cbN(fastOk.R.fA-R.req)} L.`:`<b>Aucune vitesse ne laisse le mini à l'arrivée</b> : réduire la route ou prendre plus de pétrole.`;
+ const spT=`<table class="cb-cmp"><thead><tr><th>Croisière</th><th>Temps</th><th>Conso</th><th>Arrivée</th><th>L par min gagnée</th></tr></thead><tbody>${A.sp.map((x,i)=>{const p=A.sp[i-1],gain=p?(p.R.t-x.R.t)/60:0,cost=p&&gain>0.05?(p.R.fA-x.R.fA)/gain:null;
+   return `<tr class="${x.p===c.pr?'cur':''} ${x.R.fA<R.req?'ko':''}" onclick="cbSet('pr','${x.p}')"><td><b>${esc(CB_PR.find(q=>q[0]===x.p)[1])}</b></td><td>${cbT(x.R.t)}</td><td>${cbN(x.R.used+ +c.mer)} L</td><td>${cbN(x.R.fA)} L</td><td>${cost!=null?cbN(cost):'—'}</td></tr>`}).join('')}</tbody></table>`;
+ const bl=A.bestL,cur=A.lv.find(x=>x.fl===+c.fl),ifr=c.reg==='ifr'?cbIfrFl(c):null,top=[...A.lv].sort((a,b)=>a.cost-b.cost).slice(0,4).sort((a,b)=>a.fl-b.fl);
+ const lvT=`<div class="cb-rec"><div><small>Niveau recommandé</small><b>${cbFL(bl.fl)}</b></div><div class="cb-rx">${cbT(bl.R.t)} · ${cbN(bl.R.used+ +c.mer)} L · arrivée ${cbN(bl.R.fA)} L${cur&&cur.fl!==bl.fl?`<br><span class="muted">vs ${cbFL(cur.fl)} : ${dl(bl.R.t/60,cur.R.t/60,'′')} · ${dl(bl.R.used,cur.R.used,' L')}</span>`:''}</div>${+c.fl!==bl.fl||c.legs.some(l=>l.fl!=null)?`<button class="btn pri" onclick="S.cb.legs.forEach(l=>l.fl=null);cbSet('fl',${bl.fl})">Appliquer</button>`:'<span class="cb-ok">✓ appliqué</span>'}</div>
+  <div class="cb-lvs">${top.map(x=>`<button class="${x.fl===bl.fl?'on':''} ${x.ok?'':'ko'}" onclick="S.cb.legs.forEach(l=>l.fl=null);cbSet('fl',${x.fl})"><b>${cbFL(x.fl)}</b><small>${cbT(x.R.t)} · ${cbN(x.R.used+ +c.mer)} L</small></button>`).join('')}</div>
+  <p class="cb-hint">${c.reg==='ifr'?`IFR : niveaux ${ifr.odd?'impairs':'pairs'} (route ${String(Math.round(ifr.crs)).padStart(3,'0')}° magnétique), FL280 au plus.`:`OAT : jusqu'au FL410, ${c.rvsm} min de pénalité au-dessus du FL285 (RVSM).`} Vent prévu pris à chaque niveau. Priorité ${A.lam===0?'au pétrole (croisière Éco)':A.lam>=15?'au temps (croisière '+esc(CB_PR.find(p=>p[0]===c.pr)[1])+')':'pétrole / temps équilibrée'}.</p>`;
+ const dsT=`<table class="cb-cmp"><thead><tr><th>Descente</th><th>Début</th><th>Temps total</th><th>Arrivée</th></tr></thead><tbody>${A.ds.map(x=>{const s=x.R.seg[x.R.seg.length-1];
+   return `<tr class="${x.d===c.des?'cur':''}" onclick="cbSet('des','${x.d}')"><td><b>${x.d===A.recD.d?'★ ':''}${esc(CB_DS[x.d][0])}</b><small>${esc(CB_DS[x.d][1])}</small></td><td>${s&&s.ph==='de'?Math.round(x.R.tot-s.x0)+' Nm avant':'—'}</td><td>${cbT(x.R.t)}</td><td>${cbN(x.R.fA)} L</td></tr>`}).join('')}</tbody></table>
+  <p class="cb-hint">★ ${A.recD===A.ds.reduce((a,b)=>b.R.fA>a.R.fA?b:a)?'la plus économe en pétrole':'gagne au moins 1′ pour 15 L ou moins'}. En IFR, le contrôle impose souvent le début de descente.</p>`;
+ const adv=`<section class="cb-card"><h3><span class="cb-n">4</span>Vitesse, niveau et descente</h3>
+  <div class="cb-vt ${mx.R.fA>=R.req?'ok':'ko'}">${vtxt}</div>${spT}
+  <h4 class="cb-h4">Niveau</h4>${lvT}<h4 class="cb-h4">Descente</h4>${dsT}
+  <p class="cb-hint">« Rapide » et « À fond » viennent d'un modèle IT10 recalé sur la fiche PAF et l'UCE 116.1 (fig. 5-2) : écart de quelques % sur les points connus, à vérifier au-delà de M 0,70.</p></section>`;
  /* ---- profil vertical ---- */
- const prof=`<section class="cb-card"><h3><span class="cb-n">3</span>Profil vertical</h3>${cbChart(R,c)}
+ const prof=`<section class="cb-card"><h3><span class="cb-n">5</span>Profil vertical</h3>${cbChart(R,c)}
   <ol class="cb-pf">${cbProfil(R,c).map(([k,a,b])=>`<li class="${k}"><i>${k==='up'?'↗':k==='dn'?'↘':'→'}</i><div><span>${a}</span><small>${b}</small></div></li>`).join('')}</ol></section>`;
  /* ---- navlog ---- */
  const fcol=f=>f<R.req?'ko':f<c.fv?'vo':'';
- const nav=`<section class="cb-card"><h3><span class="cb-n">4</span>Navlog</h3><ol class="cb-tl">
+ const nav=`<section class="cb-card"><h3><span class="cb-n">6</span>Navlog</h3><ol class="cb-tl">
   <li class="cb-wp"><i></i><div><b>${esc(c.pts[0].n)}</b><small>lâcher des freins</small></div><div class="r"><b>${cbN(R.f0)} L</b><small>T + 0′00</small></div></li>
   ${R.L.map((g,i)=>{const lg=c.legs[i]||{},w=g.cr.w,ev=R.ev.filter(e=>e.leg===i).map(e=>`<li class="cb-ev ${e.k}"><i></i><div><b>${e.k==='fv'?'Fin de voilure':'Mini arrivée atteint'}</b><small>${esc(g.a.n)} + ${Math.round(e.dl)} Nm</small></div><div class="r"><b>${cbN(e.f)} L</b><small>T + ${cbT(e.t)}</small></div></li>`).join('');
    return `<li class="cb-lg"><details ${S.cbOpen===i?'open':''} ontoggle="if(this.open)S.cbOpen=${i};else if(S.cbOpen===${i})S.cbOpen=null"><summary>
@@ -5969,7 +6033,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
     ${ev}<li class="cb-wp ${i===R.L.length-1?'end':''}"><i></i><div><b>${esc(g.b.n)}</b><small>${i===R.L.length-1?'arrivée':cbFL(R.wps[i+1].a)}</small></div><div class="r"><b class="${fcol(R.wps[i+1].f)}">${cbN(R.wps[i+1].f)} L</b><small>T + ${cbT(R.wps[i+1].t)}</small></div></li>`}).join('')}</ol></section>`;
  /* ---- dégagements ---- */
  const sug=cbNear(D,5,c.alts.map(a=>a.id)),dw=R.dwx;
- const alts=`<section class="cb-card"><h3><span class="cb-n">5</span>Arrivée et dégagements</h3>
+ const alts=`<section class="cb-card"><h3><span class="cb-n">3</span>Arrivée et dégagements</h3>
   <div class="cb-dst"><b>${esc(D.n)}</b> <span class="muted">${esc(PF_AD[D.n]?PF_AD[D.n][0]:'')}</span> ${dw.cat?wxB(dw.cat,''):''}<small>${esc(dw.why)} · arrivée ${new Date(R.eta).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</small></div>
   <div class="cb-alts">${R.AL.length?R.AL.map(a=>`<div class="cb-alt ${R.alt&&R.alt.id===a.id?'sel':''}">
     <button class="cb-rad" onclick="cbSet('altSel','${a.id}')" aria-label="Retenir ${a.id}"></button>
@@ -5982,7 +6046,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   <div class="cb-add"><span>Ajouter :</span>${sug.map(([id,d])=>`<button onclick="cbAltAdd('${id}')">${id} <small>${Math.round(d)} Nm</small></button>`).join('')}<input class="in cb-mini" style="width:74px" placeholder="OACI" onchange="cbAltAdd(this.value)"></div>
   <p class="cb-hint">Le terrain retenu (●) fixe le mini à l'arrivée : pétrole du dégagement (DMF, niveau auto, sans décollage) + sécurité ${CB_VFR.c} ft / ${CB_VFR.v/1000} km → VFR 250 L, sinon IFR 400 L. Météo du terrain de 30′ avant à 1 h après l'arrivée prévue, TEMPO et PROB compris. <a href="#" onclick="event.preventDefault();S.cbWx=null;cbWxLoad(1)">Recharger la météo</a></p></section>`;
  return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}
- <div class="cb-wrap">${hero}<div class="cb-cols"><div>${route}${vol}${alts}</div><div>${prof}${nav}</div></div>
+ <div class="cb-wrap">${hero}<div class="cb-cols"><div>${route}${vol}${alts}</div><div>${adv}${prof}${nav}</div></div>
  <p class="cb-hint" style="margin:12px 2px 0">Fiche PAF « Conso pétrole » (IT10, niveau 2) : décollage et accélération à 280 kt ${CB_TO.f} L, montée PMC à la VOM, croisière selon le profil (DMF interpolée entre plein et 1 200 L), descente éco 80 % (0,7 / 300 kt). Vent prévu au niveau de chaque branche, à l'heure de passage ; température prise en compte sur la vitesse propre. Estimation de préparation : les jauges et le carnet font foi.</p></div>`}
 
 /* ====================== Dossier des pilotes ====================== */
