@@ -703,7 +703,11 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .dr-ctl.ctl{color:var(--ok)}.dr-ctl.afis{color:#2563eb}.dr-ctl.aa{color:#c2410c}.dr-ctl.unk{color:var(--muted);font-weight:600}
 .dr-al{list-style:none;margin:0;padding:0;display:grid;gap:4px}.dr-al li{font-size:12px;border-radius:9px;padding:5px 8px;line-height:1.3}.dr-al li.r{background:var(--bad2);color:var(--bad)}.dr-al li.o{background:#ffedd5;color:#9a3412}.dr-al li span{opacity:.85}
 .dr-more summary{cursor:pointer;font-size:12px;color:var(--muted);font-weight:700}.dr-more .dr-fq{margin-top:6px}.dr-nt{font-size:11.5px;color:var(--muted);margin:4px 0 0}
-.dr-act{display:flex;justify-content:flex-end}.dr-src{font-weight:600!important;color:var(--muted)}.dr-wd{display:grid;gap:4px;font-size:12px;background:var(--surface2);border-radius:10px;padding:7px 9px}.dr-wd>div{line-height:1.35}.dr-ws{font-weight:800;margin-right:6px;white-space:nowrap}
+.dr-act{display:flex;justify-content:flex-end}.ldb{position:sticky;top:8px;z-index:30;display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#78350f;border:1px solid #f59e0b;border-radius:16px;padding:10px 14px;margin:0 0 12px;box-shadow:0 8px 20px -10px rgba(120,53,15,.5)}
+.ldb b{display:block;font-size:13.5px}.ldb #ldtx{display:block;font-size:13px;line-height:1.35;transition:opacity .25s}.ldh{font-size:28px;display:inline-block;animation:ldsp 2s ease-in-out infinite;flex:none}
+@keyframes ldsp{0%{transform:rotate(0)}40%{transform:rotate(180deg)}50%{transform:rotate(180deg)}90%{transform:rotate(360deg)}100%{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.ldh{animation:none}}
+.dr-src{font-weight:600!important;color:var(--muted)}.dr-wd{display:grid;gap:4px;font-size:12px;background:var(--surface2);border-radius:10px;padding:7px 9px}.dr-wd>div{line-height:1.35}.dr-ws{font-weight:800;margin-right:6px;white-space:nowrap}
 .dr-ph{display:flex;flex-wrap:wrap;gap:4px}.dr-ph span{background:#fef3c7;color:#92400e;font-weight:900;font-size:11px;border-radius:6px;padding:1px 6px}.dr-mt{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--muted);word-break:break-word}
 .dr-oth{margin-top:12px}.dr-oth>summary{cursor:pointer;font-weight:800;margin-bottom:8px}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
@@ -1436,7 +1440,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794645584';
+const APP_V='1794646455';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5761,6 +5765,17 @@ const PF_HOME=['pbd','pcf','com','fea','tcas','mecas'];
 const pfParent=k=>S.pfUp&&(S.pfUp==='home'?PF_HOME.includes(k):PF_DIR[S.pfUp]&&PF_DIR[S.pfUp][2].includes(k))?(S.pfUp==='home'?'':S.pfUp):Object.keys(PF_DIR).find(d=>PF_DIR[d][2].includes(k));
 const PF_TOOLS=[['dr','Dérouto','Terrains de déroutement en route : NOTAM, météo au passage, contrôle, PDF'],['cb','Carburant','Route ForeFlight : pétrole à chaque point, fin de voilure, vent au FL'],['sr','Série','Ruban et synchro en 3D : chacun son espace, envoi aux Athos, temps de fumée'],['zr','Zones d\'entraînement','R276 · R55 · R31 : besoins, validation de l\'OPS BOB'],['to','Perfos Alphajet','Décollage · accélération, Vr, Vlof, Vc, Vstop'],['pod','Réchauffage POD','Temps d\'attente avant usage des fumigènes'],['cto','Perfos Cirrus','Décollage, accélération-arrêt, atterrissage'],['cg','Masse et centrage','SR20 · SR22 G3 · SR22 G5'],['fea','FEA','Déclarer une panne ou un évènement au chef ops.'],['pc','Points centraux','Dispos et répartition des PC de la semaine'],['bpc','Bfg PC','Fiche de briefing du point central, préremplie avec la plaquette et la météo'],['hg','Hangar','Les Alphajet : ligne de vol, remise en œuvre, dépannage'],['ex','INSTRUCTION','Suivi des vols'],['rg','Espacement','Roulage et atterrissage : distances, break, sur le terrain'],['itw','Interviews','Qui parle aux médias : TV, radio, presse'],['cad','Cadres','Besoin du 9 et de la comm, cadres remis par la comm'],['tcas','TCAS','Trafic ADS-B autour de vous, alertes TRAFIC / CONFLIT'],['meteo','Météo','Salon · Istres · PDD : BT / INT / MT, BRDD, vents'],['nav','NAV Salon ⇄ PDD','Points centraux · LOA, fond satellite et trafic TCAS'],['coupe','Coupe Salon ⇄ PDD','Météo du transit du sol à 5000 ft : nuages, averses, vents']];
 
+/* Sablier pendant le chargement des infos (vent, météo, NOTAM, eAIP), avec une phrase pour patienter */
+const LD_TX=[n=>`Cher ${n}, je sais que tu es impatient, mais dis-toi que je vais quand même 100 fois plus vite que toi, sans faire mon malin… tu es donc en train de gagner du temps. L'info arrive sous peu.`,
+ n=>`${n}, je lis l'eAIP, les NOTAM et les TAF à ta place. Tu me remercieras au débriefing.`,
+ n=>`Patience, ${n} : même le leader attend que le 9 ait fini sa check-list.`,
+ n=>`Les serveurs prennent leur café. Toi tu as déjà fini le tien, je sais, ${n}.`,
+ n=>`${n}, pendant que je calcule, une pensée émue pour ceux qui faisaient ça à la règle Cras.`,
+ n=>`Encore quelques secondes, ${n}. Promis, c'est moins long qu'une attente au point d'arrêt.`];
+function ldN(){try{const x=typeof ccMe==='function'?ccMe():null,n=x?athN(x):0;return n&&n<100?n:''}catch(e){return''}}
+function ldBan(what){const k=ldN(),n=k?'Athos '+k:'Athos';clearInterval(window.__ldT);window.__ldI=(window.__ldI||0)%LD_TX.length;
+ window.__ldT=setInterval(()=>{const e=document.getElementById('ldtx');if(!e){clearInterval(window.__ldT);return}window.__ldI=(window.__ldI+1)%LD_TX.length;e.style.opacity=0;setTimeout(()=>{e.textContent=LD_TX[window.__ldI](n);e.style.opacity=1},250)},6000);
+ return `<div class="ldb" role="status" aria-live="polite"><span class="ldh" aria-hidden="true">⏳</span><div><b>${esc(what)}</b><span id="ldtx">${esc(LD_TX[window.__ldI](n))}</span></div></div>`}
 /* ====================== Carburant : conso Alphajet par étape (fiche PAF « CONSO PÉTROLE », IT10 niveau 2) ====================== */
 const CB_PL=[[1250,'FUS'],[1350,'FUS+100'],[1450,'N1'],[1550,'N1+100'],[1650,'N1+200'],[1750,'N1+300'],[1960,'N2']];
 const CB_MER=[[60,'10′'],[90,'15′'],[120,'20′']];
@@ -5899,9 +5914,9 @@ function cbFlFromZ(P){const z=P.map((p,i)=>i===0||i===P.length-1?(p.z!=null&&p.z
 /* --- état --- */
 function cbSt(){if(!S.cb){let o=null;try{o=JSON.parse(localStorage.getItem('pafCb')||'null')}catch(e){}
   const d=new Date(Date.now()+3600e3);d.setMinutes(0,0,0);
-  S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1250,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{},des:'eco',reg:'ifr',rvsm:5,vimax:520,m0:3850,mach:.72,low:'t420'},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
+  S.cb=Object.assign({txt:'',pts:[],legs:[],bad:[],fuel:1960,mer:90,sec:250,fv:1150,fl:250,pr:'n',dep:'',alts:[],altSel:'',u:{},des:'eco',reg:'ifr',rvsm:5,vimax:520,m0:3850,mach:.72,low:'t420'},o||{});if(!S.cb.dep)S.cb.dep=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,16)}
  return S.cb}
-function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,alts:c.alts,altSel:c.altSel,altDest:c.altDest,des:c.des,reg:c.reg,rvsm:c.rvsm,vimax:c.vimax,m0:c.m0,mach:c.mach,low:c.low}))}catch(e){}}
+function cbSave(){const c=S.cb;try{localStorage.setItem('pafCb',JSON.stringify({txt:c.txt,pts:c.pts,legs:c.legs.map(l=>({fl:l.fl,f0:l.f0,pr:l.pr,wm:l.wm,wp:l.wp,wt:l.wt})),u:c.u,fuel:c.fuel,mer:c.mer,sec:c.sec,fv:c.fv,fl:c.fl,pr:c.pr,dep:c.dep,src:c.src,dim:c.dim,alts:c.alts,altSel:c.altSel,altDest:c.altDest,des:c.des,reg:c.reg,rvsm:c.rvsm,vimax:c.vimax,vimOk:c.vimOk,fvOk:c.fvOk,m0:c.m0,mach:c.mach,low:c.low}))}catch(e){}}
 function cbSet(k,v){const c=cbSt();c[k]=v;cbSave();render()}
 function cbSetPts(P,src,legFl,dim){const c=cbSt();c.pts=P;c.src=src||'';c.dim=dim||'';c.legs=P.slice(1).map((_,i)=>({fl:legFl?legFl[i]:null,f0:legFl?legFl[i]:null,pr:'',wm:'',wp:null}));
  const D=P[P.length-1];if(D&&c.altDest!==D.n){c.altDest=D.n;c.alts=cbNear(D,2).map(([id])=>({id,wx:'a',fl:null}));c.altSel=c.alts[0]?c.alts[0].id:''}
@@ -5923,7 +5938,7 @@ function cbAltSet(id,k,v){const c=cbSt(),a=c.alts.find(x=>x.id===id);if(!a)retur
 function cbAltFl(d){for(const fl of [300,250,200,150,100,70,50])if(cbI(CB_CL.fl,CB_CL.d,fl)+cbDesD(fl)<=d*0.75)return fl;return 30}
 /* Météo des terrains (METAR / TAF) : serveur en ligne, sinon en direct */
 async function cbWxLoad(force){const c=cbSt(),D=c.pts[c.pts.length-1],ids=[...new Set([D&&D.n,...(c.alts||[]).map(a=>a.id)].filter(x=>x&&PF_AD[x]))];if(!ids.length)return;
- const key=ids.join(',');if(S.cbWxBusy)return;if(!force&&S.cbWx&&S.cbWx.key===key&&Date.now()-S.cbWx.t<10*60e3)return;if(force&&S.cbWx&&S.cbWx.key===key&&S.cbWx.ok&&Date.now()-S.cbWx.t<60e3)return;S.cbWxBusy=1;
+ const key=ids.join(',');if(S.cbWxBusy)return;if(!force&&S.cbWx&&S.cbWx.key===key&&Date.now()-S.cbWx.t<10*60e3)return;if(force&&S.cbWx&&S.cbWx.key===key&&S.cbWx.ok&&Date.now()-S.cbWx.t<60e3)return;S.cbWxBusy=1;if(S.pfTab==='cb')render();
  let m='',t='',ok=0;
  if(isOnline()){try{const r=await api('metarTaf',{ids:key});if(r&&!r.error){m=r.mtxt||'';t=r.ttxt||'';ok=1}}catch(e){}}
  if(!ok){try{const g=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return r.text()};[m,t]=await Promise.all([g('https://aviationweather.gov/api/data/metar?ids='+key+'&format=raw&hours=3'),g('https://aviationweather.gov/api/data/taf?ids='+key+'&format=raw')]);ok=1}catch(e){}}
@@ -5937,7 +5952,7 @@ function cbWxCat(id,eta){const W=S.cbWx;if(!W||!W.ok)return{cat:null,why:S.cbWxB
  if(!C.length)return{cat:null,why:F?'Le TAF ne couvre pas l\'heure d\'arrivée':M?'METAR seul, trop loin de l\'heure d\'arrivée':'Pas de TAF pour ce terrain'};
  const bad=C.find(x=>cbIfr(x.f));return bad?{cat:'IFR',why:bad.src+' · '+cbWxT(bad.f)}:{cat:'VFR',why:C[C.length-1].src.split(' ')[0]+' · '+cbWxT(C.find(x=>x.src==='TAF')?C.find(x=>x.src==='TAF').f:C[0].f)}}
 /* Vent prévu (Open-Meteo) au milieu de chaque branche, à l'heure de passage estimée */
-async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBusy=1;if(!quiet)render();
+async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBusy=1;if(S.pfTab==='cb')render();
  const r0=cbCalc(cbIn()),dep=new Date(c.dep).getTime()||Date.now(),M=c.pts.slice(1).map((p,i)=>({la:(c.pts[i].la+p.la)/2,lo:(c.pts[i].lo+p.lo)/2}));
  const V=[].concat(...CB_LV.map(l=>['wind_speed_'+l+'hPa','wind_direction_'+l+'hPa','temperature_'+l+'hPa']));
  const u='https://api.open-meteo.com/v1/forecast?latitude='+M.map(m=>m.la.toFixed(3)).join(',')+'&longitude='+M.map(m=>m.lo.toFixed(3)).join(',')+'&hourly='+V.join(',')+'&wind_speed_unit=kn&timezone=UTC&timeformat=unixtime&past_days=1&forecast_days=7';
@@ -5947,7 +5962,7 @@ async function cbWindLoad(quiet){const c=cbSt();if(c.pts.length<2)return;S.cbWBu
  c.legs.forEach((l,i)=>{const h=A[i]&&A[i].hourly;if(!h)return;const lg=r0&&r0.L[i],tt=(dep+((lg?r0.wps[i].t+lg.t/2:0))*1000)/1000;let k=0,bd=1e18;h.time.forEach((x,j)=>{const d=Math.abs(x-tt);if(d<bd){bd=d;k=j}});
   l.wp=CB_LV.map(p=>({fl:Math.round(cbFLp(p)),s:h['wind_speed_'+p+'hPa'][k],d:h['wind_direction_'+p+'hPa'][k],T:h['temperature_'+p+'hPa'][k]})).filter(o=>o.s!=null&&o.d!=null).sort((a,b)=>a.fl-b.fl);l.wt=h.time[k]});
  cbSave();render();if(!quiet)toast('Vent prévu chargé')}
-function cbIn(req){const c=cbSt();if(+c.vimax===450&&!c.vimOk){c.vimax=520;c.vimOk=1}CB_M0=+c.m0||3850;CB_VIM=+c.vimax||520;CB_MACH=+c.mach||.72;if(CB_TBA[c.pr]){c.low=c.pr;c.pr='n'}return{low:c.low||'t420',pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0,des:c.des||'eco',reg:c.reg||'ifr',rvsm:+c.rvsm||0}}
+function cbIn(req){const c=cbSt();if(+c.vimax===450&&!c.vimOk){c.vimax=520;c.vimOk=1}if(+c.fv===1250&&!c.fvOk){c.fv=1150;c.fvOk=1}CB_M0=+c.m0||3850;CB_VIM=+c.vimax||520;CB_MACH=+c.mach||.72;if(CB_TBA[c.pr]){c.low=c.pr;c.pr='n'}return{low:c.low||'t420',pts:c.pts,legs:c.legs,fuel:+c.fuel,mer:+c.mer,fv:+c.fv,fl:+c.fl,pr:c.pr,req:req||0,des:c.des||'eco',reg:c.reg||'ifr',rvsm:+c.rvsm||0}}
 /* Variantes pour les conseils : même route, une seule chose change (vitesse, descente ou niveau) */
 function cbVar(o,req){const c=cbSt(),b=cbIn(req);b.step=1;
  if(o.pr){b.pr=o.pr;b.legs=c.legs.map(l=>Object.assign({},l,{pr:l.pr&&!CB_TBA[l.pr]?o.pr:l.pr}))}
@@ -6052,8 +6067,8 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   <div class="cb-f"><label>Espace</label>${seg('reg',[['ifr','IFR','≤ FL280'],['oat','OAT','RVSM au-dessus']],c.reg)}</div>
   ${c.reg==='oat'?`<p class="cb-hint" style="margin:-4px 0 10px">Au-dessus du FL285 (RVSM) : on compte <input class="in cb-mini" inputmode="numeric" value="${c.rvsm}" onchange="cbSet('rvsm',+this.value.replace(/\D/g,'')||0)"> min perdues en évitements de trafic.</p>`:''}
   <div class="cb-f"><label>Décollage</label><div class="cb-tx"><input type="datetime-local" class="in" value="${esc(c.dep)}" onchange="S.cb.dep=this.value;cbSave();cbWindLoad(1);S.cbWx&&(S.cbWx.t=0);render()"><button class="btn" ${c.pts.length<2||S.cbWBusy?'disabled':''} onclick="cbWindLoad()">${S.cbWBusy?'…':'Vent prévu'}</button></div></div>
-  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants · À fond limité à Vi <input class="in cb-mini" inputmode="numeric" value="${c.vimax}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('vimax',v)"> kt et M 0,80 · masse sans pétrole <input class="in cb-mini" style="width:70px!important" inputmode="numeric" value="${c.m0}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('m0',v)"> kg.</p></section>`;
- if(!R)return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}<div class="cb-wrap">${hero}<div class="cb-cols">${route}${vol}</div></div>`;
+  <p class="cb-hint">${esc(wsrc)}. Fin de voilure à <input class="in cb-mini" inputmode="numeric" value="${c.fv}" onchange="const v=+this.value.replace(/\\D/g,'');if(v)cbSet('fv',v)"> L restants (fuselage plein 1 250 L − 100 L) · À fond limité à Vi <input class="in cb-mini" inputmode="numeric" value="${c.vimax}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('vimax',v)"> kt et M 0,80 · masse sans pétrole <input class="in cb-mini" style="width:70px!important" inputmode="numeric" value="${c.m0}" onchange="const v=+this.value.replace(/\D/g,'');if(v)cbSet('m0',v)"> kg.</p></section>`;
+ if(!R)return `${NOTE}${S.cbWBusy||S.cbWxBusy?ldBan('Chargement…'):''}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}<div class="cb-wrap">${hero}<div class="cb-cols">${route}${vol}</div></div>`;
  /* ---- conseils : vitesse, niveau, descente ---- */
  const dl=(a,b,u)=>{const d=Math.round(a-b);return d===0?'=':(d>0?'+':'−')+Math.abs(d)+u};
  const ref=A.sp.find(x=>x.p===c.pr)||A.sp.find(x=>x.p==='n'),mx=A.sp.find(x=>x.p==='max'),fastOk=[...A.sp].reverse().find(x=>x.R.fA>=R.req);
@@ -6107,7 +6122,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
     <div class="cb-req"><span>${cbN(a.f)} L dégagement + ${a.sec} L sécu ${a.cat}</span><b>= ${cbN(a.req)} L mini à ${esc(D.n)}</b></div></div>`).join(''):`<p class="cb-hint">Pas de dégagement : sécurité seule. ${seg('sec',[[250,'VFR 250 L'],[400,'IFR 400 L']],c.sec)}</p>`}</div>
   <div class="cb-add"><span>Ajouter :</span>${sug.map(([id,d])=>`<button onclick="cbAltAdd('${id}')">${id} <small>${Math.round(d)} Nm</small></button>`).join('')}<input class="in cb-mini" style="width:74px" placeholder="OACI" onchange="cbAltAdd(this.value)"></div>
   <p class="cb-hint">Le terrain retenu (●) fixe le mini à l'arrivée : pétrole du dégagement (DMF, niveau auto, sans décollage) + sécurité ${CB_VFR.c} ft / ${CB_VFR.v/1000} km → VFR 250 L, sinon IFR 400 L. Météo du terrain de 30′ avant à 1 h après l'arrivée prévue, TEMPO et PROB compris. <a href="#" onclick="event.preventDefault();S.cbWx=null;cbWxLoad(1)">Recharger la météo</a></p></section>`;
- return `${NOTE}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}
+ return `${NOTE}${S.cbWBusy||S.cbWxBusy?ldBan(S.cbWBusy&&S.cbWxBusy?'Chargement du vent en altitude et de la météo des terrains…':S.cbWBusy?'Chargement du vent en altitude…':'Chargement de la météo des terrains…'):''}<div class="head"><div><h1>Carburant</h1><p class="muted">Route ForeFlight, profil vertical, vent et dégagements.</p></div></div>${tabs}
  <div class="cb-wrap">${hero}<div class="cb-cols"><div>${route}${vol}${alts}</div><div>${adv}${prof}${nav}</div></div>
  <p class="cb-hint" style="margin:12px 2px 0">Fiche PAF « Conso pétrole » (IT10, niveau 2) : décollage et accélération à 280 kt ${CB_TO.f} L, montée PMC à la VOM, croisière selon le profil (DMF interpolée entre plein et 1 200 L), descente éco 80 % (0,7 / 300 kt). Vent prévu au niveau de chaque branche, à l'heure de passage ; température prise en compte sur la vitesse propre. Estimation de préparation : les jauges et le carnet font foi.</p></div>`}
 
@@ -6252,7 +6267,7 @@ function drStrip(D){const W=720,H=190,l=24,r=24,mx=D.R.tot,c=D.c,X=v=>l+(W-l-r)*
   ${D.R.wps.map((p,i)=>`<circle cx="${X(p.x)}" cy="${H/2}" r="4" fill="var(--surface)" stroke="var(--fg)" stroke-width="2"/><text x="${X(p.x)}" y="${H/2+(i%2?-10:18)}" font-size="10" text-anchor="${i===0?'start':i===D.R.wps.length-1?'end':'middle'}" font-weight="800" fill="var(--muted)">${esc(c.pts[i].n)}</text>`).join('')}
   ${D.L.filter(x=>x.sel).map((x,k)=>{const w=x.wx&&x.wx.worst,col=x.red?'#dc2626':w?DR_CAT[w][1]:'#94a3b8',dy=(x.a.side==='G'?-1:1)*(k%2?22:10)+(x.a.side==='G'?0:8);return `<line x1="${X(x.a.x)}" x2="${X(x.a.x)}" y1="${H/2}" y2="${Y(x)}" stroke="${col}" stroke-dasharray="2 2"/><circle cx="${X(x.a.x)}" cy="${Y(x)}" r="${x.cls==='A'?7:5.5}" fill="${col}" stroke="#fff" stroke-width="2"/><text x="${X(x.a.x)}" y="${Y(x)+dy}" font-size="10" text-anchor="middle" font-weight="800" fill="var(--fg)">${esc(x.id)}</text>`}).join('')}</svg>`}
 function vDr(tabs){const c=cbSt(),d=drSt();setTimeout(()=>drLoad(),40);const D=drCalc();
- const head=`${NOTE}<div class="head"><div><h1>Dérouto</h1><p class="muted">Terrains de déroutement le long de la route : NOTAM, météo à l'heure de passage, contrôle, PDF.</p></div></div>${tabs}`;
+ const head=`${NOTE}${S.drBusy?ldBan('Chargement des NOTAM, de la météo et de l\'eAIP…'):''}<div class="head"><div><h1>Dérouto</h1><p class="muted">Terrains de déroutement le long de la route : NOTAM, météo à l'heure de passage, contrôle, PDF.</p></div></div>${tabs}`;
  const route=`<section class="cb-card"><h3><span class="cb-n">1</span>Route et heure</h3>
   <label class="cb-drop">${ic('upload',22)}<span><b>Importer la route ForeFlight</b><small>.fpl · .kml · .gpx (la même route que l'outil Carburant)</small></span><input type="file" accept=".fpl,.gpx,.kml,.xml" hidden onchange="cbFile(this)"></label>
   <div class="cb-tx" style="margin-top:8px"><input id="cbtxt" class="in" value="${esc(c.txt)}" placeholder="LFMY MTL ROA LFSI" autocapitalize="characters" spellcheck="false" onkeydown="if(event.key==='Enter')cbRead()"><button class="btn pri" onclick="cbRead()">OK</button></div>
