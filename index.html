@@ -1436,7 +1436,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794643705';
+const APP_V='1794644584';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -6274,7 +6274,7 @@ function drPdfOv(D,W,H,head){const cv=document.createElement('canvas');cv.width=
  /* étiquettes : à l'opposé de la route, poussées pour ne pas se chevaucher */
  const box=[],placed=[];S1.forEach(x=>{const r0=x.p.db[0]||[],w=x.wx,col=x.red?'#dc2626':w&&w.worst?DR_CAT[w.worst][1]:'#94a3b8',px=X({lo:x.p.ad[2],la:x.p.ad[1]}),py=Y({la:x.p.ad[1]});
   const qfu=r0[2]||(x.p.ad[4]||[]).map(r=>r[0]+'/'+r[3]).join(' '),nav=[...x.p.db.flatMap(r=>[r[4]&&('ILS '+r[5]+' '+r[4].replace(/\s*\(.*$/,'')),r[6]&&('ILS '+r[7]+' '+r[6].replace(/\s*\(.*$/,''))]).filter(Boolean).slice(0,2),r0[8]&&('VOR/TAC '+r0[8])].filter(Boolean);
-  const L=[[x.id,'800 20px'],['QFU '+qfu,'600 15px'],...nav.map(v=>[v,'600 14px'])];const wt=w&&w.worst?(w.base===w.worst?w.base:w.base+'→'+w.worst):'';g.font='800 13px system-ui,sans-serif';const bdw=wt?g.measureText(wt).width+22:0;g.font='800 20px system-ui,sans-serif';const idw=g.measureText(x.id).width+bdw+12;const bw=Math.min(320,Math.max(idw,...L.slice(1).map(([t,f])=>{g.font=f+' system-ui,sans-serif';return g.measureText(t).width}))+30),bh=12+L.length*20;
+  const nmL=(x.name.length>22?x.name.slice(0,21)+'…':x.name)+' / '+x.id,L=[[nmL,'800 19px'],['QFU '+qfu,'600 15px'],...nav.map(v=>[v,'600 14px'])];const wt=w&&w.worst?(w.base===w.worst?w.base:w.base+'→'+w.worst):'';g.font='800 13px system-ui,sans-serif';const bdw=wt?g.measureText(wt).width+22:0;g.font='800 19px system-ui,sans-serif';const idw=g.measureText(nmL).width+bdw+12;const bw=Math.min(380,Math.max(idw,...L.slice(1).map(([t,f])=>{g.font=f+' system-ui,sans-serif';return g.measureText(t).width}))+30),bh=12+L.length*20;
   /* direction : depuis le point le plus proche de la route */
   let best=null;for(let i=0;i<P.length-1;i++){const ax=X(P[i]),ay=Y(P[i]),bx=X(P[i+1]),by=Y(P[i+1]),dx=bx-ax,dy=by-ay,t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/((dx*dx+dy*dy)||1))),qx=ax+t*dx,qy=ay+t*dy,d=Math.hypot(px-qx,py-qy);if(!best||d<best.d)best={d,qx,qy,dx,dy}}
   let ux=px-best.qx,uy=py-best.qy,ul=Math.hypot(ux,uy);if(ul<2){ux=-best.dy;uy=best.dx;ul=Math.hypot(ux,uy)||1;if(x.a.side==='D'){ux=-ux;uy=-uy}}ux/=ul;uy/=ul;
