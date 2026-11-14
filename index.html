@@ -731,7 +731,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cb-iso-i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0891b2;color:#fff;font-weight:900;font-size:12px}
 [data-theme=dark] .cb-iso{background:#083344;border-color:#155e75;color:#cffafe}[data-theme=dark] .cb-iso small{color:#67e8f9}
 @media (max-width:560px){.cb-res-h{grid-template-columns:1fr 1fr}}
-.cb-lim{margin-top:8px;align-items:center}.cb-limv{display:inline-flex;align-items:center;gap:6px;font-weight:700;margin-left:8px}
+.cb-lim{margin-top:8px;align-items:center}.cb-flin{display:inline-flex;align-items:center;gap:2px;font-weight:900;font-size:18px;padding:0 4px}.cb-flin input.in{width:62px!important;font-weight:900;font-size:18px;text-align:center;padding:4px 6px;min-height:0}.cb-limv{display:inline-flex;align-items:center;gap:6px;font-weight:700;margin-left:8px}
 @media (max-width:900px){.cb-cols{grid-template-columns:1fr}}
 @media (max-width:560px){.cb-kp{grid-template-columns:1fr 1fr}.cb-kp b{font-size:19px}.cb-rt{font-size:20px}.cb-f>label{width:100%}.cb-edit{grid-template-columns:1fr 1fr}.cb-hero{padding:16px 14px 14px;border-radius:20px}.cb-card{padding:12px}}
 
@@ -1462,7 +1462,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1794657231';
+const APP_V='1794658140';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -5981,8 +5981,10 @@ const cbPlanH=c=>JSON.stringify([c.pts.map(p=>[p.n,+p.la.toFixed(4),+p.lo.toFixe
 function cbValid(){const c=cbSt();c.val={h:cbPlanH(c),t:Date.now()};cbSave();render();toast('Plan validé : réchauffage POD calculé sur ce plan')}
 const cbVOk=c=>!!(c.val&&c.val.h===cbPlanH(c));
 function cbFlProp(c){let cur;c.legs.forEach(l=>{if(l.fu)cur=l.fl;else l.fl=cur!==undefined?cur:(l.f0??null)})}
+/* niveau saisi : « 275 », « FL275 » ou « 27500 » (ft) → 275 */
+const cbFlIn=x=>{let v=+String(x).replace(/\D/g,'');if(!String(x).replace(/\D/g,''))return null;if(v>450)v=Math.round(v/100);return Math.max(0,Math.min(420,v))};
 function cbFlAll(fl){const c=cbSt();c.legs.forEach(l=>{l.fl=null;l.f0=null;l.fu=0});c.fl=fl;cbSave();render()}
-function cbLeg(i,k,v){const c=cbSt(),l=c.legs[i];if(!l)return;if(k==='fl'){v=String(v).replace(/\D/g,'');if(v===''){l.fu=0;l.fl=null}else{l.fu=1;l.fl=Math.min(420,+v)}cbFlProp(c)}else l[k]=v;cbSave();render()}
+function cbLeg(i,k,v){const c=cbSt(),l=c.legs[i];if(!l)return;if(k==='fl'){v=String(v).replace(/\D/g,'');if(v===''){l.fu=0;l.fl=null}else{l.fu=1;l.fl=cbFlIn(v)}cbFlProp(c)}else l[k]=v;cbSave();render()}
 function cbEx(){const e=$('cbtxt');if(e)e.value='LFMY MTL/F250 ROA LFSI';cbRead()}
 /* Dégagements : terrains proches de la destination */
 function cbNear(D,k,ex){return Object.entries(PF_AD).filter(([id,a])=>id!==D.n&&!(ex||[]).includes(id)&&Math.max(0,...(a[4]||[]).map(r=>r[6]||0))>=1800).map(([id,a])=>[id,cbDist(D,{la:a[1],lo:a[2]})]).filter(x=>x[1]>3).sort((a,b)=>a[1]-b[1]).slice(0,k)}
@@ -6045,7 +6047,7 @@ const cbCan=()=>tov('cb')!=null?!!tov('cb'):isChef()||ccPilDir()||!!pcMe()||(!is
 const cbT=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h?h+' h '+String(m).padStart(2,'0'):m+'′'+String(x).padStart(2,'0')};
 const cbN=v=>Math.round(v).toLocaleString('fr-FR');
 const cbW=w=>w?String(Math.round(w.d)).padStart(3,'0')+'°/'+Math.round(w.s):'—';
-const cbFL=a=>a<1?'le sol':'FL'+String(a>=95?Math.round(a/10)*10:Math.round(a/5)*5).padStart(3,'0');
+const cbFL=a=>a<1?'le sol':'FL'+String(Math.abs(a-Math.round(a))<.02?Math.round(a):a>=95?Math.round(a/10)*10:Math.round(a/5)*5).padStart(3,'0');
 function cbPos(R,x){const lg=R.L.find(l=>x<=l.x0+l.d+1e-6)||R.L[R.L.length-1],a=x-lg.x0,b=lg.x0+lg.d-x;
  return a<1?'à '+esc(lg.a.n):b<1?'à '+esc(lg.b.n):a<=b?`${Math.round(a)} Nm après ${esc(lg.a.n)}`:`${Math.round(b)} Nm avant ${esc(lg.b.n)}`}
 /* Résumé du profil : niveaux et vitesses de croisière choisis, par tronçon */
@@ -6106,14 +6108,14 @@ function cbPodTab(sat,expo,sol){if(typeof POD==='undefined')return null;if(sat>=
  if(expo>30&&v<600){const pm=(sa,so,e)=>{const M=POD_M,Ta=sa+M.dk,Tm=Ta+(so+M.t0-Ta)*Math.exp(-e/M.t1),tr=so+10.5;return Tm>=0?0:60*M.t2*Math.log((tr-Tm)/tr)};v=Math.min(600,Math.ceil((v+Math.max(0,pm(POD.sat[ri],POD.sol[ci],expo)-pm(POD.sat[ri],POD.sol[ci],30)))/30)*30)}return v}
 const cbPodV=p=>{const tb=p.expo>0?cbPodTab(p.satMin,p.expo/60,p.Tg):0;p.tab=tb;return Math.max(p.std||0,tb||0)};
 function cbPodTxt(p){const v=cbPodV(p);return p.std==null&&!p.tab?'réchauffage : sol à moins de −10 °C, hors note':v<5?'POD utilisable dès le passage':'réchauffage '+cbT(Math.ceil(v/30)*30)+(v>=600?' (≥ 10′, plafond de la règle)':'')}
-function cbPodRows(R,c,g){const P=R.pod;if(!P)return[];const I=P.iso.filter(k=>k.up&&k.x>g.x0+1e-6&&k.x<=g.x0+g.d+1e-6).map(k=>[k.x,`<li class="cb-pod"><i></i><div><b>Iso 0 °C · ${cbFL(k.ph!=='cr'?(cbIso0(g)??k.a):k.a)}</b><small>Athos 5 : top chrono d’exposition POD</small></div><div class="r"><small>T + ${cbT(k.t)}</small></div></li>`]);return I.concat(P.X.filter(p=>p.x>g.x0+1e-6&&p.x<=g.x0+g.d+1e-6).map(p=>{return [p.x,(()=>{const lg=R.L.find(l=>p.x<=l.x0+l.d+1e-6)||g;
+function cbPodRows(R,c,g){const P=R.pod;if(!P)return[];const I=P.iso.filter(k=>k.up&&k.x>g.x0+1e-6&&k.x<=g.x0+g.d+1e-6).map(k=>[k.x,`<li class="cb-pod"><i></i><div><b>Iso 0 °C · ${cbFL(Math.max(5,Math.round((k.ph!=='cr'?(cbIso0(g)??k.a):k.a)/5)*5))}</b><small>Athos 5 : top chrono d’exposition POD</small></div><div class="r"><small>T + ${cbT(k.t)}</small></div></li>`]);return I.concat(P.X.filter(p=>p.x>g.x0+1e-6&&p.x<=g.x0+g.d+1e-6).map(p=>{return [p.x,(()=>{const lg=R.L.find(l=>p.x<=l.x0+l.d+1e-6)||g;
   return `<li class="cb-pod"><i></i><div><b>POD · passage FL100</b><small>${esc(cbPodTxt(p))}${(()=>{const v=Math.ceil(cbPodV(p)/30)*30;return v<5?'':p.t+v>R.t?' · utilisable après l’arrivée':' · utilisable vers T + '+cbT(p.t+v)})()}${cbVOk(c)?'':' · <em>plan non validé</em>'}</small></div><div class="r"><small>T + ${cbT(p.t)}</small></div></li>`})()]}))}
 const cbIso0=lg=>{if(cbSat(lg,0)<0)return 0;for(let a=0;a<=400;a+=1)if(cbSat(lg,a)<0)return a;return null};
-const cbIsoTx=a=>a==null?'au-dessus du FL400':a<=0?'au sol':cbFL(a)+' ('+cbN(Math.round(a*100/100)*100)+' ft)';
+const cbIsoTx=a=>a==null?'au-dessus du FL400':a<=0?'au sol':cbFL(Math.max(5,Math.round(a/5)*5))+' ('+cbN(Math.round(a*100/100)*100)+' ft)';
 function cbChrono(R,P){const ch=P.chr,i0=cbIso0(R.L[0]);
  if(ch&&ch.sol)return `<div class="cb-iso"><b>Iso 0 °C au sol</b> à ${esc(R.L[0].a.n)} : <b>Athos 5, top chrono au décollage</b>.</div>`;
  const up=P.iso.find(k=>k.up);
- return `<div class="cb-iso"><span class="cb-iso-i">0°</span><div><b>Iso 0 °C au départ : ${cbIsoTx(i0)}</b><small>${up?`Athos 5 : <b>top chrono en passant ${up.ph!=='cr'?cbFL((()=>{const lg=R.L.find(l=>up.x<=l.x0+l.d+1e-6)||R.L[0],v=cbIso0(lg);return v!=null&&Math.abs(v-up.a)<15?v:up.a})()):cbFL(up.a)} ${up.ph==='mt'?'en montée':up.ph==='de'?'en descente':'en palier'}</b>, ${cbPos(R,up.x)} · T + ${cbT(up.t)}`:'La route reste au-dessus de 0 °C : pas de chrono d\'exposition.'}</small></div></div>`}
+ return `<div class="cb-iso"><span class="cb-iso-i">0°</span><div><b>Iso 0 °C au départ : ${cbIsoTx(i0)}</b><small>${up?`Athos 5 : <b>top chrono en passant ${up.ph!=='cr'?cbFL(Math.max(5,Math.round((()=>{const lg=R.L.find(l=>up.x<=l.x0+l.d+1e-6)||R.L[0],v=cbIso0(lg);return v!=null&&Math.abs(v-up.a)<15?v:up.a})()/5)*5)):cbFL(up.a)} ${up.ph==='mt'?'en montée':up.ph==='de'?'en descente':'en palier'}</b>, ${cbPos(R,up.x)} · T + ${cbT(up.t)}`:'La route reste au-dessus de 0 °C : pas de chrono d\'exposition.'}</small></div></div>`}
 function cbPodCard(R,c){const P=R.pod;if(!P)return'';const X=P.X,v=cbVOk(c);
  return `<section class="cb-card cb-podc"><h3><span class="cb-n">7</span>Réchauffage POD</h3>
   ${cbChrono(R,P)}${X.length?X.map(p=>`<div class="cb-pr"><div><b>Passage FL100 ${cbPos(R,p.x)}</b><small>T + ${cbT(p.t)}</small></div>
@@ -6154,7 +6156,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  const vol=`<section class="cb-card"><h3><span class="cb-n">2</span>Avion et vol</h3>
   <div class="cb-f"><label>Plein</label>${seg('fuel',CB_PL.map(([v,n])=>[v,n,v]),c.fuel)}</div>
   <div class="cb-f"><label>Mise en route</label>${seg('mer',CB_MER.map(([v,n])=>[v,n,v+' L']),c.mer)}</div>
-  <div class="cb-f"><label>Niveau</label><div class="cb-step"><button onclick="cbSet('fl',Math.max(10,${+c.fl}-(${+c.fl}>100?50:10)))" aria-label="Descendre">−</button><b>${cbFL(+c.fl)}</b><button onclick="cbSet('fl',Math.min(420,${+c.fl}+(${+c.fl}>=100?50:10)))" aria-label="Monter">+</button></div>${c.dim==='3d'||c.dim==='txt'?'<span class="cb-hint" style="margin:0">branches sans niveau</span>':''}</div>
+  <div class="cb-f"><label>Niveau</label><div class="cb-step"><button onclick="cbSet('fl',Math.max(10,${+c.fl}-(${+c.fl}>100?50:10)))" aria-label="Descendre">−</button><label class="cb-flin" title="Tapez le niveau exact (ex. 275)">FL<input class="in" inputmode="numeric" value="${String(+c.fl).padStart(3,'0')}" onfocus="this.select()" onkeydown="if(event.key==='Enter')this.blur()" onchange="const v=cbFlIn(this.value);if(v!=null&&v>=5)cbSet('fl',v);else render()"></label><button onclick="cbSet('fl',Math.min(420,${+c.fl}+(${+c.fl}>=100?50:10)))" aria-label="Monter">+</button></div>${c.dim==='3d'||c.dim==='txt'?'<span class="cb-hint" style="margin:0">branches sans niveau</span>':''}</div>
   <div class="cb-f cb-fs"><label>Vitesse</label>${cbSlider(c)}</div>
   <div class="cb-f"><label>Basse alt.</label>${seg('low',CB_PR.filter(p=>CB_TBA[p[0]]).map(([v,n,s])=>[v,n,s]),c.low||'t420')}</div>
   <p class="cb-hint" style="margin:-4px 0 10px">Vitesse des branches prévues au FL050 ou en dessous${(()=>{const n=c.legs.filter(l=>+(l.fl??c.fl)<=CB_LOWFL).length;return n?` : ${n} branche${n>1?'s':''} concernée${n>1?'s':''}`:' : aucune branche à cette hauteur pour l\'instant (mettre le niveau de la branche à 5, par exemple, dans le navlog)'})()}.</p>
