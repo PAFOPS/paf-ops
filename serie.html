@@ -106,18 +106,18 @@ const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const C0={la:43.6063,lo:5.1092};
 const MX=111320*Math.cos(C0.la*D2R),MZ=110540;
 const toW=(la,lo)=>({x:(lo-C0.lo)*MX,z:-(la-C0.la)*MZ});
-/* --- Formations (8 avions : 1 leader, 2-3 intérieurs, 4-5 extérieurs, 6 charognard, 7-8 solos) ---
+/* --- Formations (8 avions : 1 leader, 2-3 intérieurs, 4 charognard, 5-6 solos, 7-8 extérieurs) ---
    [latéral (droite +), arrière (+)] en places ; d'après la planche des formations de la Patrouille.
    Chacune peut être redessinée dans l'outil (bouton « Modifier la formation »). */
 /* relevé sur la planche « Les formations » : le leader (1) est toujours devant, en [0,0] ;
-   2-3 intérieurs, 4-5 extérieurs, 6 charognard, 7-8 solos. 1 place latérale = 1 ; distances arrière à la même échelle. */
+   2-3 intérieurs, 4 charognard, 5-6 solos, 7-8 extérieurs. 1 place latérale = 1 ; distances arrière à la même échelle. */
 /* relevé sur la planche « Les formations » ; [latéral (droite +), arrière (+), n° d'Athos]. Règles de placement :
    1 devant ; 4 derrière le 1 ; 2 au plus près à droite du 1, 3 au plus près à gauche ; 8 dans l'aile du 2, 7 dans l'aile du 3
    (parfois plus en arrière) ; 6 derrière le 2, 5 derrière le 3. Colonne de 4 avions : 1, 4, 5, 6. Grande et très grande flèche :
    5 au bout à gauche, 6 au bout à droite. Big nine : grande flèche + 4 au bout à gauche, 9 au bout à droite. */
 const FORMS0={
  'DIAMANT':[[0,0,1],[1,0.9,2],[-1,0.9,3],[0,1.8,4],[-1,2.7,5],[1,2.7,6],[-2,1.8,7],[2,1.8,8]],
- 'CONCORDE':[[0,0,1],[1,2.3,2],[-1,2.3,3],[0,1.5,4],[-1,4,5],[1,4,6],[-2,3.1,7],[2,3.1,8]],
+ 'CONCORDE':[[0,0,1],[1,2.3,2],[-1,2.3,3],[0,1.5,4],[0,3,5],[0,4.5,6],[-2,3.1,7],[2,3.1,8]],
  'CANARD':[[0,0,1],[1,0.8,2],[-1,0.8,3],[0,1.5,4],[-1,2.3,5],[1,2.3,6],[-2,3.1,7],[2,3.1,8]],
  'TÉ':[[0,0,1],[1,0,2],[-1,0,3],[0,1.4,4],[0,2.7,5],[0,4.1,6],[-2,0,7],[2,0,8]],
  'FLECHE':[[0,0,1],[1,0.8,2],[-1,0.8,3],[0,1.6,4],[0,3.1,5],[0,4.6,6],[-2,1.6,7],[2,1.6,8]],
@@ -862,7 +862,7 @@ function bldPrevK(k){BLD.hov=k&&BRKm[k]?Object.assign({},BRKm[k][3],k==='G'||k==
 /* INS : on insère la prochaine brique après la brique n° INS (null = au bout du ruban) */
 let INS=null,CAMT=null,HIST={id:null,a:[],i:-1},HNO=false;
 /* formation et fumée en vigueur au bout du ruban (dernière brique ou dernière action) */
-function actForm(upto){const L=CUR.figs.slice(0,upto==null?CUR.figs.length:upto);for(let i=L.length-1;i>=0;i--)if(L[i].form)return L[i].form;return 'DIAMANT'}
+function actForm(upto){const L=CUR.figs.slice(0,upto==null?CUR.figs.length:upto);for(let i=L.length-1;i>=0;i--){const f=L[i],sn=(f.snaps||[]).filter(x=>x.form).sort((a,b)=>a.u-b.u);if(sn.length)return sn[sn.length-1].form;if(f.form)return f.form}return 'DIAMANT'}
 function actSmk(upto){for(let i=(upto==null?CUR.figs.length:upto)-1;i>=0;i--){const f=CUR.figs[i];if(f.smk)return JSON.parse(JSON.stringify(f.smk))}return {}}
 function bldPiece(){const b=Object.assign({},BLD,BLD.hov||{}),at=INS==null?undefined:INS+1,form=b.form||actForm(at);
  if(b.dir==='AF')return {id:'ghost',t:'ACT_F',form:b.nf||form,p:{L0:0,tr:b.tr},snaps:[]};
@@ -882,7 +882,7 @@ function bldPrev(k,v){BLD.hov=k?{[k]:v}:null;NOPAN=true;try{draw()}finally{NOPAN
 function bldPose(){BLD.hov=null;const f=bldPiece();f.id=uid();if(isAct(f)){f.snaps=[];if(f.t==='ACT_F')BLD.form=f.form}else{f.snaps=[{u:.5,form:f.form}];f.smk=BLD.smk?JSON.parse(JSON.stringify(BLD.smk)):actSmk(INS==null?undefined:INS+1)}
  if(f.t==='ACT_S')BLD.smk=JSON.parse(JSON.stringify(f.smk));if(INS==null)CUR.figs.push(f);else{CUR.figs.splice(INS+1,0,f);INS++}SEL=CUR.figs.indexOf(f);FEW=true;FEWP=true;
  /* remise à zéro : la prochaine brique repart des réglages de base (formation et fumée en vigueur conservées) */
- const keep={form:BLD.form,smk:BLD.smk,on:BLD.on};Object.assign(BLD,BLD0,keep);draw();touch();camEnd();info('Brique posée : '+fName(f)+(INS!=null?' (insérée)':''));setTimeout(()=>info(''),1400)}
+ const keep={form:null,smk:BLD.smk,on:BLD.on};Object.assign(BLD,BLD0,keep);draw();touch();camEnd();info('Brique posée : '+fName(f)+(INS!=null?' (insérée)':''));setTimeout(()=>info(''),1400)}
 function bldSm(m){BLD.nsmk=smCalc(m,BLD.form||actForm());BLD.nsmkName=SMPN[m];draw()}
 function bldSmC(n){const m=BLD.nsmk||actSmk(),ok=smOK(n);m[n]=ok[(ok.indexOf(m[n]||'')+1)%ok.length];BLD.nsmk=m;BLD.nsmkName='';draw()}
 function bldUndo(){if(!CUR.figs.length)return;CUR.figs.pop();BLD.form=null;BLD.smk=null;SEL=-1;if(INS!=null&&INS>=CUR.figs.length)INS=null;draw();touch()}
@@ -933,7 +933,7 @@ function bldPanel(sel,rng0,fo){const ph=physOf(CUR),rng=(lab,v,min,max,st,u,on)=
  h+=`<div class="pr" style="grid-template-columns:96px 1fr"><label>Formation</label>${sel(cur,fo.map(k=>[k,formL(k)]),"bldSet('form',this.value)")}</div>
   <div class="row" style="margin-top:8px"><button class="b pri rcgo" onclick="bldPose()">✓ Poser la brique</button><button class="b" onclick="bldUndo()" ${CUR.figs.length?'':'disabled'}>⟲ Retirer la dernière</button></div></div>`;
  return h}
-function addFig(t,pp){const f={id:uid(),t,form:LIBF||(CUR.figs.length?CUR.figs[CUR.figs.length-1].form:'DIAMANT'),p:Object.assign({},pp||{}),snaps:[]};LIBF=null;f.snaps.push({u:.5,form:f.form});const at=SEL>=0?SEL+1:CUR.figs.length;CUR.figs.splice(at,0,f);SEL=at;LIB=false;draw();touch();setTimeout(()=>view('fig'),30)}
+function addFig(t,pp){const f={id:uid(),t,form:LIBF||actForm(SEL>=0?SEL+1:undefined),p:Object.assign({},pp||{}),snaps:[]};LIBF=null;f.snaps.push({u:.5,form:f.form});const at=SEL>=0?SEL+1:CUR.figs.length;CUR.figs.splice(at,0,f);SEL=at;LIB=false;draw();touch();setTimeout(()=>view('fig'),30)}
 function mvFig(i,d){const j=i+d;if(j<0||j>=CUR.figs.length)return;const a=CUR.figs;[a[i],a[j]]=[a[j],a[i]];SEL=j;draw();touch()}
 function delFig(i){CUR.figs.splice(i,1);SEL=-1;draw();touch()}
 function setSer(k,v){if(k==='year')v=+v;CUR[k]=v;touch();panel()}
