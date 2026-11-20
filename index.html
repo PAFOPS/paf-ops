@@ -1328,6 +1328,7 @@ const ROLES=[
  {k:'dmma',l:'DMMA',side:'suivi',i:'briefcase',c1:'#8b5cf6',c2:'#5b21b6'},
  {k:'osab',l:'OSAB',side:'suivi',i:'shield',c1:'#10b981',c2:'#047857'},
  {k:'bob',l:'OPS BOB (BA 701)',side:'suivi',i:'tower',c1:'#2563eb',c2:'#1e3a8a'},
+ {k:'ext',l:'Lecture seule (externe)',side:'suivi',i:'eye',c1:'#0891b2',c2:'#155e75'},
  {k:'org',l:'Organisateur',side:'meet',i:'flag',c1:'#0ea5e9',c2:'#0369a1'},
  {k:'dv',l:'Directeur des vols',side:'meet',i:'radio',c1:'#6366f1',c2:'#3730a3'},
  {k:'ro',l:'Volontaires (lien public)',side:'ro',i:'hand',c1:'#94a3b8',c2:'#475569'}
@@ -1356,6 +1357,7 @@ const DEF_RIGHTS={
  dmma:{tech:'r',meet:'r',contacts:'r',annu:'r',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
  osab:{tech:'n',meet:'n',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'},
  bob:{tech:'n',meet:'n',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'},
+ ext:{tech:'r',meet:'r',contacts:'n',annu:'n',aero:'r',logi:'r',com:'r',pdocs:'r',acces:'n'},
  org:{tech:'e',meet:'r',contacts:'e',annu:'n',aero:'n',logi:'e',com:'e',pdocs:'n',acces:'n'},
  dv:{tech:'n',meet:'r',contacts:'r',annu:'n',aero:'e',logi:'n',com:'n',pdocs:'r',acces:'n'},
  ro:{tech:'n',meet:'r',contacts:'n',annu:'n',aero:'n',logi:'n',com:'n',pdocs:'n',acces:'n'}
@@ -1499,7 +1501,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795024306';
+const APP_V='1795169511';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -2570,6 +2572,7 @@ function invMsg(role,mid,name){const m=mid?DB.meetings.find(x=>x.id===mid):null,
  if(role==='dmma'&&m)return `${hello}\n\nVous êtes DMMA pour ${artN(nm)}${m.city&&!nm.toLowerCase().includes(m.city.toLowerCase())?' à '+m.city:''}.\n\nVoici votre accès personnel à PAF OPS, en consultation : vous y trouverez les éléments transmis par le directeur des vols (plan du site et axe, pilot book, zone réglementée temporaire, créneaux), le dossier des pilotes et la composition de l'équipe de la Patrouille. Aucun mot de passe : conservez ce message.\n\nPour toute question sur la présentation, je reste à votre disposition.${sig}`;
  if(role==='bob')return `${hello}\n\nPour l'entraînement de la Patrouille de France, nous exprimons nos besoins de zones dans PAF OPS. Voici votre accès personnel : vous y voyez le planning de nos demandes en R276 (avec les plaquettes déjà prévues) et vous validez ou refusez chaque créneau d'un toucher ; nous sommes prévenus aussitôt. Vous recevez aussi un email à chaque nouvelle demande. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris.${sig}`;
  if(role==='osab')return `${hello}\n\nVoici votre accès personnel à PAF OPS, en consultation : vous y trouverez les fiches d'événement aéronautique (FEA, CRI, CRE) de la Patrouille de France, au fur et à mesure que je les traite et vous les transmets. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris.${sig}`;
+ if(role==='ext')return `${hello}\n\nVoici votre accès personnel à PAF OPS, en lecture seule : vous pouvez tout consulter et utiliser les outils (Prépa Nav, Météo, Dérouto, Alphajet, Série, Bfg PC, NAV et Coupe Salon ⇄ Plan de Dieu, Cirrus, TCAS, Mécas), mais rien n'est enregistré. Ces données sont internes à la Patrouille de France : merci de ne pas les diffuser. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris.${sig}`;
  if(role==='visit'||role==='dmma')return `${hello}\n\nVoici votre accès personnel à PAF OPS pour suivre la préparation des meetings de la saison, en consultation. Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`;
  return `${hello}\n\nVoici votre accès personnel à PAF OPS (${(RLm[role]||{}).l||role}). Aucun mot de passe : conservez ce message et ajoutez le lien à vos favoris, ou installez l'application sur votre téléphone depuis ce lien.${sig}`}
 /* Accès de l'organisateur et du DV d'un meeting : inviter plus tard, corriger, renvoyer */
@@ -5921,7 +5924,7 @@ const CB_DE={fl:[0,50,100,150,200,250,300,350,400,450],f:[0,8,18,26,34,42,50,61,
 const CB_CR={n:{fl:[50,100,150,200,250,300,350],v:[423,414,416,411,405,403,401],q:[28.8,22,19,16.3,14.3,12.5,10.3]},
  dl:{fl:[50,100,150,200,250,300,350,400],v:[267,284,307,332,370,392,401,402],q:[13.5,12.9,12.4,11.9,11.8,11.5,10.8,11.0]},
  dg:{fl:[50,100,150,200,250,300,350,400,420],v:[255,268,286,309,346,368,394,401,402],q:[12.3,11.5,11,10.4,10.6,10.1,9.7,9.3,9.2]}};
-const CB_PR=[['i8','i8','autonomie max'],['dmf','DMF','distance max'],['lrc','Meilleur rapport','−4 % de distance'],['n','Normale','check-list'],['max','Max','2×95 %'],['m','Mach choisi','curseur'],['t320','TBA 320','20 L/min'],['t360','TBA 360','24 L/min'],['t420','TBA 420','30 L/min'],['t450','TBA 450','≈ 38 L/min']];
+const CB_PR=[['i8','i8','autonomie max'],['dmf','DMF','distance max'],['lrc','LRC','−4 % de distance, bien plus rapide'],['n','Normale','check-list'],['max','Max','2×95 %'],['m','Mach choisi','curseur'],['t320','TBA 320','20 L/min'],['t360','TBA 360','24 L/min'],['t420','TBA 420','30 L/min'],['t450','TBA 450','≈ 38 L/min']];
 const CB_TBA={t320:[320,20],t360:[360,24],t420:[420,30],t450:[450,38]};
 const CB_TO={f:43,t:69,d:3.3};   // lâcher des freins → 280 kt (1000 ft)
 const CB_LV=[850,700,600,500,400,300,250,200];
@@ -6357,7 +6360,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  const dsT=`<table class="cb-cmp"><thead><tr><th>Descente</th><th>Début</th><th>Temps total</th><th>Arrivée</th></tr></thead><tbody>${A.ds.map(x=>{const s=x.R.seg[x.R.seg.length-1];
    return `<tr class="${x.d===c.des?'cur':''}" onclick="cbSet('des','${x.d}')"><td><b>${x.d===A.recD.d?'★ ':''}${esc(CB_DS[x.d][0])}</b><small>${esc(CB_DS[x.d][1])}</small></td><td>${s&&s.ph==='de'?Math.round(x.R.tot-s.x0)+' Nm avant':'—'}</td><td>${cbT(x.R.t)}</td><td>${cbN(x.R.fA)} L</td></tr>`}).join('')}</tbody></table>
   <p class="cb-hint">★ ${A.recD===A.ds.reduce((a,b)=>b.R.fA>a.R.fA?b:a)?'la plus économe en pétrole':'gagne au moins 1′ pour 15 L ou moins'}. En IFR, le contrôle impose souvent le début de descente.</p>`;
- const LAM=8,{sS,sL,sD}=cbSug(R,A,c),same=c.pr===sS.p&&+c.fl===sL.fl&&c.des===sD.d&&!c.legs.some(l=>l.fl!=null&&l.fl!==+c.fl);
+ const LAM=8,{sS,sL,sD}=cbSug(R,A,c),same=c.pr===sS.p&&+c.fl===sL.fl&&c.des===sD.d&&!c.legs.some(l=>l.fl!=null&&l.fl!==+c.fl)&&!c.legs.some(l=>l.pr&&!CB_TBA[l.pr]&&l.pr!==c.pr);
  const mixL=c.legs.some(l=>l.fl!=null&&l.fl!==+c.fl),mixP=c.legs.some(l=>l.pr&&!CB_TBA[l.pr]&&l.pr!==c.pr),
   selL=mixL?'par tronçon':cbFL(+c.fl),selP=mixP?'par tronçon':c.pr==='m'?'M'+(+c.mach||.72).toFixed(2).replace('.',','):cbPrL(c.pr),selD=CB_DS[c.des||'eco'][0],
   df=(a,b)=>a===b?'':' class="df"';
@@ -6375,7 +6378,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
  const dMx=Math.max(...A.ds.map(x=>{const s=x.R.seg[x.R.seg.length-1];return s&&s.ph==='de'?x.R.tot-s.x0:1}),1);
  const rgDs=`<div class="cb-rg"><div class="cb-rgh"><span class="cb-rgi">↘</span><div><small>Descente</small><b>${esc(selD)}</b></div>${tag((c.des||'eco')===sD.d,CB_DS[sD.d][0],`cbSet('des','${sD.d}')`)}</div><div class="cb-dsb">${A.ds.map(x=>{const s=x.R.seg[x.R.seg.length-1],dd=s&&s.ph==='de'?x.R.tot-s.x0:0,w=8+82*dd/dMx;
    return `<button aria-pressed="${x.d===(c.des||'eco')}" onclick="cbSet('des','${x.d}')"><b>${x.d===sD.d?'★ ':''}${esc(CB_DS[x.d][0])}</b><svg viewBox="0 0 100 30" class="cb-dss" aria-hidden="true"><path d="M2 5H${(98-w).toFixed(1)}L98 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg><small>${dd?'TOD '+Math.round(dd)+' Nm avant':'—'} · ${cbN(x.R.fA)} L</small></button>`}).join('')}</div></div>`;
- const sgl=`<div class="cb-sgl ${same?'ok':''}"><span>★ Proposé : <b>${cbFL(sL.fl)} · ${esc(prN(sS.p))} · ${esc(CB_DS[sD.d][0])}</b><small>une minute gagnée vaut environ ${LAM} L, au moins 100 L au-dessus du mini à l’arrivée</small></span>${same?'<span class="cb-ok">✓ ce sont vos réglages</span>':`<button class="btn sm pri" onclick="Object.assign(S.cb,{pr:'${sS.p}',des:'${sD.d}'});cbFlAll(${sL.fl})">Tout reprendre</button>`}</div>`;
+ const sgl=`<div class="cb-sgl ${same?'ok':''}"><span>★ Proposition de l’appli : <b>${cbFL(sL.fl)} · ${esc(prN(sS.p))} · ${esc(CB_DS[sD.d][0])}</b><small>une minute gagnée vaut environ ${LAM} L, au moins 100 L au-dessus du mini à l’arrivée</small></span>${same?'<span class="cb-ok">✓ proposition appliquée</span>':`<button class="btn sm pri" onclick="Object.assign(S.cb,{pr:'${sS.p}',des:'${sD.d}'});cbFlAll(${sL.fl})">Tout reprendre</button>`}</div>`;
  const adv=`<section class="cb-card"><h3><span class="cb-n">A</span>Réglages : niveau, vitesse, descente</h3>${sgl}<div class="cb-rgs">${rgFl}${rgSp}${rgDs}</div>
   ${xsNavH(NX,R)}
   <details class="cb-more"><summary>Autres réglages : basse altitude, mise en route, fin de voilure</summary>${vol.replace(/^<section class="cb-card"><h3>.*?<\/h3>/,'').replace(/<\/section>$/,'')}</details></section>`;
@@ -6389,7 +6392,7 @@ function vCb(tabs){const c=cbSt(),R=cbAll();setTimeout(()=>cbWxLoad(),30);
   <div class="cb-seg cb-cmpt">${[['sp','🚀 Vitesses'],['lv','⛰ Niveaux'],['ds','↘ Descentes']].map(([k,l])=>`<button aria-pressed="${ct===k}" onclick="S.cbCmp='${k}';render()">${l}</button>`).join('')}</div>
   ${ct==='sp'?`<div class="cb-vt ${mx.R.fA>=R.req?'ok':'ko'}">${vtxt}</div>`:''}${cbBars(rowsC,R.req)}
   <p class="cb-hint">Le reste du plan ne change pas. ★ proposé · ✓ votre réglage · trait rouge : pétrole mini à l’arrivée (${cbN(R.req)} L). Touchez une ligne pour l’appliquer.${ct==='lv'?' '+(c.reg==='ifr'?`IFR : niveaux ${ifr.odd?'impairs':'pairs'}, FL280 au plus.`:'OAT : pénalité RVSM au-dessus du FL285.')+' Niveaux comparés à vitesse Normale et descente éco.':''}${ct==='ds'?' En IFR, le contrôle impose souvent le début de descente.':''}</p>
-  <details class="cb-more"><summary>Méthode de calcul</summary><p class="cb-hint">Vitesses i8, DMF, meilleur rapport, Mach choisi et Max : modèle IT10 recalé sur la fiche PAF et l'UCE 116.1 (fig. 5-2), poussée 2×95 % calée sur ≈ M0,80 au FL250, vent et température du jour. « Normale » : vitesse de la check-list, conso calculée par le même modèle que les autres lignes (la fiche, qui ne tient compte ni de la masse ni de la température, donne 4 à 8 % de plus en altitude). Dernière colonne : litres en plus par minute gagnée par rapport à DMF. Descente sans AF 2×82 % : calculée à partir de la descente éco (80 %), à confirmer en vol.</p></details></section>`;
+  <details class="cb-more"><summary>Méthode de calcul</summary><p class="cb-hint">Vitesses i8, DMF, LRC (long range cruise), Mach choisi et Max : modèle IT10 recalé sur la fiche PAF et l'UCE 116.1 (fig. 5-2), poussée 2×95 % calée sur ≈ M0,80 au FL250, vent et température du jour. « Normale » : vitesse de la check-list, conso calculée par le même modèle que les autres lignes (la fiche, qui ne tient compte ni de la masse ni de la température, donne 4 à 8 % de plus en altitude). Dernière colonne : litres en plus par minute gagnée par rapport à DMF. Descente sans AF 2×82 % : calculée à partir de la descente éco (80 %), à confirmer en vol.</p></details></section>`;
  /* ---- profil vertical ---- */
  const prof=`<section class="cb-card"><h3><span class="cb-n">5</span>Profil vertical</h3>${cbResume(R,c)}${cbChart(R,c)}
   <ol class="cb-pf">${cbProfil(R,c).map(([k,a,b])=>`<li class="${k}"><i>${k==='up'?'↗':k==='dn'?'↘':'→'}</i><div><span>${a}</span><small>${b}</small></div></li>`).join('')}</ol></section>`;
@@ -7192,7 +7195,7 @@ const AR_L={e:'Modifier',r:'Lecture',n:'—'};
 function people(){const P={};(DB.access||[]).filter(a=>a.role!=='ro').forEach(a=>{const k=lc(a.mail)||a.id;(P[k]=P[k]||{k,mail:a.mail||'',name:'',L:[]}).L.push(a);if(a.name&&!P[k].name)P[k].name=a.name});
  return Object.values(P).map(p=>{const m=memOf(p.mail);p.mem=m;p.label=m?memLabel(m):(p.name||p.mail);p.fonc=m?((FUm[m.fn]||{}).d||m.fn)+(m.role?' · '+m.role:''):'';p.main=p.L.find(a=>a.role==='chef')||p.L.find(a=>!a.mid)||p.L[0];p.rx=p.L.some(a=>(a.rx&&Object.keys(a.rx).length)||(a.tools&&Object.keys(a.tools).length));p.hold=p.L.some(a=>a.hold);
   const sd=p.main.role==='chef'?0:RLm[p.main.role]&&RLm[p.main.role].side==='paf'?1:p.main.role==='visit'?2:ACC_FAM(p.main.role)==='meet'?4:3;p.ord=sd;return p}).sort((a,b)=>a.ord-b.ord||a.label.localeCompare(b.label))}
-const ACC_F=[['all','Tous'],['paf','Patrouille'],['visit','Pilotes PAF'],['dmma','DMMA'],['osab','OSAB'],['bob','OPS BOB'],['org','Organisateurs'],['dv','DV'],['rx','Droits spécifiques'],['hold','À envoyer']];
+const ACC_F=[['all','Tous'],['paf','Patrouille'],['visit','Pilotes PAF'],['dmma','DMMA'],['osab','OSAB'],['bob','OPS BOB'],['ext','Externes'],['org','Organisateurs'],['dv','DV'],['rx','Droits spécifiques'],['hold','À envoyer']];
 function accMatch(p,f){if(f==='all')return true;if(f==='rx')return p.rx;if(f==='hold')return p.hold;if(f==='paf')return p.L.some(a=>RLm[a.role]&&RLm[a.role].side==='paf');return p.L.some(a=>a.role===f)}
 function plaq(p){const roles=[...new Set(p.L.map(a=>a.role))],M=p.L.filter(a=>a.mid).map(a=>({m:DB.meetings.find(x=>x.id===a.mid),r:a.role})).filter(x=>x.m),last=Math.max(0,...p.L.map(a=>a.resend||a.at||a.sent||0));
  return `<button class="plq" onclick="personSheet('${esc(p.k)}')">${tile(RLm[p.main.role]||{},'sm')}<span class="plqt"><b>${esc(p.label)}</b><small>${esc(p.mail)}</small>${p.fonc?`<small>${esc(p.fonc)}</small>`:''}
@@ -7214,6 +7217,7 @@ const ROLE_D={chef:'Vous : tous les droits, toujours. Seul à régler les droits
  cst:'Chef des services techniques : remplit la partie technique des meetings. Pas d\'outils par défaut.',
  comm:'Communication : voit les meetings et leur partie communication ; tient les Interviews, les Cadres et le dossier de presse.',
  visit:'Pilotes et direction de la Patrouille : consultent les meetings, déclarent leurs FEA, donnent leurs dispos PC, écrivent le RETEX. Leurs outils dépendent de leur poste (voir Outils et Règles particulières).',
+ ext:'Lecture seule (externe) : voit les meetings et la vie de l\'unité en lecture, sans téléphones, emails, liens d\'accès, RETEX ni suivi d\'instruction. N\'enregistre rien. Outils par défaut : Prépa Nav, Météo, Dérouto, Alphajet, Série, Bfg PC, NAV et Coupe Salon ⇄ PDD, Cirrus, TCAS, Mécas (réglables dans Outils).',
  dmma:'DMMA : consultation seule, aucun outil. Invitée pour un meeting, elle ne voit que ce meeting.',
  bob:'OPS BOB de la BA 701 : ne voit que l\'outil Zones (besoins de la Patrouille en R276, R55, R31 et plaquettes qui citent une zone) ; valide ou refuse la R276. Rien d\'autre.',
  osab:'OSAB : ne voit que les FEA que vous avez cochées « Transmise à l\'OSAB » (avec leurs photos), en lecture. Rien d\'autre : ni meetings, ni Annuaire, ni outils.',
@@ -7287,7 +7291,7 @@ function psHTML(){const p=psP();if(!p){setTimeout(closeSheet,10);return ''}const
  return `<div class="sh">${tile(RLm[gr]||{},'lg')}<div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">Accès de</div><div class="q" style="margin-top:2px">${esc(p.label)}</div><div class="small muted">${esc(p.mail)}${p.fonc?' · '+esc(p.fonc):''}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb">
  <div class="accsum"><b>${ic('eye',16)} Ce qu'il voit aujourd'hui</b><ul>${accSum(p).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>${ROLE_D[gr]&&gr!=='osab'?`<small class="muted">${esc(ROLE_D[gr])}</small>`:''}</div>
- ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab','bob'].map(k=>RLm[k]).map(r=>`<button class="pk" title="${esc(ROLE_D[r.k]||'')}" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
+ ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab','bob','ext'].map(k=>RLm[k]).map(r=>`<button class="pk" title="${esc(ROLE_D[r.k]||'')}" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
  ${M.length||(!G.length&&!chef)||ACC_FAM(gr)?`<label class="l">Meetings dont il a la charge · un seul lien pour tous</label><div class="psm">${M.map(a=>{const m=DB.meetings.find(x=>x.id===a.mid);return `<div class="psmr">${ic('flag',15)}<b>${m?esc(mName(m)):'Meeting supprimé'}</b><span class="small muted">${m&&firstDemo(m)?fmtD(firstDemo(m)):''}</span>
    <select class="in" ${ed&&a.role!=='dmma'?'':'disabled'} onchange="psMRole('${a.id}',this.value)">${(a.role==='dmma'?['dmma']:['org','dv']).map(r=>`<option value="${r}" ${a.role===r?'selected':''}>${RLm[r].l}</option>`).join('')}</select>${ed?`<button class="ib" onclick="psMDel('${a.id}')" aria-label="Retirer ce meeting">${ic('x',15)}</button>`:''}</div>`}).join('')}
    ${ed&&meetOpts.length&&p.mail?`<div class="psmr add">${ic('plus',15)}<select class="in" id="ps-m">${meetOpts.map(m=>`<option value="${m.id}">${esc(mName(m))}${firstDemo(m)?' · '+fmtD(firstDemo(m)):''}</option>`).join('')}</select><select class="in" id="ps-r">${(gr==='dmma'?['dmma']:['org','dv','dmma']).map(r=>`<option value="${r}" ${r===(ACC_FAM(gr)==='meet'?gr:'org')?'selected':''}>${RLm[r].l}</option>`).join('')}</select><button class="btn" onclick="psMAdd()">Ajouter</button></div>`:''}</div>
