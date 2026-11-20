@@ -1334,7 +1334,8 @@ const ROLES=[
  {k:'ro',l:'Volontaires (lien public)',side:'ro',i:'hand',c1:'#94a3b8',c2:'#475569'}
 ];
 const RLm=Object.fromEntries(ROLES.map(r=>[r.k,r]));
-const GRP_R=ROLES.filter(r=>r.grp).map(r=>r.k),vrole=r=>GRP_R.includes(r)?'visit':r;   // un groupe se comporte comme « Pilote PAF », avec ses propres droitsRLm.n5={k:'n5',l:'#5',num:'5',c1:'#6366f1',c2:'#4338ca'};
+const GRP_R=ROLES.filter(r=>r.grp).map(r=>r.k),vrole=r=>GRP_R.includes(r)?'visit':r;   // un groupe se comporte comme « Pilote PAF », avec ses propres droits
+RLm.n5={k:'n5',l:'#5',num:'5',c1:'#6366f1',c2:'#4338ca'};
 // Contacts PAF affichés au directeur des vols (choisis dans l'annuaire)
 const KPX=[{k:'dt',l:'DT',d:'Partie technique'},{k:'cst',l:'CST',d:'Partie technique'},{k:'comm',l:'Comm',d:'Communication, relations publiques, médias'}];
 const OWN={team:['sec'],room:['sec'],tech:['cst','dt'],lodg:['sec'],food:['sec'],move:['sec'],room:['sec'],com:['comm']};
@@ -1501,7 +1502,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795169511';
+const APP_V='1795172014';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -7039,7 +7040,7 @@ function vUnite(){
  ${groups.map(({f,L},i)=>(f.grp&&(i===0||groups[i-1].f.grp!==f.grp)?`<div class="supgrp">${tile(MECAS,'sm')} <b>${MECAS.l}</b><span class="n">${MECAS.d} · ${groups.filter(g=>g.f.grp===f.grp).reduce((a,g)=>a+g.L.length,0)}</span></div>`:'')+`<div class="${f.grp?'ingrp':''}">${grpHTML(f,L,q)}</div>`).join('')}`;
 }
 /* Accès PAF OPS des membres de l'unité : reliés par l'adresse email (un accès déjà envoyé est reconnu, rien n'est renvoyé) */
-const U_ROLES=['visit','sec','cst','dt','comm',...GRP_R];   // le DMMA s'invite depuis la page de son meeting
+const U_ROLES=['visit','sec','cst','dt','comm',...GRP_R,'ext'];   // le DMMA s'invite depuis la page de son meeting
 const U_DEF={PILOTES:'visit',DIR:'visit',SEC:'secr',MOPS:'mops',DT:'dt',CST:'cst',DEP:'dep',CHDEP:'dep',CHHANGAR:'dep',PISTE:'piste',CHPISTE:'piste',BT:'bt',PHOTO:'photo',ARTA:'arta',CHAUFFEUR:'chauf'};
 const lc=v=>String(v||'').trim().toLowerCase();
 const accOf=mail=>mail?DB.access.find(a=>!a.mid&&a.role!=='ro'&&lc(a.mail)===lc(mail)):null;
@@ -7148,7 +7149,7 @@ function vAccesInv(){(DB.access||[]).forEach(a=>{if(a.role==='bob'&&a.hold&&!a.m
  const lk=location.origin+location.pathname+'?k=ro:'+DB.ro.code;
  const nh=DB.access.filter(a=>a.hold).length;
  return `<section class="acard"><div class="ah"><h2>${ic('shield',20)} Patrouille de France</h2></div>${ROLES.filter(r=>r.side==='paf').map(r=>row(r)).join('')}</section>
- <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF, DMMA, OSAB et OPS BOB</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. L'OSAB (officier sécurité aérienne base) ne voit que les FEA que vous lui avez transmises. L'OPS BOB (BA 701) ne voit que le planning des zones et valide la R276. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
+ <section class="acard"><div class="ah"><h2>${ic('eye',20)} Pilotes PAF, DMMA, OSAB, OPS BOB et externes</h2></div><p class="small muted" style="margin:0 16px 10px">Un lien personnel, en consultation. Les pilotes PAF ont en plus les applications Perfos ; la DMMA ne les voit pas. L'OSAB (officier sécurité aérienne base) ne voit que les FEA que vous lui avez transmises. L'OPS BOB (BA 701) ne voit que le planning des zones et valide la R276. « Lecture seule (externe) » voit tout en lecture, sans contacts, RETEX ni instruction, avec les outils que vous choisissez. <b>Un seul email d'invitation</b>, puis aucun rappel ni synthèse.</p>${ROLES.filter(r=>r.side==='suivi').map(r=>row(r)).join('')}</section>
  <section class="acard"><div class="ah"><h2>${ic('flag',20)} Côté meeting</h2>${ms.length>1?`<select class="in" style="width:auto;padding:9px 12px;font-size:14px" id="a-meet" onchange="S.am=this.value;render()">${ms.map(m=>`<option value="${m.id}" ${m.id===S.am?'selected':''}>${esc(mName(m))}</option>`).join('')}</select>`:pm?`<span class="small muted">${esc(mName(pm))}</span>`:''}</div>
   ${pm?ROLES.filter(r=>r.side==='meet').map(r=>row(r,pm.id)).join(''):'<p class="small muted" style="padding:0 16px 12px">Créez d\'abord un meeting.</p>'}</section>
  <section class="acard"><div class="ah"><h2>${ic('hand',20)} Lien public : volontaires</h2>${ed?`<button class="switch" role="switch" aria-checked="${DB.ro.on}" aria-label="Activer le lien en lecture seule" onclick="DB.ro.on=!DB.ro.on;save();render();toast(DB.ro.on?'Lien en lecture seule activé':'Lien en lecture seule désactivé')"></button>`:''}</div>
