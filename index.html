@@ -939,7 +939,8 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .pul{display:grid;grid-template-columns:62px minmax(0,1fr) 74px 80px auto;gap:10px;align-items:center;padding:8px 6px;border-top:1px solid var(--line);cursor:pointer}.pul:first-of-type{border-top:0}.pul.x{opacity:.45;text-decoration:line-through}.pud,.pum,.puv{display:grid;min-width:0}.pud b{font-size:13.5px;text-transform:capitalize}.pud small,.pum small,.puv small{font-size:11px;color:var(--muted)}.pum b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pum small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.puv{font-weight:800;font-size:14px;text-align:right}.puv.r{color:#1d4ed8}
 .pua{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.pust{font-size:11.5px;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border-radius:999px;padding:3px 9px;white-space:nowrap}
 .putodo{border:2px solid #f59e0b}.puhd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
-.pumo{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;margin-bottom:10px}.pumo button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;font:inherit;font-size:12.5px;font-weight:800;color:var(--fg);cursor:pointer;display:grid}.pumo button small{font-size:10.5px;color:var(--muted);font-weight:700}.pumo button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.pumo button[aria-pressed=true] small{color:#fff;opacity:.8}
+.puoff{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0;padding:7px 10px;border-radius:9px;background:#fef3c7;color:#92400e;font-size:13px}.puoff span{color:#b45309;font-size:12px}
+.pumo{display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:4px;margin-bottom:10px}.pumo button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;font:inherit;font-size:12.5px;font-weight:800;color:var(--fg);cursor:pointer;display:grid}.pumo button small{font-size:10.5px;color:var(--muted);font-weight:700}.pumo button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.pumo button[aria-pressed=true] small{color:#fff;opacity:.8}
 .puw{border:1px solid var(--line);border-radius:12px;padding:4px 8px;margin-top:8px}.puwh{display:flex;justify-content:space-between;gap:8px;padding:6px 6px 2px;font-size:12.5px;color:var(--muted)}.puwh b{color:var(--fg)}
 .pucnt{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;font-size:12.5px;font-weight:700}
 .pumt{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:8px;display:grid;gap:8px}.pumt.miss{border-color:#f59e0b;background:color-mix(in srgb,#f59e0b 6%,var(--surface))}.pumh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.pumh small{color:var(--muted);flex:1}.pumt-t{font-weight:900;font-size:17px}
@@ -1519,7 +1520,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795331190';
+const APP_V='1795333426';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -3296,12 +3297,20 @@ function vSr(tabs){return `${NOTE}<div class="head"><div><h1>Série</h1><p class
    Une ligne = un vol : pv / rv en minutes x avions. Le leader, le 5, la direction, les marqueuses et le chef ops modifient. */
 const PU_ST={ok:['Comme prévu','#16a34a'],rep:['Replanifié','#2563eb'],met:['Annulé météo','#0891b2'],zon:['Annulé zone','#9333ea'],mec:['Annulé méca','#dc2626']};
 const PU_MO=['Janv.','Févr.','Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'];
-const PU_BASE=[43.6064,5.1093],PU_MEP_KT=390,PU_TR_KT=300;   // Salon ; M0,65 ≈ 390 kt ; transit terrain ⇄ show center à 300 kt
+const PU_BASE=[43.6064,5.1093],PU_MEP_KT=390,PU_TR_KT=300,PU_MEP_PLUS=10;   // + 10 min par avion sur chaque mise en place et chaque retour
+const r5=m=>Math.round((m||0)/5)*5;   // tous les vols : arrondis aux 5 min les plus proches (par avion)
+/* pendant la lecture des plaquettes : des blagues pour tout le monde, sur les plaquettes et les heures de vol */
+const PU_LD=[()=>'Une plaquette, deux plaquettes, trois plaquettes… le PU compte, ne vous endormez pas.',()=>'Une heure de vol : 60 minutes en l\'air et trois heures de paperasse au sol.',()=>'On arrondit aux 5 minutes. Le roulage, lui, n\'a jamais arrondi à la baisse.',()=>'On cherche le reliquat de l\'équipe suivante. Il était là il y a une seconde…',()=>'Les heures de vol, c\'est comme le pétrole : on en voudrait toujours un peu plus à la fin.',()=>'Calcul en cours. La calculette garde les ailes à plat, promis.',()=>'Une plaquette sans plein, c\'est un vol très court.',()=>'On additionne les heures prévues. Les heures de briefing, on les garde pour nous.'];   // Salon ; M0,65 ≈ 390 kt ; transit terrain ⇄ show center à 300 kt
 const puH=m=>{m=Math.round(m||0);const s=m<0?'−':'';m=Math.abs(m);return s+Math.floor(m/60)+'h'+String(m%60).padStart(2,'0')};
 const puHh=m=>Math.round((m||0)/60).toLocaleString('fr-FR');   // heures entières
 function puIn(v){v=String(v||'').trim().replace(',','.');if(!v)return null;let m=v.match(/^(\d+)\s*[h:]\s*(\d{0,2})$/i);if(m)return +m[1]*60+(+m[2]||0);m=v.match(/^\d+(\.\d+)?$/);return m?Math.round(+v*60):NaN}
 const puYear=()=>S.puY||(new Date().getMonth()>=8?new Date().getFullYear()+1:new Date().getFullYear());
 function puY(y){DB.pu=DB.pu||{};const Y=DB.pu[String(y)]||{};Y.lines=Array.isArray(Y.lines)?Y.lines:[];Y.mx=Y.mx||{};return Y}
+/* Période suivie : du début du suivi (réglage ; PU 2027 : dès le 5 oct. 2026) au 31 déc. */
+function puPer(Y,y){const a=Y.start||(y+'-01-01'),b=y+'-12-31',M=[];let yy=+a.slice(0,4),mm=+a.slice(5,7)-1;while(yy<y||(yy===y&&mm<=11)){M.push({y:yy,m:mm,k:yy+'-'+String(mm+1).padStart(2,'0')});if(++mm>11){mm=0;yy++}}return {a,b,M,ix:k=>M.findIndex(x=>x.k===k),in:d=>!!d&&d>=a&&d<=b}}
+const puMoL=(x,y,sh)=>(sh?PU_MO[x.m].slice(0,4).replace('.',''):PU_MO[x.m])+(x.y!==y?' '+String(x.y).slice(2):'');
+const PU_KW={pld:/\bPLD\b/i,zara:/\b(SOLENZARA|ZARA)\b/i,caz:/\bCAZAUX\b/i},puKw=t=>PU_KW.pld.test(t)?'pld':PU_KW.zara.test(t)?'zara':PU_KW.caz.test(t)?'caz':'';
+const PU_SPL={zara:'Stage maritime Solenzara',caz:'Simus Cazaux'};
 const puMe=()=>typeof ME!=='undefined'&&ME?memOf(ME.mail):null;
 const puEd=()=>{if(isChef())return true;if(ROLE==='ext'||ROLE==='ro')return false;const T=tov('pu');if(T!=null)return !!T;const x=puMe();return !!x&&(x.fn==='DIR'||x.fn==='MOPS'||(x.fn==='PILOTES'&&[1,5].includes(athN(x))))||(!isOnline()&&ROLE==='visit')};
 const puCan=()=>{const T=tov('pu');if(T!=null)return !!T;if(puEd()||ROLE==='sec')return true;const x=puMe();return ROLE==='visit'&&!!x&&(x.fn==='PILOTES'||x.fn==='DIR')};
@@ -3312,35 +3321,49 @@ function puMeet(m,Y){const mx=Y.mx[m.id]||{},icao=String(mx.icao||m.icao||'').to
  const C=m.aero&&m.aero.coord&&m.aero.coord.sc,dv=C?dmsDec(C):null,est=!dv&&mx.sc?mtDM(mx.sc):null,sc=dv?[dv.lat,dv.lon]:est?[est.la,est.lo]:null;
  const dMep=ap?puNM(PU_BASE,[ap[1],ap[2]]):null,dSc=ap&&sc?puNM([ap[1],ap[2]],sc):null,tr=dSc!=null?2*dSc/PU_TR_KT*60:0,tMep=dMep!=null?dMep/PU_MEP_KT*60:0;
  const E=entrs(m),D=(m.demos||[]).filter(Boolean).sort(),L=[],nm=mName(m);
- if(ap&&dMep>=5&&(E[0]||D[0]))L.push({k:'mep',d:E[0]||D[0],mis:'MEP 10',z:'LFMY → '+icao,ac:10,pv:Math.round(10*tMep)});
- E.forEach(d=>L.push({k:'ent',d,mis:'ENT 8 A/C',z:m.city||icao,ac:8,pv:Math.round(8*(60+tr))}));
- D.forEach(d=>L.push({k:'demo',d,mis:'DEMO 8 A/C',z:m.city||icao,ac:8,pv:Math.round(8*(35+tr))}));
- if(ap&&dMep>=5&&D.length)L.push({k:'rtb',d:D[D.length-1],mis:'RTB 10',z:icao+' → LFMY',ac:10,pv:Math.round(10*tMep)});
+ const tM=r5(tMep+PU_MEP_PLUS);
+ if(ap&&dMep>=5&&(E[0]||D[0]))L.push({k:'mep',d:E[0]||D[0],mis:'MEP 10',z:'LFMY → '+icao,ac:10,pv:10*tM});
+ E.forEach(d=>L.push({k:'ent',d,mis:'ENT 8 A/C',z:m.city||icao,ac:8,pv:8*r5(60+tr)}));
+ D.forEach(d=>L.push({k:'demo',d,mis:'DEMO 8 A/C',z:m.city||icao,ac:8,pv:8*r5(35+tr)}));
+ if(ap&&dMep>=5&&D.length)L.push({k:'rtb',d:D[D.length-1],mis:'RTB 10',z:icao+' → LFMY',ac:10,pv:10*tM});
  L.forEach(l=>{l.lab=nm;l.ref=m.id+':'+l.k+':'+l.d;l.src='meet'});
- return {icao,ap,dv,est,sc,dMep,dSc,tr,tMep,L,miss:!icao?'icao':!ap?'icao?':!sc?'sc':''}}
-const puMeets=y=>(DB.meetings||[]).filter(m=>[...entrs(m),...(m.demos||[])].some(d=>d&&d.startsWith(String(y))));
+ return {icao,ap,dv,est,sc,dMep,dSc,tr,tMep:r5(tMep+PU_MEP_PLUS),L,miss:!icao?'icao':!ap?'icao?':!sc?'sc':''}}
+const puMeets=y=>{const P=puPer(puY(y),y);return (DB.meetings||[]).filter(m=>[...entrs(m),...(m.demos||[])].some(d=>P.in(d)))};
 /* Plaquettes de l'agenda → vols d'entraînement (n avions x 1 h), hors jours de meeting */
-function puCalLines(ev,y){const md=new Set();(DB.meetings||[]).forEach(m=>[...entrs(m),...(m.demos||[])].forEach(d=>d&&md.add(d)));
- return ev.filter(e=>e.d&&e.d.startsWith(String(y))&&!md.has(e.d)).map(e=>{const n=e.n>0?e.n:8,z=[];String(e.title).replace(/\bR\s?-?(276|55|31)[A-Z]*\b/gi,(x,a)=>{if(!z.includes('R'+a))z.push('R'+a);return x});
-  return {d:e.d,t:e.t||'',lab:'Entraînement',mis:e.title,z:z.join(' '),ac:n,pv:n*60,src:'cal',ref:e.id}})}
-/* maquette : quelques plaquettes d'hiver fictives */
-function puDemoEv(y){const L=[],add=(d,t,ti,n)=>L.push({id:'demo-'+d+t,d,t,title:ti,n});
- for(let dt=new Date(y,0,5);dt<new Date(y,3,30);dt.setDate(dt.getDate()+1)){const w=dt.getDay();if(w===0||w===6)continue;const d=iso(dt);if(dt.getDate()%7===3)continue;add(d,'09:00','8N1 R276',8);if(w!==5&&dt.getDate()%3)add(d,'14:00','8N1 R55',8)}
- for(let dt=new Date(y,9,5);dt<new Date(y,11,18);dt.setDate(dt.getDate()+1)){const w=dt.getDay();if(w===0||w===6||w===5)continue;add(iso(dt),'10:00','4N1 R276',4)}
+/* Zara / Solenzara (stage maritime) et Cazaux (simus) : la mise en place et le retour comptent 1h00 de transit par avion ;
+   sans plaquette encore dans l'agenda, on estime 2 + 8 avions à l'aller et au retour. Vol inconnu : forfait 1h00 par avion. */
+function puCalLines(ev,y,sp){const Y=puY(y),P=puPer(Y,y),md=new Set(),to=Y.seedTo||'';(DB.meetings||[]).forEach(m=>[...entrs(m),...(m.demos||[])].forEach(d=>d&&md.add(d)));
+ const SP=(sp||[]).filter(x=>x.k==='zara'||x.k==='caz'),inSp=d=>SP.find(x=>d>=x.a&&d<=x.b);
+ const L=ev.filter(e=>P.in(e.d)&&!md.has(e.d)&&!(to&&e.d<=to)).map(e=>{const n=e.n>0?e.n:8,z=[];String(e.title).replace(/\bR\s?-?(276|55|31)[A-Z]*\b/gi,(x,a)=>{if(!z.includes('R'+a))z.push('R'+a);return x});
+  const k=e.k==='zara'||e.k==='caz'?e.k:'',w=inSp(e.d),kk=k||(w&&w.k)||'',lab=kk?PU_SPL[kk]:'Entraînement',tr=w&&(e.d===w.a||e.d===w.b)?(e.d===w.a?' · mise en place':' · retour'):'';
+  if(!z.length&&kk)z.push(kk==='zara'?'LFKS':'LFBC');
+  return {d:e.d,t:e.t||'',lab:lab+tr,mis:e.title,z:z.join(' '),ac:n,pv:n*60,src:'cal',ref:e.id}});
+ SP.forEach(x=>{if(!P.in(x.a)&&!P.in(x.b))return;if(to&&x.b<=to)return;const has=d=>ev.some(e=>e.d===d);
+  [['a','mise en place','Salon → '+(x.k==='zara'?'Solenzara':'Cazaux')],['b','retour',(x.k==='zara'?'Solenzara':'Cazaux')+' → Salon']].forEach(([f,nm,z])=>{const d=x[f];if(!P.in(d)||has(d)||(f==='b'&&x.b===x.a))return;
+   L.push({d,t:'',lab:PU_SPL[x.k]+' · '+nm,mis:(f==='a'?'MEP':'RTB')+' 2 + 8 (estimé)',z,ac:10,pv:600,src:'cal',ref:'sp:'+x.id+':'+f})})});
  return L}
+/* maquette : quelques plaquettes d'hiver fictives */
+function puDemoEv(y){const L=[],add=(d,t,ti,n,k)=>L.push({id:'demo-'+d+t,d,t,title:ti,n,k:k||''}),off=d=>(d>=y-1+'-12-21'&&d<=y+'-01-01')||(d>=y+'-01-11'&&d<=y+'-01-15')||(d>=y+'-03-08'&&d<=y+'-03-12');
+ for(let dt=new Date(y,0,5);dt<new Date(y,3,30);dt.setDate(dt.getDate()+1)){const w=dt.getDay();if(w===0||w===6)continue;const d=iso(dt);if(dt.getDate()%7===3||off(d))continue;add(d,'09:00','8N1 R276',8);if(w!==5&&dt.getDate()%3)add(d,'14:00','8N1 R55',8)}
+ for(let dt=new Date(y-1,9,5);dt<new Date(y-1,11,18);dt.setDate(dt.getDate()+1)){const w=dt.getDay();if(w===0||w===6||w===5)continue;add(iso(dt),'10:00','4N1 R276',4)}
+ add(y+'-03-08','10:00','2N2 puis 8N2 MEP ZARA',10,'zara');add(y+'-03-10','09:00','8N2 NAV MER',8);add(y+'-03-12','15:00','2N2 puis 8N2 RETOUR ZARA',10,'zara');
+ return {ev:L,sp:[{id:'demo-pld',a:(y-1)+'-12-21',b:y+'-01-01',k:'pld',title:'PLD Noël'},{id:'demo-caz',a:y+'-01-11',b:y+'-01-15',k:'caz',title:'Simus CAZAUX'},{id:'demo-zara',a:y+'-03-08',b:y+'-03-12',k:'zara',title:'Stage SOLENZARA'}]}}
 /* Met à jour les lignes automatiques (agenda + meetings) ; garde le réalisé, le statut et un prévu corrigé à la main */
 async function puSync(y,quiet){if(!puEd()||S.puBusy)return;S.puBusy=1;if(!quiet)render();
- let ev=null,err='';if(isOnline()){try{const r=await api('puCal',{y});if(r&&r.error)err=r.error;else ev=r.ev||[]}catch(e){err='Connexion impossible'}}else ev=puDemoEv(y);
- const Y=puY(y),want=[];if(ev)want.push(...puCalLines(ev,y));puMeets(y).forEach(m=>want.push(...puMeet(m,Y).L));
+ let ev=null,sp=null,err='';if(isOnline()){try{const r=await api('puCal',{y});if(r&&r.error)err=r.error;else{ev=r.ev||[];sp=r.sp||[];if(r.pu){DB.pu=r.pu;try{if(typeof BASE!=='undefined'&&BASE)BASE.pu=JSON.parse(JSON.stringify(DB.pu))}catch(_){}}}}catch(e){err='Connexion impossible'}}
+ else{const D=puDemoEv(y);ev=D.ev;sp=D.sp;const Y0=puY(y);if(!Y0.start){Y0.start=(y-1)+'-10-05';DB.pu[String(y)]=Y0}}
+ const Y=puY(y),want=[];if(ev)want.push(...puCalLines(ev,y,sp));puMeets(y).forEach(m=>want.push(...puMeet(m,Y).L));
+ let set=null;if(sp){const P=puPer(Y,y),off=(Y.off||[]).filter(o=>o.src!=='cal').concat(sp.filter(x=>x.k==='pld'&&x.b>=P.a&&x.a<=P.b).map(x=>({a:x.a,b:x.b,lab:'Congés · '+x.title,src:'cal'})));
+  if(JSON.stringify(off)!==JSON.stringify(Y.off||[]))set={off}}
  const byRef={};Y.lines.forEach(l=>{if(l.ref)byRef[l.src+'|'+l.ref]=l});
  const up=[],del=[],seen=new Set();
  want.forEach(w=>{const k=w.src+'|'+w.ref;seen.add(k);const o=byRef[k];
   if(!o){up.push(Object.assign({id:'pu'+uid(),t:'',rv:null,st:'',cm:''},w));return}
   const n=Object.assign({},o,{d:w.d,t:w.t||o.t,lab:w.lab,mis:w.mis,z:w.z,ac:o.pvm?o.ac:w.ac,pv:o.pvm?o.pv:w.pv});
   if(['d','t','lab','mis','z','ac','pv'].some(f=>n[f]!==o[f]))up.push(n)});
- Y.lines.forEach(l=>{if(l.src==='man'||seen.has(l.src+'|'+l.ref))return;if(l.src==='cal'&&!ev)return;if(l.rv==null&&!l.st)del.push(l.id)});
+ Y.lines.forEach(l=>{if(l.src==='man'||l.src==='xls'||seen.has(l.src+'|'+l.ref))return;if(l.src==='cal'&&!ev)return;if(l.rv==null&&!l.st)del.push(l.id)});
  S.puBusy=0;S.puSyncT=Date.now();S.puErr=err;
- if(up.length||del.length)await puPut(y,{up,del},1);else render()}
+ if(up.length||del.length||set)await puPut(y,Object.assign({up,del},set?{set}:{}),1);else render()}
 /* Enregistre (serveur, ou localement en maquette) */
 async function puPut(y,p,quiet){p=Object.assign({y},p);
  if(!isOnline()){const Y=puY(y),S0=p.set||{};Object.assign(Y,S0);if(p.mx)Object.assign(Y.mx,p.mx);const D=new Set(p.del||[]);Y.lines=Y.lines.filter(l=>!D.has(l.id));(p.up||[]).forEach(l=>{const i=Y.lines.findIndex(x=>x.id===l.id);if(i>=0)Y.lines[i]=l;else Y.lines.push(l)});Y.lines.sort((a,b)=>(a.d+a.t).localeCompare(b.d+b.t));DB.pu[String(y)]=Y;save();render();return true}
@@ -3348,17 +3371,17 @@ async function puPut(y,p,quiet){p=Object.assign({y},p);
  if(r&&r.error){toast(r.error);render();return false}
  DB.pu=r.pu||DB.pu;try{if(typeof BASE!=='undefined'&&BASE)BASE.pu=JSON.parse(JSON.stringify(DB.pu))}catch(_){}
  if(r.url)S.puUrl=r.url;if(r.xlsErr&&!quiet)toast('Enregistré · fichier Drive non mis à jour : '+r.xlsErr);else if(!quiet)toast('Enregistré');render();return true}
-function puSum(Y,y){const L=Y.lines.filter(l=>!l.x&&l.d.startsWith(String(y))),cut=Y.cut||(y+'-10-01'),td=iso(today),M=Array.from({length:12},()=>({pv:0,rv:0,prj:0,todo:0}));
- const t={pv:0,rv:0,prj:0,rest:0,n:0,ok:0,rep:0,met:0,zon:0,mec:0,nxt:0,todo:0,cut};
- L.forEach(l=>{const m=+l.d.slice(5,7)-1;if(!(m>=0&&m<12))return;const done=l.rv!=null||!!l.st,prj=done?(l.rv||0):(l.pv||0);
+function puSum(Y,y){const P=puPer(Y,y),L=Y.lines.filter(l=>!l.x&&P.in(l.d)),cut=Y.cut||(y+'-10-01'),td=iso(today),M=P.M.map(x=>Object.assign({pv:0,rv:0,prj:0,todo:0},x));
+ const t={pv:0,rv:0,prj:0,rest:0,n:0,ok:0,rep:0,met:0,zon:0,mec:0,nxt:0,todo:0,cut,a:P.a};
+ L.forEach(l=>{const m=P.ix(l.d.slice(0,7));if(m<0)return;const done=l.rv!=null||!!l.st,prj=done?(l.rv||0):(l.pv||0);
   M[m].pv+=l.pv||0;M[m].rv+=l.rv||0;M[m].prj+=prj;t.pv+=l.pv||0;t.rv+=l.rv||0;t.prj+=prj;if(!done)t.rest+=l.pv||0;t.n++;
   if(l.st)t[l.st]++;else if(l.rv!=null)t.ok++;if(!done&&l.d<td){t.todo++;M[m].todo++}if(l.d>=cut)t.nxt+=prj});
- return {M,t}}
+ return {M,t,P}}
 /* ---------- vue ---------- */
-function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t}=puSum(Y,y),al=(Y.alloc||0)*60,rMin=(Y.rMin!=null?Y.rMin:350)*60,rMax=(Y.rMax!=null?Y.rMax:400)*60;
+function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t,P}=puSum(Y,y),NM=M.length,dL=d=>new Date(d+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:d.slice(0,4)!==String(y)?'numeric':undefined}),al=(Y.alloc||0)*60,rMin=(Y.rMin!=null?Y.rMin:350)*60,rMax=(Y.rMax!=null?Y.rMax:400)*60;
  if(ed&&!S.puBusy&&(!S.puSyncT||Date.now()-S.puSyncT>10*60000)&&S.puSyncY!==y+':'+(DB.meetings||[]).length){S.puSyncY=y+':'+(DB.meetings||[]).length;setTimeout(()=>puSync(y,1),30)}
  const td=iso(today),cut=t.cut,cutL=cut.split('-').reverse().slice(0,2).join('/'),pre=t.prj-t.nxt,bud=al?al-rMax:0,mar=al?al-t.prj-rMax:null;
- const head=`${NOTE}<div class="head"><div><h1>PU ${y}</h1><p class="muted">Heures de vol : prévu, réalisé et projection de l'année. ${ed?'':'Consultation.'}</p></div>
+ const head=`${NOTE}<div class="head"><div><h1>PU ${y}</h1><p class="muted">Heures de vol : prévu, réalisé et projection${P.a.slice(5)!=='01-01'?`, du ${dL(P.a)} au 31 déc. ${y}`:' de l\'année'}. ${ed?'':'Consultation.'}</p></div>
   <span class="hbtns"><button class="btn" onclick="S.puY=${y-1};S.puSyncT=0;render()" aria-label="Année précédente">‹ ${y-1}</button><button class="btn" onclick="S.puY=${y+1};S.puSyncT=0;render()" aria-label="Année suivante">${y+1} ›</button></span></div>${tabs}`;
  /* 1. la jauge */
  const W=Math.max(al,t.prj+(al?0:rMax),1),pc=v=>Math.max(0,Math.min(100,v/W*100)).toFixed(2);
@@ -3375,23 +3398,23 @@ function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t}=puSum(Y,y),al=(Y.al
    <div><small>Équipe ${y+1} (dès le ${cutL})</small><b class="${t.nxt>rMax?'bad':''}">${puHh(t.nxt)} h</b></div></div></section>`;
  /* 2. graphique : en haut le cumul de l'année (réalisé, projection, plafond), en bas les heures de chaque mois */
  const cum=[],cumR=[];let a=0,b=0;M.forEach((m,i)=>{a+=m.prj;b+=m.rv;cum.push(a);cumR.push(b)});
- const curM=td.startsWith(String(y))?+td.slice(5,7)-1:(td<y+''?-1:11),Wc=innerWidth<640?420:720,x0=44,bw=(Wc-x0-10)/12,xm=i=>x0+(i+1)*bw,
-  top=Math.max(1,al||0,cum[11])*1.08,H1=190,yc=v=>H1-(v/top)*(H1-24),
+ const curM=P.in(td)?P.ix(td.slice(0,7)):(td<P.a?-1:NM-1),Wc=innerWidth<640?420:720,x0=44,bw=(Wc-x0-10)/NM,xm=i=>x0+(i+1)*bw,
+  top=Math.max(1,al||0,cum[NM-1])*1.08,H1=190,yc=v=>H1-(v/top)*(H1-24),
   mx=Math.max(1,...M.map(m=>Math.max(m.pv,m.rv))),Y2=H1+34,H2=96,yb=v=>Y2+H2-(v/mx)*(H2-14),
   tk=(()=>{const T=top/60,st=T>2000?500:T>800?200:T>300?100:50,o=[];for(let v=0;v<=T;v+=st)o.push(v*60);return o})(),lastR=Math.max(curM,...M.map((m,i)=>m.rv>0?i:-1));
  const ptsP=[[x0,yc(0)],...cum.map((v,i)=>[xm(i),yc(v)])].map(p=>p.join(',')).join(' '),
   ptsR=[[x0,yc(0)],...cumR.slice(0,lastR+1).map((v,i)=>[xm(i),yc(v)])],areaR=ptsR.length>1?`M${ptsR.map(p=>p.join(',')).join(' L')} L${ptsR[ptsR.length-1][0]},${yc(0)} Z`:'';
  const chart=`<section class="card"><h2 class="ih" style="margin:0 0 6px">L'année en un coup d'œil</h2><svg viewBox="0 0 ${Wc} ${Y2+H2+22}" class="puch" role="img" aria-label="Cumul des heures de vol et heures par mois">
   ${tk.map(v=>`<line x1="${x0}" x2="${Wc-10}" y1="${yc(v)}" y2="${yc(v)}" stroke="var(--line)"/><text x="${x0-6}" y="${yc(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${(v/60).toLocaleString('fr-FR')}</text>`).join('')}
-  ${curM>=0&&curM<12?`<line x1="${x0+(curM+1)*bw}" x2="${x0+(curM+1)*bw}" y1="${yc(top)}" y2="${Y2+H2}" stroke="var(--muted)" stroke-dasharray="2 4"/><text x="${x0+(curM+1)*bw+4}" y="${yc(top)+10}" font-size="11" fill="var(--muted)">aujourd'hui</text>`:''}
+  ${curM>=0&&curM<NM?`<line x1="${x0+(curM+1)*bw}" x2="${x0+(curM+1)*bw}" y1="${yc(top)}" y2="${Y2+H2}" stroke="var(--muted)" stroke-dasharray="2 4"/><text x="${x0+(curM+1)*bw+4}" y="${yc(top)+10}" font-size="11" fill="var(--muted)">aujourd'hui</text>`:''}
   ${al?`<line x1="${x0}" x2="${Wc-10}" y1="${yc(al)}" y2="${yc(al)}" stroke="#dc2626" stroke-width="1.5"/><text x="${x0+4}" y="${yc(al)-5}" font-size="11.5" font-weight="700" fill="#dc2626">${puHh(al)} h allouées</text>
    <rect x="${x0}" y="${yc(al)}" width="${Wc-10-x0}" height="${yc(al-rMax)-yc(al)}" fill="#fcd34d" opacity=".28"/><line x1="${x0}" x2="${Wc-10}" y1="${yc(al-rMax)}" y2="${yc(al-rMax)}" stroke="#d97706" stroke-dasharray="6 5" stroke-width="2"/><text x="${x0+4}" y="${yc(al-rMax)+15}" font-size="11.5" font-weight="700" fill="#b45309">${puHh(al-rMax)} h : plafond pour garder ${Math.round(rMax/60)} h à l'équipe ${y+1}</text>`:''}
   ${areaR?`<path d="${areaR}" fill="#1d4ed8" opacity=".85"/>`:''}
-  <polyline fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" points="${ptsP}"/><circle cx="${xm(11)}" cy="${yc(cum[11])}" r="5" fill="#16a34a"/>
-  <text x="${xm(11)-8}" y="${yc(cum[11])-9}" text-anchor="end" font-size="12.5" font-weight="800" fill="#15803d">projection ${puHh(cum[11])} h</text>
-  ${M.map((m,i)=>{const x=x0+i*bw;return `<g><title>${PU_MO[i]} : prévu ${puH(m.pv)}, réalisé ${puH(m.rv)}</title><rect x="${x+bw*.14}" y="${yb(m.pv)}" width="${bw*.34}" height="${Y2+H2-yb(m.pv)}" rx="3" fill="#bfdbfe"/><rect x="${x+bw*.52}" y="${yb(m.rv)}" width="${bw*.34}" height="${Y2+H2-yb(m.rv)}" rx="3" fill="#1d4ed8"/>
+  <polyline fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="7 5" points="${ptsP}"/><circle cx="${xm(NM-1)}" cy="${yc(cum[NM-1])}" r="5" fill="#16a34a"/>
+  <text x="${xm(NM-1)-8}" y="${yc(cum[NM-1])-9}" text-anchor="end" font-size="12.5" font-weight="800" fill="#15803d">projection ${puHh(cum[NM-1])} h</text>
+  ${M.map((m,i)=>{const x=x0+i*bw;return `<g><title>${puMoL(m,y)} : prévu ${puH(m.pv)}, réalisé ${puH(m.rv)}</title><rect x="${x+bw*.14}" y="${yb(m.pv)}" width="${bw*.34}" height="${Y2+H2-yb(m.pv)}" rx="3" fill="#bfdbfe"/><rect x="${x+bw*.52}" y="${yb(m.rv)}" width="${bw*.34}" height="${Y2+H2-yb(m.rv)}" rx="3" fill="#1d4ed8"/>
    ${m.pv?`<text x="${x+bw/2}" y="${yb(Math.max(m.pv,m.rv))-4}" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--muted)">${puHh(m.rv||m.pv)}</text>`:''}
-   <text x="${x+bw/2}" y="${Y2+H2+16}" text-anchor="middle" font-size="12" fill="var(--muted)">${Wc<500?PU_MO[i].slice(0,3).replace('.',''):PU_MO[i]}</text>${m.todo?`<circle cx="${x+bw-7}" cy="${Y2+4}" r="7" fill="#f59e0b"/><text x="${x+bw-7}" y="${Y2+8}" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">${m.todo}</text>`:''}</g>`}).join('')}
+   <text x="${x+bw/2}" y="${Y2+H2+16}" text-anchor="middle" font-size="${NM>12?11:12}" fill="var(--muted)">${puMoL(m,y,Wc<500||NM>12)}</text>${m.todo?`<circle cx="${x+bw-7}" cy="${Y2+4}" r="7" fill="#f59e0b"/><text x="${x+bw-7}" y="${Y2+8}" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">${m.todo}</text>`:''}</g>`}).join('')}
   <line x1="${x0}" x2="${Wc-10}" y1="${Y2+H2}" y2="${Y2+H2}" stroke="var(--muted)"/><text x="${x0}" y="${Y2-6}" font-size="11.5" font-weight="700" fill="var(--muted)">Heures par mois</text></svg>
   <div class="pugl"><span><i style="background:#1d4ed8"></i>Réalisé (cumul, et par mois)</span><span><i style="background:#16a34a;height:3px"></i>Projection : réalisé + prévu</span>${al?'<span><i style="background:#d97706;height:3px"></i>Plafond équipe '+y+'</span><span><i style="background:#dc2626;height:3px"></i>Allouées</span>':''}<span><i style="background:#bfdbfe"></i>Prévu du mois</span><span><i style="background:#f59e0b;border-radius:50%"></i>Vols à saisir</span></div></section>`;
  /* 3. à saisir */
@@ -3404,23 +3427,26 @@ function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t}=puSum(Y,y),al=(Y.al
  const todoH=todo.length?`<section class="card putodo"><h2 class="ih" style="margin:0 0 4px">${ic('clock',18)} ${todo.length} vol${todo.length>1?'s':''} à saisir</h2><p class="small muted" style="margin:0 0 8px">Une fois le vol fait : « Comme prévu », ou « Autre… » pour l'heure réelle, une annulation ou un report.</p>${todo.slice(0,S.puAll?999:6).map(l=>lineRow(l,1)).join('')}${todo.length>6&&!S.puAll?`<button class="more" onclick="S.puAll=1;render()">Voir les ${todo.length} vols</button>`:''}</section>`:'';
  /* 4. meetings */
  const MS=puMeets(y);
- const meetH=`<section class="card"><h2 class="ih" style="margin:0 0 4px">${ic('flag',18)} Meetings ${y}</h2><p class="small muted" style="margin:0 0 10px">Mise en place à 2 + 8 avions à M0,65 (≈ ${PU_MEP_KT} kt) depuis Salon · entraînement 1h00 et démonstration 35 min par avion, plus l'aller-retour terrain ⇄ show center à ${PU_TR_KT} kt.</p>
+ const meetH=`<section class="card"><h2 class="ih" style="margin:0 0 4px">${ic('flag',18)} Meetings ${y}</h2><p class="small muted" style="margin:0 0 10px">Mise en place à 2 + 8 avions à M0,65 (≈ ${PU_MEP_KT} kt) depuis Salon, + ${PU_MEP_PLUS} min par avion · entraînement 1h00 et démonstration 35 min par avion, plus l'aller-retour terrain ⇄ show center à ${PU_TR_KT} kt · durées par avion arrondies aux 5 min.</p>
   ${MS.length?MS.map(m=>{const R=puMeet(m,Y),tot=R.L.reduce((a,l)=>a+l.pv,0);
    return `<div class="pumt ${R.miss?'miss':''}"><div class="pumh"><b>${esc(mName(m))}</b><small>${esc([...entrs(m),...(m.demos||[])].filter(Boolean).sort().map(d=>new Date(d+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'})).join(' · '))}</small><span class="pumt-t">${puH(tot)}</span></div>
     <div class="pumf"><label>Terrain de mise en place${ed?'':':'}${ed?`<input class="in" maxlength="4" placeholder="OACI" value="${esc(R.icao)}" onchange="puMx('${m.id}','icao',this.value)">`:` <b>${esc(R.icao||'—')}</b>`}</label>
      <span class="small ${R.miss==='icao?'?'bad':'muted'}">${R.ap?esc(R.ap[0].replace(/ (International )?Airport$| Air Base$/,''))+' · '+Math.round(R.dMep)+' Nm de Salon, '+puH(R.tMep)+' par avion':R.icao?'Code OACI inconnu de l\'appli : ajoutez le vol de mise en place à la main':'Code OACI à saisir'}</span></div>
-    <div class="pumf"><label>Show center</label>${R.dv?`<span class="small" style="color:#15803d">✓ coordonnées du DV${R.dSc!=null?' · '+Math.round(R.dSc)+' Nm du terrain, '+puH(R.tr)+' aller-retour':''}</span>`:ed?`<input class="in" placeholder="Coordonnées estimées du show center (ex. 47°17,3' N 002°21,1' W)" value="${esc((Y.mx[m.id]||{}).sc||'')}" onchange="puMx('${m.id}','sc',this.value)"><span class="small ${R.est?'muted':'bad'}">${R.est?'estimées'+(R.dSc!=null?' · '+Math.round(R.dSc)+' Nm du terrain, '+puH(R.tr)+' aller-retour':''):'Le DV n\'a pas encore donné le show center : donnez des coordonnées estimées.'}</span>`:'<span class="small muted">pas encore connu</span>'}</div>
+    <div class="pumf"><label>Show center</label>${R.dv?`<span class="small" style="color:#15803d">✓ coordonnées du DV${R.dSc!=null?' · '+Math.round(R.dSc)+' Nm du terrain, '+puH(r5(R.tr))+' aller-retour':''}</span>`:ed?`<input class="in" placeholder="Coordonnées estimées du show center (ex. 47°17,3' N 002°21,1' W)" value="${esc((Y.mx[m.id]||{}).sc||'')}" onchange="puMx('${m.id}','sc',this.value)"><span class="small ${R.est?'muted':'bad'}">${R.est?'estimées'+(R.dSc!=null?' · '+Math.round(R.dSc)+' Nm du terrain, '+puH(r5(R.tr))+' aller-retour':''):'Le DV n\'a pas encore donné le show center : donnez des coordonnées estimées.'}</span>`:'<span class="small muted">pas encore connu</span>'}</div>
     <div class="pumc">${R.L.map(l=>`<span><small>${l.mis.split(' ')[0]} ${new Date(l.d+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</small><b>${puH(l.pv)}</b></span>`).join('')||'<span class="small muted">Dates à saisir dans le meeting.</span>'}</div></div>`}).join(''):'<p class="small muted">Aucun meeting en '+y+'.</p>'}</section>`;
  /* 5. semaine par semaine */
- const mo=S.puMo!=null?S.puMo:(td.startsWith(String(y))?+td.slice(5,7)-1:0),LM=Y.lines.filter(l=>+l.d.slice(5,7)-1===mo&&l.d.startsWith(String(y))),W2={};
+ const mo=S.puMo!=null&&S.puMo<NM?S.puMo:(curM>=0&&curM<NM?curM:0),mk=M[mo].k,LM=Y.lines.filter(l=>l.d.slice(0,7)===mk&&P.in(l.d)),W2={},OF={};
  LM.forEach(l=>{const k='S'+puWk(l.d);(W2[k]=W2[k]||[]).push(l)});
+ (Y.off||[]).forEach(o=>{for(let dt=new Date(o.a+'T12:00');iso(dt)<=o.b;dt.setDate(dt.getDate()+1)){const d=iso(dt);if(d.slice(0,7)!==mk||!P.in(d)||dt.getDay()===0||dt.getDay()===6)continue;const k='S'+puWk(d);W2[k]=W2[k]||[];const O=(OF[k]=OF[k]||{});(O[o.lab]=O[o.lab]||[]).push(d)}});
+ const wks=Object.keys(W2).sort((a,b)=>{const f=k=>{const L=W2[k],O=OF[k]||{};return [...L.map(l=>l.d),...Object.values(O).flat()].sort()[0]||''};return f(a).localeCompare(f(b))});
+ const offRow=O=>Object.entries(O||{}).map(([lab,D])=>`<div class="puoff">🏖 <b>${esc(lab)}</b><span>${D.length>1?'du '+dL(D[0])+' au '+dL(D[D.length-1]):dL(D[0])}</span></div>`).join('');
  const list=`<section class="card"><div class="puhd"><h2 class="ih" style="margin:0">${ic('cal',18)} Vols du mois</h2>${ed?`<button class="btn sm pri" onclick="puLine('')">${ic('plus',14)} Ajouter un vol</button>`:''}</div>
-  <div class="pumo">${PU_MO.map((n,i)=>`<button aria-pressed="${i===mo}" onclick="S.puMo=${i};render()">${n}<small>${puHh(M[i].prj)} h</small></button>`).join('')}</div>
-  ${Object.keys(W2).length?Object.entries(W2).map(([k,L])=>`<div class="puw"><div class="puwh"><b>${k}</b><span>prévu ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.pv||0),0))} · réalisé ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.rv||0),0))}</span></div>${L.map(l=>lineRow(l,0)).join('')}</div>`).join(''):`<p class="small muted">Aucun vol en ${PU_MO[mo].toLowerCase()} ${y}.</p>`}
+  <div class="pumo" style="--n:${NM}">${M.map((x,i)=>`<button aria-pressed="${i===mo}" onclick="S.puMo=${i};render()">${puMoL(x,y,NM>12)}<small>${puHh(x.prj)} h</small></button>`).join('')}</div>
+  ${wks.length?wks.map(k=>{const L=W2[k];return `<div class="puw"><div class="puwh"><b>${k}</b><span>${L.length?`prévu ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.pv||0),0))} · réalisé ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.rv||0),0))}`:'pas de vol'}</span></div>${offRow(OF[k])}${L.map(l=>lineRow(l,0)).join('')}</div>`}).join(''):`<p class="small muted">Aucun vol en ${PU_MO[M[mo].m].toLowerCase()} ${M[mo].y}.</p>`}
   <div class="pucnt"><span>${t.n} vols</span><span style="color:#16a34a">${t.ok} comme prévu</span><span style="color:#2563eb">${t.rep} replanifiés</span><span style="color:#0891b2">${t.met} météo</span><span style="color:#9333ea">${t.zon} zone</span><span style="color:#dc2626">${t.mec} méca</span></div></section>`;
- const foot=`<section class="card puxl"><div><b>${ic('book',16)} Fichier PU ${y}</b><span class="small muted">Sur le Drive (dossier ${y} › 00 – Saison), mis à jour à chaque saisie. Chaque vendredi, il part par mail au 5 et au chef ops.${S.puErr?` <span class="bad">Agenda : ${esc(S.puErr)}</span>`:''}</span></div>
+ const foot=`<section class="card puxl"><div><b>${ic('book',16)} Fichier PU ${y}</b><span class="small muted">Fichier Excel sur le Drive (dossier ${y} › 00 – Saison), refait dans la demi-heure qui suit chaque saisie, ou tout de suite avec les boutons. Chaque vendredi, il part par mail au 5 et au chef ops.${S.puErr?` <span class="bad">Agenda : ${esc(S.puErr)}</span>`:''}</span></div>
   <span style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="puXls(0)" ${S.puXB?'disabled':''}>${S.puXB?'…':'Ouvrir sur le Drive'}</button><button class="btn" onclick="puXls(1)" ${S.puXB?'disabled':''}>Télécharger (Excel)</button>${ed?`<button class="btn ghost" onclick="S.puSyncT=0;puSync(${y})" ${S.puBusy?'disabled':''}>${S.puBusy?'Lecture de l\'agenda…':'↻ Relire l\'agenda'}</button>`:''}</span></section>`;
- return `${head}${S.puBusy?ldBan('Lecture des plaquettes de l\'agenda…'):''}<div class="puw0">${big}${todoH}${chart}${list}${meetH}${foot}</div>`}
+ return `${head}${S.puBusy?ldBan('Lecture des plaquettes de l\'agenda…',PU_LD):S.puXB?ldBan('Préparation du fichier Excel…',PU_LD):''}<div class="puw0">${big}${todoH}${chart}${list}${meetH}${foot}</div>`}
 /* ---------- actions ---------- */
 function puQuick(id){const y=puYear(),l=puY(y).lines.find(x=>x.id===id);if(!l)return;puPut(y,{up:[Object.assign({},l,{st:'ok',rv:l.pv})]})}
 function puMx(mid,k,v){const y=puYear(),Y=puY(y),o=Object.assign({icao:'',sc:''},Y.mx[mid]||{});o[k]=k==='icao'?String(v).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4):String(v).trim();
@@ -3439,30 +3465,31 @@ async function puXls(dl){const y=puYear();if(!isOnline()){toast('Maquette : le f
 let PUL=null;
 function puLine(id){const y=puYear(),Y=puY(y),l=id?Y.lines.find(x=>x.id===id):null;if(id&&!l)return;
  PUL=l?JSON.parse(JSON.stringify(l)):{id:'pu'+uid(),d:iso(today),t:'',lab:'',mis:'',z:'',ac:8,pv:480,rv:null,st:'',cm:'',src:'man',ref:''};openSheet(puLineH)}
-function puLineH(){const l=PUL,auto=l.src!=='man';
+function puLineH(){const l=PUL,auto=l.src==='cal'||l.src==='meet';
  const stB=[['','Pas encore fait'],['ok','✓ Comme prévu'],['rep','Replanifié'],['met','Annulé météo'],['zon','Annulé zone'],['mec','Annulé méca']];
- return `<div class="sh"><span class="tile" style="--c1:#3b82f6;--c2:#1e3a8a">${ic('clock',22)}</span><div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">PU · ${l.src==='cal'?'vol issu d\'une plaquette de l\'agenda':l.src==='meet'?'vol issu d\'un meeting':'vol saisi'}</div><div class="q">${esc(l.mis||'Nouveau vol')}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
- <div class="sb"><div class="pufr"><div><label class="l">Date</label><input class="in" type="date" value="${l.d}" ${auto?'disabled':''} onchange="PUL.d=this.value"></div><div><label class="l">Heure</label><input class="in" type="time" value="${l.t}" ${auto?'disabled':''} onchange="PUL.t=this.value"></div><div><label class="l">Avions</label><input class="in" inputmode="numeric" value="${l.ac||''}" onchange="PUL.ac=+this.value.replace(/\\D/g,'')||0;if(PUL.src!=='man')PUL.pvm=1"></div></div>
+ return `<div class="sh"><span class="tile" style="--c1:#3b82f6;--c2:#1e3a8a">${ic('clock',22)}</span><div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">PU · ${l.src==='cal'?'vol issu d\'une plaquette de l\'agenda':l.src==='meet'?'vol issu d\'un meeting':l.src==='xls'?'vol repris du fichier Excel':'vol saisi'}</div><div class="q">${esc(l.mis||'Nouveau vol')}</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
+ <div class="sb"><div class="pufr"><div><label class="l">Date</label><input class="in" type="date" value="${l.d}" ${auto?'disabled':''} onchange="PUL.d=this.value"></div><div><label class="l">Heure</label><input class="in" type="time" value="${l.t}" ${auto?'disabled':''} onchange="PUL.t=this.value"></div><div><label class="l">Avions</label><input class="in" inputmode="numeric" value="${l.ac||''}" onchange="PUL.ac=+this.value.replace(/\\D/g,'')||0;if(PUL.src==='cal'||PUL.src==='meet')PUL.pvm=1"></div></div>
   <label class="l">Mission</label><input class="in" value="${esc(l.mis)}" placeholder="Ex. : TNG 8 A/C, VOL DIR, MEP 10, DEFILE 8+1" ${auto?'disabled':''} oninput="PUL.mis=this.value">
   <div class="pufr"><div><label class="l">Planification</label><input class="in" value="${esc(l.lab)}" placeholder="Ex. : stage maritime" ${auto?'disabled':''} oninput="PUL.lab=this.value"></div><div><label class="l">Zone / destination</label><input class="in" value="${esc(l.z)}" placeholder="Ex. : SAL R276" ${auto?'disabled':''} oninput="PUL.z=this.value"></div></div>
-  <div class="pufr"><div><label class="l">Prévu (heures x avions)</label><input class="in" value="${puH(l.pv)}" onchange="const v=puIn(this.value);if(v==null||isNaN(v)){toast('Ex. : 8h00, 6h40 ou 4,5');this.value=puH(PUL.pv);return}PUL.pv=v;if(PUL.src!=='man')PUL.pvm=1"></div>
+  <div class="pufr"><div><label class="l">Prévu (heures x avions)</label><input class="in" value="${puH(l.pv)}" onchange="const v=puIn(this.value);if(v==null||isNaN(v)){toast('Ex. : 8h00, 6h40 ou 4,5');this.value=puH(PUL.pv);return}PUL.pv=r5(v);this.value=puH(PUL.pv);if(PUL.src==='cal'||PUL.src==='meet')PUL.pvm=1"></div>
    <div><label class="l">Réalisé</label><input class="in" id="pu-rv" value="${l.rv!=null?puH(l.rv):''}" placeholder="${puH(l.pv)}" onchange="const v=puIn(this.value);if(isNaN(v)){toast('Ex. : 7h50');return}PUL.rv=v;if(v!=null&&!PUL.st)PUL.st='ok';$('sheet').innerHTML=puLineH()"></div></div>
   <label class="l">Statut</label><div class="pustb">${stB.map(([k,n])=>`<button aria-pressed="${(l.st||'')===k}" style="--c:${k?PU_ST[k][1]:'#64748b'}" onclick="PUL.st='${k}';if('${k}'==='ok'&&PUL.rv==null)PUL.rv=PUL.pv;if(['met','zon','mec'].includes('${k}'))PUL.rv=0;if('${k}'==='')PUL.rv=null;$('sheet').innerHTML=puLineH()">${n}</button>`).join('')}</div>
   <label class="l">Commentaire</label><input class="in" value="${esc(l.cm)}" placeholder="Ex. : MTO, CNL cause indispo SAR, 6 avions" oninput="PUL.cm=this.value">
   ${auto?`<p class="hint">${l.src==='cal'?'Date, heure et mission viennent de la plaquette : modifiez la plaquette dans l\'agenda.':'Date et mission viennent du meeting.'}${l.pvm?' Prévu corrigé à la main : il ne suit plus '+(l.src==='cal'?'la plaquette':'le meeting')+'. <button class="more" onclick="PUL.pvm=0;$(\'sheet\').innerHTML=puLineH()">Revenir au calcul</button>':''}</p>`:''}</div>
  <div class="sf">${auto?`<button class="btn ghost" onclick="PUL.x=PUL.x?0:1;puLineOk()">${l.x?'Remettre dans le PU':'Ne pas compter ce vol'}</button>`:(puY(puYear()).lines.some(x=>x.id===l.id)?`<button class="btn ghost" onclick="puLineDel()">${ic('trash',15)} Supprimer</button>`:'<span></span>')}<button class="btn pri big" onclick="puLineOk()">Enregistrer</button></div>`}
-function puLineOk(){const l=PUL;if(!/^\d{4}-\d\d-\d\d$/.test(l.d)){toast('Date à saisir');return}if(!l.mis&&!l.lab){toast('Donnez la mission');return}closeSheet();const y=+l.d.slice(0,4);if(y!==puYear())S.puY=y;puPut(y,{up:[l]})}
+function puLineOk(){const l=PUL;if(!/^\d{4}-\d\d-\d\d$/.test(l.d)){toast('Date à saisir');return}if(!l.mis&&!l.lab){toast('Donnez la mission');return}closeSheet();const y0=puYear(),y=puPer(puY(y0),y0).in(l.d)?y0:+l.d.slice(0,4);if(y!==y0)S.puY=y;puPut(y,{up:[l]})}
 function puLineDel(){const id=PUL.id;closeSheet();puPut(puYear(),{del:[id]})}
 /* réglages */
-function puSet(){const Y=puY(puYear());S.puSet={alloc:Y.alloc||'',rMin:Y.rMin!=null?Y.rMin:350,rMax:Y.rMax!=null?Y.rMax:400,cut:Y.cut||(puYear()+'-10-01'),mails:(Y.mails||[]).join(', ')};openSheet(puSetH)}
+function puSet(){const Y=puY(puYear());S.puSet={start:Y.start||(puYear()+'-01-01'),alloc:Y.alloc||'',rMin:Y.rMin!=null?Y.rMin:350,rMax:Y.rMax!=null?Y.rMax:400,cut:Y.cut||(puYear()+'-10-01'),mails:(Y.mails||[]).join(', ')};openSheet(puSetH)}
 function puSetH(){const o=S.puSet,y=puYear(),a5=(DB.members||[]).find(x=>x.fn==='PILOTES'&&athN(x)===5);
  return `<div class="sh"><span class="tile" style="--c1:#f59e0b;--c2:#b45309">${ic('gear',22)}</span><div class="t"><div class="tiny muted" style="font-weight:800;text-transform:uppercase;letter-spacing:.1em">PU ${y}</div><div class="q">Réglages</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div>
  <div class="sb"><label class="l">Heures allouées ${y}</label><input class="in" inputmode="numeric" value="${o.alloc}" placeholder="Ex. : 2 700" oninput="S.puSet.alloc=this.value.replace(/\\D/g,'')">
   <div class="pufr"><div><label class="l">Reliquat mini pour l'équipe ${y+1} (h)</label><input class="in" inputmode="numeric" value="${o.rMin}" oninput="S.puSet.rMin=this.value.replace(/\\D/g,'')"></div><div><label class="l">Reliquat maxi (h)</label><input class="in" inputmode="numeric" value="${o.rMax}" oninput="S.puSet.rMax=this.value.replace(/\\D/g,'')"></div></div>
+  <label class="l">Début du suivi PU ${y}</label><input class="in" type="date" value="${o.start}" min="${y-1}-01-01" max="${y}-12-31" onchange="S.puSet.start=this.value"><div class="hint">Les vols comptent du début du suivi au 31 décembre ${y} (ex. : entraînement hivernal dès octobre ${y-1}).</div>
   <label class="l">L'équipe ${y+1} commence le</label><input class="in" type="date" value="${o.cut}" onchange="S.puSet.cut=this.value"><div class="hint">Les vols à partir de cette date sont comptés pour l'équipe ${y+1}, sur le reliquat.</div>
   <label class="l">Mail du vendredi : en plus du 5${a5?' ('+esc(memLabel(a5))+')':''} et du chef ops</label><input class="in" value="${esc(o.mails)}" placeholder="adresses séparées par des virgules (facultatif)" oninput="S.puSet.mails=this.value"></div>
  <div class="sf"><span></span><button class="btn pri big" onclick="puSetOk()">Enregistrer</button></div>`}
-function puSetOk(){const o=S.puSet,n=v=>v===''?null:+v;closeSheet();puPut(puYear(),{set:{alloc:n(o.alloc),rMin:n(o.rMin),rMax:n(o.rMax),cut:o.cut,mails:String(o.mails||'').split(/[,;\s]+/).filter(Boolean)}})}
+function puSetOk(){const o=S.puSet,n=v=>v===''?null:+v;closeSheet();S.puMo=null;puPut(puYear(),{set:{start:o.start,alloc:n(o.alloc),rMin:n(o.rMin),rMax:n(o.rMax),cut:o.cut,mails:String(o.mails||'').split(/[,;\s]+/).filter(Boolean)}})}
 
 function vPerfos(){const sub=isOsab()?'fea':isBob()?'zr':(S.pfTab||'home');
  if(isOsab())return vFea('');
@@ -6092,9 +6119,9 @@ const LD_TX=[n=>`Cher ${n}, je sais que tu es impatient, mais dis-toi que je vai
  n=>`${n}, pendant que je calcule, une pensée émue pour ceux qui faisaient ça à la règle Cras.`,
  n=>`Encore quelques secondes, ${n}. Promis, c'est moins long qu'une attente au point d'arrêt.`];
 function ldN(){try{const x=typeof ccMe==='function'?ccMe():null,n=x?athN(x):0;return n&&n<100?n:''}catch(e){return''}}
-function ldBan(what){const n='Athos 7';clearInterval(window.__ldT);window.__ldI=(window.__ldI||0)%LD_TX.length;
- window.__ldT=setInterval(()=>{const e=document.getElementById('ldtx');if(!e){clearInterval(window.__ldT);return}window.__ldI=(window.__ldI+1)%LD_TX.length;e.style.opacity=0;setTimeout(()=>{e.textContent=LD_TX[window.__ldI](n);e.style.opacity=1},250)},6000);
- return `<div class="ldb" role="status" aria-live="polite"><span class="ldh" aria-hidden="true">⏳</span><div><b>${esc(what)}</b><span id="ldtx">${esc(LD_TX[window.__ldI](n))}</span></div></div>`}
+function ldBan(what,TX){const n='Athos 7';TX=TX||LD_TX;clearInterval(window.__ldT);window.__ldI=(window.__ldI||0)%TX.length;
+ window.__ldT=setInterval(()=>{const e=document.getElementById('ldtx');if(!e){clearInterval(window.__ldT);return}window.__ldI=(window.__ldI+1)%TX.length;e.style.opacity=0;setTimeout(()=>{e.textContent=TX[window.__ldI](n);e.style.opacity=1},250)},6000);
+ return `<div class="ldb" role="status" aria-live="polite"><span class="ldh" aria-hidden="true">⏳</span><div><b>${esc(what)}</b><span id="ldtx">${esc(TX[window.__ldI](n))}</span></div></div>`}
 /* ====================== Réchauffage du POD fumigène le long de la route ======================
    Membrane du POD : se refroidit vers la température d'arrêt (SAT + échauffement cinétique ≈ 10,5 °C à 300 kt, ∝ V²),
    puis se réchauffe en basse altitude. Constantes recalées sur le tableau de la note PAF (outil POD) : refroidissement τ 7,3 min,
