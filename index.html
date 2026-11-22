@@ -936,9 +936,10 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .pugl{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:12px;color:var(--muted)}.pugl i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}.pugl i.r{background:#1d4ed8}.pugl i.p{background:#93c5fd}.pugl i.res{background:#fcd34d}
 .pukv{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}.pukv>div{background:var(--surface2);border-radius:12px;padding:8px 10px;display:grid}.pukv small{font-size:11.5px;color:var(--muted);font-weight:700}.pukv b{font-size:19px}.pukv b.bad{color:#dc2626}
 .puch{width:100%;height:auto;display:block}
-.pul{display:grid;grid-template-columns:62px minmax(0,1fr) 74px 80px auto;gap:10px;align-items:center;padding:8px 6px;border-top:1px solid var(--line);cursor:pointer}.pul:first-of-type{border-top:0}.pul.x{opacity:.45;text-decoration:line-through}.pud,.pum,.puv{display:grid;min-width:0}.pud b{font-size:13.5px;text-transform:capitalize}.pud small,.pum small,.puv small{font-size:11px;color:var(--muted)}.pum b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pum small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.puv{font-weight:800;font-size:14px;text-align:right}.puv.r{color:#1d4ed8}
+.pul{display:grid;grid-template-columns:62px minmax(0,1fr) 74px 80px auto;gap:10px;align-items:center;padding:8px 6px;border-top:1px solid var(--line);cursor:pointer}.pul:first-of-type{border-top:0}.pul.x{opacity:.45;text-decoration:line-through}.pul.an{box-shadow:inset 4px 0 0 var(--sc);border-radius:8px}.pul.an .puv.r{color:var(--sc)}.pud,.pum,.puv{display:grid;min-width:0}.pud b{font-size:13.5px;text-transform:capitalize}.pud small,.pum small,.puv small{font-size:11px;color:var(--muted)}.pum b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pum small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.puv{font-weight:800;font-size:14px;text-align:right}.puv.r{color:#1d4ed8}
 .pua{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.pust{font-size:11.5px;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border-radius:999px;padding:3px 9px;white-space:nowrap}
 .putodo{border:2px solid #f59e0b}.puhd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.putr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}.putr>b{display:flex;gap:6px;align-items:center;font-size:14px}.putrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.putrl>span{display:grid;gap:2px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12.5px;min-width:130px}.putrl>span.on{border-color:#16a34a;background:#16a34a14}.putrl small{color:var(--muted);text-transform:capitalize}.putrl i{font-style:normal;color:var(--muted);font-size:11.5px}.putrl em{font-style:normal;font-size:11.5px;color:var(--muted)}.putrl .btn{margin-top:4px}
 .puoff{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0;padding:7px 10px;border-radius:9px;background:#fef3c7;color:#92400e;font-size:13px}.puoff span{color:#b45309;font-size:12px}
 .pumo{display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:4px;margin-bottom:10px}.pumo button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;font:inherit;font-size:12.5px;font-weight:800;color:var(--fg);cursor:pointer;display:grid}.pumo button small{font-size:10.5px;color:var(--muted);font-weight:700}.pumo button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.pumo button[aria-pressed=true] small{color:#fff;opacity:.8}
 .puw{border:1px solid var(--line);border-radius:12px;padding:4px 8px;margin-top:8px}.puwh{display:flex;justify-content:space-between;gap:8px;padding:6px 6px 2px;font-size:12.5px;color:var(--muted)}.puwh b{color:var(--fg)}
@@ -1520,7 +1521,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795333426';
+const APP_V='1795335717';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -3295,7 +3296,7 @@ function vSr(tabs){return `${NOTE}<div class="head"><div><h1>Série</h1><p class
 /* ====================== PU : heures de vol de l'année ======================
    Prévu (plaquettes de l'agenda, meetings, saisies), réalisé (saisi par les marqueuses), projection et reliquat pour l'équipe suivante.
    Une ligne = un vol : pv / rv en minutes x avions. Le leader, le 5, la direction, les marqueuses et le chef ops modifient. */
-const PU_ST={ok:['Comme prévu','#16a34a'],rep:['Replanifié','#2563eb'],met:['Annulé météo','#0891b2'],zon:['Annulé zone','#9333ea'],mec:['Annulé méca','#dc2626']};
+const PU_ST={ok:['Comme prévu','#16a34a'],rep:['Replanifié','#2563eb'],met:['Annulé météo','#dc2626'],zon:['Annulé zone','#ea580c'],mec:['Annulé méca','#ca8a04']};
 const PU_MO=['Janv.','Févr.','Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'];
 const PU_BASE=[43.6064,5.1093],PU_MEP_KT=390,PU_TR_KT=300,PU_MEP_PLUS=10;   // + 10 min par avion sur chaque mise en place et chaque retour
 const r5=m=>Math.round((m||0)/5)*5;   // tous les vols : arrondis aux 5 min les plus proches (par avion)
@@ -3342,6 +3343,48 @@ function puCalLines(ev,y,sp){const Y=puY(y),P=puPer(Y,y),md=new Set(),to=Y.seedT
   [['a','mise en place','Salon → '+(x.k==='zara'?'Solenzara':'Cazaux')],['b','retour',(x.k==='zara'?'Solenzara':'Cazaux')+' → Salon']].forEach(([f,nm,z])=>{const d=x[f];if(!P.in(d)||has(d)||(f==='b'&&x.b===x.a))return;
    L.push({d,t:'',lab:PU_SPL[x.k]+' · '+nm,mis:(f==='a'?'MEP':'RTB')+' 2 + 8 (estimé)',z,ac:10,pv:600,src:'cal',ref:'sp:'+x.id+':'+f})})});
  return L}
+/* Tournées : meetings enchaînés (moins de 3 jours d'écart) sans retour à Salon.
+   Ex. jeudi LFMY → A + ENT A ; vendredi A → B + ENT B ; samedi DEMO B ; dimanche B → A + DEMO A ; lundi A → LFMY.
+   Vol combiné (terrains proches) : décollage A, entraînement ou démo directement sur le site de B, posé B (2 avions en transit direct).
+   Repéré dans une plaquette du jour qui cite les deux terrains et ENT / DEMO, ou choisi à la main (mx[meeting].cb[date] = 1 / 0). */
+const puAddD=(d,n)=>{const x=new Date(d+'T12:00');x.setDate(x.getDate()+n);return iso(x)};
+const puCo=R=>R&&R.ap?[R.ap[1],R.ap[2]]:PU_BASE,puIc=R=>R?R.icao:'LFMY';
+function puTour(y){const Y=puY(y);
+ const A=puMeets(y).map(m=>{const R=puMeet(m,Y),ds=[...entrs(m),...(m.demos||[])].filter(Boolean).sort();return Object.assign(R,{m,a:ds[0],b:ds[ds.length-1]})}).filter(R=>R.a).sort((x,z)=>x.a.localeCompare(z.a));
+ const T=[];A.forEach(R=>{const t=T[T.length-1];if(t&&R.a<=puAddD(t.b,2)){t.R.push(R);if(R.b>t.b)t.b=R.b}else T.push({R:[R],b:R.b})});
+ const L=[],legs=[];
+ T.forEach(t=>{const acts=t.R.flatMap(R=>[...entrs(R.m).filter(Boolean).map(d=>({d,R,k:'ent'})),...(R.m.demos||[]).filter(Boolean).map(d=>({d,R,k:'demo'}))]);
+  let pos=null;const days=[...new Set(acts.map(a=>a.d))].sort();
+  days.forEach(d=>{const ds=acts.filter(a=>a.d===d).sort((a,b)=>(puIc(b.R)===puIc(pos))-(puIc(a.R)===puIc(pos))||(a.k==='ent'?-1:1));
+   ds.forEach(a=>{const R=a.R,base=a.k==='ent'?60:35,lab=mName(R.m);let combo=null;
+    if(puIc(R)!==puIc(pos)){const from=pos,ok=(!from||from.ap)&&R.ap,dist=ok?puNM(puCo(from),puCo(R)):null,cb=((Y.mx[R.m.id]||{}).cb||{})[d],kd=!from?'mep':'tr';
+     const leg={d,from,to:R,dist,cb,k:kd,act:a.k};legs.push(leg);
+     if(ok&&dist>=5){const tL=r5(dist/PU_MEP_KT*60+PU_MEP_PLUS),zz=puIc(from)+' → '+puIc(R),ref=R.m.id+':'+(kd==='mep'?'mep':'tr:'+(from?from.m.id:'')) +':'+d;
+      if(cb===1){const sc=R.sc||puCo(R),t8=r5(puNM(puCo(from),sc)/PU_TR_KT*60+base+puNM(sc,puCo(R))/PU_TR_KT*60);combo={t8,zz};
+       L.push({k:kd,d,mis:(kd==='mep'?'MEP':'TRANSIT')+' 2',z:zz,ac:2,pv:2*tL,lab,ref})}
+      else L.push({k:kd,d,mis:(kd==='mep'?'MEP':'TRANSIT')+' 10',z:zz,ac:10,pv:10*tL,lab,ref})}
+     pos=R}
+    const mis=(a.k==='ent'?'ENT':'DEMO')+' 8 A/C';
+    L.push(combo?{k:a.k,d,mis,z:combo.zz.replace(' → ',' → site '+(R.m.city||R.icao)+' → '),ac:8,pv:8*combo.t8,lab:lab+' · vol combiné',ref:R.m.id+':'+a.k+':'+d}
+     :{k:a.k,d,mis,z:R.m.city||R.icao,ac:8,pv:8*r5(base+R.tr),lab,ref:R.m.id+':'+a.k+':'+d})})});
+  if(pos&&pos.ap){const d=puAddD(days[days.length-1],1),dist=puNM(puCo(pos),PU_BASE);legs.push({d,from:pos,to:null,dist,k:'rtb'});
+   if(dist>=5)L.push({k:'rtb',d,mis:'RTB 10',z:pos.icao+' → LFMY',ac:10,pv:10*r5(dist/PU_MEP_KT*60+PU_MEP_PLUS),lab:mName(pos.m),ref:pos.m.id+':rtb:'+d})}
+  t.days=days});
+ L.forEach(l=>l.src='meet');return {T,L,legs}}
+/* plaquette du jour qui cite le terrain de départ, le terrain (ou la ville) d'arrivée et ENT / DEMO → vol combiné */
+function puCbDetect(y,ev){const Y=puY(y),{legs}=puTour(y),mx={};
+ legs.filter(g=>g.to&&g.dist!=null).forEach(g=>{const o=Y.mx[g.to.m.id]||{};if(o.cb&&o.cb[g.d]!=null)return;
+  const F=g.from?[g.from.icao]:['LFMY','SALON'],Tt=[g.to.icao,(g.to.m.city||'').toUpperCase()].filter(x=>x&&x.length>2);
+  if((ev||[]).some(e=>{if(e.d!==g.d)return false;const t=String(e.title).toUpperCase();return F.some(f=>t.includes(f))&&Tt.some(f=>t.includes(f))&&/\b(ENT|ENTR|ENTRAINEMENT|DEMO|DÉMO)\b/.test(t)})){
+   const n=mx[g.to.m.id]||Object.assign({icao:'',sc:''},o,{cb:Object.assign({},o.cb||{})});n.cb[g.d]=1;mx[g.to.m.id]=n}});
+ return mx}
+/* met à jour toutes les lignes des meetings (tournées comprises) */
+function puMeetDiff(Y,want){const byRef={};Y.lines.forEach(l=>{if(l.src==='meet')byRef[l.ref]=l});const up=[],keep=new Set(want.map(w=>w.ref));
+ want.forEach(w=>{const o=byRef[w.ref];if(!o){up.push(Object.assign({id:'pu'+uid(),t:'',rv:null,st:'',cm:''},w));return}
+  const n=Object.assign({},o,{d:w.d,lab:w.lab,mis:w.mis,z:w.z,ac:o.pvm?o.ac:w.ac,pv:o.pvm?o.pv:w.pv});if(['d','lab','mis','z','ac','pv'].some(f=>n[f]!==o[f]))up.push(n)});
+ const del=Y.lines.filter(l=>l.src==='meet'&&!keep.has(l.ref)&&l.rv==null&&!l.st).map(l=>l.id);return {up,del}}
+function puCb(mid,d){const y=puYear(),Y=puY(y),o=Object.assign({icao:'',sc:''},Y.mx[mid]||{}),cb=Object.assign({},o.cb||{});cb[d]=cb[d]===1?0:1;o.cb=cb;Y.mx[mid]=o;
+ const {up,del}=puMeetDiff(Y,puTour(y).L);puPut(y,{mx:{[mid]:o},up,del},1)}
 /* maquette : quelques plaquettes d'hiver fictives */
 function puDemoEv(y){const L=[],add=(d,t,ti,n,k)=>L.push({id:'demo-'+d+t,d,t,title:ti,n,k:k||''}),off=d=>(d>=y-1+'-12-21'&&d<=y+'-01-01')||(d>=y+'-01-11'&&d<=y+'-01-15')||(d>=y+'-03-08'&&d<=y+'-03-12');
  for(let dt=new Date(y,0,5);dt<new Date(y,3,30);dt.setDate(dt.getDate()+1)){const w=dt.getDay();if(w===0||w===6)continue;const d=iso(dt);if(dt.getDate()%7===3||off(d))continue;add(d,'09:00','8N1 R276',8);if(w!==5&&dt.getDate()%3)add(d,'14:00','8N1 R55',8)}
@@ -3352,7 +3395,7 @@ function puDemoEv(y){const L=[],add=(d,t,ti,n,k)=>L.push({id:'demo-'+d+t,d,t,tit
 async function puSync(y,quiet){if(!puEd()||S.puBusy)return;S.puBusy=1;if(!quiet)render();
  let ev=null,sp=null,err='';if(isOnline()){try{const r=await api('puCal',{y});if(r&&r.error)err=r.error;else{ev=r.ev||[];sp=r.sp||[];if(r.pu){DB.pu=r.pu;try{if(typeof BASE!=='undefined'&&BASE)BASE.pu=JSON.parse(JSON.stringify(DB.pu))}catch(_){}}}}catch(e){err='Connexion impossible'}}
  else{const D=puDemoEv(y);ev=D.ev;sp=D.sp;const Y0=puY(y);if(!Y0.start){Y0.start=(y-1)+'-10-05';DB.pu[String(y)]=Y0}}
- const Y=puY(y),want=[];if(ev)want.push(...puCalLines(ev,y,sp));puMeets(y).forEach(m=>want.push(...puMeet(m,Y).L));
+ const Y=puY(y),want=[],mxA=ev?puCbDetect(y,ev):{};Object.assign(Y.mx,mxA);if(ev)want.push(...puCalLines(ev,y,sp));want.push(...puTour(y).L);
  let set=null;if(sp){const P=puPer(Y,y),off=(Y.off||[]).filter(o=>o.src!=='cal').concat(sp.filter(x=>x.k==='pld'&&x.b>=P.a&&x.a<=P.b).map(x=>({a:x.a,b:x.b,lab:'Congés · '+x.title,src:'cal'})));
   if(JSON.stringify(off)!==JSON.stringify(Y.off||[]))set={off}}
  const byRef={};Y.lines.forEach(l=>{if(l.ref)byRef[l.src+'|'+l.ref]=l});
@@ -3363,7 +3406,7 @@ async function puSync(y,quiet){if(!puEd()||S.puBusy)return;S.puBusy=1;if(!quiet)
   if(['d','t','lab','mis','z','ac','pv'].some(f=>n[f]!==o[f]))up.push(n)});
  Y.lines.forEach(l=>{if(l.src==='man'||l.src==='xls'||seen.has(l.src+'|'+l.ref))return;if(l.src==='cal'&&!ev)return;if(l.rv==null&&!l.st)del.push(l.id)});
  S.puBusy=0;S.puSyncT=Date.now();S.puErr=err;
- if(up.length||del.length||set)await puPut(y,Object.assign({up,del},set?{set}:{}),1);else render()}
+ const hasMx=Object.keys(mxA).length;if(up.length||del.length||set||hasMx)await puPut(y,Object.assign({up,del},set?{set}:{},hasMx?{mx:mxA}:{}),1);else render()}
 /* Enregistre (serveur, ou localement en maquette) */
 async function puPut(y,p,quiet){p=Object.assign({y},p);
  if(!isOnline()){const Y=puY(y),S0=p.set||{};Object.assign(Y,S0);if(p.mx)Object.assign(Y.mx,p.mx);const D=new Set(p.del||[]);Y.lines=Y.lines.filter(l=>!D.has(l.id));(p.up||[]).forEach(l=>{const i=Y.lines.findIndex(x=>x.id===l.id);if(i>=0)Y.lines[i]=l;else Y.lines.push(l)});Y.lines.sort((a,b)=>(a.d+a.t).localeCompare(b.d+b.t));DB.pu[String(y)]=Y;save();render();return true}
@@ -3420,15 +3463,18 @@ function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t,P}=puSum(Y,y),NM=M.l
  /* 3. à saisir */
  const todo=Y.lines.filter(l=>!l.x&&l.rv==null&&!l.st&&l.d<=td).sort((a,b)=>(b.d+b.t).localeCompare(a.d+a.t));
  const lineRow=(l,act)=>{const st=l.st&&l.st!=='ok'?PU_ST[l.st]:null,past=l.d<=td;
-  return `<div class="pul ${l.x?'x':''}" ${ed?`onclick="puLine('${l.id}')"`:''}><span class="pud"><b>${new Date(l.d+'T12:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric'})}</b><small>${l.t?l.t.replace(':','h'):''}</small></span>
+  return `<div class="pul ${l.x?'x':''} ${st?'an':''}" ${st?`style="--sc:${st[1]};background:${st[1]}17"`:''} ${ed?`onclick="puLine('${l.id}')"`:''}><span class="pud"><b>${new Date(l.d+'T12:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric'})}</b><small>${l.t?l.t.replace(':','h'):''}</small></span>
    <span class="pum"><b>${esc(l.mis||l.lab||'Vol')}</b><small>${esc([l.lab!==l.mis?l.lab:'',l.z,l.ac?l.ac+' avions':''].filter(Boolean).join(' · '))}${l.cm?' · '+esc(l.cm):''}</small></span>
    <span class="puv"><small>prévu</small>${puH(l.pv)}</span><span class="puv ${l.rv!=null?'r':''}"><small>réalisé</small>${l.rv!=null?puH(l.rv):past?'à saisir':'—'}</span>
    ${act&&ed?`<span class="pua" onclick="event.stopPropagation()"><button class="btn sm pri" onclick="puQuick('${l.id}','ok')">✓ Comme prévu</button><button class="btn sm" onclick="puLine('${l.id}')">Autre…</button></span>`:st?`<span class="pust" style="--c:${st[1]}">${st[0]}</span>`:'<span></span>'}</div>`};
  const todoH=todo.length?`<section class="card putodo"><h2 class="ih" style="margin:0 0 4px">${ic('clock',18)} ${todo.length} vol${todo.length>1?'s':''} à saisir</h2><p class="small muted" style="margin:0 0 8px">Une fois le vol fait : « Comme prévu », ou « Autre… » pour l'heure réelle, une annulation ou un report.</p>${todo.slice(0,S.puAll?999:6).map(l=>lineRow(l,1)).join('')}${todo.length>6&&!S.puAll?`<button class="more" onclick="S.puAll=1;render()">Voir les ${todo.length} vols</button>`:''}</section>`:'';
  /* 4. meetings */
- const MS=puMeets(y);
- const meetH=`<section class="card"><h2 class="ih" style="margin:0 0 4px">${ic('flag',18)} Meetings ${y}</h2><p class="small muted" style="margin:0 0 10px">Mise en place à 2 + 8 avions à M0,65 (≈ ${PU_MEP_KT} kt) depuis Salon, + ${PU_MEP_PLUS} min par avion · entraînement 1h00 et démonstration 35 min par avion, plus l'aller-retour terrain ⇄ show center à ${PU_TR_KT} kt · durées par avion arrondies aux 5 min.</p>
-  ${MS.length?MS.map(m=>{const R=puMeet(m,Y),tot=R.L.reduce((a,l)=>a+l.pv,0);
+ const MS=puMeets(y),TO=puTour(y),dS=d=>new Date(d+'T12:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+ const tourH=TO.T.filter(t=>t.R.length>1).map(t=>{const lg=TO.legs.filter(g=>t.R.includes(g.to)||t.R.includes(g.from));
+  return `<div class="putr"><b>${ic('plane',15)} Tournée ${t.R.map(R=>esc(R.m.city||mName(R.m))).join(' + ')}</b><div class="putrl">${lg.map(g=>{const can=g.to&&g.dist!=null&&g.dist>=5,on=can&&((Y.mx[g.to.m.id]||{}).cb||{})[g.d]===1;
+   return `<span class="${on?'on':''}"><small>${dS(g.d)}</small><b>${puIc(g.from)} → ${g.to?puIc(g.to):'LFMY'}</b>${g.dist!=null?`<i>${Math.round(g.dist)} Nm</i>`:'<i class="bad">terrain à saisir</i>'}${g.to?`<em>puis ${g.act==='ent'?'ENT':'DEMO'} ${esc(g.to.m.city||'')}</em>`:''}${can&&ed?`<button class="btn sm ${on?'pri':''}" onclick="puCb('${g.to.m.id}','${g.d}')" title="Décollage ${puIc(g.from)}, ${g.act==='ent'?'entraînement':'démo'} directement sur le site, posé ${puIc(g.to)}">${on?'✓ Vol combiné':'Vol combiné ?'}</button>`:on?'<em>vol combiné</em>':''}</span>`}).join('')}</div></div>`}).join('');
+ const meetH=`<section class="card"><h2 class="ih" style="margin:0 0 4px">${ic('flag',18)} Meetings ${y}</h2><p class="small muted" style="margin:0 0 10px">Mise en place à 2 + 8 avions à M0,65 (≈ ${PU_MEP_KT} kt) depuis Salon, + ${PU_MEP_PLUS} min par avion · entraînement 1h00 et démonstration 35 min par avion, plus l'aller-retour terrain ⇄ show center à ${PU_TR_KT} kt · durées par avion arrondies aux 5 min. Deux meetings à moins de 3 jours d'écart forment une tournée : on enchaîne les terrains sans repasser par Salon, retour le lendemain du dernier vol.</p>
+  ${tourH}${MS.length?MS.map(m=>{const R=puMeet(m,Y);R.L=TO.L.filter(l=>l.ref.startsWith(m.id+':')).sort((a,b)=>a.d.localeCompare(b.d));const tot=R.L.reduce((a,l)=>a+l.pv,0);
    return `<div class="pumt ${R.miss?'miss':''}"><div class="pumh"><b>${esc(mName(m))}</b><small>${esc([...entrs(m),...(m.demos||[])].filter(Boolean).sort().map(d=>new Date(d+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'short'})).join(' · '))}</small><span class="pumt-t">${puH(tot)}</span></div>
     <div class="pumf"><label>Terrain de mise en place${ed?'':':'}${ed?`<input class="in" maxlength="4" placeholder="OACI" value="${esc(R.icao)}" onchange="puMx('${m.id}','icao',this.value)">`:` <b>${esc(R.icao||'—')}</b>`}</label>
      <span class="small ${R.miss==='icao?'?'bad':'muted'}">${R.ap?esc(R.ap[0].replace(/ (International )?Airport$| Air Base$/,''))+' · '+Math.round(R.dMep)+' Nm de Salon, '+puH(R.tMep)+' par avion':R.icao?'Code OACI inconnu de l\'appli : ajoutez le vol de mise en place à la main':'Code OACI à saisir'}</span></div>
@@ -3443,7 +3489,7 @@ function vPu(tabs){const y=puYear(),Y=puY(y),ed=puEd(),{M,t,P}=puSum(Y,y),NM=M.l
  const list=`<section class="card"><div class="puhd"><h2 class="ih" style="margin:0">${ic('cal',18)} Vols du mois</h2>${ed?`<button class="btn sm pri" onclick="puLine('')">${ic('plus',14)} Ajouter un vol</button>`:''}</div>
   <div class="pumo" style="--n:${NM}">${M.map((x,i)=>`<button aria-pressed="${i===mo}" onclick="S.puMo=${i};render()">${puMoL(x,y,NM>12)}<small>${puHh(x.prj)} h</small></button>`).join('')}</div>
   ${wks.length?wks.map(k=>{const L=W2[k];return `<div class="puw"><div class="puwh"><b>${k}</b><span>${L.length?`prévu ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.pv||0),0))} · réalisé ${puH(L.filter(l=>!l.x).reduce((a,l)=>a+(l.rv||0),0))}`:'pas de vol'}</span></div>${offRow(OF[k])}${L.map(l=>lineRow(l,0)).join('')}</div>`}).join(''):`<p class="small muted">Aucun vol en ${PU_MO[M[mo].m].toLowerCase()} ${M[mo].y}.</p>`}
-  <div class="pucnt"><span>${t.n} vols</span><span style="color:#16a34a">${t.ok} comme prévu</span><span style="color:#2563eb">${t.rep} replanifiés</span><span style="color:#0891b2">${t.met} météo</span><span style="color:#9333ea">${t.zon} zone</span><span style="color:#dc2626">${t.mec} méca</span></div></section>`;
+  <div class="pucnt"><span>${t.n} vols</span><span style="color:#16a34a">${t.ok} comme prévu</span><span style="color:#2563eb">${t.rep} replanifiés</span><span style="color:${PU_ST.met[1]}">${t.met} météo</span><span style="color:${PU_ST.zon[1]}">${t.zon} zone</span><span style="color:${PU_ST.mec[1]}">${t.mec} méca</span></div></section>`;
  const foot=`<section class="card puxl"><div><b>${ic('book',16)} Fichier PU ${y}</b><span class="small muted">Fichier Excel sur le Drive (dossier ${y} › 00 – Saison), refait dans la demi-heure qui suit chaque saisie, ou tout de suite avec les boutons. Chaque vendredi, il part par mail au 5 et au chef ops.${S.puErr?` <span class="bad">Agenda : ${esc(S.puErr)}</span>`:''}</span></div>
   <span style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="puXls(0)" ${S.puXB?'disabled':''}>${S.puXB?'…':'Ouvrir sur le Drive'}</button><button class="btn" onclick="puXls(1)" ${S.puXB?'disabled':''}>Télécharger (Excel)</button>${ed?`<button class="btn ghost" onclick="S.puSyncT=0;puSync(${y})" ${S.puBusy?'disabled':''}>${S.puBusy?'Lecture de l\'agenda…':'↻ Relire l\'agenda'}</button>`:''}</span></section>`;
  return `${head}${S.puBusy?ldBan('Lecture des plaquettes de l\'agenda…',PU_LD):S.puXB?ldBan('Préparation du fichier Excel…',PU_LD):''}<div class="puw0">${big}${todoH}${chart}${list}${meetH}${foot}</div>`}
@@ -3452,9 +3498,7 @@ function puQuick(id){const y=puYear(),l=puY(y).lines.find(x=>x.id===id);if(!l)re
 function puMx(mid,k,v){const y=puYear(),Y=puY(y),o=Object.assign({icao:'',sc:''},Y.mx[mid]||{});o[k]=k==='icao'?String(v).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4):String(v).trim();
  if(k==='sc'&&o.sc&&!mtDM(o.sc)){toast('Coordonnées non reconnues (ex. 47°17,3\' N 002°21,1\' W)');return}
  if(k==='icao'&&o.icao&&!PF_AD[o.icao])toast('Code OACI inconnu de l\'appli : ajoutez le vol de mise en place à la main');
- Y.mx[mid]=o;const want=puMeets(y).filter(m=>m.id===mid).flatMap(m=>puMeet(m,Y).L),byRef={};Y.lines.forEach(l=>{if(l.src==='meet')byRef[l.ref]=l});
- const up=want.map(w=>{const o2=byRef[w.ref];return o2?Object.assign({},o2,{z:w.z,ac:o2.pvm?o2.ac:w.ac,pv:o2.pvm?o2.pv:w.pv,mis:w.mis}):Object.assign({id:'pu'+uid(),t:'',rv:null,st:'',cm:''},w)}),keep=new Set(want.map(w=>w.ref));
- const del=Y.lines.filter(l=>l.src==='meet'&&l.ref.startsWith(mid+':')&&!keep.has(l.ref)&&l.rv==null&&!l.st).map(l=>l.id);
+ Y.mx[mid]=o;const {up,del}=puMeetDiff(Y,puTour(y).L);
  puPut(y,{mx:{[mid]:o},up,del},1)}
 async function puXls(dl){const y=puYear();if(!isOnline()){toast('Maquette : le fichier se crée sur le Drive de PAF OPS en ligne');return}
  S.puXB=1;render();let r;try{r=await api('puXls',{y,xls:dl?1:0})}catch(e){r={error:'Connexion impossible'}}S.puXB=0;render();
