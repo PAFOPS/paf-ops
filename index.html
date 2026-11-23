@@ -939,6 +939,8 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .pul{display:grid;grid-template-columns:62px minmax(0,1fr) 74px 80px auto;gap:10px;align-items:center;padding:8px 6px;border-top:1px solid var(--line);cursor:pointer}.pul:first-of-type{border-top:0}.pul.x{opacity:.45;text-decoration:line-through}.pul.an{box-shadow:inset 4px 0 0 var(--sc);border-radius:8px}.pul.an .puv.r{color:var(--sc)}.pud,.pum,.puv{display:grid;min-width:0}.pud b{font-size:13.5px;text-transform:capitalize}.pud small,.pum small,.puv small{font-size:11px;color:var(--muted)}.pum b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pum small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.puv{font-weight:800;font-size:14px;text-align:right}.puv.r{color:#1d4ed8}
 .pua{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.pust{font-size:11.5px;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border-radius:999px;padding:3px 9px;white-space:nowrap}.pum b{display:flex;align-items:center;gap:6px;min-width:0}.pumn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:48px}.pusS{display:none}.pum b .pust{flex-shrink:0;padding:1px 8px}
 .putodo{border:2px solid #f59e0b}.puhd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.rrchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;color:inherit;display:inline-flex;align-items:center;gap:4px}.rrchip.sup{background:#fef3c7;border-color:#f59e0b;color:#92400e}.rrchip.cus{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.rrchip:disabled{cursor:default}
+.rrpf{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:6px}.rrp{display:grid;gap:3px;text-align:left;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);color:inherit;cursor:pointer}.rrp small{color:var(--muted);font-size:12px;line-height:1.3}.rrp[aria-pressed=true]{border-color:#0ea5e9;background:#e0f2fe55}.rrp.sup[aria-pressed=true]{border-color:#f59e0b;background:#fef3c755}
 .putr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}.putr>b{display:flex;gap:6px;align-items:center;font-size:14px}.putrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.putrl>span{display:grid;gap:2px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12.5px;min-width:130px}.putrl>span.on{border-color:#16a34a;background:#16a34a14}.putrl small{color:var(--muted);text-transform:capitalize}.putrl i{font-style:normal;color:var(--muted);font-size:11.5px}.putrl em{font-style:normal;font-size:11.5px;color:var(--muted)}.putrl .btn{margin-top:4px}
 .puoff{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0;padding:7px 10px;border-radius:9px;background:#fef3c7;color:#92400e;font-size:13px}.puoff span{color:#b45309;font-size:12px}
 .pumo{display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:4px;margin-bottom:10px}.pumo button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;font:inherit;font-size:12.5px;font-weight:800;color:var(--fg);cursor:pointer;display:grid}.pumo button small{font-size:10.5px;color:var(--muted);font-weight:700}.pumo button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.pumo button[aria-pressed=true] small{color:#fff;opacity:.8}
@@ -1521,12 +1523,28 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795337952';
+const APP_V='1795463194';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
 const myGrp=()=>(typeof ME!=='undefined'&&ME&&ME.grp)||S.asGrp||null;
-const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';if(!role){const x=myRx();if(x&&x[area])return x[area];const g=myGrp();if(g&&DB.rights[g])return DB.rights[g][area]||'n'}return (DB.rights[r]||{})[area]||'n'};
+/* Droits par rubrique d'un organisateur ou d'un DV, meeting par meeting (accès a) :
+   standard = droits du groupe ; « super organisateur » = toute la logistique + DV en modification ; « sur mesure » = rubrique par rubrique */
+const RR_K=['tech','lodg','food','move','com','contacts','aero','pdocs'];
+const RR_L={tech:'Technique',lodg:'Logement',food:'Restauration',move:'Locomotion',com:'Communication',contacts:'Contacts',aero:'Directeur des vols',pdocs:'Dossier pilotes'};
+const RR_SUP={tech:'e',lodg:'e',food:'e',move:'e',com:'e',contacts:'e',aero:'e',pdocs:'r'};
+const rrExp=R=>({tech:R.tech||'n',lodg:R.logi||'n',food:R.logi||'n',move:R.logi||'n',com:R.com||'n',contacts:R.contacts||'n',aero:R.aero||'n',pdocs:R.pdocs||'n'});
+function accRR(a){if(!a||ACC_FAM(a.role)!=='meet')return null;if(a.pf==='sup')return Object.assign({},RR_SUP);
+ const base=rrExp(Object.assign({},(DB.rights||{})[a.role]||DEF_RIGHTS[a.role]||{},a.rx||{}));
+ if(a.pf==='cus')return Object.assign(base,a.rr||{});
+ if(a.scope){const o={};RR_K.forEach(k=>o[k]='n');o.contacts='r';if(a.scope==='room'){o.lodg=o.food=o.move='r'}else if(a.scope in o)o[a.scope]='e';return o}
+ return base}
+const rrPf=a=>a.pf==='sup'?'sup':a.pf==='cus'||(!a.pf&&a.scope)?'cus':'std';
+const meetRR=()=>{if(typeof ME==='undefined'||!ME||!ME.mrr||!S.mid||!isMeetRole())return null;return ME.mrr[S.mid]||null};
+const right=(area,role)=>{const r=role||ROLE;if(r==='chef')return 'e';
+ if(!role){const q=meetRR();if(q){if(area==='logi'){const v=[q.lodg,q.food,q.move];return v.includes('e')?'e':v.includes('r')?'r':'n'}if(area in q)return q[area]}}
+ if(area==='lodg'||area==='food'||area==='move')area='logi';
+ if(!role){const x=myRx();if(x&&x[area])return x[area];const g=myGrp();if(g&&DB.rights[g])return DB.rights[g][area]||'n'}return (DB.rights[r]||{})[area]||'n'};
 const canEdit=a=>right(a)==='e';
 const canSee=a=>right(a)!=='n';
 const isMeetRole=()=>RLm[ROLE].side==='meet';
@@ -1669,7 +1687,7 @@ function vMeeting(){
  <div id="delm"></div>`;
  // Le directeur des vols garde sa page unique
  if(ROLE==='ro')return vVote();
- if(ROLE==='dv')return head+(canSee('aero')?vAero(m):'')+(canSee('pdocs')?vPdocs():'')+kpBlock();
+ if(ROLE==='dv'&&!(meetRR()&&['tech','lodg','food','move','com'].some(k=>meetRR()[k]!=='n')))return head+(canSee('aero')?vAero(m):'')+(canSee('pdocs')?vPdocs():'')+kpBlock();
  // Le DMMA d'un meeting : en consultation, la partie du DV, le dossier pilotes, l'équipe et l'interlocuteur PAF
  if(dmmaMid())return head+`<div class="dmmab">${tile(RLm.dmma,'sm')}<span><b>Accès DMMA · consultation</b><span class="small muted">Éléments transmis par le directeur des vols, dossier des pilotes et équipe de la Patrouille. Pour toute question sur une présentation, contactez le chef des opérations.</span></span></div>`+vAero(m)+vPdocs()+vTeam(m)+kpBlock();
  const contactsH=()=>`<div class="sect"><h2>${ic('users',20)} Contacts du meeting</h2>${canEdit('contacts')?`<button class="btn pri" onclick="contactSheet('${m.id}')">${ic('plus',16)} Ajouter</button>`:''}</div>
@@ -1682,14 +1700,14 @@ function vMeeting(){
  const RUBS=[
   {k:'team',l:'Équipe PAF',d:'Qui part sur ce meeting',i:'users',c1:'#3b82f6',c2:'#1d4ed8',on:canSee('annu'),h:()=>vTeam(m),p:()=>({done:teamN(m),tot:0}),u:'personne'},
   {k:'tech',l:'Technique',d:'Parking, incendie…',i:'wrench',c1:'#f59e0b',c2:'#c2410c',on:canSee('tech'),h:()=>vGrid(m,'tech','Technique','wrench','#f59e0b','#c2410c','tech','Technique'),p:()=>gridProg(m,'tech'),o:()=>tech(m)},
-  {k:'lodg',l:'Logement',d:'Hôtel et chambres',i:'bed',c1:'#a855f7',c2:'#7e22ce',on:canSee('logi'),h:()=>vGrid(m,'lodg','Logement','bed','#a855f7','#7e22ce','logi','Logement',teamN(m)?teamN(m)+' personnes':''),p:()=>gridProg(m,'lodg'),o:()=>lodg(m)},
-  {k:'food',l:'Restauration',d:'Repas jour par jour',i:'food',c1:'#f97316',c2:'#c2410c',on:canSee('logi'),h:()=>vGrid(m,'food','Restauration','food','#f97316','#c2410c','logi','Restauration',teamN(m)?teamN(m)+' personnes par repas':''),p:()=>gridProg(m,'food'),o:()=>food(m)},
-  {k:'move',l:'Locomotion',d:'Véhicules et accès',i:'car',c1:'#06b6d4',c2:'#0e7490',on:canSee('logi'),h:()=>vGrid(m,'move','Locomotion','car','#06b6d4','#0e7490','logi','Locomotion'),p:()=>gridProg(m,'move'),o:()=>move(m)},
+  {k:'lodg',l:'Logement',d:'Hôtel et chambres',i:'bed',c1:'#a855f7',c2:'#7e22ce',on:canSee('lodg'),h:()=>vGrid(m,'lodg','Logement','bed','#a855f7','#7e22ce','lodg','Logement',teamN(m)?teamN(m)+' personnes':''),p:()=>gridProg(m,'lodg'),o:()=>lodg(m)},
+  {k:'food',l:'Restauration',d:'Repas jour par jour',i:'food',c1:'#f97316',c2:'#c2410c',on:canSee('food'),h:()=>vGrid(m,'food','Restauration','food','#f97316','#c2410c','food','Restauration',teamN(m)?teamN(m)+' personnes par repas':''),p:()=>gridProg(m,'food'),o:()=>food(m)},
+  {k:'move',l:'Locomotion',d:'Véhicules et accès',i:'car',c1:'#06b6d4',c2:'#0e7490',on:canSee('move'),h:()=>vGrid(m,'move','Locomotion','car','#06b6d4','#0e7490','move','Locomotion'),p:()=>gridProg(m,'move'),o:()=>move(m)},
   {k:'room',l:'Salles',d:'Ce qu\'il faut prévoir',i:'screen',c1:'#f43f5e',c2:'#be123c',on:canSee('logi'),h:()=>vRoomInfo(m),p:()=>({done:0,tot:0}),u:'',info:1},
   {k:'soir',l:'Soirée officielle',d:'Jour, lieu, tenue',i:'star',c1:'#f5c24a',c2:'#b7860f',on:isChef()||ROLE==='sec',h:()=>vSoir(m),p:()=>({done:[soir(m).day,soir(m).info].filter(Boolean).length,tot:2}),o:()=>soir(m)},
   {k:'com',l:'Communication',d:'Public, médias',i:'mega',c1:'#ec4899',c2:'#be185d',on:canSee('com'),h:()=>vGrid(m,'com','Communication','mega','#ec4899','#be185d','com','Communication'),p:()=>gridProg(m,'com'),o:()=>com(m)},
   {k:'contacts',l:'Contacts',d:'Organisation du meeting',i:'users',c1:'#10b981',c2:'#047857',on:canSee('contacts'),h:contactsH,p:()=>({done:cs.length,tot:0}),u:'contact'},
-  {k:'aero',l:'Directeur des vols',d:'Plan, pilot book, créneaux',i:'radio',c1:'#6366f1',c2:'#3730a3',on:canSee('aero')&&ROLE!=='org',h:()=>vAero(m),p:()=>aeroProgress(m),o:()=>aero(m)},
+  {k:'aero',l:'Directeur des vols',d:'Plan, pilot book, créneaux',i:'radio',c1:'#6366f1',c2:'#3730a3',on:canSee('aero')&&(ROLE!=='org'||!!meetRR()),h:()=>vAero(m),p:()=>aeroProgress(m),o:()=>aero(m)},
   {k:'pdocs',l:'Dossier pilotes',d:'CERFA, licences…',i:'folder',c1:'#64748b',c2:'#334155',on:canSee('pdocs'),h:()=>vPdocs(),p:()=>({done:DB.pdocs.length,tot:0}),u:'document'}
   ,{k:'retex',l:'RETEX',d:'Retours d\'expérience',i:'book',c1:'#0ea5e9',c2:'#0369a1',on:rxCan(),h:()=>vRetexMeeting(m),p:()=>({done:rxAll().filter(e=>e.mid===m.id).length+rxNotes().filter(e=>e.mid===m.id).length,tot:0}),u:'note'}
  ].filter(r=>r.on);
@@ -3056,7 +3074,7 @@ function respSheet(mid,sec){const o=SECG[sec](DB.meetings.find(x=>x.id===mid));S
  <div class="sf">${(SECG[X.sec](DB.meetings.find(x=>x.id===X.mid)).resp)?`<button class="btn danger" onclick="delResp()">${ic('trash',16)} Retirer</button>`:'<span></span>'}<button class="btn pri big" onclick="saveResp()">${ic('send',18)} Enregistrer et inviter</button></div>`})}
 function saveResp(){const X=S.rs,d=X.d;if(!d.name.trim()||!d.mail||!okMail(d.mail)){$('rs-e').textContent='Indiquez un nom et un email valide.';return}
  const o=SECG[X.sec](DB.meetings.find(x=>x.id===X.mid)),isNew=!o.resp||o.resp.mail!==d.mail;o.resp={name:d.name.trim(),mail:d.mail,tel:String(d.tel||'').replace(/[^\d+]/g,'')};
- if(isNew&&!DB.access.some(a=>a.mid===X.mid&&a.mail===d.mail))addAccess({id:uid(),role:'org',mid:X.mid,name:o.resp.name,mail:d.mail,scope:X.sec});
+ if(isNew&&!DB.access.some(a=>a.mid===X.mid&&a.mail===d.mail))addAccess({id:uid(),role:'org',mid:X.mid,name:o.resp.name,mail:d.mail,scope:X.sec,pf:'cus',rr:(()=>{const r={};RR_K.forEach(k=>r[k]='n');r.contacts='r';if(X.sec==='room')r.lodg=r.food=r.move='r';else if(X.sec in r)r[X.sec]='e';return r})()});
  save();closeSheet();render();toast(isNew?'Responsable enregistré · invitation envoyée':'Responsable enregistré')}
 function delResp(){const X=S.rs,o=SECG[X.sec](DB.meetings.find(x=>x.id===X.mid));o.resp=null;save();closeSheet();render()}
 
@@ -7525,7 +7543,9 @@ function accSum(p){const gr=p.main.role,x=p.mem,n=x&&x.fn==='PILOTES'?athN(x):0,
  if(gr==='osab')return ['Uniquement les FEA que vous avez cochées « Transmise à l\'OSAB », avec leurs photos, en lecture.','Rien d\'autre : ni meetings, ni Annuaire, ni outils, ni RETEX.'];
  const out=[],M=p.L.filter(a=>a.mid).map(a=>DB.meetings.find(m=>m.id===a.mid)).filter(Boolean);
  out.push(ACC_FAM(gr)&&M.length?'Meetings : seulement '+M.map(mName).join(', ')+'.':'Meetings : tous.');
- const by={e:[],r:[],n:[]};AREAS.filter(a=>!a.soon).forEach(a=>by[rx[a.k]||right(a.k,gr)].push(a.l+(rx[a.k]?' (pour lui)':'')));
+ if(ACC_FAM(gr)==='meet')p.L.filter(a=>a.mid&&ACC_FAM(a.role)==='meet').forEach(a=>{const m=DB.meetings.find(x=>x.id===a.mid);if(!m)return;const q=accRR(a),e=RR_K.filter(k=>q[k]==='e').map(k=>RR_L[k]),r=RR_K.filter(k=>q[k]==='r').map(k=>RR_L[k]);
+  out.push(mName(m)+(rrPf(a)==='sup'?' (super organisateur)':'')+' : '+(e.length?'modifie '+e.join(', '):'ne modifie rien')+(r.length?' ; lit '+r.join(', '):'')+'.')});
+ const by={e:[],r:[],n:[]};if(ACC_FAM(gr)!=='meet')AREAS.filter(a=>!a.soon).forEach(a=>by[rx[a.k]||right(a.k,gr)].push(a.l+(rx[a.k]?' (pour lui)':'')));
  if(by.e.length)out.push('Modifie : '+by.e.join(', ')+'.');if(by.r.length)out.push('Lit : '+by.r.join(', ')+'.');if(by.n.length)out.push('Ne voit pas : '+by.n.join(', ')+'.');
  const an=rx.annu||right('annu',gr),ct=rx.contacts||right('contacts',gr);
  out.push(an==='n'?'Téléphones et emails de l\'Unité : seulement les interlocuteurs désignés et lui-même.':'Téléphones et emails de l\'Unité : oui.');
@@ -7566,10 +7586,10 @@ function psHTML(){const p=psP();if(!p){setTimeout(closeSheet,10);return ''}const
  <div class="accsum"><b>${ic('eye',16)} Ce qu'il voit aujourd'hui</b><ul>${accSum(p).map(l=>`<li>${esc(l)}</li>`).join('')}</ul>${ROLE_D[gr]&&gr!=='osab'?`<small class="muted">${esc(ROLE_D[gr])}</small>`:''}</div>
  ${G.length?`<label class="l">Groupe</label>${chef?'<div class="hint">Chef des opérations : tous les droits, toujours. Rien à régler ici.</div>':`<div class="pick" style="grid-template-columns:repeat(auto-fill,minmax(112px,1fr))">${['visit','sec','dt','cst','comm','dmma','osab','bob','ext'].map(k=>RLm[k]).map(r=>`<button class="pk" title="${esc(ROLE_D[r.k]||'')}" aria-pressed="${G[0].role===r.k}" ${ed?`onclick="psRole('${G[0].id}','${r.k}')"`:'disabled'}>${tile(r,'sm')}<span>${r.l}</span></button>`).join('')}</div>`}`:''}
  ${M.length||(!G.length&&!chef)||ACC_FAM(gr)?`<label class="l">Meetings dont il a la charge · un seul lien pour tous</label><div class="psm">${M.map(a=>{const m=DB.meetings.find(x=>x.id===a.mid);return `<div class="psmr">${ic('flag',15)}<b>${m?esc(mName(m)):'Meeting supprimé'}</b><span class="small muted">${m&&firstDemo(m)?fmtD(firstDemo(m)):''}</span>
-   <select class="in" ${ed&&a.role!=='dmma'?'':'disabled'} onchange="psMRole('${a.id}',this.value)">${(a.role==='dmma'?['dmma']:['org','dv']).map(r=>`<option value="${r}" ${a.role===r?'selected':''}>${RLm[r].l}</option>`).join('')}</select>${ed?`<button class="ib" onclick="psMDel('${a.id}')" aria-label="Retirer ce meeting">${ic('x',15)}</button>`:''}</div>`}).join('')}
+   <select class="in" ${ed&&a.role!=='dmma'?'':'disabled'} onchange="psMRole('${a.id}',this.value)">${(a.role==='dmma'?['dmma']:['org','dv']).map(r=>`<option value="${r}" ${a.role===r?'selected':''}>${RLm[r].l}</option>`).join('')}</select>${ACC_FAM(a.role)==='meet'?`<button class="rrchip ${rrPf(a)}" ${ed?`onclick="rrSheet('${a.id}')"`:'disabled'} title="Ce qu'il peut faire sur ce meeting">${rrTxt(a)}${ed?' '+ic('edit',12):''}</button>`:''}${ed?`<button class="ib" onclick="psMDel('${a.id}')" aria-label="Retirer ce meeting">${ic('x',15)}</button>`:''}</div>`}).join('')}
    ${ed&&meetOpts.length&&p.mail?`<div class="psmr add">${ic('plus',15)}<select class="in" id="ps-m">${meetOpts.map(m=>`<option value="${m.id}">${esc(mName(m))}${firstDemo(m)?' · '+fmtD(firstDemo(m)):''}</option>`).join('')}</select><select class="in" id="ps-r">${(gr==='dmma'?['dmma']:['org','dv','dmma']).map(r=>`<option value="${r}" ${r===(ACC_FAM(gr)==='meet'?gr:'org')?'selected':''}>${RLm[r].l}</option>`).join('')}</select><button class="btn" onclick="psMAdd()">Ajouter</button></div>`:''}</div>
    <div class="hint">Il garde le même lien : il voit tous ces meetings, et seulement eux. Pour un meeting ajouté, il reçoit un email (relu avant l'envoi).</div>`:''}
- ${chef||gr==='osab'||gr==='bob'?'':`<label class="l">Ce qu'il peut faire</label><div class="hint" style="margin-top:0">Par défaut, les droits de son groupe. Choisissez autre chose pour lui seul.</div>
+ ${ACC_FAM(gr)==='meet'?`<div class="hint">Ses droits se règlent meeting par meeting : touchez l'étiquette à côté de chaque meeting (standard, super organisateur ou sur mesure).</div>`:''}${chef||gr==='osab'||gr==='bob'||ACC_FAM(gr)==='meet'?'':`<label class="l">Ce qu'il peut faire</label><div class="hint" style="margin-top:0">Par défaut, les droits de son groupe. Choisissez autre chose pour lui seul.</div>
  <div class="psr">${AREAS.filter(a=>!a.soon).map(a=>{const d=right(a.k,gr),v=rx[a.k]||'';return `<div class="psrr"><span title="${esc(AREA_D[a.k]||'')}">${a.l}</span><div class="seg sm">${[['','Groupe ('+AR_L[d]+')'],['e','Modifier'],['r','Lecture'],['n','Aucun']].map(([k,l])=>`<button aria-pressed="${v===k}" class="${k?'k'+k:''}" ${ed&&!(a.k==='acces'&&(RLm[gr]||{}).side!=='paf'&&k==='e')?`onclick="psRx('${a.k}','${k}')"`:'disabled'}>${l}</button>`).join('')}</div></div>`}).join('')}</div>
  ${Object.keys(rx).length&&ed?`<button class="more" onclick="psRx('*','')">Revenir aux droits du groupe</button>`:''}`}
  ${chef||ACC_FAM(gr)||gr==='osab'||gr==='bob'?'':`<label class="l">Ses outils</label><div class="psto">${(()=>{const T=Object.assign({},...p.L.map(a=>a.tools||{}));return TOOLS_A.map(([k,l])=>{const o=T[k]===1||T[k]===0?T[k]:null,v=o!=null?!!o:toolDef(gr,p.mem,k);return `<button class="pst ${v?'on':''} ${o!=null?'tko':''}" title="${esc(toolTip(k))}" ${ed?`onclick="psTool('${esc(p.k)}','${k}')"`:'disabled'}>${v?'✓':'—'} ${l}${o!=null?' <small>(pour lui)</small>':''}</button>`}).join('')})()}</div><div class="hint">Touchez un outil : donner → retirer → revenir à la règle habituelle.</div>`}
@@ -7578,6 +7598,26 @@ function psHTML(){const p=psP();if(!p){setTimeout(closeSheet,10);return ''}const
  ${ed&&!chef?`<div class="confirm" style="margin-top:14px"><span class="small">Plus concerné ?</span><button class="btn" onclick="if(confirm('Retirer tous ses accès ? Son lien cessera de fonctionner.')){psDelAll()}">${ic('trash',14)} Retirer tous ses accès</button></div>`:''}
  </div><div class="sf"><span></span><button class="btn pri big" onclick="closeSheet()">${ic('check',18)} Terminé</button></div>`}
 const psRe=()=>{save();$('sheet').innerHTML=psHTML();render()};
+function rrTxt(a){const pf=rrPf(a),q=accRR(a);if(pf==='sup')return '★ Super organisateur';if(pf==='std')return 'Droits standard';
+ const e=RR_K.filter(k=>q[k]==='e').map(k=>RR_L[k]);return 'Sur mesure'+(e.length?' : '+(e.length>3?e.length+' rubriques':e.join(', ')):' : consultation')}
+/* Droits d'un organisateur / DV sur UN meeting */
+let RRS=null;
+function rrSheet(id){RRS={id,back:PS?PS.k:null};openLive(rrHTML)}
+function rrHTML(){const a=DB.access.find(x=>x.id===RRS.id);if(!a)return '';const m=DB.meetings.find(x=>x.id===a.mid),q=accRR(a),pf=rrPf(a),std=rrExp(Object.assign({},(DB.rights||{})[a.role]||DEF_RIGHTS[a.role]||{},a.rx||{}));
+ const P=[['std','Droits standard',`Ceux de tout ${a.role==='dv'?'directeur des vols':'organisateur'} : ${RR_K.filter(k=>std[k]==='e').map(k=>RR_L[k].toLowerCase()).join(', ')||'consultation'}.`],['sup','★ Super organisateur','Toute la logistique (technique, logement, restauration, locomotion, communication, contacts) et la partie directeur des vols, en modification.'],['cus','Sur mesure','Rubrique par rubrique : par exemple seulement le logement et la restauration.']];
+ const others=DB.access.filter(x=>x.id!==a.id&&ACC_FAM(x.role)==='meet'&&lc(x.mail)===lc(a.mail)&&x.mid);
+ return shHead({i:'lock',c1:'#0ea5e9',c2:'#0369a1'},'Droits de '+(a.name||a.mail),m?mName(m)+(firstDemo(m)?' · '+fmtD(firstDemo(m)):''):'')+`<div class="sb">
+  <div class="rrpf">${P.map(([k,l,d])=>`<button class="rrp ${k}" aria-pressed="${pf===k}" onclick="rrSet('${k}')"><b>${l}</b><small>${esc(d)}</small></button>`).join('')}</div>
+  <label class="l">Rubrique par rubrique${pf==='cus'?'':' <span style="font-weight:500">(touchez pour passer en sur mesure)</span>'}</label>
+  <div class="psr">${RR_K.map(k=>`<div class="psrr"><span>${RR_L[k]}</span><div class="seg sm">${[['e','Modifier'],['r','Lecture'],['n','Aucun']].map(([v,l])=>`<button aria-pressed="${q[k]===v}" class="k${v}" onclick="rrSet('cus','${k}','${v}')">${l}</button>`).join('')}</div></div>`).join('')}</div>
+  <div class="hint">« Lecture » : il voit la rubrique sans pouvoir la modifier. « Aucun » : la rubrique n'apparaît pas pour lui. Les autres meetings ne changent pas.</div>
+  ${others.length?`<button class="more" onclick="rrAll()">${ic('copy',14)} Appliquer ces droits à ses ${others.length} autre${others.length>1?'s':''} meeting${others.length>1?'s':''}</button>`:''}
+ </div><div class="sf"><span></span><button class="btn pri big" onclick="rrDone()">${ic('check',18)} Terminé</button></div>`}
+function rrSet(pf,k,v){const a=DB.access.find(x=>x.id===RRS.id);if(!a)return;
+ if(pf==='cus'){const q=accRR(a);a.rr=Object.assign({},q,k?{[k]:v}:{});a.pf='cus'}else{a.pf=pf;delete a.rr}
+ delete a.scope;save();relive()}
+function rrAll(){const a=DB.access.find(x=>x.id===RRS.id);if(!a)return;let n=0;DB.access.filter(x=>x.id!==a.id&&ACC_FAM(x.role)==='meet'&&lc(x.mail)===lc(a.mail)&&x.mid).forEach(x=>{x.pf=a.pf||'std';if(a.rr)x.rr=Object.assign({},a.rr);else delete x.rr;delete x.scope;n++});save();toast('Droits appliqués à '+n+' meeting'+(n>1?'s':''))}
+function rrDone(){const k=RRS&&RRS.back;closeSheet();render();if(k)personSheet(k)}
 function psRole(id,r){const a=DB.access.find(x=>x.id===id);if(!a||a.role==='chef')return;a.role=r;psRe();toast('Groupe : '+RLm[r].l)}
 function psMRole(id,r){const a=DB.access.find(x=>x.id===id);if(a){a.role=r;psRe()}}
 function psMDel(id){const a=DB.access.find(x=>x.id===id),m=a&&DB.meetings.find(x=>x.id===a.mid);if(!a||!confirm('Retirer ce meeting de son accès ?'))return;DB.access=DB.access.filter(x=>x.id!==id);if(!psP()){save();closeSheet();render();toast('Accès retiré');return}psRe();toast('Meeting retiré'+(m?' : '+mName(m):''))}
