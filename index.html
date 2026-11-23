@@ -815,7 +815,9 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .rgali{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--ink);font-size:15px;display:flex;flex-direction:column;gap:2px}.rgali b{font-size:22px;color:#475569}.rgali small{color:var(--muted);font-size:12px}
 .sugb{color:#d97706}.sugb svg{filter:drop-shadow(0 0 6px rgba(250,204,21,.45))}
 .sgk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.sgk button{border:2px solid var(--line);background:var(--surface2);border-radius:16px;padding:12px 6px;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px}.sgk button span{font-size:26px;line-height:1}.sgk button.on{border-color:#f59e0b;background:rgba(250,204,21,.16)}
-.sgt{min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.sgph{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.sgth{position:relative;width:76px;height:76px}.sgth img{width:76px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.sgth .ib{position:absolute;top:-8px;right:-8px;width:26px;height:26px;background:var(--surface);border:1px solid var(--line);border-radius:50%}
+.sgadd{display:flex;gap:10px;align-items:center;flex:1;min-width:200px;border:2px dashed var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--muted)}.sgadd span{display:grid;font-weight:700;color:var(--fg)}.sgadd small{font-weight:500;color:var(--muted)}.sgphs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.sgt{font-family:inherit;min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
 .sgi{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px;background:var(--surface)}.sgi.done{opacity:.55}.sgm{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.sgx{margin:6px 0 8px;white-space:normal}
 .mtwin{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line)}.mtwl{margin-top:6px;font-size:14px}.mtwl.dn b{color:#c2410c}.mtwl.up b{color:#15803d}.mtt td .mtcat{margin-left:4px;vertical-align:1px}
 .pfxw{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface2);margin-bottom:4px}.pfxw div{display:flex;flex-direction:column}.pfxw b{font-size:18px}.pfxw span{font-size:12px;color:var(--muted)}
@@ -1057,7 +1059,8 @@ body.printmode .fiche{box-shadow:none;border:0;padding:0}
  h1{font-size:24px}
  .top .nav,.role span{display:none}
  .role select{max-width:34vw;min-width:0;padding-right:20px}
- body.kb .bnav{display:none}
+ body.kb .bnav,body.zoomed .bnav{display:none}
+ input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}
  .top .tin{gap:8px}.role{min-width:0;flex:0 1 auto}.top .sp{min-width:0}
  .brand img{width:36px;height:36px}
  .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:6px}
@@ -1523,7 +1526,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795466105';
+const APP_V='1795466490';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -7692,24 +7695,34 @@ function openSheet(fn){if($('ov').hidden)SHD=false;S.live=false;sheetFn=fn;const
 function fixSheet(){const sh=$('sheet');if(!sh)return;const ctrls=[...sh.querySelectorAll('input,textarea,select,.yn button,.chips button,.step button,.mchip,.pk,.ocat button,.fdrop,.ghostc,.more')];const any=ctrls.some(x=>!x.disabled);if(ROLE==='visit'||RLm[ROLE].side==='suivi'||!any){sh.querySelectorAll('.sf .btn.pri').forEach(b=>{if(/Je valide|C'est noté|Enregistrer|Remplir/.test(b.textContent)){b.textContent='Fermer';b.onclick=closeSheet;b.className='btn pri'}})}}
 /* Boîte à suggestions : une idée, un bug, quelque chose de plus pratique ; le chef ops reçoit une notification et un mail */
 let SUG={k:'idee',sent:0};const SUG_K=[['idee','💡','Une idée'],['bug','🐞','Ça ne marche pas'],['confort','✨','Plus pratique']];
-function suggOpen(){SUG={k:'idee',sent:0};openSheet(suggHTML);setTimeout(()=>{const t=$('sg-t');if(t&&!isChef())t.focus()},120)}
+function suggOpen(){SUG={k:'idee',sent:0,ph:[],t:''};openSheet(suggHTML);setTimeout(()=>{const t=$('sg-t');if(t&&!isChef())t.focus()},120)}
 function suggHTML(){const L=(DB.sugg||[]).slice().sort((a,b)=>(!!a.done-!!b.done)||b.t-a.t),open=L.filter(x=>!x.done).length;
  const form=SUG.sent?`<div class="sgok"><div class="sgbig">🙏</div><b>Merci !</b><p class="muted">Votre suggestion est bien arrivée au chef ops.</p><div class="pcbtns" style="justify-content:center"><button class="btn" onclick="SUG.sent=0;$('sheet').innerHTML=suggHTML()">Une autre idée</button><button class="btn pri" onclick="closeSheet()">Fermer</button></div></div>`:
   `<div class="sgk">${SUG_K.map(([k,e,l])=>`<button class="${SUG.k===k?'on':''}" onclick="SUG.k='${k}';document.querySelectorAll('.sgk button').forEach(b=>b.classList.toggle('on',b.dataset.k==='${k}'))" data-k="${k}"><span>${e}</span>${l}</button>`).join('')}</div>
-  <textarea class="in sgt" id="sg-t" rows="5" maxlength="3000" placeholder="Votre suggestion pour améliorer PAF OPS…"></textarea>
+  <textarea class="in sgt" id="sg-t" rows="5" maxlength="3000" placeholder="Votre suggestion pour améliorer PAF OPS…" oninput="SUG.t=this.value">${esc(SUG.t||'')}</textarea>
+  <div class="sgph">${(SUG.ph||[]).map((x,i)=>`<span class="sgth"><img src="${x.url}" alt="Photo ${i+1}"><button class="ib" aria-label="Retirer la photo" onclick="SUG.ph.splice(${i},1);$('sheet').innerHTML=suggHTML()">${ic('x',13)}</button></span>`).join('')}${(SUG.ph||[]).length<3?`<label class="sgadd">${ic('camera',18)}<span>${(SUG.ph||[]).length?'Une autre photo':'Joindre des photos'}<small>capture d'écran, photo… (3 au plus)</small></span><input type="file" accept="image/*" multiple hidden onchange="suggPics(this)"></label>`:''}</div>
   <button class="btn pri big" style="width:100%;margin-top:10px" id="sg-go" onclick="suggSend()">${ic('send',17)} Envoyer</button>
   <p class="small muted" style="margin:8px 0 0">Elle arrive directement au chef ops, avec votre nom.</p>`;
- const list=isChef()?`<h3 class="sgh">Suggestions reçues <span class="n">${open} à voir · ${L.length} en tout</span></h3>${L.length?L.map(x=>{const K=SUG_K.find(k=>k[0]===x.k)||SUG_K[0];return `<div class="sgi ${x.done?'done':''}"><div class="sgm"><span>${K[1]} <b>${esc(x.who||'?')}</b></span><span class="small muted">${new Date(x.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}${x.scr?' · '+esc(x.scr):''}</span></div><div class="sgx">${esc(x.txt).replace(/\n/g,'<br>')}</div>
+ const list=isChef()?`<h3 class="sgh">Suggestions reçues <span class="n">${open} à voir · ${L.length} en tout</span></h3>${L.length?L.map(x=>{const K=SUG_K.find(k=>k[0]===x.k)||SUG_K[0];return `<div class="sgi ${x.done?'done':''}"><div class="sgm"><span>${K[1]} <b>${esc(x.who||'?')}</b></span><span class="small muted">${new Date(x.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}${x.scr?' · '+esc(x.scr):''}</span></div><div class="sgx">${esc(x.txt).replace(/\n/g,'<br>')}</div>${(x.ph||[]).length?`<div class="sgphs">${x.ph.map((p,i)=>`<button class="btn sm" onclick="suggPh('${x.id}',${i})">${ic('camera',14)} Photo ${i+1}</button>`).join('')}</div>`:''}
    <div class="pcbtns"><button class="btn sm" onclick="suggSet('${x.id}',{done:${x.done?0:1}})">${x.done?'↺ À revoir':ic('check',14)+' Traitée'}</button><button class="ib" aria-label="Supprimer" onclick="if(confirm('Supprimer cette suggestion ?'))suggSet('${x.id}',{del:1})">${ic('trash',14)}</button></div></div>`}).join(''):'<p class="small muted">Aucune suggestion pour l\'instant.</p>'}`:'';
  return `<div class="sh">${tile({i:'bulb',c1:'#facc15',c2:'#f59e0b'},'lg')}<div class="t"><div class="q">Boîte à suggestions</div><div class="small muted">Une idée pour améliorer PAF OPS ?</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">${form}${list}</div>`}
 const SUG_FUN=['On cherche la boîte à idées. Elle était derrière la boîte à outils.',
  'On a demandé à l\'idée de faire « hmm ». Elle a fait « waouh ».'];
 function suggWait(){const sb=document.querySelector('#sheet .sb');if(sb)sb.insertAdjacentHTML('afterbegin',`<div class="sgwait"><div class="hg">⏳</div><b>${SUG_FUN[Math.floor(Math.random()*SUG_FUN.length)]}</b></div>`)}
+/* photos jointes : réduites sur l'appareil (1600 px, JPEG) avant l'envoi */
+async function suggPics(inp){const F=[...(inp.files||[])].slice(0,3-(SUG.ph||[]).length);inp.value='';
+ for(const f of F){if(!/^image\//.test(f.type))continue;try{const url=URL.createObjectURL(f),img=await new Promise((ok,ko)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ko;i.src=url});
+  const k=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*k);c.height=Math.round(img.naturalHeight*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  const d=c.toDataURL('image/jpeg',.82);SUG.ph.push({n:(f.name||'photo').replace(/\.[^.]+$/,'')+'.jpg',b64:d.split(',')[1],url:d})}catch(e){toast('Photo illisible : '+(f.name||''))}}
+ SUG.t=($('sg-t')||{}).value||SUG.t;$('sheet').innerHTML=suggHTML()}
+async function suggPh(id,i){const x=(DB.sugg||[]).find(y=>y.id===id),p=x&&x.ph&&x.ph[i];if(!p)return;let src=FILEB[p.driveId||p.id];
+ if(!src&&p.driveId&&isOnline()){toast('Ouverture de la photo…');try{const r=await api('dl',{id:p.driveId});if(r&&r.b64){const bin=atob(r.b64),u8=new Uint8Array(bin.length);for(let j=0;j<bin.length;j++)u8[j]=bin.charCodeAt(j);src=FILEB[p.driveId]=URL.createObjectURL(new Blob([u8],{type:r.type||'image/jpeg'}))}else{toast(r&&r.error||'Photo introuvable');return}}catch(e){toast('Connexion impossible');return}}
+ if(!src)return;openSheet(()=>`<div class="sh"><div class="t"><div class="q">Photo jointe</div><div class="small muted">${esc(x.who||'')} · ${new Date(x.t).toLocaleDateString('fr-FR')}</div></div><button class="ib" onclick="suggOpen();SUG.sent=0;$('sheet').innerHTML=suggHTML()" aria-label="Retour">${ic('x',18)}</button></div><div class="sb"><img src="${src}" alt="Photo jointe à la suggestion" style="width:100%;border-radius:12px"></div>`)}
 async function suggSend(){const t=($('sg-t')||{}).value||'';if(t.trim().length<3){toast('Écrivez votre suggestion');return}const b=$('sg-go');if(b){b.disabled=true;b.textContent='Envoi…'}suggWait();
  const scr=({meetings:'Meetings',meeting:'Meeting',unite:'Unité',acces:'Accès',mails:'Emails',perfos:'Outils',retex:'RETEX'})[S.view]||S.view||'';
- if(!isOnline()){DB.sugg=DB.sugg||[];DB.sugg.push({id:uid(),t:Date.now(),k:SUG.k,txt:t.trim(),who:ROLE==='chef'?'Chef des opérations':'Moi (maquette)',scr});save();SUG.sent=1;$('sheet').innerHTML=suggHTML();toast('Suggestion envoyée (maquette : ni notification ni mail)');return}
- let r;try{r=await api('suggPut',{kind:SUG.k,txt:t.trim(),scr})}catch(e){r={error:'Connexion impossible : réessayez dans un instant'}}
- if(r&&r.error){toast(r.error);document.querySelectorAll('.sgwait').forEach(x=>x.remove());if(b){b.disabled=false;b.innerHTML=ic('send',17)+' Envoyer'}return}SUG.sent=1;$('sheet').innerHTML=suggHTML()}
+ if(!isOnline()){DB.sugg=DB.sugg||[];const ph=(SUG.ph||[]).map(x=>{const id=uid();FILEB[id]=x.url;return {id,driveId:id,name:x.n}});DB.sugg.push({id:uid(),t:Date.now(),k:SUG.k,txt:t.trim(),who:ROLE==='chef'?'Chef des opérations':'Moi (maquette)',scr,ph});SUG.ph=[];SUG.t='';save();SUG.sent=1;$('sheet').innerHTML=suggHTML();toast('Suggestion envoyée (maquette : ni notification ni mail)');return}
+ let r;try{r=await api('suggPut',{kind:SUG.k,txt:t.trim(),scr,ph:(SUG.ph||[]).map(x=>({n:x.n,b64:x.b64}))})}catch(e){r={error:'Connexion impossible : réessayez dans un instant'}}
+ if(r&&r.error){toast(r.error);document.querySelectorAll('.sgwait').forEach(x=>x.remove());if(b){b.disabled=false;b.innerHTML=ic('send',17)+' Envoyer'}return}SUG.sent=1;SUG.ph=[];SUG.t='';$('sheet').innerHTML=suggHTML()}
 async function suggSet(id,o){const old=JSON.parse(JSON.stringify(DB.sugg||[])),x=(DB.sugg||[]).find(y=>y.id===id);if(o.del)DB.sugg=(DB.sugg||[]).filter(y=>y.id!==id);else if(x)x.done=o.done?Date.now():0;
  const sh=$('sheet');if(sh)sh.innerHTML=suggHTML();if(!isOnline()){save();return}   // affiché tout de suite, le serveur suit en arrière-plan
  let r;try{r=await api('suggSet',Object.assign({id},o))}catch(e){r={error:'Connexion impossible : rien n\'a été changé'}}
@@ -7957,7 +7970,14 @@ $('filein').addEventListener('change',async e=>{
  const sync=()=>{const kb=typing()&&!!vv&&vv.height<window.innerHeight*0.8;document.body.classList.toggle('kb',kb)};
  if(vv){vv.addEventListener('resize',sync);vv.addEventListener('scroll',sync)}
  document.addEventListener('focusin',()=>setTimeout(sync,300));
- document.addEventListener('focusout',()=>setTimeout(()=>{sync();if(!typing())window.scrollTo(window.scrollX,window.scrollY)},120));})();
+ document.addEventListener('focusout',()=>setTimeout(()=>{sync();if(!typing()){window.scrollTo(window.scrollX,window.scrollY);bnavFix()}},120));
+ /* Barre du bas (Meetings, Unité, Accès…) : sur iPhone, après le clavier ou un zoom, elle pouvait rester au milieu de l'écran.
+    Zoomé : elle est masquée ; au retour à 100 % ou à la fermeture du clavier, elle est recalée en bas ; un zoom laissé par un champ est annulé. */
+ const zm=()=>!!vv&&vv.scale>1.02;
+ window.bnavFix=()=>{const b=document.querySelector('.bnav');document.body.classList.toggle('zoomed',zm());if(zm()&&!typing()&&!ZTOOL())zoomReset();if(b){b.style.display='none';void b.offsetHeight;b.style.display=''}};
+ if(vv){let t=0;const f=()=>{clearTimeout(t);t=setTimeout(()=>{document.body.classList.toggle('zoomed',zm());if(!typing())bnavFix()},150)};vv.addEventListener('resize',f)}
+ window.addEventListener('orientationchange',()=>setTimeout(bnavFix,400));
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(bnavFix,300)});})();
 /* ---- Application installable sur téléphone (PWA) ---- */
 let INSTALL=null;
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}
