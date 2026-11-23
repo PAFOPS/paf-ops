@@ -1523,7 +1523,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795465690';
+const APP_V='1795466105';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -4531,7 +4531,10 @@ const RX_V=[['int','Interne PAF','#64748b','lock'],['org','À dire à l\'organis
 const RX_K={syn:'Synthèse',rem:'Remarque',crt:'Compte rendu DT / CST',crc:'Compte rendu Comm'};
 const rxRm=Object.fromEntries(RX_R.map(r=>[r[0],r])),rxVm=Object.fromEntries(RX_V.map(v=>[v[0],v]));
 const rxCan=()=>['chef','sec','dt','cst','comm','visit'].includes(ROLE);
-const rxKey=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\bSTE\b/g,'SAINTE').replace(/\bST\b/g,'SAINT').trim().replace(/^(?:LE|LA|LES|L)\s+(?=\S)/,'');
+const rxKey0=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\bSTE\b/g,'SAINTE').replace(/\bST\b/g,'SAINT').trim().replace(/^(?:LE|LA|LES|L)\s+(?=\S)/,'');
+/* Sites du RETEX qui sont le même lieu : regroupés sous un seul nom */
+const RX_ALIAS={BOURGET:'BOURGET SIAE','BOURGET SALON':'BOURGET SIAE','BOURGET SIAE':'BOURGET SIAE'},RX_ALIAS_L={'BOURGET SIAE':'Le Bourget SIAE'};
+const rxKey=s=>{const k=rxKey0(s);return RX_ALIAS[k]||k};
 /* anciennes fiches : clé du lieu remise à la forme commune (« LE BOURGET » → « BOURGET ») */
 function rxNorm(){(DB.retex||[]).forEach(e=>{if(e.site){const k=rxKey(e.site);if(k!==e.site)e.site=k}});(DB.meetings||[]).forEach(m=>{if(m.rxSite){const k=rxKey(m.rxSite);if(k!==m.rxSite)m.rxSite=k}})}
 const rxNice=s=>String(s||'').toLowerCase().replace(/(^|[\s\-'’(])(\p{L})/gu,(a,b,c)=>b+c.toUpperCase());
@@ -4541,7 +4544,7 @@ const rxYear=m=>+(String(firstDemo(m)||'').slice(0,4))||new Date().getFullYear()
 const rxLast=m=>(m.demos||[]).filter(Boolean).sort().slice(-1)[0]||firstDemo(m);
 function rxAll(){rxNorm();return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind!=='note'&&e.kind!=='pub')}   // synthèse : lue par tous ceux qui ont le RETEX, toutes rubriques   // synthèses (historique)
 function rxNotes(){return (DB.retex||[]).filter(e=>!e.del&&e.txt&&e.kind==='note'&&rxRubOk(rxRub(e)))}
-function rxSiteL(k){rxNorm();const L=(DB.retex||[]).filter(x=>x.site===k&&x.siteL).map(x=>String(x.siteL)).sort((a,b)=>b.length-a.length);if(L.length)return L[0];   // « Le Bourget » plutôt que « Bourget »
+function rxSiteL(k){rxNorm();if(RX_ALIAS_L[k])return RX_ALIAS_L[k];const L=(DB.retex||[]).filter(x=>x.site===k&&x.siteL).map(x=>String(x.siteL)).sort((a,b)=>b.length-a.length);if(L.length)return L[0];   // « Le Bourget » plutôt que « Bourget »
 const m=DB.meetings.find(x=>rxSiteOf(x)===k);return m&&m.city?m.city:rxNice(k)}
 function rxSites(){const M=new Map();rxAll().forEach(e=>{if(!e.site)return;const s=M.get(e.site)||{k:e.site,n:0,y:new Set(),say:0};s.n++;s.y.add(e.y);if(e.vis==='org'||e.vis==='dv')s.say++;M.set(e.site,s)});
  DB.meetings.forEach(m=>{const k=rxSiteOf(m);if(k&&!M.has(k))M.set(k,{k,n:0,y:new Set(),say:0})});
