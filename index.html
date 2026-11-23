@@ -1523,7 +1523,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795465295';
+const APP_V='1795465690';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -2328,7 +2328,7 @@ const MCHK=[
  {k:'util',l:'1 véhicule utilitaire',i:'truck',c1:'#64748b',c2:'#334155',sub:'Type Transit, Ducato, Sprinter ou Boxer : 3 à 5 places, environ 9 m³ de bagages.'},
  {k:'plein',l:'Des véhicules livrés avec le plein',i:'fuel',c1:'#f59e0b',c2:'#c2410c',sub:'La Patrouille n\'ajoutera aucun carburant.'},
  {k:'peage',l:'Le télépéage et des badges de parking',i:'park',c1:'#06b6d4',c2:'#0e7490',sub:'Les frais de péage et de stationnement sont entièrement à la charge de l\'organisateur.'},
- {k:'axe',l:'Un itinéraire réservé ou une escorte le jour J',i:'flag',c1:'#ef4444',c2:'#b91c1c',sub:'Fichier de l\'itinéraire ou contacts de l\'escorte, à déposer dans PAF OPS. L\'escorte est coordonnée par l\'Athos 3 de la Patrouille.'},
+ {k:'axe',l:'Un itinéraire réservé ou une escorte le jour J',i:'flag',c1:'#ef4444',c2:'#b91c1c',sub:'Fichier de l\'itinéraire ou contacts de l\'escorte, à déposer dans PAF OPS. L\'escorte est coordonnée par Athos 3 de la Patrouille.'},
  {k:'o2v',l:'Un véhicule pour les convoyeurs d\'oxygène, si besoin',i:'wind',c1:'#06b6d4',c2:'#0e7490',sub:'Le DMMA contacte les convoyeurs pour connaître leurs besoins.'},
  {k:'elec',l:'Des véhicules électriques ?',i:'plug',c1:'#22c55e',c2:'#15803d',sub:'Répondez Oui si au moins un véhicule est électrique.'}];
 function move(m){m.move=m.move||{chk:{},nVeh:'',nBig:'',remise:'',recharge:'',note:'',status:''};m.move.chk=m.move.chk||{};return m.move}
@@ -2376,11 +2376,11 @@ function vMove(m){
 
 /* ====================== Salles : cahier des charges PAF 2026 V2, §4.4 et §4.5 ====================== */
 const RBR=[
- {k:'proj',s:'Vidéoprojecteur',l:'Un vidéoprojecteur (HDMI)',i:'screen'},{k:'clim',s:'Climatisation',l:'La climatisation',i:'wind'},{k:'wifi',s:'WIFI',l:'Le WIFI',i:'wifi'},{k:'cle',s:'Porte à clé',l:'Une porte fermant à clé',i:'key'},
+ {k:'proj',s:'Vidéoprojecteur',l:'Un vidéoprojecteur (HDMI)',i:'screen'},{k:'clim',s:'Climatisation',l:'La climatisation',i:'wind'},{k:'wifi',s:'WIFI',l:'Le WIFI',i:'wifi'},{k:'cle',s:'Porte à clé',l:'Une porte fermant à clé (dans la mesure du possible)',i:'key'},
  {k:'snack',s:'Eau, café, en-cas',l:'Des <b>bouteilles d\'eau : indispensable</b>. Le café et les en-cas sont un plus, toujours grandement appréciés',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'30 chaises',l:'Une trentaine de chaises',i:'users'},{k:'calme',s:'Calme',l:'Un environnement calme',i:'moon'}];
 const RME=[
  {k:'sep',s:'Salle à part',l:'Une salle distincte de celle des pilotes',i:'door'},{k:'wc',s:'Sanitaires',l:'Des sanitaires à proximité',i:'user'},{k:'wifi',s:'WIFI ou RJ45',l:'Le WIFI ou une prise RJ45',i:'wifi'},{k:'clim',s:'Climatisation',l:'La climatisation',i:'wind'},
- {k:'cle',s:'Porte à clé',l:'Une porte fermant à clé',i:'key'},{k:'snack',s:'Eau, café, en-cas',l:'Des <b>bouteilles d\'eau : indispensable</b>. Café et en-cas : un plus, toujours apprécié',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'15 chaises',l:'Une quinzaine de chaises',i:'users'},
+ {k:'cle',s:'Porte à clé',l:'Une porte fermant à clé (dans la mesure du possible)',i:'key'},{k:'snack',s:'Eau, café, en-cas',l:'Des <b>bouteilles d\'eau : indispensable</b>. Café et en-cas : un plus, toujours apprécié',i:'coffee'},{k:'table',s:'Table et prises',l:'Une table de réunion avec multiprises',i:'plug'},{k:'chaises',s:'15 chaises',l:'Une quinzaine de chaises',i:'users'},
  {k:'manteaux',s:'Portemanteaux',l:'Des portemanteaux',i:'hanger'},{k:'atams',s:'Ordinateur ATAMS',l:'Un ordinateur Intradef avec le logiciel ATAMS',i:'laptop',sub:'Uniquement sur les bases militaires.',nc:1}];
 function room(m){m.room=m.room||{brief:{},meca:{},bWhere:'',mWhere:'',note:'',status:''};const o=m.room;o.brief=o.brief||{};o.meca=o.meca||{};o.chk=o.chk||{};Object.keys(o.brief).forEach(k=>{if(o.brief[k]&&!o.chk['b_'+k])o.chk['b_'+k]=o.brief[k]});Object.keys(o.meca).forEach(k=>{if(o.meca[k]&&!o.chk['m_'+k])o.chk['m_'+k]=o.meca[k]});o.brief={};o.meca={};return o}
 function roomProgress(m){const o=room(m);const it=[!!o.bWhere,...RBR.map(c=>!!o.brief[c.k]),!!o.mWhere,...RME.map(c=>!!o.meca[c.k])];return {done:it.filter(Boolean).length,tot:it.length}}
@@ -2400,7 +2400,7 @@ function roomSvg(kind){
  const side=(xa,xb,n,s)=>{let o='';for(let i=0;i<n;i++){const t=(i+.6)/n,x=xa+(xb-xa)*t,y=198+84*t;o+=chair(x+s*14,y+2,.85+t*.35)}return o};
  if(kind==='brief'){
   let rows='';for(let i=0;i<7;i++)rows+=chair(160+i*40,172,.8);
-  return `<svg class="rsvg" viewBox="0 0 560 300" role="img" aria-label="Salle de briefing : vidéoprojecteur, climatisation, WIFI, porte fermant à clé, coin snack, table avec multiprises, une trentaine de chaises, environnement calme">${shell}
+  return `<svg class="rsvg" viewBox="0 0 560 300" role="img" aria-label="Salle de briefing : vidéoprojecteur, climatisation, WIFI, porte fermant à clé (dans la mesure du possible), coin snack, table avec multiprises, une trentaine de chaises, environnement calme">${shell}
    <path d="M12 44L58 54V158L12 196Z" fill="url(#skybrief)" stroke="#94a3b8" stroke-width="3"/><path d="M35 49V176" stroke="#94a3b8" stroke-width="2"/>
    <rect x="276" y="4" width="18" height="9" rx="2" fill="#475569"/><path d="M285 13V22" stroke="#475569" stroke-width="2"/>
    <rect x="186" y="40" width="188" height="104" rx="3" fill="#1f2937"/><rect x="193" y="47" width="174" height="90" fill="url(#skybrief)"/>${jet(250,66,.3)}${jet(300,80,.22)}${jet(222,86,.18)}
@@ -2414,7 +2414,7 @@ function roomSvg(kind){
   </svg>`;
  }
  let ch='';
- return `<svg class="rsvg" viewBox="0 0 560 300" role="img" aria-label="Salle de repos des mécaniciens : distincte de la salle des pilotes, sanitaires à proximité, WIFI ou RJ45, climatisation, porte fermant à clé, coin snack, table avec multiprises, une quinzaine de chaises, portemanteaux, ordinateur Intradef">${shell}
+ return `<svg class="rsvg" viewBox="0 0 560 300" role="img" aria-label="Salle de repos des mécaniciens : distincte de la salle des pilotes, sanitaires à proximité, WIFI ou RJ45, climatisation, porte fermant à clé (dans la mesure du possible), coin snack, table avec multiprises, une quinzaine de chaises, portemanteaux, ordinateur Intradef">${shell}
   <rect x="96" y="40" width="210" height="112" fill="url(#skymeca)" stroke="#94a3b8" stroke-width="3"/><rect x="96" y="128" width="210" height="24" fill="#9ca3af"/><path d="M166 40V152M236 40V152" stroke="#94a3b8" stroke-width="2.5"/>
   <rect x="386" y="130" width="92" height="46" fill="#a87449"/><rect x="384" y="126" width="96" height="6" rx="2" fill="#c08a58"/><path d="M432 132V176" stroke="#8b5e3c" stroke-width="1.5"/>
   <rect x="392" y="104" width="18" height="22" rx="2" fill="#374151"/><rect x="416" y="112" width="6" height="14" rx="2" fill="#38bdf8"/>
@@ -2832,7 +2832,7 @@ ITM.move=m=>[
  {k:'plein',l:'Le plein fait',i:'fuel',c1:'#f59e0b',c2:'#c2410c',kind:'tick',info:'<p>Les véhicules sont livrés avec le plein : la Patrouille n\'ajoute pas de carburant.</p>'},
  {k:'peage',l:'Télépéage et parking',i:'park',c1:'#06b6d4',c2:'#0e7490',kind:'tick',info:'<p>Badges de télépéage et de parking. Les péages et le stationnement sont à la charge de l\'organisateur.</p>'},
  {k:'axe',l:'Itinéraire réservé ou escorte',i:'flag',c1:'#ef4444',c2:'#b91c1c',kind:'sheet',open:`itinSheet('${m.id}')`,done:itinDone,warn:()=>false,sub:o=>{const v=o.chk.axe;return v==='iti'?(o.itinFile?'Itinéraire déposé':'Itinéraire à déposer'):v==='esc'?(o.escNote||o.itinFile?'Escorte : contacts donnés':'Escorte : contacts à donner'):v==='non'?'Ni l\'un ni l\'autre':v==='oui'?'Oui, à préciser':'À dire'},
-  info:'<p>Le jour J, l\'équipe doit circuler vite entre l\'hôtel, l\'aéroport et le site : <b>un itinéraire réservé</b> (fichier à déposer) ou <b>une escorte</b> (contacts à donner). L\'escorte est coordonnée par l\'<b>Athos 3</b>.</p>'},
+  info:'<p>Le jour J, l\'équipe doit circuler vite entre l\'hôtel, l\'aéroport et le site : <b>un itinéraire réservé</b> (fichier à déposer) ou <b>une escorte</b> (contacts à donner). L\'escorte est coordonnée par <b>Athos 3</b>.</p>'},
  {k:'elec',l:'Voitures électriques ?',i:'plug',c1:'#22c55e',c2:'#15803d',kind:'sheet',open:`elecSheet('${m.id}')`,done:o=>o.chk.elec==='non'||(o.chk.elec==='oui'&&!!o.recharge&&!!o.chk.carte),warn:()=>false,sub:o=>o.chk.elec==='non'?'Aucune':o.chk.elec==='oui'?'Oui':'À dire',
   info:'<p>Autonomie adaptée aux déplacements fréquents, points de recharge près de l\'hôtel, de l\'aéroport et du site, frais de recharge à la charge de l\'organisateur.</p>'},
  {k:'regles',l:'À savoir',i:'info',c1:'#64748b',c2:'#334155',kind:'tick',okLabel:'Compris',noLabel:'Question',info:'<ul class="rl"><li><b>Pas de chauffeur</b> : l\'équipe conduit elle-même.</li><li>Péages et parking à la charge de l\'organisateur.</li><li>Transports en avion ou hélicoptère léger par des pilotes non professionnels <b>interdits</b>.</li></ul>'},
@@ -2849,7 +2849,7 @@ function itinSheet(mid){S.fs={mid};openLive(()=>{const m=DB.meetings.find(x=>x.i
    <button class="fdrop ${f?'has':''}" ${ed?`onclick="PICK={itin:'${m.id}'};const i=$('filein');i.value='';i.click()"`:'disabled'}>${tile({i:'map',c1:'#ef4444',c2:'#b91c1c'},'')}<span class="t"><b>${f?esc(f.name):v==='iti'?'Déposer l\'itinéraire':'Déposer un document'}</b>${f?`<span class="tiny muted">${fsize(f.size)} · ${new Date(f.t).toLocaleDateString('fr-FR')}${ed?' · toucher pour remplacer':''}</span>`:`<span class="small muted">${ed?'PDF, image ou carte (KML)':'Pas encore déposé'}</span>`}</span>${ed?ic(f?'edit':'upload',18):''}</button>
    ${f&&f.url?`<a class="small" href="${esc(f.url)}" target="_blank" rel="noopener">${ic('eye',13)} Ouvrir le fichier</a>`:''}`:''}
   ${v==='esc'?`<label class="l" for="esc-n">Contacts de l'escorte</label><textarea class="in" id="esc-n" rows="3" style="font:inherit" placeholder="Ex. : Gendarmerie de Morlaix, Adjudant Martin, 06…, point de rendez-vous…" ${ed?'':'disabled'} onchange="S.skipLive=true;itinNote('${m.id}',this.value);S.skipLive=false">${esc(V.escNote||'')}</textarea>`:''}
-  <div class="rappel" style="margin-top:14px">${ic('user',18)}<span><b>L'escorte est coordonnée par l'Athos 3${a3?` : ${esc([GRADEL[a3.grade]||a3.grade||'',a3.first,a3.last].filter(Boolean).join(' '))}`:''}.</b>${a3&&(a3.tel||a3.mail)?`<br>${a3.tel?`${ic('phone',13)} <a href="tel:${esc(a3.tel)}">${esc(fmtTel(a3.tel))}</a>`:''}${a3.tel&&a3.mail?' · ':''}${a3.mail?`${ic('mail',13)} <a href="mailto:${esc(a3.mail)}">${esc(a3.mail)}</a>`:''}`:'<br>Ses coordonnées vous seront communiquées par la Patrouille.'}<br><span class="small muted">Contactez-le pour organiser l'escorte ou l'itinéraire avec les forces de l'ordre.</span></span></div>
+  <div class="rappel" style="margin-top:14px">${ic('user',18)}<span><b>L'escorte est coordonnée par Athos 3${a3?` : ${esc([GRADEL[a3.grade]||a3.grade||'',a3.first,a3.last].filter(Boolean).join(' '))}`:''}.</b>${a3&&(a3.tel||a3.mail)?`<br>${a3.tel?`${ic('phone',13)} <a href="tel:${esc(a3.tel)}">${esc(fmtTel(a3.tel))}</a>`:''}${a3.tel&&a3.mail?' · ':''}${a3.mail?`${ic('mail',13)} <a href="mailto:${esc(a3.mail)}">${esc(a3.mail)}</a>`:''}`:'<br>Ses coordonnées vous seront communiquées par la Patrouille.'}<br><span class="small muted">Contactez-le pour organiser l'escorte ou l'itinéraire avec les forces de l'ordre.</span></span></div>
  </div>`+shOk})}
 function itinSet(mid,k){const V=move(DB.meetings.find(x=>x.id===mid));V.chk.axe=V.chk.axe===k?'':k;save();render()}
 function itinNote(mid,t){const V=move(DB.meetings.find(x=>x.id===mid));V.escNote=String(t||'').trim().slice(0,2000);save();render()}
