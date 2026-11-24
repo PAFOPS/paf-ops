@@ -943,6 +943,7 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .putodo{border:2px solid #f59e0b}.puhd{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .rrchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;color:inherit;display:inline-flex;align-items:center;gap:4px}.rrchip.sup{background:#fef3c7;border-color:#f59e0b;color:#92400e}.rrchip.cus{background:#e0f2fe;border-color:#0ea5e9;color:#075985}.rrchip:disabled{cursor:default}
 .rrpf{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:6px}.rrp{display:grid;gap:3px;text-align:left;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);color:inherit;cursor:pointer}.rrp small{color:var(--muted);font-size:12px;line-height:1.3}.rrp[aria-pressed=true]{border-color:#0ea5e9;background:#e0f2fe55}.rrp.sup[aria-pressed=true]{border-color:#f59e0b;background:#fef3c755}
+.exhid{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px;padding:9px 12px;border-radius:12px;background:#fef2f2;border:1px solid #fecaca;font-size:13px;color:#7f1d1d}.exhid>span:first-child{display:inline-flex;gap:5px;align-items:center;font-weight:700}.exhv{background:#fff;border:1px solid #fecaca;border-radius:999px;padding:3px 10px}.exhv .more{margin-left:4px}
 .putr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}.putr>b{display:flex;gap:6px;align-items:center;font-size:14px}.putrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.putrl>span{display:grid;gap:2px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12.5px;min-width:130px}.putrl>span.on{border-color:#16a34a;background:#16a34a14}.putrl small{color:var(--muted);text-transform:capitalize}.putrl i{font-style:normal;color:var(--muted);font-size:11.5px}.putrl em{font-style:normal;font-size:11.5px;color:var(--muted)}.putrl .btn{margin-top:4px}
 .puoff{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0;padding:7px 10px;border-radius:9px;background:#fef3c7;color:#92400e;font-size:13px}.puoff span{color:#b45309;font-size:12px}
 .pumo button{white-space:nowrap}.pumo{display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:4px;margin-bottom:10px}.pumo button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;font:inherit;font-size:12.5px;font-weight:800;color:var(--fg);cursor:pointer;display:grid}.pumo button small{font-size:10.5px;color:var(--muted);font-weight:700}.pumo button[aria-pressed=true]{background:var(--pri);color:#fff;border-color:var(--pri)}.pumo button[aria-pressed=true] small{color:#fff;opacity:.8}
@@ -1526,7 +1527,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795530170';
+const APP_V='1795530556';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -4796,7 +4797,10 @@ const exWk=()=>S.exW||(S.exW=pcCurWk());
 /* Les vols de la semaine viennent de l'agenda « Opérations PAF » (lecture directe, ou liste des points centraux qui en est tirée).
    Un même vol (même jour, même heure, même titre donc même nombre d'avions et même plein) n'apparaît qu'une fois. Les fiches reprises du classeur n'y figurent pas. */
 const exDup=f=>f.d+'|'+f.time+'|'+String(f.title||'').toUpperCase().replace(/\s+/g,'');
-function exFlights(w){const M=new Map(),K=new Set(),put=f=>{const id=f.ev||('m-'+w+'-'+f.d+'-'+f.time),k=exDup(f);if(M.has(id)||K.has(k))return;K.add(k);M.set(id,{id,ev:f.ev||'',d:f.d,date:pcAdd(w,f.d),time:f.time,title:f.title||''})};
+/* Vols supprimés à la main (lus sur la plaquette mais pas faits) : DB.ex[id].hid ; « Relire la plaquette » les remet */
+const exHidL=w=>Object.entries(DB.ex||{}).filter(([id,e])=>e.hid&&e.w===w).map(([id,e])=>Object.assign({id},e)).sort((a,b)=>a.d-b.d||String(a.time).localeCompare(String(b.time)));
+function exFlights(w){const M=new Map(),K=new Set(),HI=new Set(),HK=new Set();exHidL(w).forEach(h=>{HI.add(h.id);HK.add(exDup(h))});
+ const put=f=>{const id=f.ev||('m-'+w+'-'+f.d+'-'+f.time),k=exDup(f);if(M.has(id)||K.has(k)||HI.has(id)||HK.has(k))return;K.add(k);M.set(id,{id,ev:f.ev||'',d:f.d,date:pcAdd(w,f.d),time:f.time,title:f.title||''})};
  ((S.exEv||{})[w]||[]).forEach(put);(pcW0(w).fl||[]).forEach(put);
  if(!M.size&&!isOnline())[0,1,2,3,4].forEach(d=>[['09:30','8 FUS+100'],['12:30','4N1 4 FUS+100'],['16:00','8 FUS+100']].forEach(([t,ti])=>put({d,time:t,title:ti,ev:'demo-'+w+'-'+d+'-'+t})));
  Object.entries(DB.ex||{}).forEach(([id,e])=>{if(e.w===w&&!e.del&&!e.xl&&!e.demo&&!M.has(id)&&exTot(e))put({ev:id,d:e.d,time:e.time,title:e.title||''})});
@@ -4807,6 +4811,12 @@ function exAuto(){const w=exWk();if(!isOnline()||(S.exAgT||{})[w])return;exAgend
 /* ---- Saisie : catégorie › figure › formation, puis la note ---- */
 function exE(f){DB.ex=DB.ex||{};let e=DB.ex[f.id];if(!e){e=DB.ex[f.id]={w:exWk(),d:f.d,time:f.time,title:f.title,ev:f.ev,tour:exTourH(f.time),box:exBoxOf(f.title)||8,dom:{},c:{},g:{},note:'',v2:1,t:Date.now()}}e.g=e.g||{};e.dom=e.dom||{};if(!e.box)e.box=exBoxOf(e.title)||8;if(e.del)delete e.del;return e}
 const exCur=()=>exFlights(exWk()).find(x=>x.id===S.exF)||((DB.ex||{})[S.exF]&&Object.assign({id:S.exF},DB.ex[S.exF]));
+function exHide(id){const w=exWk(),f=exFlights(w).find(x=>x.id===id);if(!f)return;const e0=(DB.ex||{})[id],n=exTot(e0);
+ if(!confirm('Supprimer le vol de '+f.time.replace(':','h')+(f.title?' ('+f.title+')':'')+' ?'+(n?'\nSes '+n+' exercice'+(n>1?'s':'')+' ne compteront plus dans le suivi.':'')+'\nVous pourrez le remettre avec « Relire la plaquette ».'))return;
+ DB.ex=DB.ex||{};const e=DB.ex[id]||(DB.ex[id]={w,d:f.d,time:f.time,title:f.title,ev:f.ev||'',c:{},g:{},dom:{},box:exBoxOf(f.title)||8,hidNew:1});
+ e.hid=1;if(!e.del){e.del=1;e.delH=1}e.tm=Date.now();S.exF=null;S.exPick=null;S.exRate=null;save();render();toast('Vol supprimé')}
+function exUnhide(id,quiet){const e=(DB.ex||{})[id];if(!e)return;if(e.hidNew&&!exTot(e)&&!Object.keys(e.dom||{}).length&&!e.note)delete DB.ex[id];else{delete e.hid;if(e.delH){delete e.del;delete e.delH}delete e.hidNew;e.tm=Date.now()}if(!quiet){save();render();toast('Vol remis')}}
+function exReread(w){exHidL(w).forEach(h=>exUnhide(h.id,1));save();render();if(isOnline())exAgenda(w);else toast('Plaquette relue')}
 function exOpen(id){S.exF=id;S.exPick=null;S.exRate=null;render();window.scrollTo(0,0)}
 function exTap(cat){const C=exCm[cat];S.exPick={cat,fig:C.fig.length===1?C.fig[0]:null,more:false};if(C.fig.length===1&&C.quick){exAdd(exKey(C.fig[0],C.quick));return}render();exScroll()}
 function exStepFig(f){const P=S.exPick;if(!P)return;P.fig=f;render();exScroll()}
@@ -4857,7 +4867,7 @@ function vEx(tabs){exMigrate();const w=exWk(),ed=exCanEdit(),F=exFlights(w),rel=
   const forms=C&&P.fig?(C.form||EX_FORM_STD):[],others=C&&P.fig?EX_FORM.filter(x=>!forms.includes(x)):[];
   return `${head}${demo}<div class="pfbar"><button class="btn" onclick="S.exF=null;S.exPick=null;S.exRate=null;render();window.scrollTo(0,0)">${ic('back',16)} Vols de la semaine</button></div>
   <section class="exhead"><div class="exwhen"><b>${PC_J[f.d]} ${pcDay(w,f.d)} ${PC_MO[fromISO(f.date).getMonth()]}</b><span>${f.time.replace(':','h')}</span></div><div class="exttl"><b>${esc(f.title||'Vol d\'entraînement')}</b><span class="small muted">${exTour(f.time,Object.assign({w},f))}${pcX?' · PC : '+esc(pcName(pcX)):''}</span><span class="exboxsel">${[4,8].map(b=>`<button aria-pressed="${e.box===b}" ${ed?`onclick="exBox(${b})"`:'disabled'}>@${b}</button>`).join('')}</span></div><div class="extot"><b>${exTot(e)}</b><span>exercice${exTot(e)>1?'s':''}</span></div></section>
-  ${exDomBox(e,ed)}
+  ${exDomBox(e,ed)}${ed?`<div class="pcbtns" style="justify-content:flex-end;margin:-4px 0 10px"><button class="more" style="color:#b91c1c" onclick="exHide('${f.id}')">${ic('trash',14)} Supprimer ce vol (pas fait)</button></div>`:''}
   ${ed?`<section class="dvbox exbox"><div class="dvsec">
    ${R?`<div id="expick" class="expick" style="--c1:${RC.c1};--c2:${RC.c2}"><div class="exbc">${RC.ico?`<span class="exico sm">${exIco(RC.ico,26)}</span>`:''}<b>${esc(exLabel(R))}</b><span class="exchip">× ${e.c[R]}</span><button class="more" style="margin-left:auto" onclick="S.exRate=null;render()">Plus tard</button></div>
      <p class="exq">Note moyenne sur ce vol</p>${exGradeBtns(R,G[R],1)}</div>`:
@@ -4893,6 +4903,7 @@ function vEx(tabs){exMigrate();const w=exWk(),ed=exCanEdit(),F=exFlights(w),rel=
  const today=iso(new Date());
  const days=PC_J.map((j,d)=>{const L=F.filter(x=>x.d===d);if(!L.length)return '';return `<div class="exday ${pcAdd(w,d)===today?'today':''}"><b>${PC_JS[d]} ${pcDay(w,d)}${pcAdd(w,d)===today?' <span class="pill ok">Aujourd\'hui</span>':''}</b>${L.map(x=>{const e=(DB.ex||{})[x.id],n=exTot(e),gs=e?Object.keys(e.c||{}).sort(exOrd).map(k=>(e.g||{})[k]).filter(Boolean):[];return `<button class="exfl" onclick="exOpen('${x.id}')"><span class="pct">${exTour(x.time,Object.assign({w},x))}<small>${x.time.replace(':','h')}</small></span><span class="pcti">${esc(x.title||'Vol')}</span>${n?`${exDots(gs,10)}<span class="pill ok">${n} ex.</span>`:`<span class="pill todo">${ed?'À remplir':'—'}</span>`}${ic('chev',16)}</button>`}).join('')}</div>`}).join('');
  return `${head}${demo}${seg}${nav}<div class="pcbtns">${isOnline()?`<button class="btn" ${S.exBusy?'disabled':''} onclick="exAgenda(exWk())">${ic('cal',15)} ${S.exBusy?'Lecture…':'Relire l\'agenda'}</button>`:''}</div>
+  ${(()=>{const H=exHidL(w);return H.length?`<div class="exhid"><span>${ic('trash',14)} ${H.length} vol${H.length>1?'s':''} supprimé${H.length>1?'s':''} :</span>${H.map(h=>`<span class="exhv">${PC_JS[h.d]} ${String(h.time).replace(':','h')}${h.title?' · '+esc(h.title):''}${ed?` <button class="more" onclick="exUnhide('${h.id}')">Remettre</button>`:''}</span>`).join('')}${ed?`<button class="btn sm" onclick="exReread('${w}')">${ic('cal',14)} Relire la plaquette</button>`:''}</div>`:''})()}
   ${days?`<div class="exdays">${days}</div>`:`<p class="muted">Aucun vol trouvé pour cette semaine.${isOnline()?' Les vols viennent de l\'agenda « Opérations PAF » (réglé dans Points centraux).':''}</p>`}`}
 /* ---- Le classeur Google Sheets (copie du classeur 2027 sur le Drive) : réglage du chef ops ---- */
 /* Les lignes du classeur (une par vol : date, tour, DOM's, exercices), prêtes à coller dans l'onglet @4 ou @8 : aucune autorisation Google nécessaire */
