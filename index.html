@@ -1526,7 +1526,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795467254';
+const APP_V='1795530170';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -4732,13 +4732,13 @@ function rxImpGo(){DB.retex=DB.retex||[];if(RXI.rep)DB.retex.forEach(e=>{if(e.im
    1 rouge (mauvais) · 2 jaune (faible) · 3 vert (satisfaisant) · 4 bleu (bon).
    Données : DB.ex[<id du vol>] = {w, d, time, title, ev, box (4|8), dom:{out,in,to,brk}, c:{'FIGURE|FORMATION':nombre}, g:{clé:1..4}, note}. */
 const EX_FIG=['CACAHUETE','BOUCLE','TG','TD','TGTD','TDTG','GTG','GTD','TNO ENV','TR G','TR D','BOUCLE OBL','SHERIFF','TNO SIMU','APACHE','REBONDI','P ANG'];
-const EX_FORM=['MR','DIAMANT','CONCORDE','DIAMANT VERS CONCORDE','MR VERS DIAMANT','CANARD','APOLLO','FLECHE','DARD','RAFALE','LOSANGE','CROISILLON','GF','TGF','ALPHA','MR VERS LOS','TORPILLE','ALPHA VERS DIAMANT','TGF VERS CONCORDE'];
-const EX_FL={'CACAHUETE':'Cacahuète','TNO ENV':'TNO envoyé','TR G':'Trèfle à gauche','TR D':'Trèfle à droite','BOUCLE OBL':'Boucle oblique','TNO SIMU':'TNO simu','P ANG':'P ANG','GTG':'GTG','GTD':'GTD','TGTD':'TGTD','TDTG':'TDTG','TG':'TG','TD':'TD','GF':'GF','TGF':'TGF','MR':'MR','DIAMANT':'Diamant','CONCORDE':'Concorde','DIAMANT VERS CONCORDE':'Diamant → Concorde','MR VERS DIAMANT':'MR → Diamant','MR VERS DIAMANT VERS CONCORDE':'MR → Diamant → Concorde','FLECHE':'Flèche','MR VERS LOS':'MR → Losange','ALPHA VERS DIAMANT':'Alpha → Diamant','TGF VERS CONCORDE':'TGF → Concorde'};
+const EX_FORM=['MR','DIAMANT','CONCORDE','DIAMANT VERS CONCORDE','MR VERS DIAMANT','CANARD','APOLLO','FLECHE','DARD','RAFALE','LOSANGE','CROISILLON','GF','TGF','ALPHA','MR VERS LOS','TORPILLE','ALPHA VERS DIAMANT','TGF VERS CONCORDE','TRANSALL'];
+const EX_FL={'CACAHUETE':'Cacahuète','TNO ENV':'TNO envoyé','TR G':'Trèfle à gauche','TR D':'Trèfle à droite','BOUCLE OBL':'Boucle oblique','TNO SIMU':'TNO simu','P ANG':'P ANG','GTG':'GTG','GTD':'GTD','TGTD':'TGTD','TDTG':'TDTG','TG':'TG','TD':'TD','GF':'GF','TGF':'TGF','MR':'MR','DIAMANT':'Diamant','CONCORDE':'Concorde','TRANSALL':'Transall','DIAMANT VERS CONCORDE':'Diamant → Concorde','MR VERS DIAMANT':'MR → Diamant','MR VERS DIAMANT VERS CONCORDE':'MR → Diamant → Concorde','FLECHE':'Flèche','MR VERS LOS':'MR → Losange','ALPHA VERS DIAMANT':'Alpha → Diamant','TGF VERS CONCORDE':'TGF → Concorde'};
 const exL=v=>EX_FL[v]||(v?v.charAt(0)+v.slice(1).toLowerCase():'');
 /* Tuiles : une catégorie regroupe des figures proches ; la formation vient ensuite (les plus courantes d'abord, les autres derrière « Autre ») */
 const EX_CAT=[
- {k:'cc',l:'CC',d:'Cacahuète',c1:'#f59e0b',c2:'#b45309',ico:'cc',fig:['CACAHUETE'],form:['MR','DIAMANT','CONCORDE','MR VERS DIAMANT','DIAMANT VERS CONCORDE']},
- {k:'bou',l:'Boucle',d:'Pure, TG, TD, oblique',c1:'#3b82f6',c2:'#1d4ed8',ico:'loop',fig:['BOUCLE','TG','TD','BOUCLE OBL'],fl:{BOUCLE:'Pure',TG:'TG',TD:'TD','BOUCLE OBL':'Oblique'}},
+ {k:'cc',l:'CC',d:'Cacahuète',c1:'#f59e0b',c2:'#b45309',ico:'cc',fig:['CACAHUETE'],form:['MR','DIAMANT','CONCORDE','TRANSALL','MR VERS DIAMANT','DIAMANT VERS CONCORDE']},
+ {k:'bou',l:'Boucle',d:'Pure, TG, TD, oblique',c1:'#3b82f6',c2:'#1d4ed8',ico:'loop',fig:['BOUCLE','TG','TD','BOUCLE OBL'],fl:{BOUCLE:'Pure',TG:'TG',TD:'TD','BOUCLE OBL':'Oblique'},form:['DIAMANT','CONCORDE','MR','TRANSALL']},
  {k:'gt',l:'GTG / GTD',d:'Diamant, Concorde',c1:'#22c55e',c2:'#15803d',fig:['GTG','GTD']},
  {k:'tt',l:'TGTD / TDTG',d:'Diamant, Concorde',c1:'#14b8a6',c2:'#0f766e',fig:['TGTD','TDTG']},
  {k:'tr',l:'Trèfle',d:'À gauche, à droite',c1:'#a855f7',c2:'#7e22ce',ico:'clover',fig:['TR G','TR D'],fl:{'TR G':'À gauche','TR D':'À droite'}},
