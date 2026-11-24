@@ -1528,7 +1528,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795530801';
+const APP_V='1795547141';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -7989,8 +7989,18 @@ $('filein').addEventListener('change',async e=>{
  /* Barre du bas (Meetings, Unité, Accès…) : sur iPhone, après le clavier ou un zoom, elle pouvait rester au milieu de l'écran.
     Zoomé : elle est masquée ; au retour à 100 % ou à la fermeture du clavier, elle est recalée en bas ; un zoom laissé par un champ est annulé. */
  const zm=()=>!!vv&&vv.scale>1.02;
- window.bnavFix=()=>{const b=document.querySelector('.bnav');document.body.classList.toggle('zoomed',zm());if(zm()&&!typing()&&!ZTOOL())zoomReset();if(b){b.style.display='none';void b.offsetHeight;b.style.display=''}};
- if(vv){let t=0;const f=()=>{clearTimeout(t);t=setTimeout(()=>{document.body.classList.toggle('zoomed',zm());if(!typing())bnavFix()},150)};vv.addEventListener('resize',f)}
+ /* iPhone (appli sur l'écran d'accueil) : après le clavier, iOS garde parfois une « fenêtre » plus courte que l'écran,
+    et une barre accrochée en bas (bottom:0) remonte au milieu. On la place alors depuis le haut, sur la hauteur réellement visible. */
+ const bnavPos=()=>{const b=document.querySelector('.bnav');if(!b)return;if(getComputedStyle(b).display==='none'||typing()){b.style.top='';b.style.bottom='';return}
+  let H=vv?vv.height+vv.offsetTop:window.innerHeight;
+  const st=navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
+  if(st&&!zm()){const sh=(window.matchMedia&&matchMedia('(orientation: portrait)').matches)?Math.max(screen.height,screen.width):Math.min(screen.height,screen.width);if(sh>H+40)H=sh}
+  if(Math.abs(H-window.innerHeight)>30||Math.abs(b.getBoundingClientRect().bottom-H)>30){b.style.top=Math.round(H-b.offsetHeight)+'px';b.style.bottom='auto'}else{b.style.top='';b.style.bottom=''}};
+ window.bnavFix=()=>{const b=document.querySelector('.bnav');document.body.classList.toggle('zoomed',zm());if(zm()&&!typing()&&!ZTOOL())zoomReset();if(b){b.style.display='none';void b.offsetHeight;b.style.display=''}bnavPos()};
+ let raf=0;const bp=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;bnavPos()})};
+ window.addEventListener('scroll',bp,{passive:true});window.addEventListener('resize',bp);
+ if(vv){let t=0;const f=()=>{bp();clearTimeout(t);t=setTimeout(()=>{document.body.classList.toggle('zoomed',zm());if(!typing())bnavFix()},150)};vv.addEventListener('resize',f);vv.addEventListener('scroll',bp)}
+ setInterval(()=>{if(!document.hidden)bnavPos()},1500);
  window.addEventListener('orientationchange',()=>setTimeout(bnavFix,400));
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(bnavFix,300)});})();
 /* ---- Application installable sur téléphone (PWA) ---- */
