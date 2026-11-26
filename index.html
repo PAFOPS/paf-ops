@@ -818,6 +818,9 @@ details.cb-more{border:1px solid var(--line);border-radius:14px;margin:12px 0;ba
 .sgk{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.sgk button{border:2px solid var(--line);background:var(--surface2);border-radius:16px;padding:12px 6px;font-weight:700;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px}.sgk button span{font-size:26px;line-height:1}.sgk button.on{border-color:#f59e0b;background:rgba(250,204,21,.16)}
 .sgph{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.sgth{position:relative;width:76px;height:76px}.sgth img{width:76px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}.sgth .ib{position:absolute;top:-8px;right:-8px;width:26px;height:26px;background:var(--surface);border:1px solid var(--line);border-radius:50%}
 .sgadd{display:flex;gap:10px;align-items:center;flex:1;min-width:200px;border:2px dashed var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--muted)}.sgadd span{display:grid;font-weight:700;color:var(--fg)}.sgadd small{font-weight:500;color:var(--muted)}.sgphs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.sgth2{display:grid;gap:6px;margin-top:8px}.sgb{max-width:88%;padding:7px 11px;border-radius:14px;font-size:14px;line-height:1.35}.sgb small{display:block;font-size:11px;font-weight:700;opacity:.7;margin-bottom:2px}.sgb.c{justify-self:end;background:#1e3a8a;color:#fff;border-bottom-right-radius:4px}.sgb.a{justify-self:start;background:var(--surface2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.sgr{display:flex;gap:6px;align-items:flex-end}.sgr textarea{flex:1;min-height:40px;resize:none;font-family:inherit;padding:9px 11px}.sgr .btn{height:40px}.sgi.new{border-color:#f59e0b;box-shadow:0 0 0 2px #f59e0b33}.sgnew{color:#b45309;font-size:12px;margin-left:6px}
+#sugB.dot{position:relative}#sugB.dot::after{content:'';position:absolute;top:5px;right:5px;width:10px;height:10px;border-radius:50%;background:#ef4444;border:2px solid var(--surface)}
 .sgt{font-family:inherit;min-height:120px;font-size:16px;resize:vertical}.sgok{text-align:center;padding:16px 4px}.sgbig{font-size:46px}.sgh{margin:22px 0 8px;font-size:16px}.sgh .n{font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
 .sgi{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px;background:var(--surface)}.sgi.done{opacity:.55}.sgm{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.sgx{margin:6px 0 8px;white-space:normal}
 .mtwin{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);border:1px solid var(--line)}.mtwl{margin-top:6px;font-size:14px}.mtwl.dn b{color:#c2410c}.mtwl.up b{color:#15803d}.mtt td .mtcat{margin-left:4px;vertical-align:1px}
@@ -1536,7 +1539,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795615800';
+const APP_V='1795674626';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -1596,7 +1599,7 @@ function render(){navMem();
  {const f=$('sr-fr');if(f&&S.view==='perfos'&&S.pfTab==='sr'&&f.dataset.role===String(ROLE)&&viewOk('perfos')&&srCan()){try{f.contentWindow.postMessage({srList:JSON.parse(JSON.stringify(srVis()))},'*')}catch(e){}return}}
  if(typeof ME!=='undefined'&&ME&&ME.mr){const r=(S.view==='meeting'||S.view==='recap')&&S.mid&&ME.mr[S.mid];ROLE=r&&RLm[r]?r:ME.role}
  if(!viewOk(S.view))S.view=isOsab()||isBob()?'perfos':'meetings';if(isOsab())S.pfTab='fea';if(isBob())S.pfTab='zr';
- {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}const g=$('sugB');if(g){g.hidden=!ROLE||ROLE==='ro';if(!g.innerHTML)g.innerHTML=ic('bulb',19)}}
+ {const b=$('bell');if(b){b.hidden=!canBell();if(!b.innerHTML)b.innerHTML=ic('bell',18)}const g=$('sugB');if(g){g.hidden=!ROLE||ROLE==='ro';if(!g.innerHTML)g.innerHTML=ic('bulb',19);sugDot()}}
  const nm={meetings:['Meetings','plane'],unite:['Unité','users'],acces:['Accès','lock'],mails:['Emails','mail'],perfos:['Outils','gauge']};
  ['meetings','unite','acces','mails','perfos'].forEach(k=>{
   const cur=S.view===k||(k==='meetings'&&(S.view==='meeting'||S.view==='recap'||S.view==='retex'));
@@ -7766,7 +7769,7 @@ function openSheet(fn){if($('ov').hidden)SHD=false;S.live=false;sheetFn=fn;const
 function fixSheet(){const sh=$('sheet');if(!sh)return;const ctrls=[...sh.querySelectorAll('input,textarea,select,.yn button,.chips button,.step button,.mchip,.pk,.ocat button,.fdrop,.ghostc,.more')];const any=ctrls.some(x=>!x.disabled);if(ROLE==='visit'||RLm[ROLE].side==='suivi'||!any){sh.querySelectorAll('.sf .btn.pri').forEach(b=>{if(/Je valide|C'est noté|Enregistrer|Remplir/.test(b.textContent)){b.textContent='Fermer';b.onclick=closeSheet;b.className='btn pri'}})}}
 /* Boîte à suggestions : une idée, un bug, quelque chose de plus pratique ; le chef ops reçoit une notification et un mail */
 let SUG={k:'idee',sent:0};const SUG_K=[['idee','💡','Une idée'],['bug','🐞','Ça ne marche pas'],['confort','✨','Plus pratique']];
-function suggOpen(){SUG={k:'idee',sent:0,ph:[],t:''};openSheet(suggHTML);setTimeout(()=>{const t=$('sg-t');if(t&&!isChef())t.focus()},120)}
+function suggOpen(){SUG={k:'idee',sent:0,ph:[],t:''};openSheet(suggHTML);if(isChef())setTimeout(()=>(DB.sugg||[]).filter(x=>x.uc).forEach(x=>{x.uc=0;if(isOnline())api('suggSeen',{id:x.id}).catch(()=>{})}),4000);setTimeout(()=>{const t=$('sg-t');if(t&&!isChef())t.focus()},120)}
 function suggHTML(){const L=(DB.sugg||[]).slice().sort((a,b)=>(!!a.done-!!b.done)||b.t-a.t),open=L.filter(x=>!x.done).length;
  const form=SUG.sent?`<div class="sgok"><div class="sgbig">🙏</div><b>Merci !</b><p class="muted">Votre suggestion est bien arrivée au chef ops.</p><div class="pcbtns" style="justify-content:center"><button class="btn" onclick="SUG.sent=0;$('sheet').innerHTML=suggHTML()">Une autre idée</button><button class="btn pri" onclick="closeSheet()">Fermer</button></div></div>`:
   `<div class="sgk">${SUG_K.map(([k,e,l])=>`<button class="${SUG.k===k?'on':''}" onclick="SUG.k='${k}';document.querySelectorAll('.sgk button').forEach(b=>b.classList.toggle('on',b.dataset.k==='${k}'))" data-k="${k}"><span>${e}</span>${l}</button>`).join('')}</div>
@@ -7775,8 +7778,21 @@ function suggHTML(){const L=(DB.sugg||[]).slice().sort((a,b)=>(!!a.done-!!b.done
   <button class="btn pri big" style="width:100%;margin-top:10px" id="sg-go" onclick="suggSend()">${ic('send',17)} Envoyer</button>
   <p class="small muted" style="margin:8px 0 0">Elle arrive directement au chef ops, avec votre nom.</p>`;
  const list=isChef()?`<h3 class="sgh">Suggestions reçues <span class="n">${open} à voir · ${L.length} en tout</span></h3>${L.length?L.map(x=>{const K=SUG_K.find(k=>k[0]===x.k)||SUG_K[0];return `<div class="sgi ${x.done?'done':''}"><div class="sgm"><span>${K[1]} <b>${esc(x.who||'?')}</b></span><span class="small muted">${new Date(x.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}${x.scr?' · '+esc(x.scr):''}</span></div><div class="sgx">${esc(x.txt).replace(/\n/g,'<br>')}</div>${(x.ph||[]).length?`<div class="sgphs">${x.ph.map((p,i)=>`<button class="btn sm" onclick="suggPh('${x.id}',${i})">${ic('camera',14)} Photo ${i+1}</button>`).join('')}</div>`:''}
+   ${sgTh(x,1)}
    <div class="pcbtns"><button class="btn sm" onclick="suggSet('${x.id}',{done:${x.done?0:1}})">${x.done?'↺ À revoir':ic('check',14)+' Traitée'}</button><button class="ib" aria-label="Supprimer" onclick="if(confirm('Supprimer cette suggestion ?'))suggSet('${x.id}',{del:1})">${ic('trash',14)}</button></div></div>`}).join(''):'<p class="small muted">Aucune suggestion pour l\'instant.</p>'}`:'';
- return `<div class="sh">${tile({i:'bulb',c1:'#facc15',c2:'#f59e0b'},'lg')}<div class="t"><div class="q">Boîte à suggestions</div><div class="small muted">Une idée pour améliorer PAF OPS ?</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">${form}${list}</div>`}
+ const mine=!isChef()&&(DB.sugg||[]).length?`<h3 class="sgh">Mes suggestions <span class="n">${(DB.sugg||[]).length}</span></h3>${(DB.sugg||[]).slice().sort((a,b)=>(b.ua?1:0)-(a.ua?1:0)||b.t-a.t).map(x=>{const K=SUG_K.find(k=>k[0]===x.k)||SUG_K[0];return `<div class="sgi ${x.ua?'new':''}"><div class="sgm"><span>${K[1]} ${x.ua?'<b class="sgnew">Nouvelle réponse</b>':x.done?'<span class="small muted">traitée</span>':''}</span><span class="small muted">${new Date(x.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span></div><div class="sgx">${esc(x.txt).replace(/\n/g,'<br>')}</div>${sgTh(x,0)}</div>`}).join('')}`:'';
+ if(!isChef())setTimeout(()=>(DB.sugg||[]).filter(x=>x.ua).forEach(x=>suggSeen(x.id)),1500);
+ return `<div class="sh">${tile({i:'bulb',c1:'#facc15',c2:'#f59e0b'},'lg')}<div class="t"><div class="q">Boîte à suggestions</div><div class="small muted">Une idée pour améliorer PAF OPS ?</div></div><button class="ib" onclick="closeSheet()" aria-label="Fermer">${ic('x',18)}</button></div><div class="sb">${form}${mine}${list}</div>`}
+/* échange sur une suggestion : bulles + champ de réponse (le chef pose une question ou répond ; l'auteur répond) */
+function sgTh(x,chef){const T=x.th||[];return `<div class="sgth2">${T.map(m=>`<div class="sgb ${m.by==='chef'?'c':'a'}"><small>${esc(m.by==='chef'?'Chef ops':(m.who||x.who||'Auteur'))} · ${new Date(m.t).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} ${new Date(m.t).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</small>${esc(m.txt).replace(/\n/g,'<br>')}</div>`).join('')}
+ <div class="sgr"><textarea class="in" rows="1" id="sgr-${x.id}" placeholder="${chef?(T.length?'Répondre…':'Répondre ou poser une question à '+esc((x.who||'').split(' ')[0]||'l\'auteur')+'…'):'Répondre au chef ops…'}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,160)+'px'"></textarea><button class="btn sm pri" onclick="suggMsg('${x.id}')">${ic('send',14)}</button></div>${chef&&x.uc?'<div class="small" style="color:#b45309;font-weight:700">Nouvelle réponse de l\'auteur</div>':''}</div>`}
+async function suggMsg(id){const ta=$('sgr-'+id),t=(ta&&ta.value||'').trim();if(t.length<2){toast('Écrivez votre message');return}const x=(DB.sugg||[]).find(y=>y.id===id);if(!x)return;
+ const me=isChef()?'chef':'aut';x.th=(x.th||[]).concat([{by:me,t:Date.now(),txt:t,who:me==='chef'?'Chef des opérations':''}]);if(me==='chef'){x.ua=1;x.uc=0}else x.done=0;
+ const sh=$('sheet');if(sh)sh.innerHTML=suggHTML();if(!isOnline()){save();toast('Message envoyé (maquette : ni notification ni mail)');return}
+ let r;try{r=await api('suggMsg',{id,txt:t})}catch(e){r={error:'Connexion impossible : message non envoyé'}}
+ if(r&&r.error){x.th.pop();toast(r.error);const s2=$('sheet');if(s2)s2.innerHTML=suggHTML();return}if(r.sugg){DB.sugg=r.sugg;try{if(typeof BASE!=='undefined'&&BASE)BASE.sugg=JSON.parse(JSON.stringify(DB.sugg))}catch(_){}}toast(me==='chef'?'Envoyé : il est prévenu par notification et par email':'Envoyé au chef ops')}
+async function suggSeen(id){const x=(DB.sugg||[]).find(y=>y.id===id);if(!x||!x.ua)return;x.ua=0;sugDot();if(!isOnline())return;try{await api('suggSeen',{id})}catch(e){}}
+function sugDot(){const g=$('sugB');if(g)g.classList.toggle('dot',!isChef()&&(DB.sugg||[]).some(x=>x.ua)||isChef()&&(DB.sugg||[]).some(x=>x.uc))}
 const SUG_FUN=['On cherche la boîte à idées. Elle était derrière la boîte à outils.',
  'On a demandé à l\'idée de faire « hmm ». Elle a fait « waouh ».'];
 function suggWait(){const sb=document.querySelector('#sheet .sb');if(sb)sb.insertAdjacentHTML('afterbegin',`<div class="sgwait"><div class="hg">⏳</div><b>${SUG_FUN[Math.floor(Math.random()*SUG_FUN.length)]}</b></div>`)}
@@ -8048,10 +8064,9 @@ $('filein').addEventListener('change',async e=>{
  /* iPhone (appli sur l'écran d'accueil) : après le clavier, iOS garde parfois une « fenêtre » plus courte que l'écran,
     et une barre accrochée en bas (bottom:0) remonte au milieu. On la place alors depuis le haut, sur la hauteur réellement visible. */
  const bnavPos=()=>{const b=document.querySelector('.bnav');if(!b)return;if(getComputedStyle(b).display==='none'||typing()){b.style.top='';b.style.bottom='';return}
-  let H=vv?vv.height+vv.offsetTop:window.innerHeight;
-  const st=navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
-  if(st&&!zm()){const sh=(window.matchMedia&&matchMedia('(orientation: portrait)').matches)?Math.max(screen.height,screen.width):Math.min(screen.height,screen.width);if(sh>H+40)H=sh}
-  if(Math.abs(H-window.innerHeight)>30||Math.abs(b.getBoundingClientRect().bottom-H)>30){b.style.top=Math.round(H-b.offsetHeight)+'px';b.style.bottom='auto'}else{b.style.top='';b.style.bottom=''}};
+  // seulement si la zone réellement visible est plus haute que la « fenêtre » d'iOS (après le clavier) ; jamais plus bas que l'écran visible
+  const H=vv&&!zm()?vv.height+vv.offsetTop:0;
+  if(H&&H>window.innerHeight+30){b.style.top=Math.round(H-b.offsetHeight)+'px';b.style.bottom='auto'}else{b.style.top='';b.style.bottom=''}};
  window.bnavFix=()=>{const b=document.querySelector('.bnav');document.body.classList.toggle('zoomed',zm());if(zm()&&!typing()&&!ZTOOL())zoomReset();if(b){b.style.display='none';void b.offsetHeight;b.style.display=''}bnavPos()};
  let raf=0;const bp=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;bnavPos()})};
  window.addEventListener('scroll',bp,{passive:true});window.addEventListener('resize',bp);
