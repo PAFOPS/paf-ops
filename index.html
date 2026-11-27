@@ -624,7 +624,7 @@ button.cev{border:0;cursor:pointer;text-align:left;font-family:inherit}
 .cpx-gap{font-size:16px;line-height:2.3}.cpx-gw{display:inline-flex;flex-direction:column;vertical-align:middle;margin:0 2px}.cpx-gi{font:inherit;font-size:16px;font-weight:800;text-align:center;padding:4px 6px;border-radius:8px;border:1.5px dashed var(--pri);background:var(--surface);color:var(--fg);width:auto}
 .cpx-gi.bad{border:2px solid var(--bad);background:var(--bad2);color:var(--bad)}.cpx-gi.good{border:1.5px solid var(--ok);background:var(--ok2)}.cpx-hint{font-size:11px;line-height:1.2;color:var(--bad);font-weight:800;text-align:center}
 .cpx-bad{margin:10px 0 4px;padding:10px 12px;border-radius:10px;background:var(--bad2);border:1px solid var(--bad);display:grid;gap:6px}.cpx-bad small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}.cpx-bad s{color:var(--bad)}.cpx-bad b{color:var(--fg)}.cpx-bad .btn{justify-self:start}.cpx-bad .hint{margin:0}
-.cpx-act .hint{margin:0}.cpx-g.big{grid-template-columns:1fr}.cpx-g.big .cpx-ck{order:-1;position:static}@media (max-width:900px){.cpx-g.big .cpx-ck{overflow-x:auto;-webkit-overflow-scrolling:touch}.cpx-g.big .cpx-img{width:230%}}
+.cpx-act .hint{margin:0}.cpx-qcm{display:grid;gap:8px;margin-top:4px}.cpx-qcm button{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:15px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}.cpx-qcm button:hover{border-color:var(--pri)}.cpx-qcm button b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font-size:12px}.cpx-qcm button.no{border-color:var(--bad);background:var(--bad2);color:var(--bad);text-decoration:line-through;cursor:default}.cpx-g.big{grid-template-columns:1fr}.cpx-g.big .cpx-ck{order:-1;position:static}@media (max-width:900px){.cpx-g.big .cpx-ck{overflow-x:auto;-webkit-overflow-scrolling:touch}.cpx-g.big .cpx-img{width:230%}}
 .cpx-act{gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .cpx-done{border:2px solid var(--ok);border-radius:14px;padding:12px;display:grid;gap:8px}.cpx-done b{color:var(--ok);font-size:17px}.cpx-nota{margin:0;padding:6px 10px;border-radius:8px;background:var(--warn2);font-size:14px}.cpx-done .btn{justify-self:start}
 .cpx-ck{position:sticky;top:10px;margin:12px 0}.cpx-ckh{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
@@ -1579,7 +1579,7 @@ const S={view:'meetings',mid:null,filter:'all',q:''};
 let ROLE='chef';
 const isChef=()=>ROLE==='chef';
 /* Version de l'application : si une version plus récente est en ligne, un bandeau propose de recharger */
-const APP_V='1795778447';
+const APP_V='1795779989';
 function verCheck(){if(APP_V==='__APPV__'||typeof API_URL==='undefined')return;fetch(location.pathname+'?_v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=t&&t.match(/const APP_V='(\d+)'/);if(m&&+m[1]>+APP_V&&!document.getElementById('updb')){const d=document.createElement('div');d.id='updb';d.innerHTML=`<span>✨ Une mise à jour de PAF OPS est disponible.</span><button onclick="location.reload()">Recharger</button>`;document.body.appendChild(d)}}).catch(()=>{})}
 setTimeout(verCheck,8000);setInterval(verCheck,15*60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')verCheck()});
 const myRx=()=>typeof ME!=='undefined'&&ME&&ME.rx?ME.rx:null;
@@ -6483,6 +6483,16 @@ function capsGo(){const ym=S.capsYm,T=capsT(S.capsWho,ym),B=capsBank(ym);if(!B)r
  const e=$('cpxin'),a=(e&&e.value||'').trim();if(!a){toast('Écrivez votre réponse'+(st.hs?' ou touchez la commande en cabine':''));return}
  if(capsPass(st,a)){capsNext(T,Q.bad?'fix':'ok',a);return}
  Q.bad='txt';Q.v=a;Q.sc=capsScore(st.x,a);capsErr(T,k);capsKeep(S.capsWho,ym);render();setTimeout(()=>{const x=$('cpxin');if(x){x.value='';x.focus()}},30)}
+/* QCM à 4 choix pour les actions qui ne se font pas en cabine : la bonne réponse et 3 autres étapes (d'abord la suite de la même procédure) */
+const capsIsQ=st=>!!st&&st.t==='act'&&!st.hs;
+function capsQcm(B,T){const P=B[T.i],st=P.s[T.j],ok=capsShow(st.x),r=capsRng('q'+S.capsYm+'.'+T.i+'.'+T.j),seen=new Set([chN(ok)]),out=[],add=x=>{const t=capsShow(x.x);if(x.t==='gap'||x.t==='say'||out.length>=3)return;const n=chN(t);if(seen.has(n))return;seen.add(n);out.push(t)};
+ P.s.slice(0,T.j).forEach(x=>seen.add(chN(capsShow(x.x))));const same=P.s.slice(T.j+1),oth=B.filter((_,i)=>i!==T.i).flatMap(p=>p.s);
+ const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+ sh(same).slice(0,2).forEach(add);sh(oth).forEach(add);sh(same).forEach(add);sh(B.flatMap(p=>p.s).filter(x=>x.t!=='gap'&&x.t!=='say')).forEach(x=>{if(out.length<3){const t=capsShow(x.x),n=chN(t);if(n!==chN(ok)&&!out.includes(t))out.push(t)}});
+ const L=out.slice(0,3),pos=Math.floor(r()*(L.length+1));L.splice(pos,0,ok);return L}
+function capsQ(i){const ym=S.capsYm,T=capsT(S.capsWho,ym),B=capsBank(ym);if(!B)return;const {st}=capsCur(B,T);if(!capsIsQ(st))return;const O=capsQcm(B,T),Q=capsSt();
+ if(O[i]===capsShow(st.x)){capsNext(T,Q.bad?'fix':'ok',O[i]);return}
+ Q.bad='q';Q.qw=(Q.qw||[]).concat([i]);capsErr(T,T.i+'.'+T.j);capsKeep(S.capsWho,ym);render();toast('Mauvaise réponse : choisissez-en une autre')}
 function capsCopy(){const T=capsT(S.capsWho,S.capsYm),{st}=capsCur(capsBank(S.capsYm),T),e=$('cpxin');if(st&&e){e.value=capsShow(st.x).replace(/\s*…\s*$/,' ');e.focus()}}
 const CAPS_TOL=3;
 function capsNear(I,x,y){const HS=capsHS(),r=I==='p'?.667:.667,D={};Object.entries(HS).forEach(([k,v])=>{if(v[1]!==I)return;D[k]=Math.min(...v[2].map(q=>Math.hypot(Math.max(q[0]-x,0,x-q[2]),Math.max(q[1]-y,0,y-q[3])*r)))});return D}
@@ -6492,7 +6502,7 @@ function capsTap(ev){const box=$('cpximg');if(!box||S.capsEd)return;const R=box.
  const T=capsT(S.capsWho,S.capsYm),B=capsBank(S.capsYm),{st}=B?capsCur(B,T):{},H=st&&!T.endP&&T.go&&!T.fin?[].concat(st.hs||[]):[],Q=capsSt(),g=H.filter(h=>D[h]!=null&&D[h]<=CAPS_TOL&&D[h]<=D[K[0]]+1.5&&!Q.hit.includes(h)).sort((a,b)=>D[a]-D[b])[0]||H.filter(h=>Q.hit.includes(h)&&D[h]!=null&&D[h]<=D[K[0]]+1.5)[0];
  const k=g||K[0];bub((capsHS()[k]||[k])[0],!!g||!H.length);capsHit(k)}
 function capsHit(k){const ym=S.capsYm,T=capsT(S.capsWho,ym),B=capsBank(ym);if(!B||T.endP||T.fin||!T.go)return;const {st}=capsCur(B,T);if(!st)return;const Q=capsSt(),H=[].concat(st.hs||[]),L=capsHS()[k];
- if(!H.length){toast('Cette étape se répond au clavier');return}
+ if(!H.length){toast('Cette étape ne se fait pas en cabine');return}
  if(H.includes(k)){if(!Q.hit.includes(k))Q.hit.push(k);else{return}const z=document.querySelectorAll('.cpxz[data-k="'+k+'"]');z.forEach(x=>{x.classList.add('good');setTimeout(()=>x.classList.remove('good'),700)});
   if(st.t==='gap'){toast((L?L[0]:'Commande')+' : oui. Complétez les valeurs.');return}
   if(H.every(h=>Q.hit.includes(h))){setTimeout(()=>capsNext(T,Q.bad?'fix':'ok','🖱 '+H.map(h=>(capsHS()[h]||[h])[0]).join(', ')),700);return}
@@ -6530,7 +6540,7 @@ function vCaps(tabs){const who=capsWho(),L=capsPilots(),max=capsMax(),cur=capsYm
  if(!who)return head+`<div class="cpxc"><p>Le test est réservé aux pilotes Athos 1 à 9 et à la direction (Athos 15 à 17). Aucune fiche de l'annuaire ne correspond à votre lien.</p></div>`;
  if(S.capsWho!==who.id){S.capsWho=who.id;S.capsSt=null}
  if(!Y.length)return head+`<div class="cpxc"><p>Le premier test CAPS dans l'application est celui de ${capsLbl(CAPS_START)} : il ouvre le 25 du mois précédent.</p></div>`;
- if(!S.capsYm||!Y.includes(S.capsYm)){const nx=max>cur?max:null;S.capsYm=nx&&!capsDone(nx,who.id)&&capsDone(cur,who.id)?nx:!capsDone(cur,who.id)?cur:(nx||cur)}
+ if(!S.capsYm||!Y.includes(S.capsYm)){const nx=max>cur?max:null;S.capsYm=nx&&!capsDone(nx,who.id)&&capsDone(cur,who.id)?nx:!capsDone(cur,who.id)?cur:(nx||cur);if(!Y.includes(S.capsYm))S.capsYm=Y.find(m=>!capsDone(m,who.id))||Y[Y.length-1]}
  const ym=S.capsYm,B=capsBank(ym),T=capsT(who.id,ym),R=capsRes(ym,who.id);
  const pick=isChef()&&!isOnline()?`<label class="l">Passer le test en tant que</label><select onchange="S.capsAs=this.value;S.capsSt=null;render()">${L.map(x=>`<option value="${x.id}" ${x.id===who.id?'selected':''}>Athos ${esc(String(x.athos))} · ${esc(memLabel(x))}</option>`).join('')}</select>`:'';
  const months=`<div class="cpx-m">${Y.map(m=>{const d=capsDone(m,who.id),late=!d&&m<=cur;return `<button class="${m===ym?'on':''} ${d?'ok':late?'late':''}" onclick="S.capsYm='${m}';S.capsSt=null;render()">${CAPS_MC[(+m.slice(5)+2)%12]}${d?' ✓':''}</button>`}).join('')}</div>`;
@@ -6550,12 +6560,13 @@ function vCaps(tabs){const who=capsWho(),L=capsPilots(),max=capsMax(),cur=capsYm
  const past=P.s.slice(0,T.j).map((s,j)=>{const g=T.log[T.i+'.'+j]||{};return `<li class="${g.ok==='fix'?'fix':'ok'}">${s.p?`<em>${esc(s.p)} :</em> `:''}${esc(capsShow(s.x))}</li>`}).join('');
  let box='';
  if(T.endP)box=`<div class="cpx-done"><b>✓ ${esc(P.t)}</b>${(P.n||[]).map(n=>`<p class="cpx-nota">${esc(n)}</p>`).join('')}<button class="btn pri" onclick="capsNextP()">${T.i+1<B.length?'Procédure suivante':'Terminer le test'}</button></div>`;
- else{const ty=st.t==='say'?'🎙 Annonce radio':st.t==='gap'?'🔢 Valeurs':'⌨️ Action',H=[].concat(st.hs||[]);
-  let inp;if(st.t==='gap'){let i=0;inp=`<div class="cpx-gap">${esc(st.x).replace(/\{([^}]*)\}/g,(m,v)=>{const n=i++,u=Q['g'+n],bad=Q.bad==='num'&&u!=null&&capsNum(u)!==capsNum(v);return `<span class="cpx-gw"><input id="cpxg${n}" class="cpx-gi ${bad?'bad':u!=null&&Q.bad?'good':''}" inputmode="decimal" value="${u!=null?esc(u):''}" size="${Math.max(3,String(v).length+1)}" onkeydown="if(event.key==='Enter')capsGo()" aria-label="valeur ${n+1}">${bad&&(Q.tries[n]||0)>=2?`<small class="cpx-hint">${esc(v)}</small>`:''}</span>`})}</div>`}
+ else{const qcm=capsIsQ(st),ty=st.t==='say'?'🎙 Annonce radio':st.t==='gap'?'🔢 Valeurs':qcm?'☑️ Action · une seule bonne réponse':'⌨️ Action',H=[].concat(st.hs||[]);
+  let inp;if(qcm){const O=capsQcm(B,T),w=Q.qw||[];inp=`<div class="cpx-qcm">${O.map((o,i)=>`<button class="${w.includes(i)?'no':''}" ${w.includes(i)?'disabled':''} onclick="capsQ(${i})"><b>${'ABCD'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div>`}
+  else if(st.t==='gap'){let i=0;inp=`<div class="cpx-gap">${esc(st.x).replace(/\{([^}]*)\}/g,(m,v)=>{const n=i++,u=Q['g'+n],bad=Q.bad==='num'&&u!=null&&capsNum(u)!==capsNum(v);return `<span class="cpx-gw"><input id="cpxg${n}" class="cpx-gi ${bad?'bad':u!=null&&Q.bad?'good':''}" inputmode="decimal" value="${u!=null?esc(u):''}" size="${Math.max(3,String(v).length+1)}" onkeydown="if(event.key==='Enter')capsGo()" aria-label="valeur ${n+1}">${bad&&(Q.tries[n]||0)>=2?`<small class="cpx-hint">${esc(v)}</small>`:''}</span>`})}</div>`}
   else inp=`<textarea id="cpxin" rows="2" class="cpx-in ${Q.bad?'bad':''}" placeholder="${st.t==='say'?'Ce que vous dites à la radio…':'Ce que vous faites…'}" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();capsGo()}"></textarea>`;
   const fb=Q.bad==='txt'?`<div class="cpx-bad"><div><small>Votre réponse</small><s>${esc(Q.v)}</s></div><div><small>Corrigé</small><b>${esc(capsShow(st.x))}</b></div><button class="btn sm" onclick="capsCopy()">Reprendre la correction</button><p class="hint">Retapez-la pour continuer.</p></div>`:'';
   box=`<div class="cpx-cur"><div class="cpx-ty"><span>${ty}</span><small>Étape ${T.j+1} sur ${P.s.length}</small></div>${st.p?`<div class="cpx-p">${esc(st.p)}</div>`:''}${inp}${fb}
-   <div class="row cpx-act"><button class="btn pri" onclick="capsGo()">Valider</button>${H.length&&st.t!=='gap'?`<span class="hint">ou touchez ${H.length>1?'les '+H.length+' commandes':'la commande'} en cabine${Q.hit.length?' · '+Q.hit.length+' / '+H.length:''}</span>`:''}</div></div>`}
+   ${qcm?'':`<div class="row cpx-act"><button class="btn pri" onclick="capsGo()">Valider</button>`}${H.length&&st.t!=='gap'?`<span class="hint">ou touchez ${H.length>1?'les '+H.length+' commandes':'la commande'} en cabine${Q.hit.length?' · '+Q.hit.length+' / '+H.length:''}</span>`:''}${qcm?'':'</div>'}</div>`}
  return head+top+`<div class="cpx">${prog}<div class="cpx-g ${S.capsBig?'big':''}"><div class="cpxc cpx-proc"><small class="muted">Procédure ${T.i+1} sur ${B.length}</small><h2>${esc(P.t)}</h2><ol class="cpx-steps">${past}</ol>${box}</div>${capsCk(T.endP?null:st)}</div></div>`}
 /* ----- Suivi des échéances : CAPS du mois, simu éjection (2 mois), simu portique (6 mois) ----- */
 const ECH_V={ej:[2,'Simu éjection'],po:[6,'Simu portique']};
